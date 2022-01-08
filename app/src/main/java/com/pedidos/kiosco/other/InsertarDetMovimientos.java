@@ -44,15 +44,12 @@ protected String doInBackground (String...params){
             +"?id_producto=" + ObtenerProductos.gIdProducto
             +"&id_fac_movimiento=" + Login.gIdMovimiento
             +"&id_tipo_comprobante=1"
-            +"&cantidad=" + gCount
+            +"&cantidad=1"
             +"&monto=" + ObtenerProductos.gDetMonto
             +"&monto_desc=0.00"
             +"&monto_iva=" + ObtenerProductos.gDetMontoIva
-            +"&precio_uni=0.00"
-            +"&venta_gravada=" + TicketDatos.gTotal
-            +"&cambio=" + ResumenPago.money;
-
-    System.out.println(registrar_url);
+            +"&precio_uni=" + ObtenerProductos.gPrecio
+            +"&venta_gravada=0.00";
 
     String resultado = null;
 
@@ -73,8 +70,7 @@ protected String doInBackground (String...params){
         String montoDesc = "0.00";
         String montoIva = String.valueOf(ObtenerProductos.gDetMontoIva);
         String precioUni = "0.00";
-        String ventaGrav= String.valueOf(TicketDatos.gTotal);
-        String cambio = String.valueOf(ResumenPago.money);
+        String ventaGrav= "0.00";
 
         String data = URLEncoder.encode("id_producto", "UTF-8") + "=" + URLEncoder.encode(idProducto, "UTF-8")
                 + "&" + URLEncoder.encode("id_fac_movimiento", "UTF-8") + "=" + URLEncoder.encode(idFacMovimiento, "UTF-8")
@@ -84,8 +80,7 @@ protected String doInBackground (String...params){
                 + "&" + URLEncoder.encode("monto_desc", "UTF-8") + "=" + URLEncoder.encode(montoDesc, "UTF-8")
                 + "&" + URLEncoder.encode("monto_iva", "UTF-8") + "=" + URLEncoder.encode(montoIva, "UTF-8")
                 + "&" + URLEncoder.encode("precio_uni", "UTF-8") + "=" + URLEncoder.encode(precioUni, "UTF-8")
-                + "&" + URLEncoder.encode("venta_gravada", "UTF-8") + "=" + URLEncoder.encode(ventaGrav, "UTF-8")
-                + "&" + URLEncoder.encode("cambio", "UTF-8") + "=" + URLEncoder.encode(cambio, "UTF-8");
+                + "&" + URLEncoder.encode("venta_gravada", "UTF-8") + "=" + URLEncoder.encode(ventaGrav, "UTF-8");
 
         bufferedWriter.write(data);
         bufferedWriter.flush();

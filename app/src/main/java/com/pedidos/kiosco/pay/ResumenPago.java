@@ -93,21 +93,19 @@ public class ResumenPago extends AppCompatActivity {
         Button pagar = findViewById(R.id.btnPagar);
         pagar.setOnClickListener(view -> {
 
-            new InsertarMovimientos(this).execute();
 
-            try {
-                new InsertarDetMovimientos(this).execute().get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
-            if (InsertarDetMovimientos.exitoInsertProd) {
                 ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                         + "?id_estado_prefactura=2"
                         + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
                         + "&id_prefactura=" + Login.gIdPedido);
-            }
+
+                String url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
+                        +"?monto_pago="+ etMoney.getText().toString()
+                        +"&monto_cambio=" + cambio.getText().toString()
+                        +"&id_fac_movimiento="+Login.gIdMovimiento;
+                ejecutarServicio2(url);
+            System.out.println(url);
+
 
         });
     }
@@ -127,6 +125,26 @@ public class ResumenPago extends AppCompatActivity {
             progressDialog.dismiss();
                 },
                 volleyError -> progressDialog.dismiss()
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    public void ejecutarServicio2 (String URL){
+
+        ProgressDialog progressDialog = new ProgressDialog(ResumenPago.this, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> {
+
+                    progressDialog.dismiss();
+                },
+                volleyError -> {
+            progressDialog.dismiss();
+                }
         );
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);

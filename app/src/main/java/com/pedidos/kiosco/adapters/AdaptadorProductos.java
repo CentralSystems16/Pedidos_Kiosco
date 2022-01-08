@@ -23,7 +23,9 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.main.ObtenerProductos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
+import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarDetPedido;
+import com.pedidos.kiosco.other.InsertarMovimientos;
 import com.pedidos.kiosco.other.InsertarPedido;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,21 +84,23 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
                 } else {
 
                             if (Login.gIdPedido == 0) {
-                                new InsertarPedido(productosViewHolder.itemView.getContext()).execute();
+                                new InsertarPedido(context).execute();
+                                new InsertarMovimientos(context).execute();
                             }
 
                             try {
-                                new InsertarDetPedido(productosViewHolder.itemView.getContext()).execute().get();
+                                new InsertarDetPedido(context).execute().get();
+                                new InsertarDetMovimientos(context).execute().get();
                             } catch (ExecutionException | InterruptedException e) {
                                 e.printStackTrace();
                             }
-
 
                             if (InsertarDetPedido.exitoInsertProd) {
                                 AgregarProducto(v);
                                 new ContadorProductos.GetDataFromServerIntoTextView(context).execute();
                                 progressDialog.dismiss();
                             }
+
                 }
         });
     }

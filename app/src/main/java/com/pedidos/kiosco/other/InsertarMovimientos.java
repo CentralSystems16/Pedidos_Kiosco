@@ -44,14 +44,24 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
     protected String doInBackground (String...params){
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarMovimientos.php"
-                +"?id_tipo_comprobante=1"
-                +"&id_cliente=" + Login.gIdCliente
+                +"?id_cliente=" + Login.gIdCliente
+                +"&id_tipo_comprobante=1"
                 +"&id_usuario=" + Login.gIdUsuario
+                +"&id_forma_pago=1"
+                +"&id_estado_comprobante=1"
                 +"&id_sucursal=" + Login.gIdSucursal
+                +"&id_aut_fiscal=1"
                 +"&id_prefactura=" + Login.gIdPedido
+                +"&id_tipo_pago=1"
+                +"&fecha=" + "1/1/1"
                 +"&fecha_creo=" + fechacComplString + " a las " + horaString
+                +"&fecha_mod=" + "1/1/1"
                 +"&monto=" + ObtenerProductos.gDetMonto
-                +"&monto_iva=" + ObtenerProductos.gDetMontoIva;
+                +"&monto_iva=" + ObtenerProductos.gDetMontoIva
+                +"&fac_tipo_movimiento=1"
+                +"&monto_desc=" + "0.00"
+                +"&monto_pago=" + "0.00"
+                +"&monto_cambio=" + "0.00";
 
         System.out.println(registrar_url);
 
@@ -66,23 +76,43 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 
-            String tipoComprobante = "1";
             String idCliente = String.valueOf(Login.gIdCliente);
+            String tipoComprobante = "1";
             String idUsuario = String.valueOf(Login.gIdUsuario);
+            String idFormaPago = "1";
+            String idEstadoComprobante = "1";
             String idSucursal = String.valueOf(Login.gIdSucursal);
+            String idAutFiscal = "1";
             String idPrefactura = String.valueOf(Login.gIdPedido);
+            String idTipoPago = "1";
+            String fecha = "1/1/1";
             String fechaCreo = fechacComplString + " a las " + horaString;
+            String fechaMod = "11/11/11";
             String monto = String.valueOf(ObtenerProductos.gDetMonto);
             String montoIva = String.valueOf(ObtenerProductos.gDetMontoIva);
+            String facTipoMov = "1";
+            String montoDesc = "0.00";
+            String montoPago = "0.00";
+            String montoCambio = "0.00";
 
-            String data = URLEncoder.encode("id_tipo_comprobante", "UTF-8") + "=" + URLEncoder.encode(tipoComprobante, "UTF-8")
-                    + "&" + URLEncoder.encode("id_cliente", "UTF-8") + "=" + URLEncoder.encode(idCliente, "UTF-8")
+            String data = URLEncoder.encode("id_cliente", "UTF-8") + "=" + URLEncoder.encode(idCliente, "UTF-8")
+                    + "&" + URLEncoder.encode("id_tipo_comprobante", "UTF-8") + "=" + URLEncoder.encode(tipoComprobante, "UTF-8")
                     + "&" + URLEncoder.encode("id_usuario", "UTF-8") + "=" + URLEncoder.encode(idUsuario, "UTF-8")
+                    + "&" + URLEncoder.encode("id_forma_pago", "UTF-8") + "=" + URLEncoder.encode(idFormaPago, "UTF-8")
+                    + "&" + URLEncoder.encode("id_estado_comprobante", "UTF-8") + "=" + URLEncoder.encode(idEstadoComprobante, "UTF-8")
                     + "&" + URLEncoder.encode("id_sucursal", "UTF-8") + "=" + URLEncoder.encode((idSucursal), "UTF-8")
+                    + "&" + URLEncoder.encode("id_aut_fiscal", "UTF-8") + "=" + URLEncoder.encode((idAutFiscal), "UTF-8")
                     + "&" + URLEncoder.encode("id_prefactura", "UTF-8") + "=" + URLEncoder.encode(idPrefactura, "UTF-8")
+                    + "&" + URLEncoder.encode("id_tipo_pago", "UTF-8") + "=" + URLEncoder.encode(idTipoPago, "UTF-8")
+                    + "&" + URLEncoder.encode("fecha", "UTF-8") + "=" + URLEncoder.encode(fecha, "UTF-8")
                     + "&" + URLEncoder.encode("fecha_creo", "UTF-8") + "=" + URLEncoder.encode(fechaCreo, "UTF-8")
+                    + "&" + URLEncoder.encode("fecha_mod", "UTF-8") + "=" + URLEncoder.encode(fechaMod, "UTF-8")
                     + "&" + URLEncoder.encode("monto", "UTF-8") + "=" + URLEncoder.encode(monto, "UTF-8")
-                    + "&" + URLEncoder.encode("monto_iva", "UTF-8") + "=" + URLEncoder.encode(montoIva, "UTF-8");
+                    + "&" + URLEncoder.encode("monto_iva", "UTF-8") + "=" + URLEncoder.encode(montoIva, "UTF-8")
+                    + "&" + URLEncoder.encode("fac_tipo_movimiento", "UTF-8") + "=" + URLEncoder.encode(facTipoMov, "UTF-8")
+                    + "&" + URLEncoder.encode("monto_desc", "UTF-8") + "=" + URLEncoder.encode(montoDesc, "UTF-8")
+                    + "&" + URLEncoder.encode("monto_pago", "UTF-8") + "=" + URLEncoder.encode(montoPago, "UTF-8")
+                    + "&" + URLEncoder.encode("monto_cambio", "UTF-8") + "=" + URLEncoder.encode(montoCambio, "UTF-8");
 
             bufferedWriter.write(data);
             bufferedWriter.flush();
