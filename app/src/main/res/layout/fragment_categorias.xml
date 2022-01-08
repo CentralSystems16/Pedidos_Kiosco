@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/categorias"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D1D1D1"
+    android:orientation="vertical"
+    tools:context=".fragments.Categorias">
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lolipop"
+            android:gravity="start"
+            android:padding="10dp"
+            android:text="CATEGORÍAS"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListaCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear3"
+        android:layout_alignParentBottom="true" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/conejo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/linear3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="123dp"
+        android:background="@drawable/conejo" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gato"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/linear3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="123dp"
+        android:background="@drawable/gato" />
+
+
+</RelativeLayout>

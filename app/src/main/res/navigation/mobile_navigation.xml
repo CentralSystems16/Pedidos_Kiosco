@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.pedidos.kiosco.fragments.Home"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_category2"
+            app:destination="@id/navigation_category" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_category"
+        android:name="com.pedidos.kiosco.fragments.Categorias"
+        android:label="@string/title_category"
+        tools:layout="@layout/fragment_categorias" />
+
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.pedidos.kiosco.fragments.Usuario"
+        android:label="@string/title_user"
+        tools:layout="@layout/fragment_usuario" />
+
+    <fragment
+        android:id="@+id/navigation_ticket"
+        android:name="com.pedidos.kiosco.fragments.TicketDatos"
+        android:label="@string/title_ticket"
+        tools:layout="@layout/fragment_carrito" />
+
+</navigation>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="EDITAR INFORMACIÓN"
+        android:textColor="#c6391e"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNumero"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Número de teléfono"
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#c6391e"
+            app:hintTextColor="#c6391e">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditNumero"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:textColor="#9F807E7E"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Nombre y apellido"
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#c6391e"
+            app:hintTextColor="#c6391e">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditNombre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPersonName|textCapWords"
+                android:textColor="#9F807E7E"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Contraseña"
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#c6391e"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="#c6391e">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditPass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPassword"
+                android:textColor="#9F807E7E"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFielPasswordRepeat"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Repetir contraseña"
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#c6391e"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="#c6391e">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditRepeatPass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPassword"
+                android:textColor="#9F807E7E"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFielEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Email"
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#c6391e"
+            app:hintTextColor="#c6391e">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:textColor="#9F807E7E"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="4dp"
+            app:strokeColor="#f4a71d"
+            app:strokeWidth="1dp">
+
+            <Spinner
+                android:id="@+id/sucursalesEdit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:backgroundTint="@color/black"
+                android:padding="5dp"
+                android:popupBackground="@color/white"
+                android:visibility="gone" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/completeEdit"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:text="EDITAR"
+                android:textColor="#FF1A73E8"
+                android:textSize="11sp"
+                app:cornerRadius="15dp"
+                app:strokeColor="#FF1A73E8" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/completeEditDef"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#c6391e"
+                android:text="GUARDAR"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="15dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

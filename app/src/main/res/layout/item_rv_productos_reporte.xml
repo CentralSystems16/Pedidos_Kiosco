@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:backgroundTint="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="3dp"
+    android:background="@drawable/boton_borde_verde"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:background="@drawable/boton_borde_verde"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+
+        <TextView
+            android:id="@+id/tvProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:textColor="#2B2828"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="27dp"
+            android:text="Precio: $"
+            android:textColor="#6E6C6C"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/precioBase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="27dp"
+            android:text="0"
+            android:layout_toEndOf="@+id/precio"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="55dp"
+            android:text="Cant:"
+            android:textColor="#6E6C6C"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/cantBase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="55dp"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnMenos"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="185dp"
+            android:layout_marginTop="45dp"
+            android:backgroundTint="#795548"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textScaleX="2"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnMas"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="45dp"
+            android:backgroundTint="#795548"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textScaleX="1"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/btnEliminar"
+            android:layout_width="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_baseline_delete_24" />
+
+        <TextView
+            android:id="@+id/subtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="80dp"
+            android:text="SubTotal: $"
+            android:textColor="#454242"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/totalItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="80dp"
+            android:layout_toEndOf="@+id/subtotal"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="127dp"
+            android:background="#8C8C8C" />
+
+        <ImageView
+            android:id="@+id/imgProducto"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/dulce" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
