@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import pl.droidsonroids.gif.GifImageView;
@@ -48,6 +51,24 @@ public class ObtenerProductos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_productos);
+
+        TextView buscador = findViewById(R.id.etBuscador);
+        buscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+               filtrar(editable.toString());
+            }
+        });
 
         carrito = findViewById(R.id.carrito);
         carrito.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), TicketDatos.class)));
@@ -128,6 +149,21 @@ public class ObtenerProductos extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
 
+    }
+
+    public void filtrar (String texto) {
+        ArrayList<Productos> filtrarLista = new ArrayList<>();
+
+        for (Productos usuario : listaProductos) {
+            String cadenaNormalize = Normalizer.normalize(usuario.getNombreProducto(), Normalizer.Form.NFD);
+            String cadenaSinAcentos = cadenaNormalize.replaceAll("[^\\p{ASCII}]", "");
+            if (cadenaSinAcentos.toLowerCase().contains(texto.toLowerCase()) ) {
+                filtrarLista.add(usuario);
+            }
+
+        }
+
+        adaptador.filtrar(filtrarLista);
     }
 
 }

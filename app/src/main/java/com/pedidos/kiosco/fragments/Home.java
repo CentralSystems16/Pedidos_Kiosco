@@ -1,6 +1,7 @@
 package com.pedidos.kiosco.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.main.ObtenerEstados;
+import com.pedidos.kiosco.main.ObtenerReportes;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -48,6 +51,7 @@ public class Home extends Fragment {
 
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
+        verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
         hacerPedido.setOnClickListener(view1 -> {
 

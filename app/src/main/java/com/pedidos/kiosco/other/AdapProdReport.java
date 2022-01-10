@@ -175,7 +175,7 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
         holder.btnEliminar.setOnClickListener(v -> {
 
             if (listaProdReport.size() == 1){
-                Toast.makeText(context, "Esta tratando de eliminar todas las ordenes, por favor, 'vacie' o 'anule' el carrito en su lugar!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Esta tratando de eliminar todas las ordenes, por favor, 'vacie' el carrito en su lugar!", Toast.LENGTH_LONG).show();
             } else {
 
                 lidDetPedido = listaProdReport.get(position).getIdDetPedido();

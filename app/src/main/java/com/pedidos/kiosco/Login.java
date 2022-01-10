@@ -19,7 +19,9 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
-    public static int gIdCliente, cargo, gIdUsuario, gVerificacion, gIdCategoria, gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento;
+    public static int gIdCliente, cargo, gIdUsuario, gVerificacion, gIdCategoria,
+            gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento,
+            gIdPedidoReporte, gIdClienteReporte;
     public static String nombre, email, repeatContra, usuario, contra;
     EditText user, password;
 

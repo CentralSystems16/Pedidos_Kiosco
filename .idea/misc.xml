@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/boton_borde.xml" value="0.3828125" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/boton_borde_verde.xml" value="0.3828125" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/caja_texto_circular.xml" value="0.3828125" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.5" />
@@ -16,10 +17,15 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_categorias.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_estados.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_productos.xml" value="0.33" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_productos_reporte.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_reportes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/login.xml" value="0.33" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_det_reporte.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_estados.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_productos.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_reportes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/opciones_soporte.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/principal.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/recycler_categoria.xml" value="0.36666666666666664" />

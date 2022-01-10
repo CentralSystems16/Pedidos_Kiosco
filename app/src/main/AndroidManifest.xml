@@ -36,11 +36,13 @@
         <activity
             android:name=".Login"
             android:exported="false" />
-
         <activity
             android:name=".desing.VistaFinal"
             android:exported="false" />
-
+        <activity android:name=".main.ObtenerReportes"
+            android:exported="false" />
+        <activity android:name=".main.ObtenerEstados"
+            android:exported="false" />
         <activity
             android:name=".Splash"
             android:exported="true">

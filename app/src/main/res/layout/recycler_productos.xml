@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,12 +29,12 @@
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/carrito"
             android:layout_width="100dp"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/carrito" />
+            android:background="@drawable/carrito"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/tvCantProductos"
@@ -59,29 +59,48 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/etBuscador"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/linear4"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/boton_borde"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:hint="Buscar"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linear4"
+        android:layout_below="@+id/etBuscador"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/conejo2"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_alignTop="@+id/rvLista"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="123dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="120dp"
         android:background="@drawable/conejo" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gato2"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_below="@+id/etBuscador"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="123dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="122dp"
         android:background="@drawable/gato" />
 
 </RelativeLayout>

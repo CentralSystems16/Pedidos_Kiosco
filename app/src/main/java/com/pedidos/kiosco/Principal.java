@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Principal extends AppCompatActivity {
 
+    public static int gIdEstadoCliente, gIdEstado;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
