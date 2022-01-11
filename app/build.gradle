@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.github.dantsu:escpos-thermalprinter-android:2.0.11'
     implementation 'com.itextpdf:itext7-core:7.1.8'
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 

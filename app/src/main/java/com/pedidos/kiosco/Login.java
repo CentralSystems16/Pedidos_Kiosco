@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.utils.VerificarNumero;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,14 +76,7 @@ public class Login extends AppCompatActivity {
                                 gVerificacion = jsonResponse.getInt("verificacion_usuario");
                                 gIdSucursal = jsonResponse.getInt("id_sucursal");
 
-
-                                if (gVerificacion == 1) {
-
-                                    startActivity(new Intent(getApplicationContext(), Principal.class));
-
-                                } else {
-                                    startActivity(new Intent(getApplicationContext(), VerificarNumero.class));
-                                }
+                                startActivity(new Intent(getApplicationContext(), Principal.class));
 
                                 progressDialog.dismiss();
 

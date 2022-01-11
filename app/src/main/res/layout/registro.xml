@@ -194,6 +194,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <CheckBox
+            android:id="@+id/cbPolitica"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -202,7 +203,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistro"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="30dp"

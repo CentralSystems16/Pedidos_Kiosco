@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.model.Sucursales;
-import com.pedidos.kiosco.utils.VerificarNumero;
+
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,11 +29,9 @@ public class Registro extends AppCompatActivity {
 
     String usuario;
     EditText regPhoneNo, pas, nom, pr, em;
-
     int gIdSucursal;
-
     Spinner spSucursales;
-
+    CheckBox politica;
     AsyncHttpClient cliente;
     ArrayList<Sucursales> lista = new ArrayList<>();
 
@@ -40,6 +39,8 @@ public class Registro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
+
+        politica = findViewById(R.id.cbPolitica);
 
         cliente = new AsyncHttpClient();
         spSucursales = findViewById(R.id.spinnerSucursales);
@@ -56,67 +57,66 @@ public class Registro extends AppCompatActivity {
 
             obtenerSucursales();
 
-            botonRegistrar.setEnabled(false);
-
             String nombre = nom.getText().toString();
             usuario = regPhoneNo.getText().toString();
             String password = pas.getText().toString();
             String passwordRepeat = pr.getText().toString();
 
             if (usuario.isEmpty()) {
-                botonRegistrar.setEnabled(true);
-                regPhoneNo.setError("Agregue su número de teléfono.");
-                botonRegistrar.setError("Agregue su número de teléfono.");
+                regPhoneNo.setError("Agregue su número de teléfono");
+                botonRegistrar.setError("Agregue su número de teléfono");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(regPhoneNo.getWindowToken(), 0);
             }
 
             else if (nombre.isEmpty()) {
-                botonRegistrar.setEnabled(true);
-                nom.setError("Agregue su nombre.");
-                botonRegistrar.setError("Agregue su nombre.");
+                nom.setError("Agregue su nombre");
+                botonRegistrar.setError("Agregue su nombre");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(nom.getWindowToken(), 0);
             }
 
             else if (password.isEmpty()) {
-                botonRegistrar.setEnabled(true);
                 pas.setError("Agregue una contraseña.");
-                botonRegistrar.setError("Agregue una contraseña.");
+                botonRegistrar.setError("Agregue una contraseña");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(pas.getWindowToken(), 0);
             }
 
             else if (passwordRepeat.isEmpty()) {
-                botonRegistrar.setEnabled(true);
-                pr.setError("Repita la contraseña.");
-                botonRegistrar.setError("Repita la contraseña.");
+                pr.setError("Repita la contraseña");
+                botonRegistrar.setError("Repita la contraseña");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(pr.getWindowToken(), 0);
             }
 
             else if (password.length() < 6) {
-                botonRegistrar.setEnabled(true);
-                pas.setError("La contraseña debe contener al menos 6 caracteres.");
-                botonRegistrar.setError("La contraseña debe contener al menos 6 caracteres.");
+                pas.setError("La contraseña debe contener al menos 6 caracteres");
+                botonRegistrar.setError("La contraseña debe contener al menos 6 caracteres");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(pas.getWindowToken(), 0);
             }
 
             else if (!password.equals(passwordRepeat)) {
-                botonRegistrar.setEnabled(true);
-                pas.setError("Las contraseñas no coiciden.");
-                pr.setError("Las contraseñas no coiciden.");
-                botonRegistrar.setError("Las contraseñas no coiciden.");
+                pas.setError("Las contraseñas no coiciden");
+                pr.setError("Las contraseñas no coiciden");
+                botonRegistrar.setError("Las contraseñas no coiciden");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(pas.getWindowToken(), 0);
 
             }  else if (regPhoneNo.length() < 8 || regPhoneNo.length() > 8) {
-                botonRegistrar.setEnabled(true);
-                regPhoneNo.setError("El número ingresado no es correcto, asegurese que sea un número válido.");
-                botonRegistrar.setError("El número ingresado no es correcto, asegurese que sea un número válido.");
+                regPhoneNo.setError("El número ingresado no es correcto, asegurese que sea un número válido");
+                botonRegistrar.setError("El número ingresado no es correcto, asegurese que sea un número válido");
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(regPhoneNo.getWindowToken(), 0);
+            }
+
+            else if (spSucursales.getSelectedItemPosition() == 0){
+                Toast.makeText(getApplicationContext(), "Seleccione una sucursal", Toast.LENGTH_SHORT).show();
+            }
+
+            else if (!politica.isChecked()){
+                Toast.makeText(getApplicationContext(), "Por favor, acepte los terminos y las politicas de privacidad", Toast.LENGTH_SHORT).show();
             }
 
             else {
@@ -140,7 +140,7 @@ public class Registro extends AppCompatActivity {
                     if(response.equalsIgnoreCase("Usuario registrado")){
 
                         String phoneNo = regPhoneNo.getText().toString();
-                        Intent i = new Intent(getApplicationContext(), VerificarNumero.class);
+                        Intent i = new Intent(getApplicationContext(), Login.class);
                         i.putExtra("phoneNo", phoneNo);
                         startActivity(i);
                         progressDialog.dismiss();

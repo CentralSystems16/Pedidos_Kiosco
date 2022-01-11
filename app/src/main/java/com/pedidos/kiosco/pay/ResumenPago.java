@@ -68,7 +68,7 @@ public class ResumenPago extends AppCompatActivity {
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
     String horaString = ho.format(d);
     String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
-    Double gTotal, gCantidad, gPrecioUni;
+    double gTotal, gCantidad, gPrecioUni;
     public static final int PERMISSION_BLUETOOTH = 1;
     StringBuilder sb2 = new StringBuilder("");
     private int REQ_PDF = 21;
@@ -77,6 +77,14 @@ public class ResumenPago extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resumen_pago);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
+                    1000);
+        }
 
         cantidad = findViewById(R.id.cantidad);
         totalCompra = findViewById(R.id.totalFinalPago);
@@ -138,10 +146,12 @@ public class ResumenPago extends AppCompatActivity {
                         +"&id_fac_movimiento="+Login.gIdMovimiento;
                 ejecutarServicio2(url);
 
-        });
+            obtenerMovimientos();
+            obtenerDetMovimientos();
+            encodePDF();
+            uploadDocument();
 
-        obtenerMovimientos();
-        obtenerDetMovimientos();
+        });
 
     }
 
@@ -215,8 +225,8 @@ public class ResumenPago extends AppCompatActivity {
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_prefactura=" + Login.gIdPedido;
-
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + Login.gIdMovimiento;
+        System.out.println(url_det_pedido);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
@@ -234,6 +244,7 @@ public class ResumenPago extends AppCompatActivity {
 
                             Double totalFila = jsonObject1.getDouble("monto") + jsonObject1.getDouble("monto_iva");
                             gTotal = gTotal + totalFila;
+                            String.format("%.2f", gTotal);
 
                                             jsonObject1.getInt("id_fac_det_movimiento");
                             gNombreProd = jsonObject1.getString("nombre_producto");
@@ -245,6 +256,8 @@ public class ResumenPago extends AppCompatActivity {
                         sb2.append(gNombreProd + "        Cant. " + gCantidad + "    PRECIO $" + gPrecioUni);
                         sb2.append("\n");
                         sb2.append("\n");
+
+
 
                         try {
                             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
@@ -276,13 +289,12 @@ public class ResumenPago extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(getApplicationContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
                                 }
+
                             }
+
                         } catch (Exception e) {
                             Log.e("APP", "No se puede imprimir.", e);
                         }
-
-                        uploadDocument();
-                        encodePDF();
 
                         progressDialog.dismiss();
 
@@ -325,6 +337,7 @@ public class ResumenPago extends AppCompatActivity {
     private void uploadDocument() {
 
         Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF, Login.gIdPedido, Login.gIdCliente);
+        System.out.println("ID del pedido: " + Login.gIdPedido + " y ID del cliente: " + Login.gIdCliente);
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
@@ -341,6 +354,7 @@ public class ResumenPago extends AppCompatActivity {
     void encodePDF() {
         File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/" + Login.gIdPedido + " Examen.pdf")));
         Uri uri = Uri.fromFile(file);
+        System.out.println("URL: " + uri);
         try {
             InputStream inputStream = ResumenPago.this.getContentResolver().openInputStream(uri);
             byte[] pdfInBytes = new byte[inputStream.available()];

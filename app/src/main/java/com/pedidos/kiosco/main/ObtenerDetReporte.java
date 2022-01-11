@@ -43,7 +43,7 @@ public class ObtenerDetReporte extends AppCompatActivity {
         if (!granded) {
             requestPermissionForReadExtertalStorage();
         } else {
-            String urlPdf = "http://34.239.139.117/android/res/cliente/pedidos/Cliente"+ Login.gIdClienteReporte + "/" + Login.gIdPedidoReporte +" Examen.pdf";
+            String urlPdf = "http://34.239.139.117/android/kiosco/cliente/pedidos/Cliente"+ Login.gIdClienteReporte + "/" + Login.gIdPedidoReporte +" Examen.pdf";
             new RecibirPDFReportes(pdfView, progressBar).execute(urlPdf);
         }
     }

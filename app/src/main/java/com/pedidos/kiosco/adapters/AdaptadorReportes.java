@@ -23,6 +23,7 @@ import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.TicketDatos;
+import com.pedidos.kiosco.main.ObtenerDetReporte;
 import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.model.Reportes;
 import java.util.List;
@@ -60,7 +61,7 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
             Login.gIdPedidoReporte = listaReportes.get(posicion).getPedido();
             Login.gIdClienteReporte = listaReportes.get(posicion).getIdCliente();
 
-            //cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class));
+            cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class));
 
             TicketDatos.gTotal = 0.00;
 
