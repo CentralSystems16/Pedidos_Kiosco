@@ -49,7 +49,7 @@ public class ObtenerReportes extends AppCompatActivity {
 
         final ImageButton regresa = findViewById(R.id.regresarDatos);
         regresa.setOnClickListener(v -> {
-                startActivity(new Intent(getApplicationContext(), Principal.class));
+                startActivity(new Intent(getApplicationContext(), ObtenerEstados.class));
                 obtenerPedidosAct();
         });
 

@@ -1,25 +1,20 @@
 package com.pedidos.kiosco.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Environment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,28 +43,22 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.DetReporte;
-import com.pedidos.kiosco.other.AdapProdReport;
+import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.other.ContadorProductos;
 import com.pedidos.kiosco.pay.ResumenPago;
-import com.pedidos.kiosco.pdf.ResponsePOJO;
-import com.pedidos.kiosco.pdf.RetrofitClient;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import pl.droidsonroids.gif.GifImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TicketDatos extends Fragment {
 
@@ -221,7 +210,6 @@ public class TicketDatos extends Fragment {
                             nombreTicket.setText(gNombre);
                             jsonObject1.getString("fecha_creo");
                             email = jsonObject1.getString("email_cliente");
-                            numero = jsonObject1.getString("login_cliente");
                             sucursal = jsonObject1.getString("nombre_sucursal");
 
                         }

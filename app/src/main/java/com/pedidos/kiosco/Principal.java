@@ -47,8 +47,7 @@ public class Principal extends AppCompatActivity {
     }
 
     public void ejecutarServicio (String URL){
-
-        ProgressDialog progressDialog = new ProgressDialog(getApplicationContext(), R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();

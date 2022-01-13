@@ -1,24 +1,28 @@
-package com.pedidos.kiosco.other;
+package com.pedidos.kiosco.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.DetReporte;
+import com.pedidos.kiosco.other.ActualizarDetPedido;
+import com.pedidos.kiosco.other.ActualizarPedido;
+import com.pedidos.kiosco.other.EliminarDetPedido;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -120,6 +124,20 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
                             e.printStackTrace();
                         }
 
+            String actualizar_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMovimiento.php"
+                    + "?monto=" + AdapProdReport.monto
+                    + "&monto_iva=" + AdapProdReport.montoIva
+                    + "&id_prefactura=" + Login.gIdPedido;
+
+            String actualizar_url2 = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarDetMovimiento.php"
+                    + "?cantidad_producto=" + AdapProdReport.lNewCantProducto
+                    + "&monto=" + AdapProdReport.lNewDetMonto
+                    + "&monto_iva=" + AdapProdReport.lNewDetMontoIva
+                    + "&id_fac_det_movimiento=" + AdapProdReport.lidDetPedido;
+
+                        ejecutarServicio(actualizar_url);
+                        ejecutarServicio(actualizar_url2);
+
         });
 
         holder.btnMenos.setOnClickListener(v -> {
@@ -216,6 +234,17 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
     public int getItemCount() {
 
         return listaProdReport.size();
+    }
+
+    public void ejecutarServicio (String URL){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> {
+
+                },
+                error -> {});
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 
     public static class ProdReportViewHolder extends RecyclerView.ViewHolder {

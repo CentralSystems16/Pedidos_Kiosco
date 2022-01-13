@@ -131,9 +131,10 @@ public class ResumenPago extends AppCompatActivity {
             }
         });
 
+        obtenerMovimientos();
+
         Button pagar = findViewById(R.id.btnPagar);
         pagar.setOnClickListener(view -> {
-
 
                 ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                         + "?id_estado_prefactura=2"
@@ -146,7 +147,6 @@ public class ResumenPago extends AppCompatActivity {
                         +"&id_fac_movimiento="+Login.gIdMovimiento;
                 ejecutarServicio2(url);
 
-            obtenerMovimientos();
             obtenerDetMovimientos();
             encodePDF();
             uploadDocument();
@@ -246,22 +246,20 @@ public class ResumenPago extends AppCompatActivity {
                             gTotal = gTotal + totalFila;
                             String.format("%.2f", gTotal);
 
-                                            jsonObject1.getInt("id_fac_det_movimiento");
+                            jsonObject1.getInt("id_fac_det_movimiento");
                             gNombreProd = jsonObject1.getString("nombre_producto");
                             gCantidad = jsonObject1.getDouble("cantidad");
                             gPrecioUni =  jsonObject1.getDouble("precio_uni");
 
+                            sb2.append(gNombreProd + "                Cant. " + gCantidad + "    PRECIO $" + String.format("%.2f", gPrecioUni));
+                            sb2.append("\n");
+                            sb2.append("\n");
+
                         }
-
-                        sb2.append(gNombreProd + "        Cant. " + gCantidad + "    PRECIO $" + gPrecioUni);
-                        sb2.append("\n");
-                        sb2.append("\n");
-
-
 
                         try {
                             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
+                                ActivityCompat.requestPermissions(ResumenPago.this, new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
                             } else {
                                 BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
                                 if (connection != null) {
@@ -273,19 +271,19 @@ public class ResumenPago extends AppCompatActivity {
                                                             DisplayMetrics.DENSITY_LOW, getApplicationContext().getTheme())) + "</img>\n" +
                                                     "[L]\n" +
                                                     "[L]" + gFecha + "\n\n" +
-                                                    "[L]" + "Cliente: " + gNombre + "\n" +
                                                     "[C]================================\n" +
 
                                                     "[L]<b>"+ sb2.toString() +"</b>\n" +
 
                                                     "[C]--------------------------------\n" +
-                                                    "[L]TOTAL $" + gTotal + "\n" +
+                                                    "[L]TOTAL $" + String.format("%.2f",gTotal) + "\n" +
                                                     "[C]--------------------------------\n" +
                                                     "[C]<barcode type='ean13' height='10'>202105160005</barcode>\n" +
                                                     "[C]--------------------------------\n" +
                                                     "[C]Gracias por su compra :)\n";
 
                                     printer.printFormattedText(text);
+                                    System.out.println("Ticket: " + text);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
                                 }

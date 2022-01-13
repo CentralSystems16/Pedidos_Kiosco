@@ -63,7 +63,7 @@ protected String doInBackground (String...params){
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 
         String idProducto = String.valueOf(ObtenerProductos.gIdProducto);
-        String idFacMovimiento = String.valueOf(Login.gIdDetMovimiento);
+        String idFacMovimiento = String.valueOf(Login.gIdMovimiento);
         String tipoComprobante= "1";
         String cantidad = String.valueOf(gCount);
         String monto = String.valueOf(ObtenerProductos.gDetMonto);

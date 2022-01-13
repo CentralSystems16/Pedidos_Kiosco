@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

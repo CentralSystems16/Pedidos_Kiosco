@@ -2,14 +2,14 @@ package com.pedidos.kiosco.main;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
@@ -21,8 +21,11 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorProductos;
+import com.pedidos.kiosco.fragments.Categorias;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Productos;
+import com.pedidos.kiosco.other.ContadorProductos;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +55,15 @@ public class ObtenerProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_productos);
 
+        ImageButton backprod = findViewById(R.id.backProducts);
+        backprod.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.productos, new Categorias());
+            fr.commit();
+
+        });
+
         TextView buscador = findViewById(R.id.etBuscador);
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,7 +83,11 @@ public class ObtenerProductos extends AppCompatActivity {
         });
 
         carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), TicketDatos.class)));
+        carrito.setOnClickListener(view -> {
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.productos, new TicketDatos());
+            fr.commit();
+        });
 
         conejo = findViewById(R.id.conejo2);
         conejo.setVisibility(View.INVISIBLE);
@@ -80,6 +96,7 @@ public class ObtenerProductos extends AppCompatActivity {
         tvCantProductos = findViewById(R.id.tvCantProductos);
 
         tvCantProductos = findViewById(R.id.tvCantProductos);
+        new ContadorProductos.GetDataFromServerIntoTextView(getApplicationContext()).execute();
         tvCantProductos.setText(String.valueOf(formatoDecimal.format(gCount)));
 
         rvLista = findViewById(R.id.rvLista);
