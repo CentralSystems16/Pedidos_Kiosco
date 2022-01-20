@@ -38,10 +38,13 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnection
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.numbertoletter.Numero_a_Letra;
+import com.pedidos.kiosco.other.ContadorProductos;
+import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarMovimientos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
@@ -63,8 +66,9 @@ import retrofit2.Response;
 
 public class ResumenPago extends AppCompatActivity {
 
-    TextView cantidad, totalCompra, totalFinal, cambio;
+    TextView totalCompra, totalFinal, cambio;
     EditText etMoney;
+    public static TextView cantidad;
     public static Double money, change;
     DecimalFormat formatoDecimal = new DecimalFormat("#");
     Date d = new Date();
@@ -73,8 +77,8 @@ public class ResumenPago extends AppCompatActivity {
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
     String horaString = ho.format(d);
     String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
-    double gTotal, gCantidad, gPrecioUni;
-    int gIdFacMovimiento;
+    double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto;
+    int gIdFacMovimiento, noCaja;
     public static final int PERMISSION_BLUETOOTH = 1;
     StringBuilder sb1 = new StringBuilder("");
     private int REQ_PDF = 21;
@@ -93,9 +97,12 @@ public class ResumenPago extends AppCompatActivity {
                     1000);
         }
 
+        obtenerCaja();
+
         cantidad = findViewById(R.id.cantidad);
         totalCompra = findViewById(R.id.totalFinalPago);
         totalFinal = findViewById(R.id.totalDef);
+        new ContadorProductos2.GetDataFromServerIntoTextView(getApplicationContext()).execute();
         cantidad.setText(formatoDecimal.format(gCount));
         totalCompra.setText(String.format("%.2f",TicketDatos.gTotal));
         totalFinal.setText(String.format("%.2f", TicketDatos.gTotal));
@@ -121,8 +128,6 @@ public class ResumenPago extends AppCompatActivity {
                     if (etMoney != null && etMoney.length() > 0) {
 
                         change = Double.parseDouble(etMoney.getText().toString());
-                        String.format("%.2f", change);
-
                         money = Double.parseDouble(etMoney.getText().toString());
                         money = money - TicketDatos.gTotal;
                         cambio.setText(String.format("%.2f", money));
@@ -221,7 +226,9 @@ public class ResumenPago extends AppCompatActivity {
                             gNombre = jsonObject1.getString("nombre_cliente");
                             gFecha = jsonObject1.getString("fecha_creo");
                             sucursal = jsonObject1.getString("nombre_sucursal");
-
+                            exento = jsonObject1.getDouble("monto_exento");
+                            gravado = jsonObject1.getDouble("monto_gravado");
+                            noSujeto = jsonObject1.getDouble("monto_no_sujeto");
                         }
 
                         progressDialog.dismiss();
@@ -268,13 +275,14 @@ public class ResumenPago extends AppCompatActivity {
                             Double totalFila = jsonObject1.getDouble("monto") + jsonObject1.getDouble("monto_iva");
                             gTotal = gTotal + totalFila;
                             String.format("%.2f", gTotal);
-
                             jsonObject1.getInt("id_fac_det_movimiento");
                             gNombreProd = jsonObject1.getString("nombre_producto");
                             gCantidad = jsonObject1.getDouble("cantidad");
                             gPrecioUni =  jsonObject1.getDouble("precio_uni");
+                            Double total = gCantidad * gPrecioUni;
+                            gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gCantidad +  " " +gNombreProd + " $" + String.format("%.2f", gPrecioUni) + " $" + "gMonto" + " G");
+                            sb1.append(gCantidad +  " " +gNombreProd + " $" + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
                             sb1.append("\n");
                         }
 
@@ -295,34 +303,67 @@ public class ResumenPago extends AppCompatActivity {
                                                     this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logokiosko,
                                                             DisplayMetrics.DENSITY_LOW, getApplicationContext().getTheme())) + "</img>\n" +
                                                     "[L]\n" +
-                                                    "[C]" + "Dulces típicos la fiesta" + "\n" +
-                                                    "[C]" + "San Vicente" + "\n" +
+                                                    "[C]" + Splash.gNombre + "\n" +
+                                                    "[C]" + Splash.gDireccion + "\n" +
                                                     "[C]" + "Sucursal: " + sucursal + "\n" +
-                                                    "[C]" + "Teléfono: 7700-2123" + "\n" +
-                                                    "[C]" + "NRC: " + "NIT: " + "\n" +
-                                                    "[C]" + "Caja: 1 " + "Tiquete: " + Login.gIdMovimiento + "\n" +
+                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
+                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
+                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
                                                     "[C]" + "Atendio: " + Login.nombre + "\n" +
                                                     "[L]" + "Fecha: " + gFecha + "\n" +
                                                     "[C]================================\n" +
                                                     "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
                                                     "[C]================================\n" +
-                                                    "[L]" + sb1.toString() + "\n" +
+                                                    "[L]" + sb1.toString() +
                                                     "[R]" + "---------------------------" + "\n" +
                                                     "[R]" + "SubTotal $" + String.format("%.2f",gTotal) + "\n" +
-                                                    "[R]" + "Desc $0.00" + "\n" +
-                                                    "[R]" + "Exento $0.00" + "\n" +
-                                                    "[R]" + "Gravado $0.00" + "\n" +
-                                                    "[R]" + "Ventas no sujetas $0.00" + "\n" +
+                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
+                                                    "[R]" + "Exento $" + String.format("%.2f",exento) + "\n" +
+                                                    "[R]" + "Gravado $" + String.format("%.2f",gravado) + "\n" +
+                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
                                                     "[R]" + "---------------------------" + "\n" +
                                                     "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
-                                                    "[C]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
-                                                    "[R]" + "Recibido: " + "$"+ change + "\n" +
-                                                    "[R]" + "Cambio: " + cambio.getText().toString() + "\n\n" +
-                                                    "[L]" + "FB: Dulces típicos la fiesta" + "\n" +
+                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
+                                                    "[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
+                                                    "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
                                                     "[C]Gracias por su compra :)\n";
 
-                                    printer.printFormattedText(text);
-                                    System.out.println("Ticket: " + text);
+                                    final String text2 =
+                                                    "[L]\n" +
+                                                    "[C]" + Splash.gNombre + "\n" +
+                                                    "[C]" + Splash.gDireccion + "\n" +
+                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
+                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
+                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
+                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
+                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
+                                                    "[L]" + "Fecha: " + gFecha + "\n" +
+                                                    "[C]================================\n" +
+                                                    "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
+                                                    "[C]================================\n" +
+                                                    "[L]" + sb1.toString() +
+                                                    "[R]" + "---------------------------" + "\n" +
+                                                    "[R]" + "SubTotal $" + String.format("%.2f",gTotal) + "\n" +
+                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
+                                                    "[R]" + "Exento $" + String.format("%.2f",exento) + "\n" +
+                                                    "[R]" + "Gravado $" + String.format("%.2f",gravado) + "\n" +
+                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
+                                                    "[R]" + "---------------------------" + "\n" +
+                                                    "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
+                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
+                                                    "[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
+                                                    "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
+                                                    "[C]Gracias por su compra :)\n";
+
+                                    if (Splash.gImagen == 1) {
+                                        printer.printFormattedText(text);
+                                    }
+                                    else {
+                                        printer.printFormattedText(text2);
+                                    }
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
                                 }
@@ -340,6 +381,43 @@ public class ResumenPago extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, Throwable::printStackTrace
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void obtenerCaja(){
+
+        String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCaja.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Caja");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            noCaja = jsonObject1.getInt("no_caja");
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }, volleyError -> Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(

@@ -61,7 +61,10 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&fac_tipo_movimiento=1"
                 +"&monto_desc=" + "0.00"
                 +"&monto_pago=" + "0.00"
-                +"&monto_cambio=" + "0.00";
+                +"&monto_cambio=" + "0.00"
+                +"&monto_exento=" + "0.00"
+                +"&monto_gravado=" + "0.00"
+                +"&monto_no_sujeto=" + "0.00";
 
         System.out.println(registrar_url);
 
