@@ -85,12 +85,10 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
 
                             if (Login.gIdPedido == 0) {
                                 new InsertarPedido(context).execute();
-                                new InsertarMovimientos(context).execute();
                             }
 
                             try {
                                 new InsertarDetPedido(context).execute().get();
-                                new InsertarDetMovimientos(context).execute().get();
                             } catch (ExecutionException | InterruptedException e) {
                                 e.printStackTrace();
                             }

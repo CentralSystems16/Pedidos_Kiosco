@@ -29,7 +29,7 @@ import java.util.Locale;
 public class InsertarMovimientos extends AsyncTask<String, Void, String> {
 
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d'-'MMMM'-'yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
@@ -45,7 +45,7 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarMovimientos.php"
                 +"?id_cliente=" + Login.gIdCliente
-                +"&id_tipo_comprobante=1"
+                +"&id_tipo_comprobante=4"
                 +"&id_usuario=" + Login.gIdUsuario
                 +"&id_forma_pago=1"
                 +"&id_estado_comprobante=1"
@@ -54,7 +54,7 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_prefactura=" + Login.gIdPedido
                 +"&id_tipo_pago=1"
                 +"&fecha=" + "1/1/1"
-                +"&fecha_creo=" + fechacComplString + " a las " + horaString
+                +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
                 +"&monto=" + ObtenerProductos.gDetMonto
                 +"&monto_iva=" + ObtenerProductos.gDetMontoIva

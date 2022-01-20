@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="#539649">
+            android:background="#c6391e">
 
             <ImageButton
                 android:id="@+id/backArrow"

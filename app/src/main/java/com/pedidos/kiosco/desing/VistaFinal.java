@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.fragments.TicketDatos;;
+import com.pedidos.kiosco.fragments.TicketDatos;
 
 public class VistaFinal extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,6 +50,7 @@ public class VistaFinal extends AppCompatActivity implements View.OnClickListene
 
                 TicketDatos.gTotal = 0.00;
                 Login.gIdPedido = 0;
+                Login.gIdMovimiento = 0;
                 Intent i = new Intent(this, Principal.class);
                 startActivity(i);
 

@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -66,12 +67,12 @@ public class TicketDatos extends Fragment {
     RecyclerView rvProductos;
     AdapProdReport adaptador;
     List<DetReporte> listaProdReport;
-    GifImageView btnConfirmarEnviar;
+    ImageButton btnConfirmarEnviar;
     @SuppressLint("StaticFieldLeak")
     public static TextView totalFinal;
     public static Double gTotal = 0.00;
     public static String gNombre, sucursal;
-    String numero, email;
+    String email;
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
@@ -125,7 +126,7 @@ public class TicketDatos extends Fragment {
         fechaReporte.setText((fechacComplString));
         horaReporte.setText(horaString);
 
-        btnConfirmarEnviar = vista.findViewById(R.id.enviarPedido);
+        btnConfirmarEnviar = vista.findViewById(R.id.paleta);
         btnConfirmarEnviar.setOnClickListener(view -> {
             try {
                 createPDF();
@@ -178,8 +179,6 @@ public class TicketDatos extends Fragment {
                         anular.setEnabled(false);
                         progressDialog.dismiss();
                     }
-                    String url = "http://" + VariablesGlobales.host + "/android/LCB/cliente/scripts/scripts_php/eliminarPedido2.php" + "?id_prefactura=" + Login.gIdPedido;
-                    ejecutarServicio(url);
                 },
                 error -> progressDialog.dismiss());
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());

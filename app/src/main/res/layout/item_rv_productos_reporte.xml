@@ -72,7 +72,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="185dp"
             android:layout_marginTop="45dp"
-            android:backgroundTint="#795548"
+            android:backgroundTint="#c6391e"
             android:text="-"
             android:textColor="@color/white"
             android:textScaleX="2"
@@ -84,7 +84,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="225dp"
             android:layout_marginTop="45dp"
-            android:backgroundTint="#795548"
+            android:backgroundTint="#c6391e"
             android:text="+"
             android:textColor="@color/white"
             android:textScaleX="1"
@@ -93,11 +93,12 @@
         <ImageButton
             android:id="@+id/btnEliminar"
             android:layout_width="40dp"
-            android:layout_alignParentEnd="true"
             android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="#c6391e"
             android:background="@drawable/ic_baseline_delete_24" />
 
         <TextView

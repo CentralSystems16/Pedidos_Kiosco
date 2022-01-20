@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +20,7 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +41,9 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
 import com.pedidos.kiosco.fragments.TicketDatos;
+import com.pedidos.kiosco.numbertoletter.Numero_a_Letra;
+import com.pedidos.kiosco.other.InsertarDetMovimientos;
+import com.pedidos.kiosco.other.InsertarMovimientos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import org.json.JSONArray;
@@ -52,6 +56,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +65,7 @@ public class ResumenPago extends AppCompatActivity {
 
     TextView cantidad, totalCompra, totalFinal, cambio;
     EditText etMoney;
-    public static Double money;
+    public static Double money, change;
     DecimalFormat formatoDecimal = new DecimalFormat("#");
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
@@ -69,10 +74,12 @@ public class ResumenPago extends AppCompatActivity {
     String horaString = ho.format(d);
     String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
     double gTotal, gCantidad, gPrecioUni;
+    int gIdFacMovimiento;
     public static final int PERMISSION_BLUETOOTH = 1;
-    StringBuilder sb2 = new StringBuilder("");
+    StringBuilder sb1 = new StringBuilder("");
     private int REQ_PDF = 21;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +108,7 @@ public class ResumenPago extends AppCompatActivity {
         etMoney = findViewById(R.id.etMoney);
         cambio = findViewById(R.id.montoCambio);
 
+
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -111,6 +119,9 @@ public class ResumenPago extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     if (etMoney != null && etMoney.length() > 0) {
+
+                        change = Double.parseDouble(etMoney.getText().toString());
+                        String.format("%.2f", change);
 
                         money = Double.parseDouble(etMoney.getText().toString());
                         money = money - TicketDatos.gTotal;
@@ -131,28 +142,40 @@ public class ResumenPago extends AppCompatActivity {
             }
         });
 
-        obtenerMovimientos();
-
         Button pagar = findViewById(R.id.btnPagar);
         pagar.setOnClickListener(view -> {
 
-                ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
+            if (etMoney.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                new InsertarMovimientos(getApplicationContext()).execute();
+                try {
+
+                    new InsertarDetMovimientos(getApplicationContext()).execute().get();
+
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                obtenerMovimientos();
+                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                         + "?id_estado_prefactura=2"
                         + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
                         + "&id_prefactura=" + Login.gIdPedido);
 
-                String url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
-                        +"?monto_pago="+ etMoney.getText().toString()
-                        +"&monto_cambio=" + cambio.getText().toString()
-                        +"&id_fac_movimiento="+Login.gIdMovimiento;
+                String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
+                        + "?monto_pago=" + etMoney.getText().toString()
+                        + "&monto_cambio=" + cambio.getText().toString()
+                        + "&id_fac_movimiento=" + Login.gIdMovimiento;
                 ejecutarServicio2(url);
 
-            obtenerDetMovimientos();
-            encodePDF();
-            uploadDocument();
-
+                obtenerDetMovimientos();
+                encodePDF();
+                uploadDocument();
+            }
         });
-
     }
 
     public void ejecutarServicio (String URL){
@@ -184,7 +207,7 @@ public class ResumenPago extends AppCompatActivity {
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
+        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {
@@ -229,7 +252,7 @@ public class ResumenPago extends AppCompatActivity {
         System.out.println(url_det_pedido);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
+        @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
 
                 response -> {
 
@@ -250,12 +273,14 @@ public class ResumenPago extends AppCompatActivity {
                             gNombreProd = jsonObject1.getString("nombre_producto");
                             gCantidad = jsonObject1.getDouble("cantidad");
                             gPrecioUni =  jsonObject1.getDouble("precio_uni");
-
-                            sb2.append(gNombreProd + "                Cant. " + gCantidad + "    PRECIO $" + String.format("%.2f", gPrecioUni));
-                            sb2.append("\n");
-                            sb2.append("\n");
-
+                            gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
+                            sb1.append(gCantidad +  " " +gNombreProd + " $" + String.format("%.2f", gPrecioUni) + " $" + "gMonto" + " G");
+                            sb1.append("\n");
                         }
+
+                        Numero_a_Letra NumLetra = new Numero_a_Letra();
+                        String numero;
+                        numero = String.valueOf(gTotal);
 
                         try {
                             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
@@ -270,16 +295,30 @@ public class ResumenPago extends AppCompatActivity {
                                                     this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logokiosko,
                                                             DisplayMetrics.DENSITY_LOW, getApplicationContext().getTheme())) + "</img>\n" +
                                                     "[L]\n" +
-                                                    "[L]" + gFecha + "\n\n" +
+                                                    "[C]" + "Dulces típicos la fiesta" + "\n" +
+                                                    "[C]" + "San Vicente" + "\n" +
+                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
+                                                    "[C]" + "Teléfono: 7700-2123" + "\n" +
+                                                    "[C]" + "NRC: " + "NIT: " + "\n" +
+                                                    "[C]" + "Caja: 1 " + "Tiquete: " + Login.gIdMovimiento + "\n" +
+                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
+                                                    "[L]" + "Fecha: " + gFecha + "\n" +
                                                     "[C]================================\n" +
-
-                                                    "[L]<b>"+ sb2.toString() +"</b>\n" +
-
-                                                    "[C]--------------------------------\n" +
-                                                    "[L]TOTAL $" + String.format("%.2f",gTotal) + "\n" +
-                                                    "[C]--------------------------------\n" +
-                                                    "[C]<barcode type='ean13' height='10'>202105160005</barcode>\n" +
-                                                    "[C]--------------------------------\n" +
+                                                    "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
+                                                    "[C]================================\n" +
+                                                    "[L]" + sb1.toString() + "\n" +
+                                                    "[R]" + "---------------------------" + "\n" +
+                                                    "[R]" + "SubTotal $" + String.format("%.2f",gTotal) + "\n" +
+                                                    "[R]" + "Desc $0.00" + "\n" +
+                                                    "[R]" + "Exento $0.00" + "\n" +
+                                                    "[R]" + "Gravado $0.00" + "\n" +
+                                                    "[R]" + "Ventas no sujetas $0.00" + "\n" +
+                                                    "[R]" + "---------------------------" + "\n" +
+                                                    "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
+                                                    "[C]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
+                                                    "[R]" + "Recibido: " + "$"+ change + "\n" +
+                                                    "[R]" + "Cambio: " + cambio.getText().toString() + "\n\n" +
+                                                    "[L]" + "FB: Dulces típicos la fiesta" + "\n" +
                                                     "[C]Gracias por su compra :)\n";
 
                                     printer.printFormattedText(text);
@@ -291,7 +330,7 @@ public class ResumenPago extends AppCompatActivity {
                             }
 
                         } catch (Exception e) {
-                            Log.e("APP", "No se puede imprimir.", e);
+                            Log.e("APP", "No se puede imprimir, error: ", e);
                         }
 
                         progressDialog.dismiss();
@@ -310,6 +349,14 @@ public class ResumenPago extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
 
+    }
+
+    private static boolean band(){
+        if ( Math.random() > .5) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void ejecutarServicio2 (String URL){

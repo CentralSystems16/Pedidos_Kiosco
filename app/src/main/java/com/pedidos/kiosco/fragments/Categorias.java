@@ -48,7 +48,7 @@ public class Categorias extends Fragment {
         gato.setVisibility(View.INVISIBLE);
 
         rvListaCategorias = vista.findViewById(R.id.rvListaCategorias);
-        rvListaCategorias.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvListaCategorias.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         listaCategorias = new ArrayList<>();
 

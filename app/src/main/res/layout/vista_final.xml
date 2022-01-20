@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#539649">
+        android:background="#c6391e">
 
     <RelativeLayout
         android:gravity="center"
@@ -92,8 +92,8 @@
 
         <ImageButton
             android:id="@+id/homeEnd"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="40dp"
             android:background="@drawable/ic_baseline_home_24" />
