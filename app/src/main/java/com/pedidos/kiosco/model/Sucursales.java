@@ -5,13 +5,13 @@ public class Sucursales {
     String nomSucursal;
     int idSucursal;
 
-    public Sucursales(){
-
-    }
-
     public Sucursales(String nomSucursal, int idSucursal) {
         this.nomSucursal = nomSucursal;
         this.idSucursal = idSucursal;
+
+    }
+
+    public Sucursales() {
 
     }
 

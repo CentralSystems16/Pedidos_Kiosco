@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".productos.ModificarProductos"
+    android:background="@color/white"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MODIFICAR PRODUCTO"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            app:boxStrokeColor="#7D9E34"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etModifProd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="#9F807E7E"
+                android:textSize="12sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+    <TextView
+        android:text="Cargar imagen:"
+        android:layout_marginStart="30dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginStart="30dp"
+            android:layout_width="100dp"
+            android:src="@drawable/ic_menu_gallery"
+            android:layout_marginTop="10dp"
+            android:layout_height="100dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cargarImagenProd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CARGAR"
+        android:textSize="12sp"
+        android:backgroundTint="#7D9E34"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="80dp"
+        app:cornerRadius="15dp"/>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="Estado:"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            />
+
+    <Button
+        android:layout_marginStart="5dp"
+        android:id="@+id/btnActivoProducto"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#8800FF"
+        android:textColor="@color/white"
+        android:text="Activo" />
+
+    <Button
+        android:id="@+id/btnInactivoProducto"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#CB3234"
+        android:textColor="@color/white"
+        android:text="Inactivo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio"
+            app:boxStrokeColor="#7D9E34"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etModifPrec"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="#9F807E7E"
+                android:textSize="12sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="Cambiar categoría:"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:strokeWidth="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            app:strokeColor="#f4a71d"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="4dp">
+
+            <Spinner
+                android:id="@+id/spinnerCategoria"
+                android:layout_width="match_parent"
+                android:popupBackground="@color/white"
+                android:backgroundTint="@color/black"
+                android:layout_height="45dp"
+                android:padding="5dp"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGuardarProd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GUARDAR"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:backgroundTint="#7D9E34"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:cornerRadius="15dp"/>
+
+</LinearLayout>

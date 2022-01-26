@@ -7,6 +7,7 @@ import android.util.Log;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerProductos;
+import com.pedidos.kiosco.pay.ResumenPago;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -64,7 +65,8 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&monto_cambio=" + "0.00"
                 +"&monto_exento=" + "0.00"
                 +"&monto_gravado=" + "0.00"
-                +"&monto_no_sujeto=" + "0.00";
+                +"&monto_no_sujeto=" + "0.00"
+                +"&numero_comprobante=" + ResumenPago.no_comprobante;
 
         System.out.println(registrar_url);
 

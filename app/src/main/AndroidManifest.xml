@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".pay.AutFiscal"
+            android:exported="false" />
+        <activity
             android:name=".pay.ResumenPago"
             android:exported="false" />
         <activity
@@ -42,12 +45,30 @@
         <activity
             android:name=".desing.VistaFinal"
             android:exported="false" />
-        <activity android:name=".main.ObtenerReportes"
+        <activity
+            android:name=".main.ObtenerReportes"
             android:exported="false" />
-        <activity android:name=".main.ObtenerEstados"
+        <activity
+            android:name=".main.ObtenerEstados"
             android:exported="false" />
-        <activity android:name=".main.ObtenerDetReporte"
+        <activity
+            android:name=".main.ObtenerDetReporte"
             android:exported="false" />
+        <activity
+            android:name=".categorias.ModificarCategorias"
+            android:exported="false" />
+        <activity
+            android:name=".categorias.AgregarCategorias"
+            android:exported="false" />
+        <activity
+            android:name=".categorias.CategoriasInactivas"
+            android:exported="false" />
+        <activity android:name=".productos.AgregarProducto"
+            android:exported="false" />
+        <activity android:name=".productos.ModificarProductos"
+            android:exported="true" />
+        <activity android:name=".productos.ObtenerProductos"
+            android:exported="true" />
         <activity
             android:name=".Splash"
             android:exported="true">

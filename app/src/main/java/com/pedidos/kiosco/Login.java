@@ -23,6 +23,7 @@ public class Login extends AppCompatActivity {
             gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento,
             gIdPedidoReporte, gIdClienteReporte;
     public static String nombre, email, repeatContra, usuario, contra;
+    public static int gIdAutFiscal;
     EditText user, password;
 
     @Override

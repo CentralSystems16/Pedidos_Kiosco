@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentCategorias"
+    android:background="@color/white"
+    tools:context=".categorias.CatFragment">
+
+    <TextView
+        android:text="ADMINISTRAR CATEGORÍAS"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnCrearCat"
+        android:layout_marginTop="60dp"
+        android:layout_width="150dp"
+        android:layout_gravity="start"
+        android:backgroundTint="#CB3234"
+        android:text="Crear categoria"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnInactivas"
+        android:layout_marginTop="60dp"
+        android:layout_width="150dp"
+        android:layout_gravity="end"
+        android:backgroundTint="#CB3234"
+        android:text="Inactivas"
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListaCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp" />
+
+</FrameLayout>

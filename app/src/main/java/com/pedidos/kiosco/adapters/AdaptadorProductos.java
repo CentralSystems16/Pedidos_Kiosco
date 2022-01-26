@@ -16,10 +16,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerProductos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
@@ -27,6 +34,11 @@ import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarDetPedido;
 import com.pedidos.kiosco.other.InsertarMovimientos;
 import com.pedidos.kiosco.other.InsertarPedido;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;

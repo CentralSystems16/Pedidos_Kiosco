@@ -20,7 +20,6 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +42,6 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.numbertoletter.Numero_a_Letra;
-import com.pedidos.kiosco.other.ContadorProductos;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarMovimientos;
@@ -78,9 +76,10 @@ public class ResumenPago extends AppCompatActivity {
     String horaString = ho.format(d);
     String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto;
-    int gIdFacMovimiento, noCaja;
+    int gIdFacMovimiento, noCaja,  hasta;
     public static final int PERMISSION_BLUETOOTH = 1;
     StringBuilder sb1 = new StringBuilder("");
+    public static int no_comprobante;
     private int REQ_PDF = 21;
 
     @SuppressLint("DefaultLocale")
@@ -150,12 +149,14 @@ public class ResumenPago extends AppCompatActivity {
         Button pagar = findViewById(R.id.btnPagar);
         pagar.setOnClickListener(view -> {
 
+
             if (etMoney.getText().toString().equals("")){
                 Toast.makeText(getApplicationContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
             }
             else {
 
-                new InsertarMovimientos(getApplicationContext()).execute();
+                obtenerAutFiscal();
+
                 try {
 
                     new InsertarDetMovimientos(getApplicationContext()).execute().get();
@@ -194,7 +195,6 @@ public class ResumenPago extends AppCompatActivity {
                 response -> {
                     Login.gIdPedido = 0;
                     gCount = 0.00;
-                    startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
             progressDialog.dismiss();
                 },
                 volleyError -> progressDialog.dismiss()
@@ -236,6 +236,42 @@ public class ResumenPago extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                         progressDialog.dismiss();
+                    }
+                }, Throwable::printStackTrace
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void obtenerAutFiscal(){
+
+        System.out.println("Entro al metodo");
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?id_tipo_comprobante=4";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("AutFiscal");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            Login.gIdAutFiscal = jsonObject1.getInt("id_aut_fiscal");
+                            hasta = jsonObject1.getInt("hasta");
+                        }
+
+                        obtenerNoComprobante();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
                     }
                 }, Throwable::printStackTrace
         );
@@ -437,6 +473,55 @@ public class ResumenPago extends AppCompatActivity {
         }
     }
 
+    public void obtenerNoComprobante(){
+
+        String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php" + "?id_aut_fiscal=" + Login.gIdAutFiscal;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Comprobante");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            no_comprobante = jsonObject1.getInt("numero_comprobante")+1;
+
+                        }
+                        if (no_comprobante == 0){
+                            no_comprobante = 1;
+                        }
+
+                        if (no_comprobante <= hasta) {
+                            startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "La autorización fiscal ha finalizado", Toast.LENGTH_SHORT).show();
+                        }
+
+                        new InsertarMovimientos(getApplicationContext()).execute();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }, volleyError -> Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
+
+    }
+
     public void ejecutarServicio2 (String URL){
 
         ProgressDialog progressDialog = new ProgressDialog(ResumenPago.this, R.style.Custom);
@@ -460,7 +545,6 @@ public class ResumenPago extends AppCompatActivity {
     private void uploadDocument() {
 
         Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF, Login.gIdPedido, Login.gIdCliente);
-        System.out.println("ID del pedido: " + Login.gIdPedido + " y ID del cliente: " + Login.gIdCliente);
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
