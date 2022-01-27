@@ -1,22 +1,16 @@
 package com.pedidos.kiosco.pay;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.categorias.Categorias;
 import com.pedidos.kiosco.model.Sucursales;
-
 import org.json.JSONArray;
-
 import java.util.ArrayList;
-
 import cz.msebera.android.httpclient.Header;
 
 public class AutFiscal extends AppCompatActivity {

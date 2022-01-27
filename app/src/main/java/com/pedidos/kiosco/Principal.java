@@ -36,7 +36,7 @@ public class Principal extends AppCompatActivity {
     Boolean clicked = false;
     FloatingActionButton addButton, list, product, user;
 
-    public static int gIdEstadoCliente, gIdEstado;
+    public static int gIdEstadoCliente, gIdEstado, gIdEstadoFiscal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
