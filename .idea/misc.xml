@@ -22,7 +22,7 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_categorias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_dashboard.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_gallery.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_prod.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
@@ -34,6 +34,7 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_reportes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_reportes_fiscal.xml" value="0.55" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/login.xml" value="0.33" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_autorizacion.xml" value="0.55" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_categorias.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_productos.xml" value="0.33" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/nav_header_main.xml" value="0.33" />
@@ -45,7 +46,7 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_reportes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/obtener_reportes_fiscal.xml" value="0.55" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/opciones_soporte.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/principal.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/principal.xml" value="0.5" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/productos_inactivos.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/recycler_categoria.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/layout/recycler_productos.xml" value="0.36666666666666664" />

@@ -27,8 +27,10 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.main.ObtenerDetReporte;
 import com.pedidos.kiosco.main.ObtenerReportes;
+import com.pedidos.kiosco.main.ObtenerReportesFiscal;
 import com.pedidos.kiosco.model.Fiscal;
 import com.pedidos.kiosco.model.Reportes;
+import com.pedidos.kiosco.pay.ModificarAutorizacion;
 
 import java.util.List;
 
@@ -64,6 +66,8 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
 
         reportesViewHolder.editar.setOnClickListener(v -> {
 
+            ObtenerReportesFiscal.idAutFiscal = listaReportes.get(posicion).getIdAutFiscal();
+            cContext.startActivity(new Intent(cContext, ModificarAutorizacion.class));
 
         });
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dulces Tipicos La Fiesta</string>
+    <string name="app_name">La Chicharroneria Mix</string>
     <string name="title_activity_principal">Principal</string>
     <string name="title_home">Home</string>
     <string name="title_category">Categorias</string>
@@ -14,7 +14,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

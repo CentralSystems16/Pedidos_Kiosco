@@ -3,9 +3,7 @@ package com.pedidos.kiosco;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,9 +20,7 @@ import com.pedidos.kiosco.fragments.Home;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
 import com.pedidos.kiosco.other.MiPersona;
-import com.pedidos.kiosco.pay.AutFiscal;
 import com.pedidos.kiosco.productos.ProdFragment;
-
 import java.util.concurrent.ExecutionException;
 
 public class Principal extends AppCompatActivity {
@@ -36,7 +32,7 @@ public class Principal extends AppCompatActivity {
     Boolean clicked = false;
     FloatingActionButton addButton, list, product, user;
 
-    public static int gIdEstadoCliente, gIdEstado, gIdEstadoFiscal;
+    public static int gIdEstadoCliente, gIdEstado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,44 +45,29 @@ public class Principal extends AppCompatActivity {
         toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
 
         addButton = findViewById(R.id.floatingActionButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddButtonClickListener();
-                startActivity(new Intent(getApplicationContext(), AutFiscal.class));
-            }
-        });
+        addButton.setOnClickListener(view -> onAddButtonClickListener());
 
         list = findViewById(R.id.floatingActionButton2);
-        list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        list.setOnClickListener(view -> {
 
-                FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new CatFragment());
-                fr.commit();
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CatFragment());
+            fr.commit();
 
-            }
         });
 
         product = findViewById(R.id.floatingActionButton3);
-        product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        product.setOnClickListener(view -> {
 
-                FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new ProdFragment());
-                fr.commit();
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ProdFragment());
+            fr.commit();
 
-            }
         });
 
         user = findViewById(R.id.floatingActionButton4);
-        user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        user.setOnClickListener(view -> {
 
-            }
         });
 
         if (Login.gIdCliente == 0) {

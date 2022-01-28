@@ -67,9 +67,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btnPedidos"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:backgroundTint="#c6391e"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:backgroundTint="#E26C5E"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="20dp">
@@ -80,13 +80,13 @@
             android:text="Hacer un pedido"
             android:textColor="@color/white"
             android:fontFamily="@font/rabits"
-            android:textSize="20sp"
+            android:textSize="13sp"
             android:gravity="center"
             android:padding="5dp"/>
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|end"
             android:src="@drawable/pedidos" />
 
@@ -94,11 +94,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnVerPedidos"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="#c6391e"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:backgroundTint="#9DD8FA"
             android:clickable="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:focusable="true"
             app:cardCornerRadius="20dp">
 
@@ -108,15 +108,43 @@
                 android:text="Ver pedidos"
                 android:textColor="@color/white"
                 android:fontFamily="@font/rabits"
-                android:textSize="20sp"
+                android:textSize="13sp"
                 android:gravity="center"
-                android:layout_marginTop="20dp"/>
+                android:padding="10dp"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom|end"
                 android:src="@drawable/ordenes" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnFiscal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:backgroundTint="#BD8BEA"
+            android:clickable="true"
+            android:layout_marginStart="5dp"
+            android:focusable="true"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Crear autorización"
+                android:textColor="@color/white"
+                android:fontFamily="@font/rabits"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/activo" />
 
         </androidx.cardview.widget.CardView>
 

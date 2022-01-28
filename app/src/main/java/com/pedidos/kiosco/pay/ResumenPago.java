@@ -157,14 +157,6 @@ public class ResumenPago extends AppCompatActivity {
 
                 obtenerAutFiscal();
 
-                try {
-
-                    new InsertarDetMovimientos(getApplicationContext()).execute().get();
-
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 obtenerMovimientos();
                 ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                         + "?id_estado_prefactura=2"
@@ -475,7 +467,9 @@ public class ResumenPago extends AppCompatActivity {
 
     public void obtenerNoComprobante(){
 
-        String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php" + "?id_aut_fiscal=" + Login.gIdAutFiscal;
+        String URL_REPORTES = "http://" + VariablesGlobales.host +
+                "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php"
+                + "?id_aut_fiscal=" + Login.gIdAutFiscal;
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -498,13 +492,19 @@ public class ResumenPago extends AppCompatActivity {
                         }
 
                         if (no_comprobante <= hasta) {
+                            new InsertarMovimientos(getApplicationContext()).execute();
+                            try {
+
+                                new InsertarDetMovimientos(getApplicationContext()).execute().get();
+
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "La autorización fiscal ha finalizado", Toast.LENGTH_SHORT).show();
                         }
-
-                        new InsertarMovimientos(getApplicationContext()).execute();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

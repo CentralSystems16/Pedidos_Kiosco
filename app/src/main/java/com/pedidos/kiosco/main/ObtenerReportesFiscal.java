@@ -30,6 +30,7 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
     RecyclerView rvLista;
     ArrayList<Fiscal> reportes;
     AdaptadorReportesFiscal adaptador;
+    public static int idAutFiscal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepClientes.php" + "?activo=" + "1" + "&id_usuario=" + "1";
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepClientes.php" + "?activo=" + ObtenerEstadoFiscal.fiscalActivo + "&id_usuario=" + "3";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {
@@ -80,6 +81,8 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
                                             jsonObject1.getString("tipo_comprobante"),
                                             jsonObject1.getString("nombre_usuario"),
                                             jsonObject1.getString("nombre_caja"),
+                                            jsonObject1.getString("nombre_sucursal"),
+                                            jsonObject1.getInt("id_aut_fiscal"),
                                             jsonObject1.getString("serie"),
                                             jsonObject1.getString("fecha_autorizacion")));
                                     }

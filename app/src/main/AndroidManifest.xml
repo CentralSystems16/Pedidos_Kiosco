@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".pay.ModificarAutorizacion"
+            android:exported="false" />
+        <activity
             android:name=".main.ObtenerEstadoFiscal"
             android:exported="false" />
         <activity
@@ -75,8 +78,8 @@
         <activity
             android:name=".productos.ObtenerProductos"
             android:exported="false" />
-
-        <activity android:name=".main.ObtenerReportesFiscal"
+        <activity
+            android:name=".main.ObtenerReportesFiscal"
             android:exported="false" />
         <activity
             android:name=".Splash"

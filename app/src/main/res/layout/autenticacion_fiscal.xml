@@ -315,7 +315,7 @@
             android:textSize="15sp" />
 
         <EditText
-            android:id="@+id/etNumFilas"
+            android:id="@+id/editFilas"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black" />
@@ -338,7 +338,7 @@
             android:textSize="15sp" />
 
         <EditText
-            android:id="@+id/tvFechaFiscal"
+            android:id="@+id/editFecha"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black" />
@@ -346,7 +346,7 @@
     </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegistrarUsuario"
+                android:id="@+id/btnRegistrarFiscal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="GUARDAR"
