@@ -1,16 +1,11 @@
 package com.pedidos.kiosco.other;
 
-import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.main.ObtenerProductos;
-import com.pedidos.kiosco.pay.ResumenPago;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -31,14 +26,14 @@ public class InsertarDetMovimientos extends AsyncTask<String, Void, String> {
 
     public static boolean exitoInsertProd= false;
 
-private final WeakReference<Context> context;
+    private final WeakReference<Context> context;
 
-public InsertarDetMovimientos(Context context) {
+    public InsertarDetMovimientos(Context context) {
     this.context = new WeakReference<>(context);
 }
 
-@SuppressLint("WrongThread")
-protected String doInBackground (String...params){
+    @SuppressLint("WrongThread")
+    protected String doInBackground (String...params){
 
     String registrar_url = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/insertarDetMovimiento.php"
             +"?id_fac_movimiento=" + Login.gIdMovimiento

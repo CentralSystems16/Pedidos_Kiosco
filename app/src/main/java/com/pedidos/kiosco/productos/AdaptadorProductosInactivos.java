@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.productos;
 
 import static com.pedidos.kiosco.productos.ModificarProductos.gEstadoProd;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-
 import java.util.ArrayList;
 import java.util.List;
 

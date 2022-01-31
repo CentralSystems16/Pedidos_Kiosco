@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.pay;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +40,7 @@ import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
 import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.numbertoletter.Numero_a_Letra;
+import com.pedidos.kiosco.utils.Numero_a_Letra;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarMovimientos;
@@ -57,7 +56,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -156,12 +154,7 @@ public class ResumenPago extends AppCompatActivity {
             else {
 
                 obtenerAutFiscal();
-
                 obtenerMovimientos();
-                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
-                        + "?id_estado_prefactura=2"
-                        + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
-                        + "&id_prefactura=" + Login.gIdPedido);
 
                 String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
                         + "?monto_pago=" + etMoney.getText().toString()
@@ -185,7 +178,6 @@ public class ResumenPago extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
-                    Login.gIdPedido = 0;
                     gCount = 0.00;
             progressDialog.dismiss();
                 },
@@ -242,7 +234,6 @@ public class ResumenPago extends AppCompatActivity {
 
     public void obtenerAutFiscal(){
 
-        System.out.println("Entro al metodo");
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?id_tipo_comprobante=4";
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
@@ -310,7 +301,7 @@ public class ResumenPago extends AppCompatActivity {
                             Double total = gCantidad * gPrecioUni;
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gCantidad +  " " +gNombreProd + " $" + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
+                            sb1.append(gNombreProd+"\n" + " $" + gCantidad +  " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
                             sb1.append("\n");
                         }
 
@@ -339,8 +330,6 @@ public class ResumenPago extends AppCompatActivity {
                                                     "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
                                                     "[C]" + "Atendio: " + Login.nombre + "\n" +
                                                     "[L]" + "Fecha: " + gFecha + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
                                                     "[C]================================\n" +
                                                     "[L]" + sb1.toString() +
                                                     "[R]" + "---------------------------" + "\n" +
@@ -471,6 +460,8 @@ public class ResumenPago extends AppCompatActivity {
                 "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php"
                 + "?id_aut_fiscal=" + Login.gIdAutFiscal;
 
+        System.out.println(URL_REPORTES);
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
@@ -487,22 +478,26 @@ public class ResumenPago extends AppCompatActivity {
                             no_comprobante = jsonObject1.getInt("numero_comprobante")+1;
 
                         }
+                        System.out.println("Numero de comprobante: " + no_comprobante);
                         if (no_comprobante == 0){
                             no_comprobante = 1;
                         }
 
                         if (no_comprobante <= hasta) {
                             new InsertarMovimientos(getApplicationContext()).execute();
-                            try {
-
-                                new InsertarDetMovimientos(getApplicationContext()).execute().get();
-
-                            } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            new InsertarDetMovimientos(getApplicationContext()).execute();
+                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
+                                    + "?id_estado_prefactura=2"
+                                    + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
+                                    + "&id_prefactura=" + Login.gIdPedido);
                             startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
                         }
                         else {
+
+                            String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
+                                    + "?id_aut_fiscal=" + Login.gIdAutFiscal;
+                            ejecutarServicio(url);
+
                             Toast.makeText(getApplicationContext(), "La autorización fiscal ha finalizado", Toast.LENGTH_SHORT).show();
                         }
 

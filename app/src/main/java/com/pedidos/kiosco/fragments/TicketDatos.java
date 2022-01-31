@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,7 +46,6 @@ import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.other.ContadorProductos;
 import com.pedidos.kiosco.pay.ResumenPago;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

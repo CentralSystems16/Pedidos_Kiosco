@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +68,7 @@ public class ObtenerReportes extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepClientes.php" + "?id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepPrefactura.php" + "?id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         System.out.println(URL_REPORTES);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,

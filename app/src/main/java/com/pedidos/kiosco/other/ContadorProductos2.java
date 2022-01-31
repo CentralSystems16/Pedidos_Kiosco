@@ -3,12 +3,9 @@ package com.pedidos.kiosco.other;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerProductos;
 import com.pedidos.kiosco.pay.ResumenPago;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -17,7 +14,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 

@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -15,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportesFiscal;
@@ -41,9 +40,9 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
         TextView orden = findViewById(R.id.orden);
         orden.setText(ObtenerEstados.estadosNombre);
 
-        final ImageButton regresa = findViewById(R.id.regresarDatos);
+        final ImageButton regresa = findViewById(R.id.regresarDatosFiscal);
         regresa.setOnClickListener(v -> {
-                startActivity(new Intent(getApplicationContext(), ObtenerEstados.class));
+                startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
         });
 
         rvLista = findViewById(R.id.rvListaReportes);

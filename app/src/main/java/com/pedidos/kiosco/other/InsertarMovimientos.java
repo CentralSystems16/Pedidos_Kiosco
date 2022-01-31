@@ -51,7 +51,7 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_forma_pago=1"
                 +"&id_estado_comprobante=1"
                 +"&id_sucursal=" + Login.gIdSucursal
-                +"&id_aut_fiscal=1"
+                +"&id_aut_fiscal=" + Login.gIdAutFiscal
                 +"&id_prefactura=" + Login.gIdPedido
                 +"&id_tipo_pago=1"
                 +"&fecha=" + "1/1/1"

@@ -207,7 +207,7 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
 
                 //if(EliminarDetPedido.exitoDeleteProd == true) {
 
-                Double newSubTotal = TicketDatos.gTotal - lDetMontoFinal;
+                double newSubTotal = TicketDatos.gTotal - lDetMontoFinal;
 
                 TicketDatos.gTotal = TicketDatos.gTotal - lDetMontoFinal;
 

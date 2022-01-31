@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.productos;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 public class Productos implements Serializable {

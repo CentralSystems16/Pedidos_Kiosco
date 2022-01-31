@@ -18,7 +18,6 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.model.Estados;
-
 import java.util.List;
 
 public class AdaptadorEstados extends RecyclerView.Adapter<AdaptadorEstados.EstadosViewHolder> {
@@ -89,13 +88,10 @@ public class AdaptadorEstados extends RecyclerView.Adapter<AdaptadorEstados.Esta
         Principal.gIdEstado = listaEstados.get(posicion).getIdEstado();
         Glide.with(cContext).load(estados.getImgEstado()).into(holder.imageView);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
-                ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
-                cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
+            ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
+            cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
         });
     }
 

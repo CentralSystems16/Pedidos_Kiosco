@@ -17,7 +17,7 @@
         android:background="#c6391e">
 
         <ImageButton
-            android:id="@+id/regresara"
+            android:id="@+id/regresaraPrincipal"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"

@@ -25,7 +25,6 @@ import com.pedidos.kiosco.fragments.Categorias;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

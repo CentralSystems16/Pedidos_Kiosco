@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
+import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Sucursales;
 import org.json.JSONArray;
 import java.text.ParseException;
@@ -65,6 +67,14 @@ public class AutFiscal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.autenticacion_fiscal);
+
+        ImageButton agregar = findViewById(R.id.agregar);
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
+            }
+        });
 
         desde = findViewById(R.id.etDesde);
         hasta = findViewById(R.id.etHasta);
@@ -128,25 +138,18 @@ public class AutFiscal extends AppCompatActivity {
             }
         };
 
-        continuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (desde.getText().toString().equals("") || hasta.getText().toString().equals("") || serie.getText().toString().equals("") || autorizacion.getText().toString().equals("")
-                    || resolucion.getText().toString().equals("") || numeroFilas.getText().toString().equals("") || mDisplayDate.getText().toString().equals("")){
+        continuar.setOnClickListener(view -> {
+            if (desde.getText().toString().equals("") || hasta.getText().toString().equals("") || serie.getText().toString().equals("") || autorizacion.getText().toString().equals("")
+                || resolucion.getText().toString().equals("") || numeroFilas.getText().toString().equals("") || mDisplayDate.getText().toString().equals("")){
 
-                    Toast.makeText(getApplicationContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
-
-                }
-
-                else if (spCaja.getSelectedItemPosition() == 0 || spComprobante.getSelectedItemPosition() == 0 || spSucursal.getSelectedItemPosition() == 0){
-                    Toast.makeText(getApplicationContext(), "Seleccione una opción", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
-                    ejecutarServicio();
-                }
+                Toast.makeText(getApplicationContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
 
             }
+
+            else {
+                ejecutarServicio();
+            }
+
         });
 
     }
@@ -340,14 +343,17 @@ public class AutFiscal extends AppCompatActivity {
                 params.put("id_tipo_comprobante", comprobante);
                 params.put("id_usuario", String.valueOf(Login.gIdUsuario));
 
-                System.out.println("Parametros: " + params);
-
                 return params;
             }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(request);
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 

@@ -2,9 +2,12 @@ package com.pedidos.kiosco.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.pay.AutFiscal;
 
@@ -16,6 +19,14 @@ public class ObtenerEstadoFiscal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.obtener_estado_fiscal);
+
+        ImageButton regresar = findViewById(R.id.regresaraPrincipal);
+        regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Principal.class));
+            }
+        });
 
         FloatingActionButton addButton = findViewById(R.id.floatingFiscal);
         addButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AutFiscal.class)));
@@ -34,4 +45,10 @@ public class ObtenerEstadoFiscal extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

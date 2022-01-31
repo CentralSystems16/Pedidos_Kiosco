@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +20,7 @@ import com.pedidos.kiosco.fragments.Categorias;
 import com.pedidos.kiosco.fragments.Home;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
+import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.other.MiPersona;
 import com.pedidos.kiosco.productos.ProdFragment;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +32,7 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    FloatingActionButton addButton, list, product, user;
+    FloatingActionButton addButton, list, product, user, fiscal;
 
     public static int gIdEstadoCliente, gIdEstado;
 
@@ -45,6 +47,10 @@ public class Principal extends AppCompatActivity {
         toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
 
         addButton = findViewById(R.id.floatingActionButton);
+        if(Login.cargo == 3 || Login.cargo == 4){
+            addButton.setVisibility(View.GONE);
+        }
+
         addButton.setOnClickListener(view -> onAddButtonClickListener());
 
         list = findViewById(R.id.floatingActionButton2);
@@ -68,6 +74,11 @@ public class Principal extends AppCompatActivity {
         user = findViewById(R.id.floatingActionButton4);
         user.setOnClickListener(view -> {
 
+        });
+
+        fiscal = findViewById(R.id.floatingActionButton5);
+        fiscal.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
         });
 
         if (Login.gIdCliente == 0) {
@@ -103,12 +114,14 @@ public class Principal extends AppCompatActivity {
             list.startAnimation(fromBottom);
             product.startAnimation(fromBottom);
             user.startAnimation(fromBottom);
+            fiscal.startAnimation(fromBottom);
             addButton.startAnimation(rotateOpen);
         }
         else {
             list.startAnimation(toBottom);
             product.startAnimation(toBottom);
             user.startAnimation(toBottom);
+            fiscal.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
         }
         
@@ -120,11 +133,13 @@ public class Principal extends AppCompatActivity {
             list.setVisibility(View.VISIBLE);
             product.setVisibility(View.VISIBLE);
             user.setVisibility(View.VISIBLE);
+            fiscal.setVisibility(View.VISIBLE);
         }
         else {
             list.setVisibility(View.INVISIBLE);
             product.setVisibility(View.INVISIBLE);
             user.setVisibility(View.INVISIBLE);
+            fiscal.setVisibility(View.INVISIBLE);
         }
 
     }

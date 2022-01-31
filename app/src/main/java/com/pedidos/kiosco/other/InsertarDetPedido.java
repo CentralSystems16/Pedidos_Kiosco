@@ -25,15 +25,15 @@ import java.nio.charset.StandardCharsets;
 
 public class InsertarDetPedido extends AsyncTask<String, Void, String> {
 
-public static boolean exitoInsertProd= false;
-private final WeakReference<Context> context;
+    public static boolean exitoInsertProd= false;
+    private final WeakReference<Context> context;
 
-public InsertarDetPedido (Context context) {
+    public InsertarDetPedido (Context context) {
     this.context = new WeakReference<>(context);
 }
 
-@SuppressLint("WrongThread")
-protected String doInBackground (String...params){
+    @SuppressLint("WrongThread")
+    protected String doInBackground (String...params){
 
     Login.gIdFacDetPedido = 0;
 
@@ -69,7 +69,6 @@ protected String doInBackground (String...params){
                 + "&" + URLEncoder.encode("precio_venta", "UTF-8") + "=" + URLEncoder.encode(precioVenta, "UTF-8")
                 + "&" + URLEncoder.encode("monto", "UTF-8") + "=" + URLEncoder.encode(monto, "UTF-8")
                 + "&" + URLEncoder.encode("monto_iva", "UTF-8") + "=" + URLEncoder.encode(montoIva, "UTF-8");
-        ;
 
         bufferedWriter.write(data);
         bufferedWriter.flush();

@@ -19,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.model.Sucursales;
-
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;

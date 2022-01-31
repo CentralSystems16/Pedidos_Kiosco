@@ -19,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -32,7 +31,7 @@ import org.json.JSONObject;
 public class Home extends Fragment {
 
     private SliderLayout sliderLayout;
-    CardView hacerPedido, verPedido, fiscal;
+    CardView hacerPedido, verPedido;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,23 +48,24 @@ public class Home extends Fragment {
         obtenerPedidosAct();
         obtenerPedidosAct2();
 
-        fiscal = view.findViewById(R.id.btnFiscal);
+        //fiscal = view.findViewById(R.id.btnFiscal);
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
-        fiscal.setOnClickListener(new View.OnClickListener() {
+        /*fiscal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ObtenerEstadoFiscal.class));
+
             }
-        });
+        });*/
 
         hacerPedido.setOnClickListener(view1 -> {
 
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new Categorias());
             fr.commit();
+            Login.gIdPedido = 0;
 
         });
 

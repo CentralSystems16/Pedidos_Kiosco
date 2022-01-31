@@ -9,29 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.main.ObtenerDetReporte;
-import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.main.ObtenerReportesFiscal;
 import com.pedidos.kiosco.model.Fiscal;
-import com.pedidos.kiosco.model.Reportes;
 import com.pedidos.kiosco.pay.ModificarAutorizacion;
-
 import java.util.List;
 
 public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorReportesFiscal.ReportesViewHolder> {

@@ -1,11 +1,8 @@
 package com.pedidos.kiosco.categorias;
 
 import static com.pedidos.kiosco.categorias.ModificarCategorias.gEstadoAct;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-
 import java.util.List;
 
 public class AdaptadorCategoriasInvalidas extends RecyclerView.Adapter<AdaptadorCategoriasInvalidas.CategoriaViewHolder> {

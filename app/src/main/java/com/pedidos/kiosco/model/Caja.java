@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.pay;
+package com.pedidos.kiosco.model;
 
 public class Caja {
 

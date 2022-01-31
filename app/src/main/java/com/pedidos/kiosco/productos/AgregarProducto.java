@@ -21,7 +21,6 @@ import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
