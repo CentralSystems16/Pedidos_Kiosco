@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".main.ObtenerMovimientos"
+            android:exported="false" />
+        <activity
             android:name=".other.Ayuda"
             android:exported="false" />
         <activity

@@ -14,8 +14,7 @@
         android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:layout_alignParentTop="true"
-        android:background="#C91DCBD1" />
+        android:layout_alignParentTop="true"/>
 
     <RelativeLayout
         android:id="@+id/linear1"
@@ -172,14 +171,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
+            android:id="@+id/cardViewRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:strokeWidth="1dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:layout_marginStart="40dp"
-            app:strokeColor="#C91DCBD1"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="4dp">
 
@@ -209,7 +207,6 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="#C91DCBD1"
             android:text="REGISTRARSE"
             android:textColor="@color/white"
             android:textSize="12sp"

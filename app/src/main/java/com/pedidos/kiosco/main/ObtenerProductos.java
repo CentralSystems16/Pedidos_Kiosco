@@ -182,4 +182,9 @@ public class ObtenerProductos extends AppCompatActivity {
         adaptador.filtrar(filtrarLista);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

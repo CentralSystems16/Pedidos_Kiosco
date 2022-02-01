@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.main.ObtenerReportesFiscal;
 import com.pedidos.kiosco.model.Caja;
+import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +36,11 @@ import cz.msebera.android.httpclient.Header;
 public class ModificarAutorizacion extends AppCompatActivity {
 
     String desde, hasta, serie, autorizacion, resolucion, filas, fecha;
-    int rgButton;
     EditText desdeet, hastaet, serieet, autorizacionet, resolucionet, filaset, fechaet;
-    RadioGroup activoEdit;
     RadioButton activo, inactivo;
     Button btnActivo, btnInactivo;
 
-    int gEstadoProd;
+    int gEstadoProd = 1;
 
     private AsyncHttpClient cliente;
     private AsyncHttpClient cliente2;
@@ -67,12 +65,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
         setContentView(R.layout.modificar_autorizacion);
 
         regresar = findViewById(R.id.returnmodif);
-        regresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ObtenerReportesFiscal.class));
-            }
-        });
+        regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerReportesFiscal.class)));
 
         cliente = new AsyncHttpClient();
         cliente2 = new AsyncHttpClient();
@@ -266,7 +259,6 @@ public class ModificarAutorizacion extends AppCompatActivity {
     public void getInfoUser() {
 
         String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerFiscal.php" + "?id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
-
         ProgressDialog progressDialog = new ProgressDialog(ModificarAutorizacion.this, R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);

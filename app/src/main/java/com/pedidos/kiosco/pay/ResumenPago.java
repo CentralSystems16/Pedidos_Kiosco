@@ -478,7 +478,7 @@ public class ResumenPago extends AppCompatActivity {
                             no_comprobante = jsonObject1.getInt("numero_comprobante")+1;
 
                         }
-                        System.out.println("Numero de comprobante: " + no_comprobante);
+
                         if (no_comprobante == 0){
                             no_comprobante = 1;
                         }

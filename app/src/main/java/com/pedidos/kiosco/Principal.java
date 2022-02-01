@@ -1,10 +1,16 @@
 package com.pedidos.kiosco;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -47,6 +53,7 @@ public class Principal extends AppCompatActivity {
         toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
 
         addButton = findViewById(R.id.floatingActionButton);
+        addButton.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         if(Login.cargo == 3 || Login.cargo == 4){
             addButton.setVisibility(View.GONE);
         }
@@ -54,6 +61,7 @@ public class Principal extends AppCompatActivity {
         addButton.setOnClickListener(view -> onAddButtonClickListener());
 
         list = findViewById(R.id.floatingActionButton2);
+        list.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         list.setOnClickListener(view -> {
 
             FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
@@ -63,6 +71,7 @@ public class Principal extends AppCompatActivity {
         });
 
         product = findViewById(R.id.floatingActionButton3);
+        product.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         product.setOnClickListener(view -> {
 
             FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
@@ -72,11 +81,13 @@ public class Principal extends AppCompatActivity {
         });
 
         user = findViewById(R.id.floatingActionButton4);
+        user.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         user.setOnClickListener(view -> {
 
         });
 
         fiscal = findViewById(R.id.floatingActionButton5);
+        fiscal.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         fiscal.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
         });
@@ -97,6 +108,7 @@ public class Principal extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        bottomNavigationView.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new Home()).commit();
 
@@ -182,4 +194,10 @@ public class Principal extends AppCompatActivity {
 
     return  true;
     };
+
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

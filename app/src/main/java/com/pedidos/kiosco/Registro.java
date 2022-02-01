@@ -1,21 +1,27 @@
 package com.pedidos.kiosco;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.model.Sucursales;
@@ -39,6 +45,12 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
 
+        RelativeLayout relativeLayout = findViewById(R.id.linear2);
+        relativeLayout.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro = findViewById(R.id.cardViewRegistro);
+        registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
         politica = findViewById(R.id.cbPolitica);
 
         cliente = new AsyncHttpClient();
@@ -46,6 +58,7 @@ public class Registro extends AppCompatActivity {
         llenarSpinner();
 
         Button botonRegistrar = findViewById(R.id.btnRegistro);
+        botonRegistrar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         regPhoneNo = findViewById(R.id.telefono);
         pas = findViewById(R.id.pass);
         nom = findViewById(R.id.nombre);

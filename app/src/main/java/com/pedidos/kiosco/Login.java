@@ -1,18 +1,28 @@
 package com.pedidos.kiosco;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gImagenSplah;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,15 +30,26 @@ public class Login extends AppCompatActivity {
 
     public static int gIdCliente, cargo, gIdUsuario, gVerificacion, gIdCategoria,
             gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento,
-            gIdPedidoReporte, gIdClienteReporte;
+            gIdPedidoReporte, gIdClienteReporte, gIdAutFiscal;
+
     public static String nombre, email, repeatContra, usuario, contra;
-    public static int gIdAutFiscal;
+
     EditText user, password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        LinearLayout linearLayout = findViewById(R.id.linearLogin);
+        linearLayout.setBackgroundColor(Color.rgb(244, 57, 44));
+
+        ImageView logoLogin = findViewById(R.id.imageViewLogin);
+        TextView txtBinevenido = findViewById(R.id.tctBienvenido);
+
+        Glide.with(Login.this).load(gImagenSplah).into(logoLogin);
+        txtBinevenido.setTextColor(Color.rgb(gRed, gGreen, gBlue));
 
         user = findViewById(R.id.user);
         password = findViewById(R.id.pass);
@@ -42,6 +63,7 @@ public class Login extends AppCompatActivity {
         });
 
         Button btnEntrar = findViewById(R.id.btnEntrar);
+        btnEntrar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         btnEntrar.setOnClickListener(v -> {
 
@@ -113,4 +135,10 @@ public class Login extends AppCompatActivity {
         user.setText(preferences.getString("login_usuario", ""));
         password.setText(preferences.getString("password_usuarios", ""));
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

@@ -1,11 +1,12 @@
 package com.pedidos.kiosco.adapters;
 
+import static com.pedidos.kiosco.pay.ResumenPago.PERMISSION_BLUETOOTH;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -19,10 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,48 +34,36 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.pedidos.kiosco.Login;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerReportes;
-import com.pedidos.kiosco.model.Reportes;
-import com.pedidos.kiosco.other.Ayuda;
+import com.pedidos.kiosco.main.ObtenerMovimientos;
+import com.pedidos.kiosco.model.Movimientos;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.ReportesViewHolder> {
+public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportesMov.ReportesViewHolder> {
 
     Context cContext;
-    public static List<Reportes> listaReportes;
-    public static final int PERMISSION_BLUETOOTH = 1;
-    String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
-    double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto;
-    int gIdFacMovimiento, noCaja,  hasta;
+    public static List<Movimientos> listaReportes;
+    String sucursal, gFecha, gNombreProd;
+    double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto, cambio, change;
     StringBuilder sb1 = new StringBuilder("");
-    public static int no_comprobante;
-    Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
-    String fechacComplString = fecc.format(d);
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
-    String horaString = ho.format(d);
+    int gIdFacMovimiento, noCaja;
 
-    public AdaptadorReportes(Context cContext, List<Reportes> listaReportes) {
+    public AdaptadorReportesMov(Context cContext, List<Movimientos> listaReportes) {
 
         this.cContext = cContext;
-        AdaptadorReportes.listaReportes = listaReportes;
+        AdaptadorReportesMov.listaReportes = listaReportes;
     }
 
     @NonNull
     @Override
     public ReportesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rv_reportes, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rv_reportes_mov, viewGroup, false);
         return new ReportesViewHolder(v);
 
     }
@@ -84,47 +73,16 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
-        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombre());
-        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaFinalizo());
-        reportesViewHolder.tvPedido.setText(Integer.toString(listaReportes.get(posicion).getPedido()));
+        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombreCliente());
+        listaReportes.get(posicion).getNombreCliente();
+        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
+        reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
 
-        reportesViewHolder.ver.setOnClickListener(v -> {
+        reportesViewHolder.editar.setOnClickListener(v -> {
 
-            Login.gIdPedido = listaReportes.get(posicion).getPedido();
-
-            cContext.startActivity(new Intent(cContext, Ayuda.class));
-
-
+            ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
+            obtenerDetMovimientos();
         });
-
-        if (Principal.gIdEstadoCliente == 2){
-            reportesViewHolder.anular.setVisibility(View.VISIBLE);
-            reportesViewHolder.reeImprimir.setVisibility(View.VISIBLE);
-        }
-
-        reportesViewHolder.reeImprimir.setOnClickListener(view -> {
-
-
-        });
-
-        reportesViewHolder.anular.setOnClickListener(view -> new AlertDialog.Builder(cContext)
-                .setTitle("Confirmación")
-                .setMessage("¿Esta seguro que desea anular el pedido?, ¡Esta acción ya no se puede revertir!")
-
-                .setPositiveButton("CONFIRMAR", (dialog, which) -> {
-
-                    Login.gIdPedidoReporte = listaReportes.get(posicion).getPedido();
-                    ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarEstado.php" + "?id_estado_prefactura=3" + "&id_prefactura=" + Login.gIdPedidoReporte);
-                    Toast.makeText(cContext, "El pedido se ha anulado", Toast.LENGTH_SHORT).show();
-                    cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
-
-                })
-                .setNegativeButton("CANCELAR",
-                        (dialog, which) -> dialog.dismiss()
-                )
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .show());
-
     }
 
     public void obtenerDetMovimientos(){
@@ -134,7 +92,7 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + Login.gIdMovimiento;
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + ObtenerMovimientos.idMov;
         System.out.println(url_det_pedido);
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
 
@@ -146,7 +104,8 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
                         JSONObject jsonObject = new JSONObject(response);
 
                         JSONArray jsonArray = jsonObject.getJSONArray("DetMovimiento");
-
+                        sb1 = new StringBuilder("");
+                        gTotal = 0.00;
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -200,9 +159,9 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
                                                     "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
                                                     "[R]" + "---------------------------" + "\n" +
                                                     "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
-                                                    //"[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
-                                                    //"[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
-                                                    //"[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, true)+"\n" +
+                                                    "[R]" + "Recibido: " + "$"+ change + "\n" +
+                                                    "[R]" + "Cambio: $" + cambio + "\n\n" +
                                                     "[C]" + "FB: " + Splash.gFacebook + "\n" +
                                                     "[C]Gracias por su compra :)\n";
 
@@ -228,9 +187,9 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
                                                     "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
                                                     "[R]" + "---------------------------" + "\n" +
                                                     "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
-                                                    //"[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
-                                                    //"[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
-                                                    //"[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, true)+"\n" +
+                                                    "[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
+                                                    "[R]" + "Cambio: $" + cambio + "\n\n" +
                                                     "[C]" + "FB: " + Splash.gFacebook + "\n" +
                                                     "[C]Gracias por su compra :)\n";
 
@@ -269,15 +228,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
 
     }
 
-    public void ejecutarServicio (String URL){
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {},
-                error -> {});
-        RequestQueue requestQueue = Volley.newRequestQueue(cContext);
-        requestQueue.add(stringRequest);
-    }
-
     @Override
     public int getItemCount() {
         return listaReportes.size();
@@ -285,18 +235,16 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvPedido;
-   Button reeImprimir, ver, anular;
+   TextView tvNombre, tvFecha, tvComprobante;
+   Button editar;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-        tvNombre = itemView.findViewById(R.id.nombreCliente);
-        tvFecha = itemView.findViewById(R.id.tvFecha);
-        tvPedido = itemView.findViewById(R.id.numeroPedido);
-        reeImprimir = itemView.findViewById(R.id.reimprimir);
-        ver = itemView.findViewById(R.id.verReporte);
-        anular = itemView.findViewById(R.id.anular);
+        tvNombre = itemView.findViewById(R.id.nombreMov);
+        tvFecha = itemView.findViewById(R.id.tvFechaMov);
+        tvComprobante = itemView.findViewById(R.id.comprobanteMov);
+        editar = itemView.findViewById(R.id.reimprimir2);
 
         }
     }

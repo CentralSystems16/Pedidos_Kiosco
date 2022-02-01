@@ -42,15 +42,15 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
-        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombreUsuario());
-        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaAut());
-        reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getTipoComprobante());
-        reportesViewHolder.tvcaja.setText((listaReportes.get(posicion).getNombreCaja()));
+        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombre());
+        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFecha());
+        reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getComprobante());
+        reportesViewHolder.tvcaja.setText((listaReportes.get(posicion).getCaja()));
         reportesViewHolder.tvserie.setText(listaReportes.get(posicion).getSerie());
 
         reportesViewHolder.editar.setOnClickListener(v -> {
 
-            ObtenerReportesFiscal.idAutFiscal = listaReportes.get(posicion).getIdAutFiscal();
+            ObtenerReportesFiscal.idAutFiscal = listaReportes.get(posicion).getIdFiscal();
             cContext.startActivity(new Intent(cContext, ModificarAutorizacion.class));
 
         });

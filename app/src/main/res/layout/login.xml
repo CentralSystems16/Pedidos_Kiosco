@@ -10,28 +10,28 @@
     tools:context=".Login">
 
     <LinearLayout
+        android:id="@+id/linearLogin"
         android:layout_width="match_parent"
         android:background="#C91DCBD1"
        android:gravity="center"
         android:layout_height="200dp" >
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewLogin"
         android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/logokiosko"/>
+        android:layout_height="150dp"/>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tctBienvenido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="BIENVENIDO"
         android:textSize="50sp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="#c6391e"
-        android:fontFamily="@font/candy"/>
+        android:fontFamily="@font/rabits"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -113,7 +113,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:textSize="12sp"
-        android:backgroundTint="#c6391e"
         android:textColor="@color/white"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"

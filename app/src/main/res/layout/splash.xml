@@ -4,24 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".Splash">
 
     <ImageView
+        android:id="@+id/imgEmpresa"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/logokiosko" />
+        android:layout_marginTop="100dp"/>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvEmpresa"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="cargando.json"
-        app:lottie_imageAssetsFolder="assets"
-        app:lottie_loop="true" />
+        android:layout_gravity="center"
+        android:textColor="#FFC400"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/animacionEmpresa"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

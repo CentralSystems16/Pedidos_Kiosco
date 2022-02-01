@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content">
 
     <TextView
@@ -43,9 +43,9 @@
         android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/nombrePrincipal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adiel"
             android:textSize="20sp"
             android:textColor="@color/black"/>
 
@@ -62,13 +62,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btnPedidos"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:backgroundTint="#E26C5E"
         android:clickable="true"
         android:focusable="true"
@@ -85,8 +85,8 @@
             android:padding="5dp"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="bottom|end"
             android:src="@drawable/pedidos" />
 
@@ -94,8 +94,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnVerPedidos"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:backgroundTint="#9DD8FA"
             android:clickable="true"
             android:layout_marginStart="5dp"
@@ -113,8 +113,8 @@
                 android:padding="10dp"/>
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="bottom|end"
                 android:src="@drawable/ordenes" />
 

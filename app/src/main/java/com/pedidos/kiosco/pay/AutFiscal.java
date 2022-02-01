@@ -29,6 +29,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.model.Caja;
+import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
 import org.json.JSONArray;
 import java.text.ParseException;
