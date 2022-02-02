@@ -9,12 +9,10 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <Toolbar
+        android:id="@+id/toolbarFiscal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#c6391e">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/regresaraPrincipal"
@@ -33,7 +31,7 @@
             android:text="ESTADOS DE AUTORIZACIÓN FISCAL"
             android:textColor="#FFFFFF" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,7 +110,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="358dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#E53935"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@drawable/ic_baseline_add_24" />

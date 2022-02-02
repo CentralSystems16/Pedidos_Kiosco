@@ -1,12 +1,20 @@
 package com.pedidos.kiosco.adapters;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gFoto;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -15,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
@@ -74,6 +83,9 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
             holder.btnMenos.setEnabled(false);
         }
 
+        holder.btnMas.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        holder.btnMenos.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        holder.btnEliminar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         holder.btnMas.setOnClickListener(v -> {
 
                         holder.btnMenos.setEnabled(true);
@@ -252,6 +264,7 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
         TextView tvNombre, tvPrecio, tvCantidad, totalItem;
         Button btnMas, btnMenos;
         ImageButton btnEliminar;
+        ImageView producto;
 
         public ProdReportViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -263,6 +276,7 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
             btnMenos = itemView.findViewById(R.id.btnMenos);
             totalItem = itemView.findViewById(R.id.totalItem);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
+            producto = itemView.findViewById(R.id.imgProducto);
 
         }
     }

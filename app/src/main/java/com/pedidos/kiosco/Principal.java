@@ -195,9 +195,4 @@ public class Principal extends AppCompatActivity {
     return  true;
     };
 
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }

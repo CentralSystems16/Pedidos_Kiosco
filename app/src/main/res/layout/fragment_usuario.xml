@@ -196,5 +196,38 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cerrarSesion"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#FF9800"
+                android:text="CERRAR SESIÓN"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/soyAdmin"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#FF9800"
+                android:text="¿ERES ADMINISTRADOR?"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="15dp" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

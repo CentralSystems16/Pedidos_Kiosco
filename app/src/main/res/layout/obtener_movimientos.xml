@@ -14,16 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbarMovimientos" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <Toolbar
+        android:id="@+id/toolbarMovimientos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#539649">
+        android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/regresarDatos"
+            android:id="@+id/regresarDatos2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -48,6 +47,6 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
 </RelativeLayout>

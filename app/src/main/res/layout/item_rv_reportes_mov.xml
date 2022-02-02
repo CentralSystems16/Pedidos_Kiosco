@@ -142,11 +142,22 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/reimprimir2"
-                android:layout_width="match_parent"
+                android:id="@+id/reimprimir3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="REIMPRIMIR"
-                android:backgroundTint="@color/marron" />
+                android:text="VER"/>
+
+            <Button
+                android:id="@+id/reimprimir2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REIMPRIMIR"/>
+
+            <Button
+                android:id="@+id/reimprimir1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ANULAR"/>
 
         </LinearLayout>
         </LinearLayout>

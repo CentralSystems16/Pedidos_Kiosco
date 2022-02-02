@@ -1,5 +1,8 @@
 package com.pedidos.kiosco.adapters;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.main.ObtenerProductos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
@@ -99,7 +103,6 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
                                 Toast.makeText(context, "Ocurrió un error inesperado...", Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
-
                 }
         });
     }
@@ -112,7 +115,7 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         params.gravity = Gravity.TOP;
         params.height = 120;
         view.setLayoutParams(params);
-        snack.setBackgroundTint(Color.rgb(198,57,30));
+        snack.setBackgroundTint(Color.rgb(Splash.gRed,gGreen,gBlue));
         snack.show();
     }
 

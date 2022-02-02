@@ -1,9 +1,22 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gFacebook;
+import static com.pedidos.kiosco.Splash.gFoto;
+import static com.pedidos.kiosco.Splash.gGif;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gImagenSplah;
+import static com.pedidos.kiosco.Splash.gRecBlue;
+import static com.pedidos.kiosco.Splash.gRecGreen;
+import static com.pedidos.kiosco.Splash.gRecRed;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -18,12 +31,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.DeviceRgb;
@@ -41,6 +59,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.adapters.AdapProdReport;
@@ -65,7 +84,7 @@ public class TicketDatos extends Fragment {
     RecyclerView rvProductos;
     AdapProdReport adaptador;
     List<DetReporte> listaProdReport;
-    ImageButton btnConfirmarEnviar;
+    ImageView btnConfirmarEnviar;
     @SuppressLint("StaticFieldLeak")
     public static TextView totalFinal;
     public static Double gTotal = 0.00;
@@ -95,11 +114,22 @@ public class TicketDatos extends Fragment {
         nombreTicket = vista.findViewById(R.id.nombreReporte);
 
         etBuscador = vista.findViewById(R.id.etBuscadorTicket);
+        etBuscador.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         etBuscador.setOnClickListener(view -> {
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new Categorias());
             fr.commit();
         });
+
+        LinearLayout ln1 = vista.findViewById(R.id.linearTicket);
+        LinearLayout ln2 = vista.findViewById(R.id.linearTicket2);
+        Toolbar ln3 = vista.findViewById(R.id.toolbarTicket);
+        TextView total = vista.findViewById(R.id.tvPagar);
+
+        total.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
+        ln1.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+        ln2.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+        ln3.setBackgroundColor(Color.rgb(gRecRed, gRecGreen, gRecBlue));
 
         anular = vista.findViewById(R.id.anularPedido);
 
@@ -113,6 +143,7 @@ public class TicketDatos extends Fragment {
                 .show());
 
         gato = vista.findViewById(R.id.gato3);
+        Glide.with(TicketDatos.this).load(gGif).into(gato);
         gato.setVisibility(View.GONE);
         noHay = vista.findViewById(R.id.noHay);
         noHay.setVisibility(View.GONE);
@@ -124,7 +155,8 @@ public class TicketDatos extends Fragment {
         fechaReporte.setText((fechacComplString));
         horaReporte.setText(horaString);
 
-        btnConfirmarEnviar = vista.findViewById(R.id.paleta);
+        btnConfirmarEnviar = vista.findViewById(R.id.cerdo);
+        Glide.with(TicketDatos.this).load(gFoto).into(btnConfirmarEnviar);
         btnConfirmarEnviar.setOnClickListener(view -> {
             try {
                 createPDF();
@@ -305,6 +337,7 @@ public class TicketDatos extends Fragment {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                assert writer != null;
                 PdfDocument pdfDocument = new PdfDocument(writer);
                 com.itextpdf.layout.Document document = new Document(pdfDocument);
 
@@ -380,7 +413,7 @@ public class TicketDatos extends Fragment {
 
                 }
 
-                    table.addFooterCell(new Cell(0,6).add(new Paragraph("TOTAL: $ " + String.format("%.2f",gTotal)).setTextAlignment(TextAlignment.RIGHT)));
+                table.addFooterCell(new Cell(0,6).add(new Paragraph("TOTAL: $ " + String.format("%.2f",gTotal)).setTextAlignment(TextAlignment.RIGHT)));
 
 
                 Paragraph linea = new Paragraph("----------------------------------------------------------------------------------------------------------------------------------");
@@ -390,7 +423,6 @@ public class TicketDatos extends Fragment {
                 Paragraph direcion = new Paragraph("Dirección: ");
 
                 Paragraph telefono = new Paragraph("Teléfono: 7702-2123");
-
                 Paragraph sitio = new Paragraph("Facebook: Dulces Tipicos La fiesta");
 
                 document.add(image2.setFixedPosition(170,-10));

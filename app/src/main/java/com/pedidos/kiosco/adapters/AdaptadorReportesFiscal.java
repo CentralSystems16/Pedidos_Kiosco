@@ -1,8 +1,14 @@
 package com.pedidos.kiosco.adapters;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,12 +48,14 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
-        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombre());
+        reportesViewHolder.tvNombre.setText(String.valueOf(listaReportes.get(posicion).getIdFiscal()));
+        ObtenerReportesFiscal.numeroAut = listaReportes.get(posicion).getIdFiscal();
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFecha());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getComprobante());
         reportesViewHolder.tvcaja.setText((listaReportes.get(posicion).getCaja()));
-        reportesViewHolder.tvserie.setText(listaReportes.get(posicion).getSerie());
+        reportesViewHolder.tvserie.setText(listaReportes.get(posicion).getSucursal());
 
+        reportesViewHolder.editar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar.setOnClickListener(v -> {
 
             ObtenerReportesFiscal.idAutFiscal = listaReportes.get(posicion).getIdFiscal();
@@ -69,12 +77,13 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-        tvNombre = itemView.findViewById(R.id.nombreFiscal);
+        tvNombre = itemView.findViewById(R.id.nombreFiscal2);
         tvFecha = itemView.findViewById(R.id.tvFechaAut);
         tvComprobante = itemView.findViewById(R.id.comprobante);
         tvcaja = itemView.findViewById(R.id.cajaFiscal);
         tvserie= itemView.findViewById(R.id.serieFiscal);
         editar = itemView.findViewById(R.id.editarFiscal);
+
 
         }
     }

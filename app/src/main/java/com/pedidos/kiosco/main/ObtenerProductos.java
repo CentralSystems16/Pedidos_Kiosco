@@ -2,9 +2,9 @@ package com.pedidos.kiosco.main;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,11 +18,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorProductos;
-import com.pedidos.kiosco.fragments.Categorias;
-import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
 import org.json.JSONArray;
@@ -55,13 +54,7 @@ public class ObtenerProductos extends AppCompatActivity {
         setContentView(R.layout.recycler_productos);
 
         ImageButton backprod = findViewById(R.id.backProducts);
-        backprod.setOnClickListener(view -> {
-
-            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-            fr.replace(R.id.productos, new Categorias());
-            fr.commit();
-
-        });
+        backprod.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), Principal.class)));
 
         TextView buscador = findViewById(R.id.etBuscador);
         buscador.addTextChangedListener(new TextWatcher() {
@@ -83,9 +76,6 @@ public class ObtenerProductos extends AppCompatActivity {
 
         carrito = findViewById(R.id.carrito);
         carrito.setOnClickListener(view -> {
-            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-            fr.replace(R.id.productos, new TicketDatos());
-            fr.commit();
         });
 
         conejo = findViewById(R.id.conejo2);

@@ -2,9 +2,12 @@ package com.pedidos.kiosco.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorEstados;
 import com.pedidos.kiosco.model.Estados;
@@ -43,6 +47,9 @@ public class ObtenerEstados extends AppCompatActivity {
         rvLista.setLayoutManager(new GridLayoutManager(this, 3));
 
         estados = new ArrayList<>();
+
+        Toolbar estado = findViewById(R.id.toolbarEstados);
+        estado.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
         obtenerEstados();
 

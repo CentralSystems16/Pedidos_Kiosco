@@ -1,7 +1,12 @@
 package com.pedidos.kiosco.pay;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,13 +15,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
@@ -64,6 +72,21 @@ public class ModificarAutorizacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modificar_autorizacion);
 
+        TextView fiscal = findViewById(R.id.numeroAut);
+        fiscal.setText(String.valueOf(ObtenerReportesFiscal.numeroAut));
+
+        Toolbar toolbar = findViewById(R.id.toolbarModif);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro = findViewById(R.id.cardView1);
+        registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro2 = findViewById(R.id.cardView2);
+        registro2.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro3 = findViewById(R.id.cardView3);
+        registro3.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
         regresar = findViewById(R.id.returnmodif);
         regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerReportesFiscal.class)));
 
@@ -78,8 +101,8 @@ public class ModificarAutorizacion extends AppCompatActivity {
         btnActivo.setOnClickListener(v -> {
 
             gEstadoProd = 1;
-            btnActivo.setEnabled(false);
-            btnInactivo.setEnabled(true);
+            btnActivo.setVisibility(View.INVISIBLE);
+            btnInactivo.setVisibility(View.VISIBLE);
             Toast.makeText(ModificarAutorizacion.this, "Activado nuevamente", Toast.LENGTH_SHORT).show();
         });
 
@@ -87,31 +110,29 @@ public class ModificarAutorizacion extends AppCompatActivity {
         btnInactivo.setOnClickListener(v -> {
 
             gEstadoProd = 0;
-            btnActivo.setEnabled(true);
-            btnInactivo.setEnabled(false);
+            btnActivo.setVisibility(View.VISIBLE);
+            btnInactivo.setVisibility(View.INVISIBLE);
             Toast.makeText(ModificarAutorizacion.this, "Desactivado", Toast.LENGTH_SHORT).show();
 
         });
 
         Button modificar = findViewById(R.id.btnModificarFiscal);
-        modificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        modificar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        modificar.setOnClickListener(view -> {
 
-                String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarFiscal.php"
-                        + "?desde=" + desdeet.getText().toString()
-                        + "&hasta=" + hastaet.getText().toString()
-                        + "&serie=" + serieet.getText().toString()
-                        + "&no_autorizacion=" + autorizacionet.getText().toString()
-                        + "&resolucion=" + resolucionet.getText().toString()
-                        + "&no_filas=" + filaset.getText().toString()
-                        + "&fecha_autorizacion=" + fechaet.getText().toString()
-                        + "&activo=" + gEstadoProd
-                        + "&id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
-                ejecutarServicio(url);
-                System.out.println(url);
-                startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
-            }
+            String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarFiscal.php"
+                    + "?desde=" + desdeet.getText().toString()
+                    + "&hasta=" + hastaet.getText().toString()
+                    + "&serie=" + serieet.getText().toString()
+                    + "&no_autorizacion=" + autorizacionet.getText().toString()
+                    + "&resolucion=" + resolucionet.getText().toString()
+                    + "&no_filas=" + filaset.getText().toString()
+                    + "&fecha_autorizacion=" + fechaet.getText().toString()
+                    + "&activo=" + gEstadoProd
+                    + "&id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
+            ejecutarServicio(url);
+            System.out.println(url);
+            startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
         });
 
         desdeet = findViewById(R.id.editDesde);

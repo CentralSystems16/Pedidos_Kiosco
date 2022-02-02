@@ -56,14 +56,8 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
     public static final int PERMISSION_BLUETOOTH = 1;
     String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto;
-    int gIdFacMovimiento, noCaja,  hasta;
+    int gIdFacMovimiento, noCaja;
     StringBuilder sb1 = new StringBuilder("");
-    public static int no_comprobante;
-    Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
-    String fechacComplString = fecc.format(d);
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
-    String horaString = ho.format(d);
 
     public AdaptadorReportes(Context cContext, List<Reportes> listaReportes) {
 
@@ -102,11 +96,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
             reportesViewHolder.reeImprimir.setVisibility(View.VISIBLE);
         }
 
-        reportesViewHolder.reeImprimir.setOnClickListener(view -> {
-
-
-        });
-
         reportesViewHolder.anular.setOnClickListener(view -> new AlertDialog.Builder(cContext)
                 .setTitle("Confirmación")
                 .setMessage("¿Esta seguro que desea anular el pedido?, ¡Esta acción ya no se puede revertir!")
@@ -124,148 +113,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
                 )
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show());
-
-    }
-
-    public void obtenerDetMovimientos(){
-
-        final ProgressDialog progressDialog = new ProgressDialog(cContext);
-        progressDialog.setMessage("Por favor espera...");
-        progressDialog.show();
-        progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + Login.gIdMovimiento;
-        System.out.println(url_det_pedido);
-        RequestQueue requestQueue = Volley.newRequestQueue(cContext);
-
-        @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
-
-                response -> {
-
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-
-                        JSONArray jsonArray = jsonObject.getJSONArray("DetMovimiento");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                            Double totalFila = jsonObject1.getDouble("monto") + jsonObject1.getDouble("monto_iva");
-                            gTotal = gTotal + totalFila;
-                            String.format("%.2f", gTotal);
-                            jsonObject1.getInt("id_fac_det_movimiento");
-                            gNombreProd = jsonObject1.getString("nombre_producto");
-                            gCantidad = jsonObject1.getDouble("cantidad");
-                            gPrecioUni =  jsonObject1.getDouble("precio_uni");
-                            Double total = gCantidad * gPrecioUni;
-                            gDesc = jsonObject1.getDouble("monto_desc");
-                            gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gNombreProd+"\n" + " $" + gCantidad +  " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
-                            sb1.append("\n");
-                        }
-
-                        Numero_a_Letra NumLetra = new Numero_a_Letra();
-                        String numero;
-                        numero = String.valueOf(gTotal);
-
-                        try {
-                            if (ContextCompat.checkSelfPermission(cContext, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions((Activity) cContext, new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
-                            } else {
-                                BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
-                                if (connection != null) {
-                                    EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
-
-                                    final String text =
-                                            "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
-                                                    cContext.getResources().getDrawableForDensity(R.drawable.logokiosko,
-                                                            DisplayMetrics.DENSITY_LOW, cContext.getTheme())) + "</img>\n" +
-                                                    "[L]\n" +
-                                                    "[C]" + Splash.gNombre + "\n" +
-                                                    "[C]" + Splash.gDireccion + "\n" +
-                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
-                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
-                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
-                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
-                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
-                                                    "[L]" + "Fecha: " + gFecha + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + sb1.toString() +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "SubTotal $" + String.format("%.2f",gTotal) + "\n" +
-                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
-                                                    "[R]" + "Exento $" + String.format("%.2f",exento) + "\n" +
-                                                    "[R]" + "Gravado $" + String.format("%.2f",gravado) + "\n" +
-                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
-                                                    //"[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
-                                                    //"[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
-                                                    //"[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
-                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
-                                                    "[C]Gracias por su compra :)\n";
-
-                                    final String text2 =
-                                            "[L]\n" +
-                                                    "[C]" + Splash.gNombre + "\n" +
-                                                    "[C]" + Splash.gDireccion + "\n" +
-                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
-                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
-                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
-                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
-                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
-                                                    "[L]" + "Fecha: " + gFecha + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + sb1.toString() +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "SubTotal $" + String.format("%.2f",gTotal) + "\n" +
-                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
-                                                    "[R]" + "Exento $" + String.format("%.2f",exento) + "\n" +
-                                                    "[R]" + "Gravado $" + String.format("%.2f",gravado) + "\n" +
-                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n" +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "Total a pagar $" + String.format("%.2f",gTotal) + "\n" +
-                                                    //"[R]" + "Son: " + NumLetra.Convertir(numero, band())+"\n" +
-                                                    //"[R]" + "Recibido: " + "$"+ String.format("%.2f",change) + "\n" +
-                                                    //"[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
-                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
-                                                    "[C]Gracias por su compra :)\n";
-
-                                    if (Splash.gImagen == 1) {
-                                        printer.printFormattedText(text);
-                                    }
-                                    else {
-                                        printer.printFormattedText(text2);
-                                    }
-
-                                } else {
-                                    Toast.makeText(cContext, "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-
-                        } catch (Exception e) {
-                            Log.e("APP", "No se puede imprimir, error: ", e);
-                        }
-
-                        progressDialog.dismiss();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        progressDialog.dismiss();
-                    }
-                }, Throwable::printStackTrace
-        );
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        requestQueue.add(stringRequest);
 
     }
 

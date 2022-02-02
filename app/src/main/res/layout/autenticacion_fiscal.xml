@@ -9,8 +9,8 @@
     android:orientation="vertical">
 
     <Toolbar
+        android:id="@+id/toolbarAdd"
         android:layout_width="match_parent"
-        android:background="#c6391e"
         android:layout_height="wrap_content">
 
         <ImageButton
@@ -47,59 +47,80 @@
         android:layout_marginTop="50dp"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Desde:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextFieldNombre"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="Desde"
+                android:textColorHint="#9F807E7E"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etDesde"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDesde"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hasta:"
-            android:layout_marginStart="20dp"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etHasta"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextFieldNombre2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="Hasta"
+                android:textColorHint="#9F807E7E"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                android:layout_marginStart="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etHasta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo comprobante:"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Tipo comprobante:"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView1"
+            android:id="@+id/cardView1Add"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:strokeWidth="1dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            app:strokeColor="#c6391e"
-            app:cardCornerRadius="4dp">
+            android:layout_marginEnd="50dp"
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="1dp">
 
             <Spinner
                 android:id="@+id/spinnerComprobante"
@@ -111,9 +132,9 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -123,19 +144,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sucursal:"
+            android:layout_alignParentStart="true"
             android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Sucursal:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cardView2Add"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:strokeWidth="1dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            app:strokeColor="#c6391e"
-            app:cardCornerRadius="4dp">
+            android:layout_marginEnd="50dp"
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="1dp">
 
             <Spinner
                 android:id="@+id/spinnerSucursal"
@@ -147,9 +172,9 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -159,19 +184,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Caja:"
+            android:layout_alignParentStart="true"
             android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Caja:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView3"
+            android:id="@+id/cardView3Add"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:strokeWidth="1dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            app:strokeColor="#c6391e"
-            app:cardCornerRadius="4dp">
+            android:layout_marginEnd="50dp"
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="1dp">
 
             <Spinner
                 android:id="@+id/spinnerCajas"
@@ -183,7 +212,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -192,19 +221,30 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Serie:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:hint="Serie"
+            android:layout_marginEnd="30dp"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginStart="30dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSerie"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black" />
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </LinearLayout>
@@ -216,19 +256,52 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autorización:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:hint="Número autorización"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etAuth"
-            android:layout_width="100dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAuth"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre6"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+            android:hint="Numero filas"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFilas"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -239,19 +312,30 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Resolucion:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:hint="Resolución"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etRes"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -307,42 +391,31 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numero de filas:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:hint="Fecha"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/editFilas"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFecha"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fecha:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/editFecha"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -354,7 +427,6 @@
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 android:textColor="@color/white"
-                android:backgroundTint="#c6391e"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="20dp"

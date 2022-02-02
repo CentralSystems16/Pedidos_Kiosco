@@ -11,8 +11,8 @@
     android:orientation="vertical">
 
     <Toolbar
+        android:id="@+id/toolbarModif"
         android:layout_width="match_parent"
-        android:background="#c6391e"
         android:layout_height="wrap_content">
 
         <ImageButton
@@ -42,45 +42,90 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center"
+                 android:layout_marginTop="20dp"
+                 android:orientation="horizontal" >
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center"
+                     android:text="Numero de autenticación"
+                     android:textColor="@color/black"
+                     android:textSize="15sp" />
+
+                 <TextView
+                     android:id="@+id/numeroAut"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="20dp"
+                     android:textColor="@color/black"
+                     android:textSize="15sp" />
+
+             </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="Desde:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:hint="Desde"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/editDesde"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editDesde"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre2"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="Hasta:"
+                    android:hint="Hasta"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/editHasta"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editHasta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -90,7 +135,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
                     android:text="Tipo comprobante:"
+                    android:layout_marginTop="15dp"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -98,10 +146,11 @@
                     android:id="@+id/cardView1"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    app:strokeWidth="1dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
-                    app:strokeColor="#c6391e"
-                    app:cardCornerRadius="4dp">
+                    android:layout_marginEnd="50dp"
+                    app:cardCornerRadius="4dp"
+                    app:strokeWidth="1dp">
 
                     <Spinner
                         android:id="@+id/EditSpinnerComprobante"
@@ -113,9 +162,9 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -125,8 +174,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sucursal:"
+                    android:layout_alignParentStart="true"
                     android:layout_gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Sucursal:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -134,10 +186,11 @@
                     android:id="@+id/cardView2"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    app:strokeWidth="1dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
-                    app:strokeColor="#c6391e"
-                    app:cardCornerRadius="4dp">
+                    android:layout_marginEnd="50dp"
+                    app:cardCornerRadius="4dp"
+                    app:strokeWidth="1dp">
 
                     <Spinner
                         android:id="@+id/editSpinnerSucursal"
@@ -149,9 +202,9 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -161,8 +214,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Caja:"
+                    android:layout_alignParentStart="true"
                     android:layout_gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:text="Caja:"
+                    android:layout_marginTop="15dp"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -170,10 +226,11 @@
                     android:id="@+id/cardView3"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    app:strokeWidth="1dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
-                    app:strokeColor="#c6391e"
-                    app:cardCornerRadius="4dp">
+                    android:layout_marginEnd="50dp"
+                    app:cardCornerRadius="4dp"
+                    app:strokeWidth="1dp">
 
                     <Spinner
                         android:id="@+id/EditSpinnerCajas"
@@ -185,7 +242,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -194,42 +251,30 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Serie:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:hint="Serie"
+                    android:layout_marginEnd="30dp"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    android:layout_marginStart="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/editSerie"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editSerie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Autorización:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/editAuth"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
@@ -240,53 +285,127 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Resolucion:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:hint="Número autorización"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/editRes"
-                    android:layout_width="100dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editAuth"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre6"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                    android:hint="Numero filas"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNumFilas"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Resolución"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editRes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:text="Estado:"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <Button
-                        android:layout_marginStart="5dp"
-                        android:id="@+id/btnActivoProducto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#8800FF"
-                        android:textColor="@color/white"
-                        android:text="Activar" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnActivoProducto"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="50dp"
+                            android:text="ACTIVAR"
+                            android:textColor="#FF1A73E8"
+                            android:textSize="11sp"
+                            app:cornerRadius="15dp"
+                            app:strokeColor="#FF1A73E8" />
 
-                    <Button
-                        android:id="@+id/btnInactivoProducto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#CB3234"
-                        android:textColor="@color/white"
-                        android:text="Inactivar" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnInactivoProducto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="50dp"
+                            android:backgroundTint="#c6391e"
+                            android:text="INACTIVAR"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            app:cornerRadius="15dp" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -297,42 +416,31 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Numero de filas:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:hint="Fecha"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/etNumFilas"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tvFechaFiscal"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fecha:"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/tvFechaFiscal"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
@@ -344,7 +452,6 @@
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 android:textColor="@color/white"
-                android:backgroundTint="#c6391e"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="20dp"

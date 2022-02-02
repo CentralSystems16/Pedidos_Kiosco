@@ -1,5 +1,6 @@
 package com.pedidos.kiosco.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -42,6 +43,7 @@ public class Categorias extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_categorias, container, false);
 
         conejo = vista.findViewById(R.id.conejo);
+        //Glide.with(Categorias.this).load(Splash.gGif).into(conejo);
         conejo.setVisibility(View.INVISIBLE);
         gato = vista.findViewById(R.id.gato);
         gato.setVisibility(View.INVISIBLE);
@@ -61,10 +63,13 @@ public class Categorias extends Fragment {
 
     public void obtenerCategorias() {
 
-        conejo.setVisibility(View.VISIBLE);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         String URL_CATEGORIAS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"+"?estado_categoria=1";
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CATEGORIAS,
 
@@ -88,14 +93,14 @@ public class Categorias extends Fragment {
                         adaptadorCat = new AdaptadorCategorias(getContext(), listaCategorias);
                         rvListaCategorias.setAdapter(adaptadorCat);
 
-                        conejo.setVisibility(View.INVISIBLE);
+                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
-                        gato.setVisibility(View.VISIBLE);
+                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
                 }, volleyError -> {
-            conejo.setVisibility(View.INVISIBLE);
+            progressDialog.dismiss();
             gato.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + volleyError, Toast.LENGTH_LONG).show();
 

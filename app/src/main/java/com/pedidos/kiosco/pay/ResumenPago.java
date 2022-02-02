@@ -1,5 +1,11 @@
 package com.pedidos.kiosco.pay;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRecBlue;
+import static com.pedidos.kiosco.Splash.gRecGreen;
+import static com.pedidos.kiosco.Splash.gRecRed;
+import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,9 +14,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +33,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -94,6 +104,17 @@ public class ResumenPago extends AppCompatActivity {
                     1000);
         }
 
+        Toolbar toolbar = findViewById(R.id.toolbarPago);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+
+        TextView pedido, pago;
+
+        pedido = findViewById(R.id.tvPedido);
+        pago = findViewById(R.id.tvPago);
+
+        pedido.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
+        pago.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
+
         obtenerCaja();
 
         cantidad = findViewById(R.id.cantidad);
@@ -145,6 +166,7 @@ public class ResumenPago extends AppCompatActivity {
         });
 
         Button pagar = findViewById(R.id.btnPagar);
+        pagar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         pagar.setOnClickListener(view -> {
 
 
@@ -155,12 +177,6 @@ public class ResumenPago extends AppCompatActivity {
 
                 obtenerAutFiscal();
                 obtenerMovimientos();
-
-                String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
-                        + "?monto_pago=" + etMoney.getText().toString()
-                        + "&monto_cambio=" + cambio.getText().toString()
-                        + "&id_fac_movimiento=" + Login.gIdMovimiento;
-                ejecutarServicio2(url);
 
                 obtenerDetMovimientos();
                 encodePDF();
@@ -490,6 +506,10 @@ public class ResumenPago extends AppCompatActivity {
                                     + "?id_estado_prefactura=2"
                                     + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
                                     + "&id_prefactura=" + Login.gIdPedido);
+                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
+                                    + "?monto_pago=" + etMoney.getText().toString()
+                                    + "&monto_cambio=" + cambio.getText().toString()
+                                    + "&id_fac_movimiento=" + Login.gIdMovimiento);
                             startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
                         }
                         else {
@@ -498,7 +518,13 @@ public class ResumenPago extends AppCompatActivity {
                                     + "?id_aut_fiscal=" + Login.gIdAutFiscal;
                             ejecutarServicio(url);
 
-                            Toast.makeText(getApplicationContext(), "La autorización fiscal ha finalizado", Toast.LENGTH_SHORT).show();
+                            new AlertDialog.Builder(ResumenPago.this)
+                                    .setTitle("Autorización finalizada")
+                                    .setMessage("La autorización fiscal ha finalizado, por favor comuniquese con su administrador")
+                                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
                         }
 
                     } catch (JSONException e) {

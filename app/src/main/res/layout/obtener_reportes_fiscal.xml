@@ -9,15 +9,14 @@
         android:id="@+id/rvListaReportes"
         android:layout_width="match_parent"
         android:layout_height="536dp"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbarRepFiscal"
         android:layout_alignParentBottom="true" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <Toolbar
+        android:id="@+id/toolbarRepFiscal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#539649">
+        android:layout_alignParentTop="true">
 
         <ImageButton
             android:id="@+id/regresarDatosFiscal"
@@ -45,5 +44,5 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 </RelativeLayout>

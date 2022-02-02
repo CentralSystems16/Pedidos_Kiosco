@@ -1,5 +1,8 @@
 package com.pedidos.kiosco.adapters;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.pay.ResumenPago.PERMISSION_BLUETOOTH;
 
 import android.Manifest;
@@ -7,7 +10,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,6 +43,7 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.main.ObtenerDetReporte;
 import com.pedidos.kiosco.main.ObtenerMovimientos;
 import com.pedidos.kiosco.model.Movimientos;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
@@ -77,6 +84,18 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         listaReportes.get(posicion).getNombreCliente();
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
+        reportesViewHolder.tvFiscal.setText(listaReportes.get(posicion).getNumeroComprobante());
+
+        reportesViewHolder.editar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        reportesViewHolder.editar2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        reportesViewHolder.editar3.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+
+        reportesViewHolder.editar3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class));
+            }
+        });
 
         reportesViewHolder.editar.setOnClickListener(v -> {
 
@@ -235,8 +254,8 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvComprobante;
-   Button editar;
+   TextView tvNombre, tvFecha, tvComprobante, tvFiscal;
+   Button editar, editar2, editar3;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -245,6 +264,8 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         tvFecha = itemView.findViewById(R.id.tvFechaMov);
         tvComprobante = itemView.findViewById(R.id.comprobanteMov);
         editar = itemView.findViewById(R.id.reimprimir2);
+        editar2 = itemView.findViewById(R.id.reimprimir1);
+        editar3 = itemView.findViewById(R.id.reimprimir3);
 
         }
     }

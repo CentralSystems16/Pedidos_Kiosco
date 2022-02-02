@@ -3,10 +3,13 @@ package com.pedidos.kiosco.main;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportes;
 import com.pedidos.kiosco.model.Reportes;
@@ -45,6 +49,9 @@ public class ObtenerReportes extends AppCompatActivity {
 
         TextView orden = findViewById(R.id.orden);
         orden.setText(ObtenerEstados.estadosNombre);
+
+        Toolbar fiscal = findViewById(R.id.toolbarPrefac);
+        fiscal.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
         final ImageButton regresa = findViewById(R.id.regresarDatos);
         regresa.setOnClickListener(v -> {

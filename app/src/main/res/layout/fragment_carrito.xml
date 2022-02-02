@@ -25,8 +25,7 @@
             android:gravity="center"
             android:hint="Buscar mas productos"
             android:padding="10dp"
-            android:textSize="14sp"
-            app:backgroundTint="#c6391e" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/anularPedido"
@@ -46,10 +45,10 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearTicket"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#c6391e" >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_marginTop="10dp"
@@ -71,7 +70,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#c6391e"
+        android:id="@+id/linearTicket2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
@@ -109,8 +108,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="105dp"
             android:layout_marginTop="63dp"
-            android:layout_marginEnd="106dp"
-            android:background="@drawable/cat" />
+            android:layout_marginEnd="106dp" />
 
         <TextView
             android:id="@+id/noHay"
@@ -132,17 +130,17 @@
             android:id="@+id/ln1"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_above="@+id/toolbar"
+            android:layout_above="@+id/toolbarTicket"
             android:background="#4DFFFFFF"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvPagar"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="12dp"
                 android:text="Total a pagar:"
-                android:textColor="#c6391e"
                 android:textSize="15sp" />
 
             <RelativeLayout
@@ -171,20 +169,20 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <Toolbar
+            android:id="@+id/toolbarTicket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#AAAAAA">
+            android:layout_alignParentBottom="true">
 
-            <ImageButton
-                android:id="@+id/paleta"
+            <ImageView
+                android:id="@+id/cerdo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/lollipop" />
+                android:clickable="true"
+                android:focusable="true" />
 
-        </androidx.appcompat.widget.Toolbar>
+        </Toolbar>
     </RelativeLayout>
 </LinearLayout>

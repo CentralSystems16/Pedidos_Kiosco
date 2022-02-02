@@ -1,11 +1,21 @@
 package com.pedidos.kiosco.main;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -13,7 +23,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportesFiscal;
 import com.pedidos.kiosco.adapters.AdaptadorReportesMov;
@@ -39,10 +51,24 @@ public class ObtenerMovimientos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.obtener_movimientos);
 
+        ImageButton regresar = findViewById(R.id.regresarDatos2);
+        regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ObtenerEstados.class));
+            }
+        });
+
         rvLista = findViewById(R.id.rvListaReportesMov);
         rvLista.setLayoutManager(new LinearLayoutManager(this));
 
+        Toolbar estado = findViewById(R.id.toolbarMovimientos);
+        estado.setBackgroundColor((Color.rgb(gRed, gGreen, gBlue)));
+
         reportes = new ArrayList<>();
+
+        TextView orden2 = findViewById(R.id.orden2);
+        orden2.setText(ObtenerEstados.estadosNombre);
 
         obtenerMovimientos();
     }
@@ -54,7 +80,7 @@ public class ObtenerMovimientos extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_usuario=" + Login.gIdUsuario;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
@@ -76,7 +102,8 @@ public class ObtenerMovimientos extends AppCompatActivity {
                             jsonObject1.getDouble("monto_exento"),
                             jsonObject1.getDouble("monto_gravado"),
                             jsonObject1.getDouble("monto_no_sujeto"),
-                            jsonObject1.getInt("id_fac_movimiento")
+                            jsonObject1.getInt("id_fac_movimiento"),
+                            jsonObject1.getString("numero_comprobante")
 
                             ));
                         }

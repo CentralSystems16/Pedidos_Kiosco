@@ -69,7 +69,6 @@
         android:id="@+id/btnPedidos"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:backgroundTint="#E26C5E"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="20dp">
@@ -96,7 +95,6 @@
             android:id="@+id/btnVerPedidos"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:backgroundTint="#9DD8FA"
             android:clickable="true"
             android:layout_marginStart="5dp"
             android:focusable="true"

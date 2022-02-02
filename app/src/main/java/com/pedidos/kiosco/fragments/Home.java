@@ -1,7 +1,19 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gBlue3;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gGreen3;
+import static com.pedidos.kiosco.Splash.gRecBlue2;
+import static com.pedidos.kiosco.Splash.gRecGreen2;
+import static com.pedidos.kiosco.Splash.gRecRed2;
+import static com.pedidos.kiosco.Splash.gRed;
+import static com.pedidos.kiosco.Splash.gRed3;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -17,8 +29,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.card.MaterialCardView;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -54,6 +68,8 @@ public class Home extends Fragment {
         verPedido = view.findViewById(R.id.btnVerPedidos);
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
+
+
         TextView nombre = view.findViewById(R.id.nombrePrincipal);
         nombre.setText(Login.nombre);
 
@@ -73,6 +89,9 @@ public class Home extends Fragment {
 
         });
 
+        hacerPedido.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRecRed2, gRecGreen2, gRecBlue2)));
+        verPedido.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed3, gGreen3, gBlue3)));
+
         sliderLayout = view.findViewById(R.id.slider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL);
         sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -81,6 +100,7 @@ public class Home extends Fragment {
         setSliderViews();
 
         return view;
+
     }
 
     private void setSliderViews() {

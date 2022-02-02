@@ -10,11 +10,11 @@
         android:id="@+id/listaEstados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbarEstados"
         android:layout_alignParentBottom="true" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <Toolbar
+        android:id="@+id/toolbarEstados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -37,6 +37,6 @@
             android:text="ESTADOS DE ORDEN"
             android:textColor="#FFFFFF" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     </RelativeLayout>

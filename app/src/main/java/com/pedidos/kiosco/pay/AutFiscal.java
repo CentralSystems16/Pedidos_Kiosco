@@ -1,10 +1,15 @@
 package com.pedidos.kiosco.pay;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,10 +23,13 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.Login;
@@ -69,13 +77,20 @@ public class AutFiscal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.autenticacion_fiscal);
 
+        Toolbar toolbar = findViewById(R.id.toolbarAdd);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+
         ImageButton agregar = findViewById(R.id.agregar);
-        agregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
-            }
-        });
+        agregar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class)));
+
+        MaterialCardView registro = findViewById(R.id.cardView1Add);
+        registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro2 = findViewById(R.id.cardView2Add);
+        registro2.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialCardView registro3 = findViewById(R.id.cardView3Add);
+        registro3.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
         desde = findViewById(R.id.etDesde);
         hasta = findViewById(R.id.etHasta);
@@ -116,7 +131,7 @@ public class AutFiscal extends AppCompatActivity {
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(
-                    getApplicationContext(),
+                    AutFiscal.this,
                     android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,
                     mDateSetListener,
                     year, month, day);
@@ -139,6 +154,7 @@ public class AutFiscal extends AppCompatActivity {
             }
         };
 
+        continuar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         continuar.setOnClickListener(view -> {
             if (desde.getText().toString().equals("") || hasta.getText().toString().equals("") || serie.getText().toString().equals("") || autorizacion.getText().toString().equals("")
                 || resolucion.getText().toString().equals("") || numeroFilas.getText().toString().equals("") || mDisplayDate.getText().toString().equals("")){

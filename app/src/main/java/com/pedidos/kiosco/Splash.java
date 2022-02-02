@@ -2,6 +2,7 @@ package com.pedidos.kiosco;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,8 +24,8 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class Splash extends AppCompatActivity {
 
-    public static String gNombre, gTelefono, gDireccion, gFacebook, gImagenSplah, gAnimacion;
-    public static int gNrc, gNit, gCantImagenes, gImagen, gRed, gGreen, gBlue;
+    public static String gNombre, gTelefono, gDireccion, gFacebook, gImagenSplah, gAnimacion, gGif, gFoto, gGif2, gFoto2, gGif3, gFoto3;
+    public static int gNrc, gNit, gCantImagenes, gImagen, gRed, gGreen, gBlue, gRecRed, gRecGreen, gRecBlue, gRecRed2, gRecGreen2, gRecBlue2, gRed3, gGreen3, gBlue3;
 
     TextView tvEmpresa;
     ImageView imgEmpresa;
@@ -34,6 +35,7 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
         Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
@@ -45,9 +47,97 @@ public class Splash extends AppCompatActivity {
         imgEmpresa.setAnimation(animacion1);
 
         obtenerEmpresa();
+        obtenerRecursos();
+        obtenerRecursos2();
+        obtenerRecursos3();
 
         new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
 
+    }
+
+    public void obtenerRecursos(){
+
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=1";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url
+                ,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Empresa");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            gGif = jsonObject1.getString("gif_recurso");
+                            gFoto = jsonObject1.getString("img_recurso");
+                            gRecRed = jsonObject1.getInt("red_recurso");
+                            gRecBlue = jsonObject1.getInt("green_recurso");
+                            gRecGreen = jsonObject1.getInt("blue_recurso");
+
+                        }
+                    } catch (JSONException ignored) {}
+                }, volleyError ->{}
+        );
+        requestQueue.add(stringRequest);
+    }
+
+    public void obtenerRecursos2(){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=2",
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Empresa");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            gGif2 = jsonObject1.getString("gif_recurso");
+                            gFoto2 = jsonObject1.getString("img_recurso");
+                            gRecRed2 = jsonObject1.getInt("red_recurso");
+                            gRecGreen2 = jsonObject1.getInt("green_recurso");
+                            gRecBlue2 = jsonObject1.getInt("blue_recurso");
+
+                        }
+                    } catch (JSONException ignored) {}
+                }, volleyError ->{}
+        );
+        requestQueue.add(stringRequest);
+    }
+
+    public void obtenerRecursos3(){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=3",
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Empresa");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            gGif3 = jsonObject1.getString("gif_recurso");
+                            gFoto3 = jsonObject1.getString("img_recurso");
+                            gRed3 = jsonObject1.getInt("red_recurso");
+                            gGreen3 = jsonObject1.getInt("green_recurso");
+                            gBlue3  = jsonObject1.getInt("blue_recurso");
+
+                        }
+                    } catch (JSONException ignored) {}
+                }, volleyError ->{}
+        );
+        requestQueue.add(stringRequest);
     }
 
     public void obtenerEmpresa(){
