@@ -6,8 +6,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerProductos;
-import com.pedidos.kiosco.pay.ResumenPago;
+import com.pedidos.kiosco.fragments.ObtenerProductos;
+import com.pedidos.kiosco.fragments.ResumenPago;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;

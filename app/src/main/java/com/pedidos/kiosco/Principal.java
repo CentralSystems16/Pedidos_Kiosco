@@ -3,7 +3,6 @@ package com.pedidos.kiosco;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -54,8 +53,8 @@ public class Principal extends AppCompatActivity {
 
         addButton = findViewById(R.id.floatingActionButton);
         addButton.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
-        if(Login.cargo == 3 || Login.cargo == 4){
-            addButton.setVisibility(View.GONE);
+        if(Login.cargo == 1 || Login.cargo == 2){
+            addButton.setVisibility(View.VISIBLE);
         }
 
         addButton.setOnClickListener(view -> onAddButtonClickListener());

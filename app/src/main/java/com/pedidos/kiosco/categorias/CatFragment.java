@@ -50,12 +50,7 @@ public class CatFragment extends Fragment {
         categorias = new ArrayList<>();
 
         Button crearCat = vista.findViewById(R.id.btnCrearCat);
-        crearCat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AgregarCategorias.class));
-            }
-        });
+        crearCat.setOnClickListener(view -> startActivity(new Intent(getActivity(), AgregarCategorias.class)));
 
         rvLista = vista.findViewById(R.id.rvListaCategorias);
 

@@ -40,66 +40,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextFieldNombre"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:hint="Desde"
-                android:textColorHint="#9F807E7E"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxCornerRadiusTopStart="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDesde"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextFieldNombre2"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:hint="Hasta"
-                android:textColorHint="#9F807E7E"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                android:layout_marginStart="20dp"
-                app:boxCornerRadiusTopStart="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etHasta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -258,7 +202,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextFieldNombre4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Número autorización"
             android:textColorHint="#9F807E7E"
@@ -270,31 +214,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etAuth"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextFieldNombre6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Numero filas"
-            android:textColorHint="#9F807E7E"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            android:layout_marginStart="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editFilas"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:gravity="center"
@@ -339,85 +261,166 @@
 
     </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Desde"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDesde"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Hasta"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etHasta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activo:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <RadioGroup
-            android:id="@+id/rgActivo"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/si"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SI"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-            <RadioButton
-                android:id="@+id/no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NO"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-        </RadioGroup>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextFieldNombre7"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="Fecha"
             android:textColorHint="#9F807E7E"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
-            android:layout_marginStart="20dp"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFecha"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:clickable="true"
+                android:layout_marginStart="30dp"
                 android:focusable="true"
                 android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número filas"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginEnd="30dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFilas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activo:"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:id="@+id/rgActivo"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/si"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textColor="@color/black"
+                        android:buttonTint="#c6391e"
+                        app:buttonTint="@color/black" />
+
+                    <RadioButton
+                        android:id="@+id/no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textColor="@color/black"
+                        android:buttonTint="#c6391e"
+                        app:buttonTint="@color/black" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegistrarFiscal"
@@ -427,8 +430,8 @@
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 android:textColor="@color/white"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
                 app:cornerRadius="15dp"/>
 

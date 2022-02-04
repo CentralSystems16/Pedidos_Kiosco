@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:text="CARGAR"
         android:textSize="12sp"
-        android:backgroundTint="#7D9E34"
+        android:backgroundTint="#FFCC03"
         android:layout_marginStart="120dp"
         android:layout_marginEnd="80dp"
         app:cornerRadius="15dp"/>
@@ -188,7 +188,7 @@
         android:text="GUARDAR"
         android:layout_marginTop="10dp"
         android:textSize="12sp"
-        android:backgroundTint="#7D9E34"
+        android:backgroundTint="#FFCC03"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:cornerRadius="15dp"/>

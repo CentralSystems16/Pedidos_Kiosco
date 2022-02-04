@@ -1,19 +1,13 @@
-package com.pedidos.kiosco.pay;
+package com.pedidos.kiosco.fragments;
 
+import static android.app.Activity.RESULT_OK;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
-import static com.pedidos.kiosco.Splash.gRecBlue;
-import static com.pedidos.kiosco.Splash.gRecGreen;
-import static com.pedidos.kiosco.Splash.gRecRed;
 import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,12 +15,21 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,13 +51,12 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
-import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.utils.Numero_a_Letra;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarMovimientos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
+import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ResumenPago extends AppCompatActivity {
+public class ResumenPago extends Fragment {
 
     TextView totalCompra, totalFinal, cambio;
     EditText etMoney;
@@ -90,49 +91,56 @@ public class ResumenPago extends AppCompatActivity {
     public static int no_comprobante;
     private int REQ_PDF = 21;
 
-    @SuppressLint("DefaultLocale")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.resumen_pago);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.resumen_pago_fragment, container, false);
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+
+        /*File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        File file = new File(dir, Login.gIdPedido + " Examen.pdf");
+        boolean deleted = file.delete();*/
+
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                         PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
+            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
                     1000);
         }
 
-        Toolbar toolbar = findViewById(R.id.toolbarPago);
+        Toolbar toolbar = vista.findViewById(R.id.toolbarPago);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         TextView pedido, pago;
 
-        pedido = findViewById(R.id.tvPedido);
-        pago = findViewById(R.id.tvPago);
+        pedido = vista.findViewById(R.id.tvPedido);
+        pago = vista.findViewById(R.id.tvPago);
 
         pedido.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
         pago.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
 
         obtenerCaja();
 
-        cantidad = findViewById(R.id.cantidad);
-        totalCompra = findViewById(R.id.totalFinalPago);
-        totalFinal = findViewById(R.id.totalDef);
-        new ContadorProductos2.GetDataFromServerIntoTextView(getApplicationContext()).execute();
+        cantidad = vista.findViewById(R.id.cantidad);
+        totalCompra = vista.findViewById(R.id.totalFinalPago);
+        totalFinal = vista.findViewById(R.id.totalDef);
+        new ContadorProductos2.GetDataFromServerIntoTextView(getContext()).execute();
         cantidad.setText(formatoDecimal.format(gCount));
         totalCompra.setText(String.format("%.2f",TicketDatos.gTotal));
         totalFinal.setText(String.format("%.2f", TicketDatos.gTotal));
 
-        ImageButton back = findViewById(R.id.backArrow);
+        ImageButton back = vista.findViewById(R.id.backArrow);
         back.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new TicketDatos());
+            fr.commit();
 
         });
 
-        etMoney = findViewById(R.id.etMoney);
-        cambio = findViewById(R.id.montoCambio);
-
+        etMoney = vista.findViewById(R.id.etMoney);
+        cambio = vista.findViewById(R.id.montoCambio);
 
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
@@ -165,13 +173,13 @@ public class ResumenPago extends AppCompatActivity {
             }
         });
 
-        Button pagar = findViewById(R.id.btnPagar);
+        Button pagar = vista.findViewById(R.id.btnPagar);
         pagar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         pagar.setOnClickListener(view -> {
 
 
             if (etMoney.getText().toString().equals("")){
-                Toast.makeText(getApplicationContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
             }
             else {
 
@@ -183,11 +191,13 @@ public class ResumenPago extends AppCompatActivity {
                 uploadDocument();
             }
         });
+
+        return vista;
     }
 
     public void ejecutarServicio (String URL){
 
-        ProgressDialog progressDialog = new ProgressDialog(ResumenPago.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -195,23 +205,23 @@ public class ResumenPago extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
                     gCount = 0.00;
-            progressDialog.dismiss();
+                    progressDialog.dismiss();
                 },
                 volleyError -> progressDialog.dismiss()
         );
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
 
     public void obtenerMovimientos(){
 
-        ProgressDialog progressDialog = new ProgressDialog(ResumenPago.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
@@ -251,7 +261,7 @@ public class ResumenPago extends AppCompatActivity {
     public void obtenerAutFiscal(){
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?id_tipo_comprobante=4";
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {
@@ -285,14 +295,14 @@ public class ResumenPago extends AppCompatActivity {
 
     public void obtenerDetMovimientos(){
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Por favor espera...");
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
         String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + Login.gIdMovimiento;
         System.out.println(url_det_pedido);
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
 
@@ -326,8 +336,8 @@ public class ResumenPago extends AppCompatActivity {
                         numero = String.valueOf(gTotal);
 
                         try {
-                            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(ResumenPago.this, new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
+                            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
                             } else {
                                 BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
                                 if (connection != null) {
@@ -335,8 +345,8 @@ public class ResumenPago extends AppCompatActivity {
 
                                     final String text =
                                             "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
-                                                    this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logokiosko,
-                                                            DisplayMetrics.DENSITY_LOW, getApplicationContext().getTheme())) + "</img>\n" +
+                                                    getContext().getResources().getDrawableForDensity(R.drawable.logokiosko,
+                                                            DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
                                                     "[L]\n" +
                                                     "[C]" + Splash.gNombre + "\n" +
                                                     "[C]" + Splash.gDireccion + "\n" +
@@ -363,7 +373,7 @@ public class ResumenPago extends AppCompatActivity {
                                                     "[C]Gracias por su compra :)\n";
 
                                     final String text2 =
-                                                    "[L]\n" +
+                                            "[L]\n" +
                                                     "[C]" + Splash.gNombre + "\n" +
                                                     "[C]" + Splash.gDireccion + "\n" +
                                                     "[C]" + "Sucursal: " + sucursal + "\n" +
@@ -398,7 +408,7 @@ public class ResumenPago extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -429,7 +439,7 @@ public class ResumenPago extends AppCompatActivity {
 
         String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCaja.php";
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
 
@@ -450,7 +460,7 @@ public class ResumenPago extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }, volleyError -> Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
+                }, volleyError -> Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -478,7 +488,7 @@ public class ResumenPago extends AppCompatActivity {
 
         System.out.println(URL_REPORTES);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
 
@@ -500,8 +510,8 @@ public class ResumenPago extends AppCompatActivity {
                         }
 
                         if (no_comprobante <= hasta) {
-                            new InsertarMovimientos(getApplicationContext()).execute();
-                            new InsertarDetMovimientos(getApplicationContext()).execute();
+                            new InsertarMovimientos(getContext()).execute();
+                            new InsertarDetMovimientos(getContext()).execute();
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                                     + "?id_estado_prefactura=2"
                                     + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
@@ -510,7 +520,7 @@ public class ResumenPago extends AppCompatActivity {
                                     + "?monto_pago=" + etMoney.getText().toString()
                                     + "&monto_cambio=" + cambio.getText().toString()
                                     + "&id_fac_movimiento=" + Login.gIdMovimiento);
-                            startActivity(new Intent(getApplicationContext(), EnviandoTicket.class));
+                            startActivity(new Intent(getContext(), EnviandoTicket.class));
                         }
                         else {
 
@@ -518,7 +528,7 @@ public class ResumenPago extends AppCompatActivity {
                                     + "?id_aut_fiscal=" + Login.gIdAutFiscal;
                             ejecutarServicio(url);
 
-                            new AlertDialog.Builder(ResumenPago.this)
+                            new AlertDialog.Builder(getContext())
                                     .setTitle("Autorización finalizada")
                                     .setMessage("La autorización fiscal ha finalizado, por favor comuniquese con su administrador")
                                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
@@ -531,7 +541,7 @@ public class ResumenPago extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }, volleyError -> Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
+                }, volleyError -> Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -545,7 +555,7 @@ public class ResumenPago extends AppCompatActivity {
 
     public void ejecutarServicio2 (String URL){
 
-        ProgressDialog progressDialog = new ProgressDialog(ResumenPago.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -556,10 +566,10 @@ public class ResumenPago extends AppCompatActivity {
                     progressDialog.dismiss();
                 },
                 volleyError -> {
-            progressDialog.dismiss();
+                    progressDialog.dismiss();
                 }
         );
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
 
@@ -584,7 +594,7 @@ public class ResumenPago extends AppCompatActivity {
         Uri uri = Uri.fromFile(file);
         System.out.println("URL: " + uri);
         try {
-            InputStream inputStream = ResumenPago.this.getContentResolver().openInputStream(uri);
+            InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
             byte[] pdfInBytes = new byte[inputStream.available()];
             inputStream.read(pdfInBytes);
             encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
@@ -601,7 +611,7 @@ public class ResumenPago extends AppCompatActivity {
             Uri path = data.getData();
 
             try {
-                InputStream inputStream = ResumenPago.this.getContentResolver().openInputStream(path);
+                InputStream inputStream = getContext().getContentResolver().openInputStream(path);
                 byte[] pdfInBytes = new byte[inputStream.available()];
                 inputStream.read(pdfInBytes);
                 encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
@@ -612,5 +622,5 @@ public class ResumenPago extends AppCompatActivity {
 
         }
     }
-
+    
 }

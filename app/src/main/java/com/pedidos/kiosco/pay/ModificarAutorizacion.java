@@ -43,7 +43,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class ModificarAutorizacion extends AppCompatActivity {
 
-    String desde, hasta, serie, autorizacion, resolucion, filas, fecha;
+    String desde, hasta, serie, autorizacion, resolucion, filas, fecha, activoEdit;
     EditText desdeet, hastaet, serieet, autorizacionet, resolucionet, filaset, fechaet;
     RadioButton activo, inactivo;
     Button btnActivo, btnInactivo;
@@ -71,6 +71,8 @@ public class ModificarAutorizacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modificar_autorizacion);
+
+        getInfoUser();
 
         TextView fiscal = findViewById(R.id.numeroAut);
         fiscal.setText(String.valueOf(ObtenerReportesFiscal.numeroAut));
@@ -145,7 +147,6 @@ public class ModificarAutorizacion extends AppCompatActivity {
         activo = findViewById(R.id.si);
         inactivo = findViewById(R.id.no);
 
-        getInfoUser();
     }
 
     private void llenarComprobante(){
@@ -318,6 +319,16 @@ public class ModificarAutorizacion extends AppCompatActivity {
 
                             fecha = jsonObject1.getString("fecha_autorizacion");
                             fechaet.setText(fecha);
+
+                            activoEdit = jsonObject1.getString("activo");
+                            if (activoEdit.equals("1")){
+                                btnInactivo.setVisibility(View.VISIBLE);
+                                btnActivo.setVisibility(View.INVISIBLE);
+                            }
+                            else {
+                                btnActivo.setVisibility(View.VISIBLE);
+                                btnInactivo.setVisibility(View.INVISIBLE);
+                            }
 
                             llenarCaja();
                             llenarComprobante();

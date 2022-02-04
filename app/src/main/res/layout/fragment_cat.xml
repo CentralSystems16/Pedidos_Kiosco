@@ -23,7 +23,7 @@
         android:layout_marginTop="60dp"
         android:layout_width="150dp"
         android:layout_gravity="start"
-        android:backgroundTint="#CB3234"
+        android:backgroundTint="#FFCC03"
         android:text="Crear categoria"
         android:layout_marginStart="10dp"
         android:layout_height="wrap_content" />
@@ -33,7 +33,7 @@
         android:layout_marginTop="60dp"
         android:layout_width="150dp"
         android:layout_gravity="end"
-        android:backgroundTint="#CB3234"
+        android:backgroundTint="#FFCC03"
         android:text="Inactivas"
         android:layout_marginEnd="10dp"
         android:layout_height="wrap_content" />

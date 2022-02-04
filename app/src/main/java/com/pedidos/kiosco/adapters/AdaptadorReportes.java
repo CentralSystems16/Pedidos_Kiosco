@@ -88,7 +88,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
 
             cContext.startActivity(new Intent(cContext, Ayuda.class));
 
-
         });
 
         if (Principal.gIdEstadoCliente == 2){

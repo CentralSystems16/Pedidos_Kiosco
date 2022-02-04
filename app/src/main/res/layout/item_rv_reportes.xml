@@ -108,11 +108,10 @@
                 android:layout_marginStart="5dp"
                 android:background="@drawable/caja_texto_circular"
                 android:clickable="true"
-                android:text="Anular orden"
+                android:text="Anular pedido"
                 android:layout_width="100dp"
                 android:layout_height="35dp"
                 android:padding="10dp"
-                android:visibility="gone"
                 android:focusable="true" />
 
             <Button

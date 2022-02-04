@@ -3,7 +3,6 @@ package com.pedidos.kiosco.adapters;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +49,6 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
 
         reportesViewHolder.tvNombre.setText(String.valueOf(listaReportes.get(posicion).getIdFiscal()));
         ObtenerReportesFiscal.numeroAut = listaReportes.get(posicion).getIdFiscal();
-        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFecha());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getComprobante());
         reportesViewHolder.tvcaja.setText((listaReportes.get(posicion).getCaja()));
         reportesViewHolder.tvserie.setText(listaReportes.get(posicion).getSucursal());
@@ -71,14 +69,13 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvComprobante, tvcaja, tvserie;
+   TextView tvNombre, tvComprobante, tvcaja, tvserie;
    Button editar;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
 
         tvNombre = itemView.findViewById(R.id.nombreFiscal2);
-        tvFecha = itemView.findViewById(R.id.tvFechaAut);
         tvComprobante = itemView.findViewById(R.id.comprobante);
         tvcaja = itemView.findViewById(R.id.cajaFiscal);
         tvserie= itemView.findViewById(R.id.serieFiscal);

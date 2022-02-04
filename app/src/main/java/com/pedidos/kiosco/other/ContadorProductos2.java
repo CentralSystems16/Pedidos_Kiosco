@@ -5,7 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.pay.ResumenPago;
+import com.pedidos.kiosco.fragments.ResumenPago;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

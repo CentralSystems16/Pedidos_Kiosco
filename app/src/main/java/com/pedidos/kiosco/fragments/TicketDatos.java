@@ -1,11 +1,9 @@
 package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.Splash.gBlue;
-import static com.pedidos.kiosco.Splash.gFacebook;
 import static com.pedidos.kiosco.Splash.gFoto;
 import static com.pedidos.kiosco.Splash.gGif;
 import static com.pedidos.kiosco.Splash.gGreen;
-import static com.pedidos.kiosco.Splash.gImagenSplah;
 import static com.pedidos.kiosco.Splash.gRecBlue;
 import static com.pedidos.kiosco.Splash.gRecGreen;
 import static com.pedidos.kiosco.Splash.gRecRed;
@@ -22,6 +20,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +30,6 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,12 +58,11 @@ import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.other.ContadorProductos;
-import com.pedidos.kiosco.pay.ResumenPago;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +74,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class TicketDatos extends Fragment {
@@ -163,7 +163,9 @@ public class TicketDatos extends Fragment {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(getContext(), ResumenPago.class));
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ResumenPago());
+            fr.commit();
         });
 
         rvProductos = vista.findViewById(R.id.rvProductos);
@@ -337,7 +339,6 @@ public class TicketDatos extends Fragment {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                assert writer != null;
                 PdfDocument pdfDocument = new PdfDocument(writer);
                 com.itextpdf.layout.Document document = new Document(pdfDocument);
 
@@ -352,7 +353,7 @@ public class TicketDatos extends Fragment {
                 image.setHeight(100);
                 image.setWidth(100);
 
-                Drawable d2 = getActivity().getDrawable(R.drawable.logotaqueriapdf);
+                /*Drawable d2 = getActivity().getDrawable(R.drawable.logotaqueriapdf);
                 Bitmap bitmap2 = ((BitmapDrawable)d2).getBitmap();
                 ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
                 bitmap2.compress(Bitmap.CompressFormat.PNG, 100, stream2);
@@ -363,7 +364,7 @@ public class TicketDatos extends Fragment {
                 image2.setHeight(532);
                 image2.setWidth(532);
 
-                Drawable d3 = getActivity().getDrawable(R.drawable.barcodepdf);
+                Drawable d3 = AppCompatResources.getDrawable(requireContext(), R.drawable.barcodepdf);
                 Bitmap bitmap3 = ((BitmapDrawable)d3).getBitmap();
                 ByteArrayOutputStream stream3 = new ByteArrayOutputStream();
                 bitmap3.compress(Bitmap.CompressFormat.PNG, 100, stream3);
@@ -374,7 +375,7 @@ public class TicketDatos extends Fragment {
                 image3.setHeight(50);
                 image3.setWidth(100);
                 image3.setMarginLeft(398);
-                image3.setMarginTop(-40);
+                image3.setMarginTop(-40);*/
 
                 StringBuffer sb = new StringBuffer(18);
                 for ( int i = 0; i < 7 ;i++) {
@@ -425,7 +426,7 @@ public class TicketDatos extends Fragment {
                 Paragraph telefono = new Paragraph("Teléfono: 7702-2123");
                 Paragraph sitio = new Paragraph("Facebook: Dulces Tipicos La fiesta");
 
-                document.add(image2.setFixedPosition(170,-10));
+                //document.add(image2.setFixedPosition(170,-10));
                 document.add(image.setFixedPosition(420,710));
                 document.add(pedido);
                 document.add(fecha);
@@ -435,7 +436,7 @@ public class TicketDatos extends Fragment {
                 document.add(direcion);
                 document.add(telefono);
                 document.add(sitio);
-                document.add(image3);
+                //document.add(image3);
                 document.close();
 
             }

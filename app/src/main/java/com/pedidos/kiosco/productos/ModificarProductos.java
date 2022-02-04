@@ -138,7 +138,7 @@ public class ModificarProductos extends AppCompatActivity {
                 lista.add(c);
             }
 
-            ArrayAdapter<Categorias> a  = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, lista);
+            ArrayAdapter<Categorias> a  = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
             spProductos.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();

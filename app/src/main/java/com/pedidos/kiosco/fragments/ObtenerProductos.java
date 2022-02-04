@@ -1,14 +1,17 @@
-package com.pedidos.kiosco.main;
+package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.droidsonroids.gif.GifImageView;
 
-public class ObtenerProductos extends AppCompatActivity {
+public class ObtenerProductos extends Fragment {
 
     RecyclerView rvLista = null;
     AdaptadorProductos adaptador = null;
@@ -44,19 +47,23 @@ public class ObtenerProductos extends AppCompatActivity {
     public static String gNombreProd;
 
     GifImageView conejo, gato, carrito;
-
     public static TextView tvCantProductos;
     DecimalFormat formatoDecimal = new DecimalFormat("#");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.recycler_productos);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        ImageButton backprod = findViewById(R.id.backProducts);
-        backprod.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), Principal.class)));
+        View vista = inflater.inflate(R.layout.obtener_productos_fragment, container, false);
 
-        TextView buscador = findViewById(R.id.etBuscador);
+        ImageButton backprod = vista.findViewById(R.id.backProducts);
+        backprod.setOnClickListener(view -> {
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Categorias());
+            fr.commit();
+        });
+
+        TextView buscador = vista.findViewById(R.id.etBuscador);
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -70,34 +77,40 @@ public class ObtenerProductos extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-               filtrar(editable.toString());
+                filtrar(editable.toString());
             }
         });
 
-        carrito = findViewById(R.id.carrito);
+        carrito = vista.findViewById(R.id.carrito);
         carrito.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new TicketDatos());
+            fr.commit();
+
         });
 
-        conejo = findViewById(R.id.conejo2);
+        conejo = vista.findViewById(R.id.conejo2);
         conejo.setVisibility(View.INVISIBLE);
-        gato = findViewById(R.id.gato2);
+        gato = vista.findViewById(R.id.gato2);
         gato.setVisibility(View.INVISIBLE);
-        tvCantProductos = findViewById(R.id.tvCantProductos);
+        tvCantProductos = vista.findViewById(R.id.tvCantProductos);
 
-        tvCantProductos = findViewById(R.id.tvCantProductos);
-        new ContadorProductos.GetDataFromServerIntoTextView(getApplicationContext()).execute();
+        tvCantProductos = vista.findViewById(R.id.tvCantProductos);
+        new ContadorProductos.GetDataFromServerIntoTextView(getContext()).execute();
         tvCantProductos.setText(String.valueOf(formatoDecimal.format(gCount)));
 
-        rvLista = findViewById(R.id.rvLista);
-        rvLista.setLayoutManager(new GridLayoutManager(this, 3));
+        rvLista = vista.findViewById(R.id.rvLista);
+        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         listaProductos = new ArrayList<>();
 
-        adaptador = new AdaptadorProductos(this, listaProductos);
+        adaptador = new AdaptadorProductos(getContext(), listaProductos);
         rvLista.setAdapter(adaptador);
 
         obtenerProductos();
 
+        return vista;
     }
 
     public void obtenerProductos() {
@@ -106,7 +119,7 @@ public class ObtenerProductos extends AppCompatActivity {
 
         String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductos.php" + "?id_categoria=" + Login.gIdCategoria;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
 
@@ -130,19 +143,19 @@ public class ObtenerProductos extends AppCompatActivity {
                                             jsonObject1.getInt("maximo")));
                         }
 
-                        adaptador = new AdaptadorProductos(this, listaProductos);
+                        adaptador = new AdaptadorProductos(getContext(), listaProductos);
                         rvLista.setAdapter(adaptador);
 
                         conejo.setVisibility(View.INVISIBLE);
 
                     } catch (JSONException e) {
-                        Toast.makeText(this, "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         conejo.setVisibility(View.INVISIBLE);
                         gato.setVisibility(View.VISIBLE);
                     }
 
                 }, volleyError -> {
-            Toast.makeText(this, "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + volleyError, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + volleyError, Toast.LENGTH_LONG).show();
             conejo.setVisibility(View.INVISIBLE);
             gato.setVisibility(View.VISIBLE);
         }
@@ -172,7 +185,6 @@ public class ObtenerProductos extends AppCompatActivity {
         adaptador.filtrar(filtrarLista);
     }
 
-    @Override
     public void onBackPressed() {
 
     }

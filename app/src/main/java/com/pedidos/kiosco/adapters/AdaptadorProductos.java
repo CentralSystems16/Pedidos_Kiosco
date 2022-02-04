@@ -2,7 +2,6 @@ package com.pedidos.kiosco.adapters;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
-import com.pedidos.kiosco.main.ObtenerProductos;
+import com.pedidos.kiosco.fragments.ObtenerProductos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
 import com.pedidos.kiosco.other.InsertarDetPedido;

@@ -25,13 +25,9 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.adapters.AdaptadorReportesFiscal;
 import com.pedidos.kiosco.adapters.AdaptadorReportesMov;
-import com.pedidos.kiosco.model.Fiscal;
 import com.pedidos.kiosco.model.Movimientos;
-import com.pedidos.kiosco.pay.ResumenPago;
 
 import org.json.JSONArray;
 import org.json.JSONException;

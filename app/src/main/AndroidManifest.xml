@@ -34,13 +34,7 @@
             android:name=".pay.AutFiscal"
             android:exported="false" />
         <activity
-            android:name=".pay.ResumenPago"
-            android:exported="false" />
-        <activity
             android:name=".desing.EnviandoTicket"
-            android:exported="false" />
-        <activity
-            android:name=".main.ObtenerProductos"
             android:exported="false" />
         <activity
             android:name=".utils.OpcionesSoporte"

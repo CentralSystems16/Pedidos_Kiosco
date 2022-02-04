@@ -22,14 +22,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/tvFechaAut"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp" />
-
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,7 +63,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:text="Numero de autenticación"
+                    android:text="Numero de autorización:"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/black"

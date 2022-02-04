@@ -1,15 +1,13 @@
 package com.pedidos.kiosco.fragments;
 
-import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gBlue3;
-import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gFoto2;
+import static com.pedidos.kiosco.Splash.gFoto3;
 import static com.pedidos.kiosco.Splash.gGreen3;
 import static com.pedidos.kiosco.Splash.gRecBlue2;
 import static com.pedidos.kiosco.Splash.gRecGreen2;
 import static com.pedidos.kiosco.Splash.gRecRed2;
-import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.Splash.gRed3;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -29,10 +27,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.card.MaterialCardView;
+import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -51,7 +48,6 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -63,22 +59,20 @@ public class Home extends Fragment {
         obtenerPedidosAct();
         obtenerPedidosAct2();
 
-        //fiscal = view.findViewById(R.id.btnFiscal);
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
+        ImageView hacer, ver;
 
+        hacer = view.findViewById(R.id.pedido);
+        ver = view.findViewById(R.id.ver);
+
+        Glide.with(Home.this).load(gFoto3).into(hacer);
+        Glide.with(Home.this).load(gFoto2).into(ver);
 
         TextView nombre = view.findViewById(R.id.nombrePrincipal);
         nombre.setText(Login.nombre);
-
-        /*fiscal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
 
         hacerPedido.setOnClickListener(view1 -> {
 

@@ -3,7 +3,7 @@ package com.pedidos.kiosco.adapters;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-import static com.pedidos.kiosco.pay.ResumenPago.PERMISSION_BLUETOOTH;
+import static com.pedidos.kiosco.fragments.ResumenPago.PERMISSION_BLUETOOTH;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
