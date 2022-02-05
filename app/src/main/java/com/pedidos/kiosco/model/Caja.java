@@ -10,7 +10,7 @@ public class Caja {
         this.nombreCaja = nombreCaja;
     }
 
-    public Caja() {
+    public Caja(){
 
     }
 

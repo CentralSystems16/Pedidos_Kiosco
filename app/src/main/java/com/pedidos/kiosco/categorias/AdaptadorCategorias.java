@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.fragments.ModificarCategorias;
 
 import java.util.List;
 

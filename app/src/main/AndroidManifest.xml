@@ -61,9 +61,6 @@
             android:name=".main.ObtenerDetReporte"
             android:exported="false" />
         <activity
-            android:name=".categorias.ModificarCategorias"
-            android:exported="false" />
-        <activity
             android:name=".categorias.AgregarCategorias"
             android:exported="false" />
         <activity

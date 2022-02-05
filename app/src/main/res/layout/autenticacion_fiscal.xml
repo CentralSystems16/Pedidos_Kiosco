@@ -281,7 +281,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDesde"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:gravity="center"
@@ -338,7 +338,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFecha"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:layout_marginStart="30dp"

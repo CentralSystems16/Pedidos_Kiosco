@@ -43,7 +43,7 @@ import org.json.JSONObject;
 public class Home extends Fragment {
 
     private SliderLayout sliderLayout;
-    CardView hacerPedido, verPedido;
+    CardView hacerPedido, verPedido, abrirCaja;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,13 @@ public class Home extends Fragment {
         verPedido = view.findViewById(R.id.btnVerPedidos);
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
+
+        abrirCaja = view.findViewById(R.id.btnCrearCaja);
+        abrirCaja.setOnClickListener(view12 -> {
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Monto_inicial());
+            fr.commit();
+        });
         ImageView hacer, ver;
 
         hacer = view.findViewById(R.id.pedido);

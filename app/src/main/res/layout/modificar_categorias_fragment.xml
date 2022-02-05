@@ -7,8 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:id="@+id/modifCat"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".categorias.ModificarCategorias">
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <TextView
         android:layout_width="match_parent"

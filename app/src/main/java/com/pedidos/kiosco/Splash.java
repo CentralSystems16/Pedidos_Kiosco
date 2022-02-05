@@ -1,25 +1,45 @@
 package com.pedidos.kiosco;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.pedidos.kiosco.model.Caja;
+import com.pedidos.kiosco.model.Sucursales;
+import com.pedidos.kiosco.pdf.Api;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class Splash extends AppCompatActivity {
@@ -30,6 +50,12 @@ public class Splash extends AppCompatActivity {
     TextView tvEmpresa;
     ImageView imgEmpresa;
     GifImageView animEmpresa;
+    AsyncHttpClient datos;
+    AsyncHttpClient datos2;
+    Spinner spDatos;
+    ArrayList<Sucursales> lista = new ArrayList<>();
+    Spinner spDatos2;
+    ArrayList<Caja> lista2 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +63,165 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
-        Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
+        datos = new AsyncHttpClient();
+        datos2 = new AsyncHttpClient();
+        showAlertWithTextInputLayout(getApplicationContext());
 
-        tvEmpresa = findViewById(R.id.tvEmpresa);
-        imgEmpresa = findViewById(R.id.imgEmpresa);
-        animEmpresa = findViewById(R.id.animacionEmpresa);
-        tvEmpresa.setAnimation(animacion2);
-        imgEmpresa.setAnimation(animacion1);
+    }
 
-        obtenerEmpresa();
-        obtenerRecursos();
-        obtenerRecursos2();
-        obtenerRecursos3();
+    private void llenarSpinner(){
 
-        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
+        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php";
+
+        datos.post(url, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                if (statusCode == 200){
+                    cargarSpinner(new String(responseBody));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    private void cargarSpinner(String respuesta){
+
+        try {
+            JSONArray jsonArreglo = new JSONArray(respuesta);
+            for (int i = 0; i < jsonArreglo.length(); i++){
+
+                Sucursales e = new Sucursales();
+                e.setNomSucursal(jsonArreglo.getJSONObject(i).getString("nombre_sucursal"));
+                lista.add(e);
+            }
+
+            ArrayAdapter<Sucursales> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, lista);
+            spDatos.setAdapter(a);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void llenarSpinner2(){
+
+        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php";
+
+        datos2.post(url, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                if (statusCode == 200){
+                    cargarSpinner2(new String(responseBody));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    private void cargarSpinner2(String respuesta){
+
+        try {
+            JSONArray jsonArreglo = new JSONArray(respuesta);
+            for (int i = 0; i < jsonArreglo.length(); i++){
+
+                Caja e = new Caja();
+                e.setNombreCaja(jsonArreglo.getJSONObject(i).getString("nombre_caja"));
+                lista2.add(e);
+            }
+
+            ArrayAdapter<Caja> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, lista2);
+            spDatos2.setAdapter(a);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void showAlertWithTextInputLayout(Context context) {
+
+         spDatos = new Spinner(context);
+         llenarSpinner();
+
+        AlertDialog dialog = new AlertDialog.Builder(Splash.this)
+                .setTitle("Sucursal")
+                .setMessage("Por favor, seleccione la sucursal a la que pertenece")
+                .setView(spDatos)
+                .setPositiveButton("Realizado", (dialogInterface, i) -> {
+
+                    showAlertWithTextInputLayout2(context);
+
+                })
+                .create();
+
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        dialog.show();
+
+    }
+
+    private void showAlertWithTextInputLayout2(Context context) {
+
+        llenarSpinner2();
+        spDatos2 = new Spinner(context);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Cajas")
+                .setMessage("Por favor, seleccione el número de caja")
+                .setView(spDatos2)
+                .setPositiveButton("Realizado", (dialogInterface, i) -> {
+                    ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php");
+                })
+                .create();
+
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        dialog.show();
+
+    }
+
+    public void ejecutarServicio (String URL) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
+            Toast.makeText(getApplicationContext(), "¡Datos registrados correctamente!", Toast.LENGTH_SHORT).show();
+            Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
+            Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
+
+            tvEmpresa = findViewById(R.id.tvEmpresa);
+            imgEmpresa = findViewById(R.id.imgEmpresa);
+            animEmpresa = findViewById(R.id.animacionEmpresa);
+            tvEmpresa.setAnimation(animacion2);
+            imgEmpresa.setAnimation(animacion1);
+
+            obtenerEmpresa();
+            obtenerRecursos();
+            obtenerRecursos2();
+            obtenerRecursos3();
+
+            new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
+
+        }, error -> Toast.makeText(getApplicationContext(), "Ocurrió un error: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                Map<String, String> params = new Hashtable<>();
+                params.put("nombre_sucursal", String.valueOf(spDatos.getSelectedItemPosition()));
+                params.put("nombre_caja", String.valueOf(spDatos2.getSelectedItemPosition()));
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
 
     }
 

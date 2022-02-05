@@ -118,6 +118,7 @@ public class AutFiscal extends AppCompatActivity {
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             Date date = null;
+
             try {
                 date = sdf.parse("2003/07/01");
             } catch (ParseException e) {
@@ -125,6 +126,7 @@ public class AutFiscal extends AppCompatActivity {
             }
 
             Calendar cal = Calendar.getInstance();
+            String strDate = sdf.format(cal.getTime());
             cal.setTime(date);
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
