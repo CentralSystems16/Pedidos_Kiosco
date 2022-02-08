@@ -1,5 +1,6 @@
 package com.pedidos.kiosco.categorias;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -10,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.ModificarCategorias;
+import com.pedidos.kiosco.productos.ProdFragment;
 
 import java.util.List;
 
@@ -53,8 +57,9 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
             CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
 
             CatFragment.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
-            Intent i = new Intent(cContext, ModificarCategorias.class);
-            categoriaViewHolder.itemView.getContext().startActivity(i);
+            FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ProdFragment());
+            fr.commit();
 
         });
     }

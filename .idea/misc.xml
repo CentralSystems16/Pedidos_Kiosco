@@ -8,7 +8,8 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.334" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_view_list_24.xml" value="0.334" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/agregar_usuario.xml" value="0.33" />
-        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/autenticacion_fiscal.xml" value="0.33" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/autenticacion_fiscal.xml" value="0.5" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/cierre_caja_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_carrito.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_cat.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_categorias.xml" value="0.36666666666666664" />
@@ -42,8 +43,11 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/registro.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/resumen_pago.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/resumen_pago_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/spinner_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/spinner_item_inicial.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/splash.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/usuario_frament.xml" value="1.3428571428571427" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/tipo_pago.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/usuario_frament.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/usuarios_inactivos.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/boton_borde.xml" value="0.3828125" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/boton_borde_verde.xml" value="0.3828125" />

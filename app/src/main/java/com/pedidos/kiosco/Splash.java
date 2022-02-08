@@ -2,9 +2,10 @@ package com.pedidos.kiosco;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,8 +21,6 @@ import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -30,22 +28,19 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Sucursales;
-import com.pedidos.kiosco.pdf.Api;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class Splash extends AppCompatActivity {
 
-    public static String gNombre, gTelefono, gDireccion, gFacebook, gImagenSplah, gAnimacion, gGif, gFoto, gGif2, gFoto2, gGif3, gFoto3;
-    public static int gNrc, gNit, gCantImagenes, gImagen, gRed, gGreen, gBlue, gRecRed, gRecGreen, gRecBlue, gRecRed2, gRecGreen2, gRecBlue2, gRed3, gGreen3, gBlue3;
+    public static String gNombre, gTelefono, gDireccion, gFacebook,
+            gImagenSplah, gAnimacion, gGif, gFoto, gGif2, gFoto2, gGif3, gFoto3;
+    public static int gNrc, gNit, gCantImagenes, gImagen, gRed, gGreen,
+            gBlue, gRecRed, gRecGreen, gRecBlue, gRecRed2, gRecGreen2, gRecBlue2,
+            gRed3, gGreen3, gBlue3, gIdCaja, gIdSucursal;
 
     TextView tvEmpresa;
     ImageView imgEmpresa;
@@ -56,6 +51,7 @@ public class Splash extends AppCompatActivity {
     ArrayList<Sucursales> lista = new ArrayList<>();
     Spinner spDatos2;
     ArrayList<Caja> lista2 = new ArrayList<>();
+    int resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +59,53 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        SharedPreferences preferences2 = getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
+        resultado = preferences2.getInt("sucursal", 0);
+
         datos = new AsyncHttpClient();
         datos2 = new AsyncHttpClient();
-        showAlertWithTextInputLayout(getApplicationContext());
+
+        if (resultado == 0) {
+
+            Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
+            Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
+
+            tvEmpresa = findViewById(R.id.tvEmpresa);
+            imgEmpresa = findViewById(R.id.imgEmpresa);
+            animEmpresa = findViewById(R.id.animacionEmpresa);
+            tvEmpresa.setAnimation(animacion2);
+            imgEmpresa.setAnimation(animacion1);
+
+            obtenerEmpresa();
+            obtenerRecursos();
+            obtenerRecursos2();
+            obtenerRecursos3();
+
+            showAlertWithTextInputLayout(getApplicationContext());
+        }
+
+        else {
+
+            Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
+            Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
+
+            tvEmpresa = findViewById(R.id.tvEmpresa);
+            imgEmpresa = findViewById(R.id.imgEmpresa);
+            animEmpresa = findViewById(R.id.animacionEmpresa);
+            tvEmpresa.setAnimation(animacion2);
+            imgEmpresa.setAnimation(animacion1);
+
+            obtenerEmpresa();
+            obtenerRecursos();
+            obtenerRecursos2();
+            obtenerRecursos3();
+
+            new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
+
+        }
+
+
+
 
     }
 
@@ -98,10 +138,11 @@ public class Splash extends AppCompatActivity {
 
                 Sucursales e = new Sucursales();
                 e.setNomSucursal(jsonArreglo.getJSONObject(i).getString("nombre_sucursal"));
+                e.setIdSucursal(jsonArreglo.getJSONObject(i).getInt("id_sucursal"));
                 lista.add(e);
             }
 
-            ArrayAdapter<Sucursales> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, lista);
+            ArrayAdapter<Sucursales> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item_inicial, lista);
             spDatos.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -110,7 +151,8 @@ public class Splash extends AppCompatActivity {
 
     private void llenarSpinner2(){
 
-        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php";
+        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php" + "?id_sucursal=" + gIdSucursal;
+        System.out.println(url);
 
         datos2.post(url, new AsyncHttpResponseHandler() {
 
@@ -137,29 +179,32 @@ public class Splash extends AppCompatActivity {
 
                 Caja e = new Caja();
                 e.setNombreCaja(jsonArreglo.getJSONObject(i).getString("nombre_caja"));
+                e.setIdCaja(jsonArreglo.getJSONObject(i).getInt("id_caja"));
                 lista2.add(e);
             }
 
-            ArrayAdapter<Caja> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, lista2);
+            ArrayAdapter<Caja> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item_inicial, lista2);
             spDatos2.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
+    @SuppressLint("ResourceType")
     private void showAlertWithTextInputLayout(Context context) {
 
          spDatos = new Spinner(context);
          llenarSpinner();
 
+
         AlertDialog dialog = new AlertDialog.Builder(Splash.this)
                 .setTitle("Sucursal")
-                .setMessage("Por favor, seleccione la sucursal a la que pertenece")
+                .setMessage("Por favor seleccione la sucursal a la que pertenece")
                 .setView(spDatos)
                 .setPositiveButton("Realizado", (dialogInterface, i) -> {
-
+                    obtenerIdSucursal();
                     showAlertWithTextInputLayout2(context);
+
 
                 })
                 .create();
@@ -179,7 +224,10 @@ public class Splash extends AppCompatActivity {
                 .setMessage("Por favor, seleccione el número de caja")
                 .setView(spDatos2)
                 .setPositiveButton("Realizado", (dialogInterface, i) -> {
-                    ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php");
+                    obtenerIdCaja();
+
+                    ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php" + "?id_caja=" + gIdCaja + "&id_sucursal=" + gIdSucursal);
+
                 })
                 .create();
 
@@ -192,37 +240,30 @@ public class Splash extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
             Toast.makeText(getApplicationContext(), "¡Datos registrados correctamente!", Toast.LENGTH_SHORT).show();
-            Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
-            Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
-
-            tvEmpresa = findViewById(R.id.tvEmpresa);
-            imgEmpresa = findViewById(R.id.imgEmpresa);
-            animEmpresa = findViewById(R.id.animacionEmpresa);
-            tvEmpresa.setAnimation(animacion2);
-            imgEmpresa.setAnimation(animacion1);
-
-            obtenerEmpresa();
-            obtenerRecursos();
-            obtenerRecursos2();
-            obtenerRecursos3();
-
             new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
 
         }, error -> Toast.makeText(getApplicationContext(), "Ocurrió un error: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
-            @Override
-            protected Map<String, String> getParams() {
-
-                Map<String, String> params = new Hashtable<>();
-                params.put("nombre_sucursal", String.valueOf(spDatos.getSelectedItemPosition()));
-                params.put("nombre_caja", String.valueOf(spDatos2.getSelectedItemPosition()));
-
-                return params;
-            }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    public void obtenerIdCaja(){
+        int indice = spDatos2.getSelectedItemPosition();
+        gIdCaja = lista2.get(indice).getIdCaja();
+
+        SharedPreferences preferences = getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =  preferences.edit();
+        editor.putInt("sucursal", gIdCaja);
+        editor.putBoolean("sesion", true);
+        editor.apply();
+    }
+
+    public void obtenerIdSucursal(){
+        int indice = spDatos.getSelectedItemPosition();
+        gIdSucursal = lista.get(indice).getIdSucursal();
     }
 
     public void obtenerRecursos(){

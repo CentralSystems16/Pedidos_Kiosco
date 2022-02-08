@@ -58,7 +58,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMoney"
+                android:id="@+id/montoInicial"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:inputType="number"

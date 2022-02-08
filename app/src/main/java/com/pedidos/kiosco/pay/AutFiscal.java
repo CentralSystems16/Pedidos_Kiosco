@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
@@ -72,10 +73,65 @@ public class AutFiscal extends AppCompatActivity {
     private Spinner spCaja;
     ArrayList<Caja> caja;
 
+    private int ultimoAnio, ultimoMes, ultimoDiaDelMes;
+
+    private DatePickerDialog.OnDateSetListener listenerDeDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int anio, int mes, int diaDelMes) {
+            // Esto se llama cuando seleccionan una fecha. Nos pasa la vista, pero más importante, nos pasa:
+            // El año, el mes y el día del mes. Es lo que necesitamos para saber la fecha completa
+
+
+            // Refrescamos las globales
+            ultimoAnio = anio;
+            ultimoMes = mes;
+            ultimoDiaDelMes = diaDelMes;
+
+            // Y refrescamos la fecha
+            refrescarFechaEnEditText();
+
+        }
+    };
+
+    public void refrescarFechaEnEditText() {
+        // Formateamos la fecha pero podríamos hacer cualquier otra cosa ;)
+        String fecha = String.format(Locale.getDefault(), "%02d-%02d-%02d", ultimoAnio, ultimoMes+1, ultimoDiaDelMes);
+
+        // La ponemos en el editText
+        mDisplayDate.setText(fecha);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.autenticacion_fiscal);
+
+        mDisplayDate = findViewById(R.id.editFecha);
+
+        // Poner último año, mes y día a la fecha de hoy
+        final Calendar calendario = Calendar.getInstance();
+        ultimoAnio = calendario.get(Calendar.YEAR);
+        ultimoMes = calendario.get(Calendar.MONTH);
+        ultimoDiaDelMes = calendario.get(Calendar.DAY_OF_MONTH);
+
+        // Refrescar la fecha en el EditText
+        refrescarFechaEnEditText();
+
+        // Hacer que el datepicker se muestre cuando toquen el EditText; recuerda
+        // que se podría invocar en el click de cualquier otro botón, o en cualquier
+        // otro evento
+
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Aquí es cuando dan click así que mostramos el DatePicker
+
+                // Le pasamos lo que haya en las globales
+                DatePickerDialog dialogoFecha = new DatePickerDialog(AutFiscal.this, listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
+                //Mostrar
+                dialogoFecha.show();
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbarAdd);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
@@ -98,7 +154,7 @@ public class AutFiscal extends AppCompatActivity {
         autorizacion = findViewById(R.id.etAuth);
         resolucion = findViewById(R.id.etRes);
         numeroFilas = findViewById(R.id.editFilas);
-        mDisplayDate = findViewById(R.id.editFecha);
+
         activos = findViewById(R.id.rgActivo);
         continuar = findViewById(R.id.btnRegistrarFiscal);
 
@@ -112,49 +168,6 @@ public class AutFiscal extends AppCompatActivity {
         llenarCaja();
         llenarComprobante();
         llenarSucursal();
-
-        mDisplayDate.setOnClickListener(v -> {
-
-            @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = null;
-
-            try {
-                date = sdf.parse("2003/07/01");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            Calendar cal = Calendar.getInstance();
-            String strDate = sdf.format(cal.getTime());
-            cal.setTime(date);
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog dialog = new DatePickerDialog(
-                    AutFiscal.this,
-                    android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,
-                    mDateSetListener,
-                    year, month, day);
-            dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-        });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            private static final String TAG = "";
-
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-
-                Log.d(TAG, "onDateSet: d/MMMM/yyyy: " + day + month + year);
-
-                String date = day + "/" + month + "/" + year;
-                mDisplayDate.setText(date);
-            }
-        };
 
         continuar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         continuar.setOnClickListener(view -> {

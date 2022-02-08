@@ -9,7 +9,9 @@ import static com.pedidos.kiosco.Splash.gRecGreen2;
 import static com.pedidos.kiosco.Splash.gRecRed2;
 import static com.pedidos.kiosco.Splash.gRed3;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,6 +46,8 @@ public class Home extends Fragment {
 
     private SliderLayout sliderLayout;
     CardView hacerPedido, verPedido, abrirCaja;
+    int resultado;
+    TextView cierreCaja;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +60,11 @@ public class Home extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        obtenerCierreCaja();
         obtenerPedidosAct();
         obtenerPedidosAct2();
+
+        cierreCaja = view.findViewById(R.id.txtCierreCaja);
 
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
@@ -66,9 +73,17 @@ public class Home extends Fragment {
 
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
         abrirCaja.setOnClickListener(view12 -> {
+
+            if (VariablesGlobales.gIdCierreCaja != 0) {
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new Monto_inicial());
             fr.commit();
+            }
+            else {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new Cierre_caja());
+                fr.commit();
+            }
         });
         ImageView hacer, ver;
 
@@ -83,10 +98,10 @@ public class Home extends Fragment {
 
         hacerPedido.setOnClickListener(view1 -> {
 
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new Categorias());
-            fr.commit();
-            Login.gIdPedido = 0;
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new Categorias());
+                fr.commit();
+                Login.gIdPedido = 0;
 
         });
 
@@ -101,6 +116,53 @@ public class Home extends Fragment {
         setSliderViews();
 
         return view;
+
+    }
+
+    public void obtenerCierreCaja(){
+
+        SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
+        resultado = preferences2.getInt("sucursal", 0);
+
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCierreCaja.php" + "?id_usuario=" + Login.gIdUsuario + "&id_caja=" + resultado;
+        System.out.println(url_pedido);
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Caja");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            VariablesGlobales.gIdCierreCaja = jsonObject1.getInt("id_cierre_caja");
+                            jsonObject1.getInt("id_caja");
+                            jsonObject1.getString("fecha_ini");
+                            jsonObject1.getString("fecha_fin");
+                            jsonObject1.getDouble("fondo_inicial");
+
+                        }
+
+                        if (VariablesGlobales.gIdCierreCaja != 0){
+                            cierreCaja.setText("Cerrar caja");
+                        }
+
+                        Toast.makeText(getContext(), ""+VariablesGlobales.gIdCierreCaja, Toast.LENGTH_SHORT).show();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }, Throwable::printStackTrace
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
 
     }
 

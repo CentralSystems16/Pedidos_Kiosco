@@ -4,7 +4,6 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gImagenSplah;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +35,6 @@ public class Login extends AppCompatActivity {
     public static String nombre, email, repeatContra, usuario, contra;
 
     EditText user, password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

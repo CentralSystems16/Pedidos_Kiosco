@@ -8,20 +8,13 @@ import static com.pedidos.kiosco.Splash.gRecBlue;
 import static com.pedidos.kiosco.Splash.gRecGreen;
 import static com.pedidos.kiosco.Splash.gRecRed;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,15 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -50,7 +40,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.GrooveBorder;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
@@ -62,11 +51,9 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.other.ContadorProductos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -74,8 +61,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class TicketDatos extends Fragment {
@@ -158,11 +143,6 @@ public class TicketDatos extends Fragment {
         btnConfirmarEnviar = vista.findViewById(R.id.cerdo);
         Glide.with(TicketDatos.this).load(gFoto).into(btnConfirmarEnviar);
         btnConfirmarEnviar.setOnClickListener(view -> {
-            try {
-                createPDF();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ResumenPago());
             fr.commit();
@@ -342,7 +322,7 @@ public class TicketDatos extends Fragment {
                 PdfDocument pdfDocument = new PdfDocument(writer);
                 com.itextpdf.layout.Document document = new Document(pdfDocument);
 
-                Drawable d = getActivity().getDrawable(R.drawable.logokiosko);
+                /*Drawable d = getActivity().getDrawable(R.drawable.logokiosko);
                 Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -351,7 +331,7 @@ public class TicketDatos extends Fragment {
                 ImageData imageData = ImageDataFactory.create(bitmapData);
                 com.itextpdf.layout.element.Image image = new Image(imageData);
                 image.setHeight(100);
-                image.setWidth(100);
+                image.setWidth(100);*/
 
                 /*Drawable d2 = getActivity().getDrawable(R.drawable.logotaqueriapdf);
                 Bitmap bitmap2 = ((BitmapDrawable)d2).getBitmap();
@@ -427,7 +407,7 @@ public class TicketDatos extends Fragment {
                 Paragraph sitio = new Paragraph("Facebook: Dulces Tipicos La fiesta");
 
                 //document.add(image2.setFixedPosition(170,-10));
-                document.add(image.setFixedPosition(420,710));
+                //document.add(image.setFixedPosition(420,710));
                 document.add(pedido);
                 document.add(fecha);
                 document.add(sucursal1);

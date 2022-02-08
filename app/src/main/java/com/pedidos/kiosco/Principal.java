@@ -28,6 +28,8 @@ import com.pedidos.kiosco.fragments.Usuario;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.other.MiPersona;
 import com.pedidos.kiosco.productos.ProdFragment;
+import com.pedidos.kiosco.usuarios.UsuarioFragment;
+
 import java.util.concurrent.ExecutionException;
 
 public class Principal extends AppCompatActivity {
@@ -82,6 +84,10 @@ public class Principal extends AppCompatActivity {
         user = findViewById(R.id.floatingActionButton4);
         user.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         user.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new UsuarioFragment());
+            fr.commit();
 
         });
 

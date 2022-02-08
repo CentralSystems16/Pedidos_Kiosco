@@ -51,6 +51,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
+import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarDetMovimientos;
 import com.pedidos.kiosco.other.InsertarMovimientos;
@@ -95,7 +96,6 @@ public class ResumenPago extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.resumen_pago_fragment, container, false);
-
 
         /*File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         File file = new File(dir, Login.gIdPedido + " Examen.pdf");
@@ -177,18 +177,30 @@ public class ResumenPago extends Fragment {
         pagar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         pagar.setOnClickListener(view -> {
 
-
-            if (etMoney.getText().toString().equals("")){
-                Toast.makeText(getContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
+            if (VariablesGlobales.gIdCierreCaja == 0){
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Caja cerrada")
+                        .setMessage("Para pagar debe abrir caja")
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
             }
+
             else {
+                if (etMoney.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
+                } else {
 
-                obtenerAutFiscal();
-                obtenerMovimientos();
+                    TipoPago myDialogFragment = new TipoPago();
+                    myDialogFragment.show(getFragmentManager(), "MyFragment");
+                    myDialogFragment.setCancelable(false);
 
-                obtenerDetMovimientos();
-                encodePDF();
-                uploadDocument();
+                    obtenerAutFiscal();
+                    obtenerMovimientos();
+                    obtenerDetMovimientos();
+
+                }
             }
         });
 
@@ -439,7 +451,7 @@ public class ResumenPago extends Fragment {
 
         String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCaja.php";
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
 
@@ -488,7 +500,7 @@ public class ResumenPago extends Fragment {
 
         System.out.println(URL_REPORTES);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
 
@@ -520,7 +532,7 @@ public class ResumenPago extends Fragment {
                                     + "?monto_pago=" + etMoney.getText().toString()
                                     + "&monto_cambio=" + cambio.getText().toString()
                                     + "&id_fac_movimiento=" + Login.gIdMovimiento);
-                            startActivity(new Intent(getContext(), EnviandoTicket.class));
+
                         }
                         else {
 
@@ -553,25 +565,6 @@ public class ResumenPago extends Fragment {
 
     }
 
-    public void ejecutarServicio2 (String URL){
-
-        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-                    progressDialog.dismiss();
-                },
-                volleyError -> {
-                    progressDialog.dismiss();
-                }
-        );
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }
 
     private void uploadDocument() {
 

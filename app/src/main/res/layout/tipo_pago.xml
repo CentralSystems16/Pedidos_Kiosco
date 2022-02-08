@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:backgroundTint="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:background="@drawable/boton_borde"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/about"
+            android:clickable="true"
+            android:backgroundTint="#4CAF50"
+           android:background="@drawable/boton_borde"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="payment.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="true"
+            android:focusable="true" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="Por favor seleccione el método de pago"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content" >
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/btnDinero"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:textSize="11dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/dinero"/>
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/btnCreditCard"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:textSize="11dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/creditcards"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

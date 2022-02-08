@@ -31,7 +31,7 @@ public class UsuarioFragment extends Fragment {
     public static ArrayList<Usuarios> usuarios;
     Adaptadorsuarios adaptadorUsers;
     FloatingActionButton fab;
-    public static final String URL_USERS = "http://"+ VariablesGlobales.host +"/android/LCB/administrador/scripts/scripts_php/login.php" + "?estado_usuario=1";
+    public static final String URL_USERS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerUsers.php" + "?estado_usuario=1";
     public static String gNombreUsuario, gLoginUusario, gPasswordUsuario, gPasswordRepeatUsuario, gEmailUsuario, gFechaNacimiento, gSexoUsuario;
     public static int gIdUsuario, gIdCargo, gEstadoUsuario, gEdadUsuario, gDuiUsuario;
     public Button usuariosInactivos;

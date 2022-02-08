@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    tools:context=".fragments.Cierre_caja">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Digite el monto en efectivo encontrado en la caja"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cashmachine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Monto final $"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipRegisterCurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Monto final"
+            app:boxStrokeColor="#000000"
+            android:textColorHint="#9F807E7E"
+            app:hintTextColor="#000000"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/montoFinal"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAceptarRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="ACEPTAR"
+            android:textSize="12sp"
+            android:backgroundTint="#4CAF50"
+            android:textColor="@color/amarillo"
+            app:cornerRadius="15dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="REGRESAR"
+            android:layout_marginStart="10dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/rojo"
+            android:textColor="#FFEB3B"
+            app:cornerRadius="15dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
