@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
 import com.pedidos.kiosco.fragments.ResumenPago;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -54,7 +54,7 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_sucursal=" + Login.gIdSucursal
                 +"&id_aut_fiscal=" + Login.gIdAutFiscal
                 +"&id_prefactura=" + Login.gIdPedido
-                +"&id_tipo_pago=1"
+                +"&id_tipo_pago=" + TipoPago.idTipoPago
                 +"&fecha=" + "1/1/1"
                 +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
@@ -68,6 +68,7 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&monto_gravado=" + "0.00"
                 +"&monto_no_sujeto=" + "0.00"
                 +"&numero_comprobante=" + ResumenPago.no_comprobante;
+                //id_cierre_caja = VariablesGlobales.gIdCiereCaja
 
         System.out.println(registrar_url);
 

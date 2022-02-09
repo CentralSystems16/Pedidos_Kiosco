@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:gravity="center" >
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,6 +91,105 @@
             android:id="@+id/btnRegresar"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:text="REGRESAR"
+            android:layout_marginStart="10dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/rojo"
+            android:textColor="#FFEB3B"
+            app:cornerRadius="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txtCierre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:text="Digite el monto tarjeta encontrado en la caja"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgCierre"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/cashmachine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/txtMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:text="Monto final $"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Monto final"
+            app:boxStrokeColor="#000000"
+            android:textColorHint="#9F807E7E"
+            android:visibility="gone"
+            app:hintTextColor="#000000"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/montoTargeta"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAceptarCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="ACEPTAR"
+            android:visibility="gone"
+            android:textSize="12sp"
+            android:backgroundTint="#4CAF50"
+            android:textColor="@color/amarillo"
+            app:cornerRadius="15dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegresarCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:visibility="gone"
             android:text="REGRESAR"
             android:layout_marginStart="10dp"
             android:textSize="12sp"

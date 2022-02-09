@@ -97,9 +97,9 @@ public class ResumenPago extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.resumen_pago_fragment, container, false);
 
-        /*File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        File file = new File(dir, Login.gIdPedido + " Examen.pdf");
-        boolean deleted = file.delete();*/
+        TipoPago myDialogFragment = new TipoPago();
+        myDialogFragment.show(getFragmentManager(), "MyFragment");
+        myDialogFragment.setCancelable(false);
 
         if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -192,13 +192,7 @@ public class ResumenPago extends Fragment {
                     Toast.makeText(getContext(), "Por favor, ingresa el monto.", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    TipoPago myDialogFragment = new TipoPago();
-                    myDialogFragment.show(getFragmentManager(), "MyFragment");
-                    myDialogFragment.setCancelable(false);
-
                     obtenerAutFiscal();
-                    obtenerMovimientos();
-                    obtenerDetMovimientos();
 
                 }
             }
@@ -218,10 +212,11 @@ public class ResumenPago extends Fragment {
                 response -> {
                     gCount = 0.00;
                     progressDialog.dismiss();
+                    startActivity(new Intent(getContext(), EnviandoTicket.class));
                 },
                 volleyError -> progressDialog.dismiss()
         );
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
     }
 
@@ -233,8 +228,7 @@ public class ResumenPago extends Fragment {
         progressDialog.show();
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        System.out.println(url_pedido);
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {
@@ -272,8 +266,10 @@ public class ResumenPago extends Fragment {
 
     public void obtenerAutFiscal(){
 
+        System.out.println("Entro a aut fiscal");
+
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?id_tipo_comprobante=4";
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {
@@ -329,7 +325,7 @@ public class ResumenPago extends Fragment {
 
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                            Double totalFila = jsonObject1.getDouble("monto") + jsonObject1.getDouble("monto_iva");
+                            double totalFila = jsonObject1.getDouble("monto") + jsonObject1.getDouble("monto_iva");
                             gTotal = gTotal + totalFila;
                             String.format("%.2f", gTotal);
                             jsonObject1.getInt("id_fac_det_movimiento");
@@ -498,8 +494,6 @@ public class ResumenPago extends Fragment {
                 "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php"
                 + "?id_aut_fiscal=" + Login.gIdAutFiscal;
 
-        System.out.println(URL_REPORTES);
-
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
@@ -516,6 +510,9 @@ public class ResumenPago extends Fragment {
                             no_comprobante = jsonObject1.getInt("numero_comprobante")+1;
 
                         }
+
+                        obtenerDetMovimientos();
+                        obtenerMovimientos();
 
                         if (no_comprobante == 0){
                             no_comprobante = 1;
@@ -564,56 +561,4 @@ public class ResumenPago extends Fragment {
         requestQueue.add(stringRequest);
 
     }
-
-
-    private void uploadDocument() {
-
-        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF, Login.gIdPedido, Login.gIdCliente);
-        call.enqueue(new Callback<ResponsePOJO>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponsePOJO> call, @NonNull Throwable t) {
-
-            }
-        });
-    }
-
-    void encodePDF() {
-        File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/" + Login.gIdPedido + " Examen.pdf")));
-        Uri uri = Uri.fromFile(file);
-        System.out.println("URL: " + uri);
-        try {
-            InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
-            byte[] pdfInBytes = new byte[inputStream.available()];
-            inputStream.read(pdfInBytes);
-            encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_PDF && resultCode == RESULT_OK && data != null){
-
-            Uri path = data.getData();
-
-            try {
-                InputStream inputStream = getContext().getContentResolver().openInputStream(path);
-                byte[] pdfInBytes = new byte[inputStream.available()];
-                inputStream.read(pdfInBytes);
-                encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-    
 }

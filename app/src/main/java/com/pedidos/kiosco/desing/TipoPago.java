@@ -1,47 +1,38 @@
 package com.pedidos.kiosco.desing;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.fragment.app.DialogFragment;
-
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.Monto_inicial;
-
+import com.pedidos.kiosco.adapters.AdaptadorTipoPago;
+import com.pedidos.kiosco.model.Pago;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class TipoPago extends DialogFragment {
 
-    ImageFilterView btnDinero, btnCreditCard;
-    Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
-    String fechacComplString = fecc.format(d);
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
-    String horaString = ho.format(d);
-    Double fondoInit;
+    public static int idTipoPago;
+
+    RecyclerView rvLista;
+    ArrayList<Pago> pago;
+    AdaptadorTipoPago adaptador;
 
     @Nullable
     @Override
@@ -51,107 +42,70 @@ public class TipoPago extends DialogFragment {
         View vista = inflater.inflate(R.layout.tipo_pago, container,false);
         vista.setFocusableInTouchMode(false);
 
-        btnDinero = vista.findViewById(R.id.btnDinero);
-        btnCreditCard = vista.findViewById(R.id.btnCreditCard);
+        rvLista = vista.findViewById(R.id.rvListaPago);
+        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        obtenerCierreCaja();
+        pago = new ArrayList<>();
 
-        btnDinero.setOnClickListener(view -> {
-
-            String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCierreCaja.php"
-                    + "?id_cierre_caja=" +VariablesGlobales.gIdCierreCaja
-                    + "&id_usuario=" + Login.gIdUsuario
-                    + "&monto_inicial=" + fondoInit
-                    + "&monto_venta=0.00"
-                    + "&monto_gastos=0.00"
-                    + "&monto_fisico=0.00"
-                    + "&diferencia=0.00"
-                    + "&monto_devolucion=0.00"
-                    + "&fecha_movimiento=" + fechacComplString + " a las " + horaString;
-
-            ejecutarServicio(url);
-            System.out.println(url);
-
-            getDialog().dismiss();
-            startActivity(new Intent(getContext(), EnviandoTicket.class));
-        });
-
-        btnCreditCard.setOnClickListener(view -> {
-
-            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCierreCaja.php"
-                    + "?id_cierre_caja=" +VariablesGlobales.gIdCierreCaja
-                    + "&id_usuario=" + Login.gIdUsuario
-                    + "&monto_inicial=" + Monto_inicial.montoInit
-                    + "&monto_venta=0"
-                    + "&monto_gastos=0"
-                    + "&monto_fisico=0"
-                    + "&diferencia=0"
-                    + "&monto_devolucion=0"
-                    + "&fecha_movimiento=" + fechacComplString + " a las " + horaString);
-
-            getDialog().dismiss();
-
-        });
-
+        obtenerTipoPago();
 
         return vista;
     }
 
-    public void obtenerCierreCaja(){
-
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerIdCierre.php" + "?id_usuario=" + Login.gIdUsuario;
-        System.out.println(url_pedido);
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
-
-                response -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("Caja");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                            fondoInit = jsonObject1.getDouble("fondo_inicial");
-
-                        }
-
-                        Toast.makeText(getContext(), ""+VariablesGlobales.gIdCierreCaja, Toast.LENGTH_SHORT).show();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-
-                    }
-                }, Throwable::printStackTrace
-        );
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(stringRequest);
-
-    }
-
-    public void ejecutarServicio (String URL){
+    public void obtenerTipoPago() {
 
         ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPago.php";
 
-                    progressDialog.dismiss();
-                    startActivity(new Intent(getContext(), EnviandoTicket.class));
-                },
-                volleyError -> {
-                    progressDialog.dismiss();
-                }
-        );
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("TipoPago");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            pago.add(
+                                    new Pago(
+
+                                            jsonObject1.getInt("id_tipo_pago"),
+                                            jsonObject1.getString("tipo_pago"),
+                                            jsonObject1.getInt("activo"),
+                                            jsonObject1.getString("imagen")));
+                        }
+
+                        adaptador = new AdaptadorTipoPago(getContext(), pago);
+                        rvLista.setAdapter(adaptador);
+
+                        progressDialog.dismiss();
+
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+
+                }, volleyError -> {
+            Toast.makeText(getContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         requestQueue.add(stringRequest);
+
     }
 
 }

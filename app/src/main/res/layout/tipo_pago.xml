@@ -44,28 +44,12 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content" >
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/btnDinero"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="11dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/dinero"/>
-
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/btnCreditCard"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="11dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="30dp"
-                android:src="@drawable/creditcards"/>
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListaPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

@@ -74,7 +74,7 @@ public class Home extends Fragment {
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
         abrirCaja.setOnClickListener(view12 -> {
 
-            if (VariablesGlobales.gIdCierreCaja != 0) {
+            if (VariablesGlobales.gIdCierreCaja == 0) {
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new Monto_inicial());
             fr.commit();
@@ -148,8 +148,6 @@ public class Home extends Fragment {
                         if (VariablesGlobales.gIdCierreCaja != 0){
                             cierreCaja.setText("Cerrar caja");
                         }
-
-                        Toast.makeText(getContext(), ""+VariablesGlobales.gIdCierreCaja, Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
