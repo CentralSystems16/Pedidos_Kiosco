@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,6 +101,8 @@ public class ObtenerReportes extends AppCompatActivity {
 
                             adaptador = new AdaptadorReportes(this, reportes);
                             rvLista.setAdapter(adaptador);
+
+
                             progressDialog.dismiss();
 
                     } catch (JSONException e) {

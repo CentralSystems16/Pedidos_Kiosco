@@ -3,11 +3,9 @@ package com.pedidos.kiosco.main;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toolbar;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,11 +25,9 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportesMov;
 import com.pedidos.kiosco.model.Movimientos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class ObtenerMovimientos extends AppCompatActivity {

@@ -9,14 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.desing.TipoPago;
-import com.pedidos.kiosco.model.Categorias;
+import com.pedidos.kiosco.fragments.ResumenPago;
 import com.pedidos.kiosco.model.Pago;
-
 import java.util.List;
 
 public class AdaptadorTipoPago extends RecyclerView.Adapter<AdaptadorTipoPago.CategoriaViewHolder> {
@@ -47,13 +47,17 @@ public class AdaptadorTipoPago extends RecyclerView.Adapter<AdaptadorTipoPago.Ca
 
         categoriaViewHolder.tvUsers.setText(listaPago.get(posicion).getNombrePago());
         TipoPago.idTipoPago = listaPago.get(posicion).getIdPago();
+        TipoPago.tipoPago = listaPago.get(posicion).getNombrePago();
         Glide.with(cContext).load(pago.getImgPago()).into(categoriaViewHolder.imagen);
+
 
         categoriaViewHolder.itemView.setOnClickListener(v -> {
 
             TipoPago.idTipoPago = listaPago.get(posicion).getIdPago();
-            TipoPago myDialogFragment = new TipoPago();
-            myDialogFragment.dismiss();
+            TipoPago.tipoPago = listaPago.get(posicion).getNombrePago();
+            FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ResumenPago());
+            fr.commit();
 
         });
     }

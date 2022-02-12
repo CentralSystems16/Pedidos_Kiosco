@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.fragments.CierreCaja;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,8 +58,9 @@ public class UsuarioFragment extends Fragment {
 
         usuariosInactivos = vista.findViewById(R.id.usuariosInactivos);
         usuariosInactivos.setOnClickListener(v -> {
-            Intent i = new Intent (requireActivity(), UsuarioInactivos.class);
-            startActivity(i);
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CierreCaja());
+            fr.commit();
         });
 
         fab = vista.findViewById(R.id.fabUser);

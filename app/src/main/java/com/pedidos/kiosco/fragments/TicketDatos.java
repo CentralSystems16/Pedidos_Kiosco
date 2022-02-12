@@ -12,14 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,40 +20,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.borders.GrooveBorder;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.adapters.AdapProdReport;
+import com.pedidos.kiosco.desing.TipoPago;
+import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.other.ContadorProductos;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class TicketDatos extends Fragment {
@@ -143,9 +129,11 @@ public class TicketDatos extends Fragment {
         btnConfirmarEnviar = vista.findViewById(R.id.cerdo);
         Glide.with(TicketDatos.this).load(gFoto).into(btnConfirmarEnviar);
         btnConfirmarEnviar.setOnClickListener(view -> {
+
             FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new ResumenPago());
+            fr.replace(R.id.fragment_layout, new TipoPago());
             fr.commit();
+
         });
 
         rvProductos = vista.findViewById(R.id.rvProductos);
@@ -302,125 +290,5 @@ public class TicketDatos extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
-    }
-
-    public void createPDF() throws FileNotFoundException {
-
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-
-                String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-                File file = new File(pdfPath, Login.gIdPedido + " Examen.pdf");
-
-                PdfWriter writer = null;
-                try {
-                    writer = new PdfWriter(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                PdfDocument pdfDocument = new PdfDocument(writer);
-                com.itextpdf.layout.Document document = new Document(pdfDocument);
-
-                /*Drawable d = getActivity().getDrawable(R.drawable.logokiosko);
-                Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] bitmapData = stream.toByteArray();
-
-                ImageData imageData = ImageDataFactory.create(bitmapData);
-                com.itextpdf.layout.element.Image image = new Image(imageData);
-                image.setHeight(100);
-                image.setWidth(100);*/
-
-                /*Drawable d2 = getActivity().getDrawable(R.drawable.logotaqueriapdf);
-                Bitmap bitmap2 = ((BitmapDrawable)d2).getBitmap();
-                ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
-                bitmap2.compress(Bitmap.CompressFormat.PNG, 100, stream2);
-                byte[] bitmapData2 = stream2.toByteArray();
-
-                ImageData  imageData2 = ImageDataFactory.create(bitmapData2);
-                Image image2 = new Image(imageData2);
-                image2.setHeight(532);
-                image2.setWidth(532);
-
-                Drawable d3 = AppCompatResources.getDrawable(requireContext(), R.drawable.barcodepdf);
-                Bitmap bitmap3 = ((BitmapDrawable)d3).getBitmap();
-                ByteArrayOutputStream stream3 = new ByteArrayOutputStream();
-                bitmap3.compress(Bitmap.CompressFormat.PNG, 100, stream3);
-                byte[] bitmapData3 = stream3.toByteArray();
-
-                ImageData imageData3 = ImageDataFactory.create(bitmapData3);
-                Image image3 = new Image(imageData3);
-                image3.setHeight(50);
-                image3.setWidth(100);
-                image3.setMarginLeft(398);
-                image3.setMarginTop(-40);*/
-
-                StringBuffer sb = new StringBuffer(18);
-                for ( int i = 0; i < 7 ;i++) {
-                    sb.append("0");
-                }
-                String codigo = sb.toString();
-
-                Paragraph pedido = new Paragraph( "Número de orden: " + codigo + Login.gIdPedido);
-
-                Paragraph fecha = new Paragraph( "Fecha y hora de la orden: " + fechacComplString + " a las " + horaString);
-
-                Paragraph sucursal1 = new Paragraph("Sucursal: " + sucursal);
-
-                float[] medidaCeldas = {0.78f, 2.40f, 1.40f, 0.63f};
-                Table table = new Table(medidaCeldas);
-                Border border1 = new GrooveBorder(2);
-
-                table.addCell(new Cell().setBackgroundColor(new DeviceRgb(244,167,29)).setBorder(border1).add(new Paragraph("CANTIDAD").setTextAlignment(TextAlignment.CENTER)));
-                table.addCell(new Cell().setBackgroundColor(new DeviceRgb(244,167,29)).setBorder(border1).add(new Paragraph("PRODUCTO").setTextAlignment(TextAlignment.CENTER)));
-                table.addCell(new Cell().setBackgroundColor(new DeviceRgb(244,167,29)).setBorder(border1).add(new Paragraph("PRECIO UNITARIO").setTextAlignment(TextAlignment.CENTER)));
-                table.addCell(new Cell().setBackgroundColor(new DeviceRgb(244,167,29)).setBorder(border1).add(new Paragraph("MONTO").setTextAlignment(TextAlignment.CENTER)));
-
-                for(int i = 0 ; i < listaProdReport.size(); i++) {
-
-                    table.addCell(new Cell()
-                            .add(new Paragraph(String.valueOf((AdapProdReport.lCantProducto = listaProdReport.get(i).getCantiProd())))).setTextAlignment(TextAlignment.CENTER));
-
-                    table.addCell(new Cell()
-                            .add(new Paragraph(listaProdReport.get(i).getNombreProducto()).setTextAlignment(TextAlignment.LEFT)));
-
-                    table.addCell(new Cell()
-                            .add(new Paragraph("$ " + String.format("%.2f", AdapProdReport.lPrecioVta = listaProdReport.get(i).getPrecioVenta())).setTextAlignment(TextAlignment.RIGHT)));
-
-                    table.addCell(new Cell()
-                            .add(new Paragraph("$ " + String.format("%.2f",AdapProdReport.lDetMontoFinal = listaProdReport.get(i).getMonto() + listaProdReport.get(i).getMontoIva())).setTextAlignment(TextAlignment.RIGHT)));
-
-                }
-
-                table.addFooterCell(new Cell(0,6).add(new Paragraph("TOTAL: $ " + String.format("%.2f",gTotal)).setTextAlignment(TextAlignment.RIGHT)));
-
-
-                Paragraph linea = new Paragraph("----------------------------------------------------------------------------------------------------------------------------------");
-                linea.setBackgroundColor(new DeviceRgb(244,167,29));
-                linea.setFontColor(new DeviceRgb(244,167,29));
-                linea.setMarginTop(300f);
-                Paragraph direcion = new Paragraph("Dirección: ");
-
-                Paragraph telefono = new Paragraph("Teléfono: 7702-2123");
-                Paragraph sitio = new Paragraph("Facebook: Dulces Tipicos La fiesta");
-
-                //document.add(image2.setFixedPosition(170,-10));
-                //document.add(image.setFixedPosition(420,710));
-                document.add(pedido);
-                document.add(fecha);
-                document.add(sucursal1);
-                document.add(table.setMarginTop(30f).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
-                document.add(linea);
-                document.add(direcion);
-                document.add(telefono);
-                document.add(sitio);
-                //document.add(image3);
-                document.close();
-
-            }
-        });
-
     }
 }

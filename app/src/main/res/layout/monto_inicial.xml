@@ -61,7 +61,7 @@
                 android:id="@+id/montoInicial"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 />

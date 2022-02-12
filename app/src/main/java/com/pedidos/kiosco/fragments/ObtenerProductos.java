@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,7 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorProductos;

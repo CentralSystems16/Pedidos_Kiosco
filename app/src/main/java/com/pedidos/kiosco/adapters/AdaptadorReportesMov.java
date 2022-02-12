@@ -4,7 +4,6 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.fragments.ResumenPago.PERMISSION_BLUETOOTH;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,7 +28,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -90,12 +88,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         reportesViewHolder.editar2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar3.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
 
-        reportesViewHolder.editar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class));
-            }
-        });
+        reportesViewHolder.editar3.setOnClickListener(view -> cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class)));
 
         reportesViewHolder.editar.setOnClickListener(v -> {
 

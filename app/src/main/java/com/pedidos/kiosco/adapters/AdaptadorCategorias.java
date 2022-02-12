@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
-import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Categorias;
 import java.util.List;
 

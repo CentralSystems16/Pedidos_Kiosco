@@ -12,6 +12,8 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.TicketDatos;
+import com.pedidos.kiosco.other.SumaMonto;
+import com.pedidos.kiosco.other.SumaMontoDevolucion;
 
 public class VistaFinal extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +26,9 @@ public class VistaFinal extends AppCompatActivity implements View.OnClickListene
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.vista_final);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        new SumaMonto().execute();
+        new SumaMontoDevolucion().execute();
         
         ImageButton homeEnd = findViewById(R.id.homeEnd);
         homeEnd.setOnClickListener(v -> {

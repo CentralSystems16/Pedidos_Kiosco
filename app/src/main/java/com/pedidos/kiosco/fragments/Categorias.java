@@ -43,7 +43,6 @@ public class Categorias extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_categorias, container, false);
 
         conejo = vista.findViewById(R.id.conejo);
-        //Glide.with(Categorias.this).load(Splash.gGif).into(conejo);
         conejo.setVisibility(View.INVISIBLE);
         gato = vista.findViewById(R.id.gato);
         gato.setVisibility(View.INVISIBLE);

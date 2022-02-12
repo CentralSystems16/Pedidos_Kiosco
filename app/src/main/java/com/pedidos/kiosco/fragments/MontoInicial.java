@@ -1,20 +1,17 @@
 package com.pedidos.kiosco.fragments;
 
-import static com.pedidos.kiosco.Splash.gIdCaja;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -25,12 +22,11 @@ import com.pedidos.kiosco.VariablesGlobales;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
-public class Monto_inicial extends Fragment {
+public class MontoInicial extends Fragment {
 
     EditText montoInicial;
-    public static String montoInit;
+    public static Double montoInit;
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
@@ -45,8 +41,6 @@ public class Monto_inicial extends Fragment {
 
         montoInicial = vista.findViewById(R.id.montoInicial);
 
-        montoInit = montoInicial.getText().toString();
-
         Button aceptar = vista.findViewById(R.id.btnAceptar);
 
         SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
@@ -54,6 +48,9 @@ public class Monto_inicial extends Fragment {
         Toast.makeText(getContext(), ""+resultado, Toast.LENGTH_SHORT).show();
 
         aceptar.setOnClickListener(view -> {
+            if (montoInicial != null && montoInicial.length() > 0){
+                montoInit = Double.valueOf((montoInicial.getText().toString()));
+            }
             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php"
                     + "?id_usuario=" + Login.gIdUsuario
                     + "&id_caja=" + resultado
@@ -67,8 +64,6 @@ public class Monto_inicial extends Fragment {
             fr.commit();
 
         });
-
-
 
         return vista;
     }

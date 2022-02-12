@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

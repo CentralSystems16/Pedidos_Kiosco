@@ -1,6 +1,5 @@
 package com.pedidos.kiosco.fragments;
 
-import static android.app.Activity.RESULT_OK;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
@@ -13,18 +12,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,26 +45,17 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.EnviandoTicket;
-import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.other.ContadorProductos2;
-import com.pedidos.kiosco.other.InsertarDetMovimientos;
-import com.pedidos.kiosco.other.InsertarMovimientos;
-import com.pedidos.kiosco.pdf.ResponsePOJO;
-import com.pedidos.kiosco.pdf.RetrofitClient;
+import com.pedidos.kiosco.other.InsertarFacDetMovimientos;
+import com.pedidos.kiosco.other.InsertarFacMovimientos;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ResumenPago extends Fragment {
 
@@ -90,24 +75,11 @@ public class ResumenPago extends Fragment {
     public static final int PERMISSION_BLUETOOTH = 1;
     StringBuilder sb1 = new StringBuilder("");
     public static int no_comprobante;
-    private int REQ_PDF = 21;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.resumen_pago_fragment, container, false);
-
-        TipoPago myDialogFragment = new TipoPago();
-        myDialogFragment.show(getFragmentManager(), "MyFragment");
-        myDialogFragment.setCancelable(false);
-
-        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
-                    1000);
-        }
 
         Toolbar toolbar = vista.findViewById(R.id.toolbarPago);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
@@ -519,8 +491,8 @@ public class ResumenPago extends Fragment {
                         }
 
                         if (no_comprobante <= hasta) {
-                            new InsertarMovimientos(getContext()).execute();
-                            new InsertarDetMovimientos(getContext()).execute();
+                            new InsertarFacMovimientos(getContext()).execute();
+                            new InsertarFacDetMovimientos(getContext()).execute();
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                                     + "?id_estado_prefactura=2"
                                     + "&fecha_finalizo=" + fechacComplString + " a las " + horaString

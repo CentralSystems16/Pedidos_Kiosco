@@ -20,10 +20,6 @@ public class Comprobantes {
         return idComprobante;
     }
 
-    public String getComprobante() {
-        return comprobante;
-    }
-
     public void setIdComprobante(int idComprobante) {
         this.idComprobante = idComprobante;
     }

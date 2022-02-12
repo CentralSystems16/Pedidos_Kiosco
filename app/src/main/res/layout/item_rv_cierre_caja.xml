@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="#fff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    tools:ignore="UnusedAttribute">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imgCierre"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="100dp"/>
+
+        <TextView
+            android:id="@+id/tvCierre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre"
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:hint="Monto"
+            android:textColorHint="#9F807E7E"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:layout_marginTop="10dp"
+            app:boxCornerRadiusTopStart="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCierre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/aceptarTipoPago"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="CONFIRMAR"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#3F51B5"
+            app:cornerRadius="15dp"/>
+
+        </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -46,8 +46,9 @@ public class Home extends Fragment {
 
     private SliderLayout sliderLayout;
     CardView hacerPedido, verPedido, abrirCaja;
-    int resultado;
+    int resultado, state;
     TextView cierreCaja;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,16 +76,20 @@ public class Home extends Fragment {
         abrirCaja.setOnClickListener(view12 -> {
 
             if (VariablesGlobales.gIdCierreCaja == 0) {
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new Monto_inicial());
-            fr.commit();
-            }
-            else {
+
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new Cierre_caja());
+                fr.replace(R.id.fragment_layout, new MontoInicial());
                 fr.commit();
+
+            } else {
+
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new CierreCaja());
+                fr.commit();
+
             }
         });
+
         ImageView hacer, ver;
 
         hacer = view.findViewById(R.id.pedido);
@@ -142,10 +147,15 @@ public class Home extends Fragment {
                             jsonObject1.getString("fecha_ini");
                             jsonObject1.getString("fecha_fin");
                             jsonObject1.getDouble("fondo_inicial");
+                            state = jsonObject.getInt("state");
 
                         }
 
-                        if (VariablesGlobales.gIdCierreCaja != 0){
+                        System.out.println("Estado: " + state);
+
+                        if (VariablesGlobales.gIdCierreCaja != 0 ){
+                            cierreCaja.setText("Cerrar caja");
+                        } else if (state == 1) {
                             cierreCaja.setText("Cerrar caja");
                         }
 

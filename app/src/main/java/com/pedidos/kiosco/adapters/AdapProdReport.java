@@ -1,10 +1,8 @@
 package com.pedidos.kiosco.adapters;
 
 import static com.pedidos.kiosco.Splash.gBlue;
-import static com.pedidos.kiosco.Splash.gFoto;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -23,7 +21,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;

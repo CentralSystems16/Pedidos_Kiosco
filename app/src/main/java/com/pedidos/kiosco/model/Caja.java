@@ -14,7 +14,6 @@ public class Caja {
 
     }
 
-
     public int getIdCaja() {
         return idCaja;
     }
@@ -23,14 +22,9 @@ public class Caja {
         this.idCaja = idCaja;
     }
 
-    public String getNombreCaja() {
-        return nombreCaja;
-    }
-
     public void setNombreCaja(String nombreCaja) {
         this.nombreCaja = nombreCaja;
     }
-
 
     @Override
     public String toString() {

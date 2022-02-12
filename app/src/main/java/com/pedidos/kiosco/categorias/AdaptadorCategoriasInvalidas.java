@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.categorias;
 
 import static com.pedidos.kiosco.fragments.ModificarCategorias.gEstadoAct;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;

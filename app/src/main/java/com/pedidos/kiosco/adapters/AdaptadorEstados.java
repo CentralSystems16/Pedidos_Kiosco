@@ -95,12 +95,10 @@ public class AdaptadorEstados extends RecyclerView.Adapter<AdaptadorEstados.Esta
                 Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
                 ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
                 cContext.startActivity(new Intent(cContext, ObtenerMovimientos.class));
-                System.out.println("Estado de cliente: " + Principal.gIdEstadoCliente);
             } else {
                 Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
                 ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
                 cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
-                System.out.println("Estado de cliente: " + Principal.gIdEstadoCliente);
             }
         });
     }

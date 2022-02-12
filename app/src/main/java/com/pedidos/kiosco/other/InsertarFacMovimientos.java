@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class InsertarMovimientos extends AsyncTask<String, Void, String> {
+public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
 
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d'-'MMMM'-'yyyy", Locale.getDefault());
@@ -39,7 +39,8 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
 
     private final WeakReference<Context> context;
 
-    public InsertarMovimientos(Context context) {
+
+    public InsertarFacMovimientos(Context context) {
         this.context = new WeakReference<>(context);
     }
 
@@ -67,8 +68,8 @@ public class InsertarMovimientos extends AsyncTask<String, Void, String> {
                 +"&monto_exento=" + "0.00"
                 +"&monto_gravado=" + "0.00"
                 +"&monto_no_sujeto=" + "0.00"
-                +"&numero_comprobante=" + ResumenPago.no_comprobante;
-                //id_cierre_caja = VariablesGlobales.gIdCiereCaja
+                +"&numero_comprobante=" + ResumenPago.no_comprobante
+                +"&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
 
         System.out.println(registrar_url);
 

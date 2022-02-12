@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -26,9 +25,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class TipoPago extends DialogFragment {
+public class TipoPago extends Fragment {
 
     public static int idTipoPago;
+    public static String tipoPago;
 
     RecyclerView rvLista;
     ArrayList<Pago> pago;

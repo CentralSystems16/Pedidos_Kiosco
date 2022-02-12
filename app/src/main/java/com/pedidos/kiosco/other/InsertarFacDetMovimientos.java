@@ -22,13 +22,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class InsertarDetMovimientos extends AsyncTask<String, Void, String> {
+public class InsertarFacDetMovimientos extends AsyncTask<String, Void, String> {
 
     public static boolean exitoInsertProd= false;
 
     private final WeakReference<Context> context;
 
-    public InsertarDetMovimientos(Context context) {
+    public InsertarFacDetMovimientos(Context context) {
     this.context = new WeakReference<>(context);
 }
 

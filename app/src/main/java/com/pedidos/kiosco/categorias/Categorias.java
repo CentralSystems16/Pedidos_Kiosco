@@ -39,14 +39,6 @@ public class Categorias {
         return imgCategoria;
     }
 
-    public int getgEstadoCat() {
-        return gEstadoCat;
-    }
-
-    public void setgEstadoCat(int gEstadoCat) {
-        this.gEstadoCat = gEstadoCat;
-    }
-
 
     @NotNull
     @Override
