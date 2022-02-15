@@ -76,7 +76,6 @@ public class ObtenerReportes extends AppCompatActivity {
 
         String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepPrefactura.php" + "?id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        System.out.println(URL_REPORTES);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {
 

@@ -82,20 +82,55 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         listaReportes.get(posicion).getNombreCliente();
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
-        reportesViewHolder.tvFiscal.setText(listaReportes.get(posicion).getNumeroComprobante());
+        reportesViewHolder.numeroComprobante.setText(listaReportes.get(posicion).getNumeroComprobante());
+        reportesViewHolder.tipoPago.setText(listaReportes.get(posicion).getTipoPago());
 
         reportesViewHolder.editar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar3.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
 
-        reportesViewHolder.editar3.setOnClickListener(view -> cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class)));
+        //ver
+        reportesViewHolder.editar3.setOnClickListener(view -> {
+            Login.gIdPedidoReporte = listaReportes.get(posicion).getIdPrefactura();
+            Login.gIdClienteReporte = listaReportes.get(posicion).getIdCliente();
+            cContext.startActivity(new Intent(cContext, ObtenerDetReporte.class));
 
+        });
+
+        //reimprimir
         reportesViewHolder.editar.setOnClickListener(v -> {
-
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
             obtenerDetMovimientos();
         });
+
+        //anular
+        reportesViewHolder.editar2.setOnClickListener(view -> {
+            ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
+            String url = "http://34.239.139.117/android/kiosco/cliente/scripts/scripts_php/anularFacMovimientos.php" + "?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+            ejecutarServicio(url);
+            System.out.println(url);
+        });
     }
+
+    public void ejecutarServicio (String URL){
+
+        ProgressDialog progressDialog = new ProgressDialog(cContext, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> {
+                    Toast.makeText(cContext, "Comprobante anulado", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+
+                },
+                volleyError -> progressDialog.dismiss()
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(cContext);
+        requestQueue.add(stringRequest);
+    }
+
 
     public void obtenerDetMovimientos(){
 
@@ -105,7 +140,6 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
         String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + ObtenerMovimientos.idMov;
-        System.out.println(url_det_pedido);
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
 
         @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
@@ -207,9 +241,11 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
                                     if (Splash.gImagen == 1) {
                                         printer.printFormattedText(text);
+                                        System.out.println(text);
                                     }
                                     else {
                                         printer.printFormattedText(text2);
+                                        System.out.println(text2);
                                     }
 
                                 } else {
@@ -247,7 +283,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvComprobante, tvFiscal;
+   TextView tvNombre, tvFecha, tvComprobante, numeroComprobante, tipoPago;
    Button editar, editar2, editar3;
 
         public ReportesViewHolder(@NonNull View itemView) {
@@ -259,6 +295,8 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         editar = itemView.findViewById(R.id.reimprimir2);
         editar2 = itemView.findViewById(R.id.reimprimir1);
         editar3 = itemView.findViewById(R.id.reimprimir3);
+        numeroComprobante = itemView.findViewById(R.id.comprobante);
+        tipoPago = itemView.findViewById(R.id.tipoPago);
 
         }
     }

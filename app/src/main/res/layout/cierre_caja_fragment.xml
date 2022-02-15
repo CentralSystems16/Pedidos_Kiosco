@@ -26,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:textSize="12sp"
         android:textColor="@color/white"
-        android:backgroundTint="#3F51B5"
+        android:backgroundTint="#757575"
         app:cornerRadius="15dp"/>
 
     <com.google.android.material.button.MaterialButton

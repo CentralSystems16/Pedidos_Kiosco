@@ -25,9 +25,14 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
 import com.pedidos.kiosco.model.Productos;
+import com.pedidos.kiosco.other.ActualizarPedido;
+import com.pedidos.kiosco.other.ActualizarPedidoMultiple;
 import com.pedidos.kiosco.other.ContadorProductos;
 import com.pedidos.kiosco.other.InsertarDetPedido;
 import com.pedidos.kiosco.other.InsertarPedido;
+import com.pedidos.kiosco.other.SumaMontoMultiple;
+import com.pedidos.kiosco.other.SumaMontoMultipleIva;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -102,6 +107,10 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
                                 Toast.makeText(context, "Ocurrió un error inesperado...", Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
+                            new SumaMontoMultiple().execute();
+                            new SumaMontoMultipleIva().execute();
+                            new ActualizarPedidoMultiple(context).execute();
+
                 }
         });
     }

@@ -3,8 +3,10 @@ package com.pedidos.kiosco.other;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.CierreCaja;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -13,20 +15,20 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 
-public class SumaMonto extends AsyncTask<Void, Void, Void>{
+public class SumaMontoMultipleIva extends AsyncTask<Void, Void, Void>{
 
         @SuppressLint("StaticFieldLeak")
         public Context context;
         HttpResponse httpResponse;
         JSONArray jsonObject = null;
         String StringHolder = "" ;
+        String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerSumaMontoIva.php"
+                + "?id_prefactura=" + Login.gIdPedido;
 
-        String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMonto.php"
-                + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja + "&id_tipo_pago=" + CierreCaja.lIdTipoPago;
-
-        public static Double sumaMonto;
+        public static String sumaMontoMultipleIva;
 
         @Override
         protected void onPreExecute()
@@ -36,7 +38,6 @@ public class SumaMonto extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... arg0) {
-
             System.out.println(contador_url);
 
             HttpClient httpClient = new DefaultHttpClient();
@@ -67,13 +68,10 @@ public class SumaMonto extends AsyncTask<Void, Void, Void>{
 
             try {
 
-                if (sumaMonto != null) {
-                    JSONObject responseJSON = new JSONObject(String.valueOf(StringHolder));
-                    sumaMonto = responseJSON.getJSONArray("voto").getJSONObject(0).getDouble("count");
-                }
-                else {
-                    sumaMonto = 0.00;
-                }
+                JSONObject responseJSON = new JSONObject(String.valueOf(StringHolder));
+                sumaMontoMultipleIva = String.valueOf((responseJSON.getJSONArray("voto").getJSONObject(0).getDouble("count")));
+                new ActualizarPedidoMultiple(context).execute();
+
             } catch (JSONException e) {
 
                 e.printStackTrace();

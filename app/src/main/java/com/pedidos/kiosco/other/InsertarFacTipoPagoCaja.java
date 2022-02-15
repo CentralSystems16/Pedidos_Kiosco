@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.adapters.AdaptadorCierreCaja;
 import com.pedidos.kiosco.fragments.CierreCaja;
 import com.pedidos.kiosco.fragments.MontoInicial;
 
@@ -31,19 +32,24 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
 
     protected String doInBackground (String...params){
 
-        //Double montoDif = String.valueOf(MontoInicial.montoInit + SumaMonto.sumaMonto - SumaMontoDevolucion.sumaMontoDevolucion - CierreCaja.etCaja);
-        //System.out.println("Monto diferencia: " + montoDif);
+        System.out.println("Monto incial: " + CierreCaja.fondoInit);
+        System.out.println("Monto: " + SumaMonto.sumaMonto);
+        System.out.println("Monto devolucion: " + SumaMontoDevolucion.sumaMontoDevolucion);
+        System.out.println("Monto fisico: " + CierreCaja.montoFisico);
+
+        double montoDif = CierreCaja.fondoInit + SumaMonto.sumaMonto - SumaMontoDevolucion.sumaMontoDevolucion - CierreCaja.montoFisico;
+        System.out.println("Monto diferencia: " + montoDif);
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarTipoPagoCaja.php"
                 +"?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
                 +"&tipo_pago=" + CierreCaja.lTipoPago
                 +"&monto=" + SumaMonto.sumaMonto
                 +"&monto_devolucion=" + SumaMontoDevolucion.sumaMontoDevolucion
-                +"&monto_diferencia=0.00"
+                +"&monto_diferencia=" + montoDif
                 +"&liquidar=1"
                 +"&id_tipo_pago=" + CierreCaja.lIdTipoPago
                 +"&monto_inicial=" + CierreCaja.fondoInit
-                +"&monto_fisico=" + CierreCaja.etCaja;
+                +"&monto_fisico=" + CierreCaja.montoFisico;
 
         String resultado = null;
 
@@ -66,7 +72,7 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
             String liquidar = "1";
             String idTipoPago = String.valueOf(CierreCaja.lIdTipoPago);
             String montoInicial = String.valueOf(CierreCaja.fondoInit);
-            String montoFisico = String.valueOf(CierreCaja.etCaja);
+            String montoFisico = String.valueOf(CierreCaja.montoFisico);
 
             String data = URLEncoder.encode("id_cierre_caja", "UTF-8") + "=" + URLEncoder.encode(idCierreCaja, "UTF-8")
                     + "&" + URLEncoder.encode("tipo_pago", "UTF-8") + "=" + URLEncoder.encode(tipoPago, "UTF-8")
@@ -82,6 +88,15 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
             bufferedWriter.flush();
             bufferedWriter.close();
             outputStream.close();
+
+            SumaMonto.sumaMonto = 0.00;
+            SumaMontoDevolucion.sumaMontoDevolucion = 0.00;
+
+            if (CierreCaja.lIdTipoPago == 1){
+                CierreCaja.fondoInit = 0.00;
+            }
+
+            CierreCaja.montoFisico = 0.00;
 
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));

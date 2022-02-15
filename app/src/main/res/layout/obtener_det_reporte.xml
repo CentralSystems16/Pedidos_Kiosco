@@ -30,11 +30,10 @@
     </com.github.barteksc.pdfviewer.PDFView>
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarDetPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#539649">
+        android:layout_alignParentTop="true">
 
         <ImageButton
             android:id="@+id/flechaReturn"

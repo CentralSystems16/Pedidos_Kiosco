@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -43,12 +42,7 @@ public class ObtenerMovimientos extends AppCompatActivity {
         setContentView(R.layout.obtener_movimientos);
 
         ImageButton regresar = findViewById(R.id.regresarDatos2);
-        regresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ObtenerEstados.class));
-            }
-        });
+        regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerEstados.class)));
 
         rvLista = findViewById(R.id.rvListaReportesMov);
         rvLista.setLayoutManager(new LinearLayoutManager(this));
@@ -61,17 +55,17 @@ public class ObtenerMovimientos extends AppCompatActivity {
         TextView orden2 = findViewById(R.id.orden2);
         orden2.setText(ObtenerEstados.estadosNombre);
 
-        obtenerMovimientos();
+        obtenerComprobantesVenta();
     }
 
-    public void obtenerMovimientos(){
+    public void obtenerComprobantesVenta(){
 
         ProgressDialog progressDialog = new ProgressDialog(ObtenerMovimientos.this, R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobantesVenta.php" + "?id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
@@ -94,7 +88,10 @@ public class ObtenerMovimientos extends AppCompatActivity {
                             jsonObject1.getDouble("monto_gravado"),
                             jsonObject1.getDouble("monto_no_sujeto"),
                             jsonObject1.getInt("id_fac_movimiento"),
-                            jsonObject1.getString("numero_comprobante")
+                            jsonObject1.getString("numero_comprobante"),
+                            jsonObject1.getString("tipo_pago"),
+                            jsonObject1.getInt("id_cliente"),
+                            jsonObject1.getInt("id_prefactura")
 
                             ));
                         }

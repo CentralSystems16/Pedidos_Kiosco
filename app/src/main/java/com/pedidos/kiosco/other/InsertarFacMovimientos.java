@@ -59,8 +59,8 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
                 +"&fecha=" + "1/1/1"
                 +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
-                +"&monto=" + ObtenerProductos.gDetMonto
-                +"&monto_iva=" + ObtenerProductos.gDetMontoIva
+                +"&monto=" + SumaMontoMultiple.sumaMontoMultiple
+                +"&monto_iva=" + SumaMontoMultipleIva.sumaMontoMultipleIva
                 +"&fac_tipo_movimiento=1"
                 +"&monto_desc=" + "0.00"
                 +"&monto_pago=" + "0.00"

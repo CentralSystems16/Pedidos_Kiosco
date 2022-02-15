@@ -41,8 +41,6 @@ public class SumaMontoDevolucion extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... arg0) {
 
-            System.out.println(contador_url);
-
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(contador_url);
 
@@ -73,8 +71,7 @@ public class SumaMontoDevolucion extends AsyncTask<Void, Void, Void>{
 
                 if (sumaMontoDevolucion != null) {
                     JSONObject responseJSON = new JSONObject(String.valueOf(StringHolder));
-                    sumaMontoDevolucion = (responseJSON.getJSONArray("voto").getJSONObject(0).getDouble("count"));
-                    System.out.println("SumamontoDevolucion: " + sumaMontoDevolucion);
+                    sumaMontoDevolucion = responseJSON.getJSONArray("voto").getJSONObject(0).getDouble("count");
                 }
                 else {
                     sumaMontoDevolucion = 0.00;

@@ -49,7 +49,6 @@ public class Home extends Fragment {
     int resultado, state;
     TextView cierreCaja;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,34 +60,17 @@ public class Home extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        cierreCaja = view.findViewById(R.id.txtCierreCaja);
         obtenerCierreCaja();
         obtenerPedidosAct();
         obtenerPedidosAct2();
-
-        cierreCaja = view.findViewById(R.id.txtCierreCaja);
 
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
-
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
-        abrirCaja.setOnClickListener(view12 -> {
 
-            if (VariablesGlobales.gIdCierreCaja == 0) {
-
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new MontoInicial());
-                fr.commit();
-
-            } else {
-
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new CierreCaja());
-                fr.commit();
-
-            }
-        });
 
         ImageView hacer, ver;
 
@@ -147,17 +129,30 @@ public class Home extends Fragment {
                             jsonObject1.getString("fecha_ini");
                             jsonObject1.getString("fecha_fin");
                             jsonObject1.getDouble("fondo_inicial");
-                            state = jsonObject.getInt("state");
+                            state = jsonObject1.getInt("state");
 
                         }
 
-                        System.out.println("Estado: " + state);
-
-                        if (VariablesGlobales.gIdCierreCaja != 0 ){
-                            cierreCaja.setText("Cerrar caja");
-                        } else if (state == 1) {
+                        if (state == 1){
                             cierreCaja.setText("Cerrar caja");
                         }
+
+                        abrirCaja.setOnClickListener(view12 -> {
+                            System.out.println("Estado: " + state);
+                            if (state == 0) {
+
+                                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                                fr.replace(R.id.fragment_layout, new MontoInicial());
+                                fr.commit();
+
+                            } else {
+
+                                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                                fr.replace(R.id.fragment_layout, new CierreCaja());
+                                fr.commit();
+
+                            }
+                        });
 
                     } catch (JSONException e) {
                         e.printStackTrace();

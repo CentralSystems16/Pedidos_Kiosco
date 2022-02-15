@@ -71,13 +71,24 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/nombreFiscal"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:text="Tipo de pago:"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tipoPago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
                     android:textSize="13sp" />
 
             </LinearLayout>

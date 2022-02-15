@@ -104,9 +104,6 @@ public class Splash extends AppCompatActivity {
 
         }
 
-
-
-
     }
 
     private void llenarSpinner(){
