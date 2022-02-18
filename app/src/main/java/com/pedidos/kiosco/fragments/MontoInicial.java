@@ -45,7 +45,6 @@ public class MontoInicial extends Fragment {
 
         SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
         resultado = preferences2.getInt("sucursal", 0);
-        Toast.makeText(getContext(), ""+resultado, Toast.LENGTH_SHORT).show();
 
         aceptar.setOnClickListener(view -> {
             if (montoInicial != null && montoInicial.length() > 0){
@@ -58,8 +57,7 @@ public class MontoInicial extends Fragment {
                     + "&fecha_fin=Activo"
                     + "&state=1"
                     + "&fondo_inicial=" + montoInicial.getText().toString());
-
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new Home());
             fr.commit();
 
@@ -77,7 +75,7 @@ public class MontoInicial extends Fragment {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
-                    progressDialog.dismiss();
+
                 },
                 volleyError -> progressDialog.dismiss()
         );

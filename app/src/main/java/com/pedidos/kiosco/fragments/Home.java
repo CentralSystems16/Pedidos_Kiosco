@@ -71,7 +71,6 @@ public class Home extends Fragment {
 
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
 
-
         ImageView hacer, ver;
 
         hacer = view.findViewById(R.id.pedido);
@@ -112,7 +111,6 @@ public class Home extends Fragment {
         resultado = preferences2.getInt("sucursal", 0);
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCierreCaja.php" + "?id_usuario=" + Login.gIdUsuario + "&id_caja=" + resultado;
-        System.out.println(url_pedido);
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
@@ -202,7 +200,6 @@ public class Home extends Fragment {
         progressDialog.show();
 
         String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos.php" + "?id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
-        System.out.println(url);
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

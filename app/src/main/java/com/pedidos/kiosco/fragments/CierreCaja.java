@@ -6,6 +6,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
@@ -64,7 +65,6 @@ public class CierreCaja extends Fragment {
     public static Button aceptar;
     public static Double fondoInit;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class CierreCaja extends Fragment {
         vista = inflater.inflate(R.layout.cierre_caja_fragment, container, false);
 
         obtenerCierreCaja();
+        obtenerFacTipoPagoCaja();
 
         rvLista = vista.findViewById(R.id.rvListaPagoCierre);
         rvLista.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -112,7 +113,7 @@ public class CierreCaja extends Fragment {
         Button cerrar = vista.findViewById(R.id.btnCancelarTipoPago);
         cerrar.setOnClickListener(view -> {
 
-            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarFacTipoPago.php" + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja);
+            ejecutarServicio2("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarFacTipoPago.php" + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja);
 
         });
 
@@ -243,12 +244,12 @@ public class CierreCaja extends Fragment {
                             gMontoFisico1 = jsonObject1.getDouble("monto_fisico");
 
                         }
-
+                        System.out.println(gMonto+ " " + gMonto1);
                         double ventTotal = gMonto+gMonto1;
                         double devTotal = gMontoDevolucion+gMontoDevolucion1;
 
                         try {
-                            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
                                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
                             } else {
                                 BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
@@ -303,7 +304,6 @@ public class CierreCaja extends Fragment {
                                                     "[C]================================";
 
                                     printer.printFormattedText(text);
-                                    System.out.println(text);
 
                                     FragmentTransaction fr = getActivity().getSupportFragmentManager().beginTransaction();
                                     fr.replace(R.id.fragment_layout, new Home());
@@ -377,7 +377,6 @@ public class CierreCaja extends Fragment {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
-                    obtenerFacTipoPagoCaja();
                     obtenerFacTipoPago();
                     progressDialog.dismiss();
                 },
@@ -388,4 +387,27 @@ public class CierreCaja extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
     }
+
+    public void ejecutarServicio2 (String URL){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> {
+                    FragmentTransaction fr = getActivity().getSupportFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new Home());
+                    fr.commit();
+                    progressDialog.dismiss();
+                },
+                volleyError -> {
+                    progressDialog.dismiss();
+                }
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue.add(stringRequest);
+    }
+
 }

@@ -13,6 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,9 +26,9 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.model.Reportes;
-import com.pedidos.kiosco.other.Ayuda;
 import java.util.List;
 
 public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.ReportesViewHolder> {
@@ -58,8 +62,12 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
         reportesViewHolder.ver.setOnClickListener(v -> {
 
             Login.gIdPedido = listaReportes.get(posicion).getPedido();
+            FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.reportes, new TicketDatos());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
-            cContext.startActivity(new Intent(cContext, Ayuda.class));
 
         });
 

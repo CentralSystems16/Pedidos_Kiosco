@@ -1,6 +1,8 @@
 package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,7 +46,7 @@ public class ObtenerProductos extends Fragment {
     public static int gIdProducto, cantidad, maximo, minimo;
     public static String gNombreProd;
 
-    GifImageView conejo, gato, carrito;
+    GifImageView gato, carrito;
     public static TextView tvCantProductos;
     DecimalFormat formatoDecimal = new DecimalFormat("#");
 
@@ -88,8 +90,6 @@ public class ObtenerProductos extends Fragment {
 
         });
 
-        conejo = vista.findViewById(R.id.conejo2);
-        conejo.setVisibility(View.INVISIBLE);
         gato = vista.findViewById(R.id.gato2);
         gato.setVisibility(View.INVISIBLE);
         tvCantProductos = vista.findViewById(R.id.tvCantProductos);
@@ -113,9 +113,12 @@ public class ObtenerProductos extends Fragment {
 
     public void obtenerProductos() {
 
-        conejo.setVisibility(View.VISIBLE);
-
         String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductos.php" + "?id_categoria=" + Login.gIdCategoria;
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
@@ -143,18 +146,18 @@ public class ObtenerProductos extends Fragment {
 
                         adaptador = new AdaptadorProductos(getContext(), listaProductos);
                         rvLista.setAdapter(adaptador);
+                        progressDialog.dismiss();
 
-                        conejo.setVisibility(View.INVISIBLE);
 
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        conejo.setVisibility(View.INVISIBLE);
+                        progressDialog.dismiss();
                         gato.setVisibility(View.VISIBLE);
                     }
 
                 }, volleyError -> {
+            progressDialog.dismiss();
             Toast.makeText(getContext(), "Ocurrió un error inesperado, verifica tu conexion a internet o vuelve a intentarlo mas tarde, Error: " + volleyError, Toast.LENGTH_LONG).show();
-            conejo.setVisibility(View.INVISIBLE);
             gato.setVisibility(View.VISIBLE);
         }
         );

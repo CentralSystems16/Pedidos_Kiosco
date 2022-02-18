@@ -46,6 +46,7 @@ import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
+import com.google.android.material.card.MaterialCardView;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -55,6 +56,7 @@ import com.itextpdf.layout.borders.GrooveBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
@@ -64,6 +66,8 @@ import com.pedidos.kiosco.desing.EnviandoTicket;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarFacDetMovimientos;
 import com.pedidos.kiosco.other.InsertarFacMovimientos;
+import com.pedidos.kiosco.other.SumaMontoMultiple;
+import com.pedidos.kiosco.other.SumaMontoMultipleIva;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
@@ -128,6 +132,9 @@ public class ResumenPago extends Fragment {
         cantidad.setText(formatoDecimal.format(gCount));
         totalCompra.setText(String.format("%.2f", TicketDatos.gTotal));
         totalFinal.setText(String.format("%.2f", TicketDatos.gTotal));
+
+        new SumaMontoMultiple().execute();
+        new SumaMontoMultipleIva().execute();
 
         ImageButton back = vista.findViewById(R.id.backArrow);
         back.setOnClickListener(view -> {
@@ -229,7 +236,7 @@ public class ResumenPago extends Fragment {
 
                     encodePDF();
                     uploadDocument();
-                    startActivity(new Intent(getContext(), EnviandoTicket.class));
+
                 },
                 volleyError -> {
 
@@ -246,14 +253,14 @@ public class ResumenPago extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
 
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("Movimientos");
+                        JSONArray jsonArray = jsonObject.getJSONArray("Movimiento");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -261,10 +268,9 @@ public class ResumenPago extends Fragment {
                             gNombre = jsonObject1.getString("nombre_cliente");
                             gFecha = jsonObject1.getString("fecha_creo");
                             sucursal = jsonObject1.getString("nombre_sucursal");
-                            exento = jsonObject1.getDouble("monto_exento");
-                            gravado = jsonObject1.getDouble("monto_gravado");
-                            noSujeto = jsonObject1.getDouble("monto_no_sujeto");
                         }
+
+                        obtenerDetMovimientos();
 
                         progressDialog.dismiss();
 
@@ -352,10 +358,11 @@ public class ResumenPago extends Fragment {
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
 
-                            sb1.append(gNombreProd + "\n" + gCantidad + " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f", total) + " G");
+                            sb1.append(gNombreProd + "\n" + "       " + gCantidad + " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f", total) + " G");
                             sb1.append("\n");
 
                             sb2.append(gCantidad + "  " + gNombreProd + "  " + String.format("%.2f", gPrecioUni) + "  " + " $" + String.format("%.2f", total) + " G");
+                            sb2.append("\n");
                         }
 
                         Numero_a_Letra NumLetra = new Numero_a_Letra();
@@ -384,24 +391,22 @@ public class ResumenPago extends Fragment {
                         Paragraph atendio = new Paragraph("Atendio: " + Login.nombre);
                         Paragraph fecha = new Paragraph("Fecha: " + gFecha);
 
-                        System.out.println(nombre + " " + direccion + " " + sucursal1);
-
                         float[] medidaCeldas = {0.78f, 2.40f, 1.40f, 0.63f};
                         Table table = new Table(medidaCeldas);
                         Border border1 = new GrooveBorder(2);
+                        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
                         table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("CANTIDAD").setTextAlignment(TextAlignment.CENTER)));
                         table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("PRODUCTO").setTextAlignment(TextAlignment.CENTER)));
                         table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("PRECIO UNITARIO").setTextAlignment(TextAlignment.CENTER)));
                         table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("MONTO").setTextAlignment(TextAlignment.CENTER)));
 
-                        table.addCell(new Cell(1, 4).add(new Paragraph(sb2.toString() + "\n"))).setTextAlignment(TextAlignment.LEFT);
+                        table.addCell(new Cell(1, 4).add(new Paragraph(sb2.toString()))).setTextAlignment(TextAlignment.LEFT);
 
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Desc $" + String.format("%.2f", gDesc))).setTextAlignment(TextAlignment.RIGHT));
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Exento $" + String.format("%.2f", exento)))).setTextAlignment(TextAlignment.RIGHT);
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Gravado $" + String.format("%.2f", gravado)))).setTextAlignment(TextAlignment.RIGHT);
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Ventas no sujetas $" + String.format("%.2f", noSujeto)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Total a pagar $" + String.format("%.2f", gTotal)))).setTextAlignment(TextAlignment.RIGHT);
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Total a pagar $" + String.format("%.2f", gTotal)))).setTextAlignment(TextAlignment.RIGHT);
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Son: " + NumLetra.Convertir(numero, band()))).setTextAlignment(TextAlignment.RIGHT));
                         table.addFooterCell(new Cell(1, 4).add(new Paragraph("Recibido: " + "$" + String.format("%.2f", change)))).setTextAlignment(TextAlignment.RIGHT);
@@ -441,7 +446,7 @@ public class ResumenPago extends Fragment {
                                                     "[C]" + "Atendio: " + Login.nombre + "\n" +
                                                     "[L]" + "Fecha: " + gFecha + "\n" +
                                                     "[C]================================\n" +
-                                                    "[L]" + sb1.toString() +
+                                                    "[C]" + sb1.toString() +
                                                     "[R]" + "---------------------------" + "\n" +
                                                     "[R]" + "SubTotal $" + String.format("%.2f", gTotal) + "\n" +
                                                     "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
@@ -593,7 +598,6 @@ public class ResumenPago extends Fragment {
                         if (no_comprobante <= hasta) {
                             new InsertarFacMovimientos(getContext()).execute();
                             obtenerMovimientos();
-                            obtenerDetMovimientos();
                             new InsertarFacDetMovimientos(getContext()).execute();
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
                                     + "?id_estado_prefactura=2"
@@ -638,7 +642,7 @@ public class ResumenPago extends Fragment {
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-
+                startActivity(new Intent(getContext(), EnviandoTicket.class));
             }
 
             @Override

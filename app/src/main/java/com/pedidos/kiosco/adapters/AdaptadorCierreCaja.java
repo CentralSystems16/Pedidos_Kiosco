@@ -82,12 +82,11 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
             CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
             CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
 
-            obtenerCierreCaja();
-
             if (cierreCajaViewHolder.cierre != null && cierreCajaViewHolder.cierre.length() > 0) {
                 CierreCaja.montoFisico = Double.parseDouble(cierreCajaViewHolder.cierre.getText().toString());
             }
 
+            obtenerCierreCaja();
             new SumaMonto().execute();
             new SumaMontoDevolucion().execute();
 

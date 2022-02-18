@@ -95,16 +95,6 @@
         android:layout_alignParentBottom="true" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/conejo2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignTop="@+id/rvLista"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="120dp"
-        android:background="@drawable/conejo" />
-
-    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gato2"
         android:layout_width="150dp"
         android:layout_height="150dp"

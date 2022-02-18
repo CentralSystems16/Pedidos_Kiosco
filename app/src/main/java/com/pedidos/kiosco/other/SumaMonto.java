@@ -67,13 +67,9 @@ public class SumaMonto extends AsyncTask<Void, Void, Void>{
 
             try {
 
-                if (sumaMonto != null) {
                     JSONObject responseJSON = new JSONObject(String.valueOf(StringHolder));
                     sumaMonto = responseJSON.getJSONArray("voto").getJSONObject(0).getDouble("count");
-                }
-                else {
-                    sumaMonto = 0.00;
-                }
+
             } catch (JSONException e) {
 
                 e.printStackTrace();

@@ -29,7 +29,6 @@ import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.other.MiPersona;
 import com.pedidos.kiosco.productos.ProdFragment;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-
 import java.util.concurrent.ExecutionException;
 
 public class Principal extends AppCompatActivity {
@@ -40,7 +39,6 @@ public class Principal extends AppCompatActivity {
     Animation toBottom;
     Boolean clicked = false;
     FloatingActionButton addButton, list, product, user, fiscal;
-
     public static int gIdEstadoCliente, gIdEstado;
 
     @Override

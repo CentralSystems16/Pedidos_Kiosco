@@ -107,8 +107,6 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
                                 Toast.makeText(context, "Ocurrió un error inesperado...", Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
-                            new SumaMontoMultiple().execute();
-                            new SumaMontoMultipleIva().execute();
                             new ActualizarPedidoMultiple(context).execute();
 
                 }

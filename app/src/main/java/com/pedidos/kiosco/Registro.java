@@ -123,10 +123,6 @@ public class Registro extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(regPhoneNo.getWindowToken(), 0);
             }
 
-            else if (spSucursales.getSelectedItemPosition() == 0){
-                Toast.makeText(getApplicationContext(), "Seleccione una sucursal", Toast.LENGTH_SHORT).show();
-            }
-
             else if (!politica.isChecked()){
                 Toast.makeText(getApplicationContext(), "Por favor, acepte los terminos y las politicas de privacidad", Toast.LENGTH_SHORT).show();
             }

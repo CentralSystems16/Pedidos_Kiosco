@@ -54,7 +54,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     Context cContext;
     public static List<Movimientos> listaReportes;
-    String sucursal, gFecha, gNombreProd;
+    String sucursal, gFecha, gNombre, gNombreProd;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto, cambio, change;
     StringBuilder sb1 = new StringBuilder("");
     int gIdFacMovimiento, noCaja;
@@ -100,7 +100,8 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         //reimprimir
         reportesViewHolder.editar.setOnClickListener(v -> {
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            obtenerDetMovimientos();
+            obtenerMovimientos();
+
         });
 
         //anular
@@ -108,7 +109,6 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
             String url = "http://34.239.139.117/android/kiosco/cliente/scripts/scripts_php/anularFacMovimientos.php" + "?id_fac_movimiento=" + ObtenerMovimientos.idMov;
             ejecutarServicio(url);
-            System.out.println(url);
         });
     }
 
@@ -241,11 +241,11 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
                                     if (Splash.gImagen == 1) {
                                         printer.printFormattedText(text);
-                                        System.out.println(text);
+
                                     }
                                     else {
                                         printer.printFormattedText(text2);
-                                        System.out.println(text2);
+
                                     }
 
                                 } else {
@@ -272,6 +272,48 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void obtenerMovimientos() {
+
+        ProgressDialog progressDialog = new ProgressDialog(cContext, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+        RequestQueue requestQueue = Volley.newRequestQueue(cContext);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Movimiento");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            gNombre = jsonObject1.getString("nombre_cliente");
+                            gFecha = jsonObject1.getString("fecha_creo");
+                            sucursal = jsonObject1.getString("nombre_sucursal");
+                        }
+
+                        progressDialog.dismiss();
+                        obtenerDetMovimientos();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressDialog.dismiss();
+                    }
+                }, Throwable::printStackTrace
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
 
     }

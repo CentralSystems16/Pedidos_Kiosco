@@ -1,23 +1,30 @@
 package com.pedidos.kiosco.desing;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.button.MaterialButton;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.TicketDatos;
+import com.pedidos.kiosco.main.ObtenerMovimientos;
 import com.pedidos.kiosco.other.SumaMonto;
 import com.pedidos.kiosco.other.SumaMontoDevolucion;
 
-public class VistaFinal extends AppCompatActivity implements View.OnClickListener {
+public class VistaFinal extends AppCompatActivity {
 
-    Button btnRepetir, btnCerrarSesion, salir;
+    Button btnRepetir, btnCerrarSesion;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -29,6 +36,15 @@ public class VistaFinal extends AppCompatActivity implements View.OnClickListene
 
         new SumaMonto().execute();
         new SumaMontoDevolucion().execute();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+
+        MaterialButton nuevo = findViewById(R.id.btnRepetirPedido);
+        nuevo.setStrokeColor(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+
+        MaterialButton ver = findViewById(R.id.btnVerOrdenes);
+        ver.setStrokeColor(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         
         ImageButton homeEnd = findViewById(R.id.homeEnd);
         homeEnd.setOnClickListener(v -> {
@@ -37,43 +53,21 @@ public class VistaFinal extends AppCompatActivity implements View.OnClickListene
             startActivity(new Intent(getApplicationContext(), Principal.class));
         });
 
-        btnRepetir = findViewById(R.id.btnRepetirExamen);
-        btnRepetir.setOnClickListener(this);
+        nuevo.setOnClickListener(view -> {
+            TicketDatos.gTotal = 0.00;
+            Login.gIdPedido = 0;
+            Login.gIdMovimiento = 0;
+            Intent i = new Intent(getApplicationContext(), Principal.class);
+            startActivity(i);
+        });
 
-        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
-        btnCerrarSesion.setOnClickListener(this);
+        ver.setOnClickListener(view -> {
+            TicketDatos.gTotal = 0.00;
+            Login.gIdPedido = 0;
+            Principal.gIdEstadoCliente = 2;
+            startActivity(new Intent(getApplicationContext(), ObtenerMovimientos.class));
+        });
 
-        salir = findViewById(R.id.btnSalir);
-        salir.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
-            if (btnRepetir.isPressed()) {
-
-                TicketDatos.gTotal = 0.00;
-                Login.gIdPedido = 0;
-                Login.gIdMovimiento = 0;
-                Intent i = new Intent(this, Principal.class);
-                startActivity(i);
-
-            }
-
-            if (salir.isPressed()) {
-
-                Login.gIdPedido = 0;
-                finishAffinity();
-                finishActivity(0);
-                System.exit(0);
-
-            }
-            if (btnCerrarSesion.isPressed()) {
-                TicketDatos.gTotal = 0.00;
-                Login.gIdPedido = 0;
-
-            }
     }
 
     @Override

@@ -5,15 +5,12 @@ import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -40,11 +36,8 @@ import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
 import org.json.JSONArray;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -56,7 +49,6 @@ public class AutFiscal extends AppCompatActivity {
     EditText desde, hasta, serie, autorizacion, resolucion, numeroFilas, mDisplayDate;
     RadioGroup activos;
     Button continuar;
-    DatePickerDialog.OnDateSetListener mDateSetListener;
 
     int gIdComprobante, gIdSucursal, gIdCaja;
 
@@ -78,27 +70,21 @@ public class AutFiscal extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener listenerDeDatePicker = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int anio, int mes, int diaDelMes) {
-            // Esto se llama cuando seleccionan una fecha. Nos pasa la vista, pero más importante, nos pasa:
-            // El año, el mes y el día del mes. Es lo que necesitamos para saber la fecha completa
 
-
-            // Refrescamos las globales
             ultimoAnio = anio;
             ultimoMes = mes;
             ultimoDiaDelMes = diaDelMes;
 
-            // Y refrescamos la fecha
             refrescarFechaEnEditText();
 
         }
     };
 
     public void refrescarFechaEnEditText() {
-        // Formateamos la fecha pero podríamos hacer cualquier otra cosa ;)
-        String fecha = String.format(Locale.getDefault(), "%02d-%02d-%02d", ultimoAnio, ultimoMes+1, ultimoDiaDelMes);
 
-        // La ponemos en el editText
+        String fecha = String.format(Locale.getDefault(), "%02d-%02d-%02d", ultimoAnio, ultimoMes+1, ultimoDiaDelMes);
         mDisplayDate.setText(fecha);
+
     }
 
     @Override
@@ -108,29 +94,18 @@ public class AutFiscal extends AppCompatActivity {
 
         mDisplayDate = findViewById(R.id.editFecha);
 
-        // Poner último año, mes y día a la fecha de hoy
         final Calendar calendario = Calendar.getInstance();
         ultimoAnio = calendario.get(Calendar.YEAR);
         ultimoMes = calendario.get(Calendar.MONTH);
         ultimoDiaDelMes = calendario.get(Calendar.DAY_OF_MONTH);
 
-        // Refrescar la fecha en el EditText
         refrescarFechaEnEditText();
 
-        // Hacer que el datepicker se muestre cuando toquen el EditText; recuerda
-        // que se podría invocar en el click de cualquier otro botón, o en cualquier
-        // otro evento
+        mDisplayDate.setOnClickListener(v -> {
 
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Aquí es cuando dan click así que mostramos el DatePicker
+            DatePickerDialog dialogoFecha = new DatePickerDialog(AutFiscal.this, listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
 
-                // Le pasamos lo que haya en las globales
-                DatePickerDialog dialogoFecha = new DatePickerDialog(AutFiscal.this, listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
-                //Mostrar
-                dialogoFecha.show();
-            }
+            dialogoFecha.show();
         });
 
         Toolbar toolbar = findViewById(R.id.toolbarAdd);
@@ -273,7 +248,7 @@ public class AutFiscal extends AppCompatActivity {
     }
 
     private void llenarCaja(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php";
         cliente3.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

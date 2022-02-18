@@ -191,8 +191,8 @@ public class Splash extends AppCompatActivity {
     private void showAlertWithTextInputLayout(Context context) {
 
          spDatos = new Spinner(context);
+         spDatos.setPopupBackgroundResource(R.drawable.spinner_background);
          llenarSpinner();
-
 
         AlertDialog dialog = new AlertDialog.Builder(Splash.this)
                 .setTitle("Sucursal")
@@ -201,8 +201,6 @@ public class Splash extends AppCompatActivity {
                 .setPositiveButton("Realizado", (dialogInterface, i) -> {
                     obtenerIdSucursal();
                     showAlertWithTextInputLayout2(context);
-
-
                 })
                 .create();
 
@@ -213,8 +211,9 @@ public class Splash extends AppCompatActivity {
 
     private void showAlertWithTextInputLayout2(Context context) {
 
-        llenarSpinner2();
         spDatos2 = new Spinner(context);
+        spDatos2.setPopupBackgroundResource(R.drawable.spinner_background);
+        llenarSpinner2();
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Cajas")

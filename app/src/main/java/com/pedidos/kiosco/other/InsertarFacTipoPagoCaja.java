@@ -37,6 +37,14 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
         System.out.println("Monto devolucion: " + SumaMontoDevolucion.sumaMontoDevolucion);
         System.out.println("Monto fisico: " + CierreCaja.montoFisico);
 
+        if (SumaMonto.sumaMonto == null){
+            SumaMonto.sumaMonto = 0.00;
+        }
+
+        if (SumaMontoDevolucion.sumaMontoDevolucion == null){
+            SumaMontoDevolucion.sumaMontoDevolucion = 0.00;
+        }
+
         double montoDif = CierreCaja.fondoInit + SumaMonto.sumaMonto - SumaMontoDevolucion.sumaMontoDevolucion - CierreCaja.montoFisico;
         System.out.println("Monto diferencia: " + montoDif);
 

@@ -38,7 +38,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-
 import cz.msebera.android.httpclient.Header;
 
 public class ModificarAutorizacion extends AppCompatActivity {
@@ -236,7 +235,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
     }
 
     private void llenarCaja(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php";
         cliente3.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
