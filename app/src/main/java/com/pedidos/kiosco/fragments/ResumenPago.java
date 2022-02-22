@@ -363,7 +363,6 @@ public class ResumenPago extends Fragment {
                             e.printStackTrace();
                         }
                         assert writer != null;
-                        Rectangle one = new Rectangle(70,140);
                         PdfDocument pdfDocument = new PdfDocument(writer);
 
                         com.itextpdf.layout.Document document = new Document(pdfDocument);

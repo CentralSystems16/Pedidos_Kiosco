@@ -143,6 +143,7 @@
                 android:text="Total a pagar:"
                 android:textSize="15sp" />
 
+
             <RelativeLayout
                 android:layout_width="60dp"
                 android:layout_height="wrap_content">
@@ -169,12 +170,19 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@+id/ln1"
+            android:background="#8C8C8C" />
+
         <Toolbar
             android:id="@+id/toolbarTicket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#AB8BC34A">
+            android:background="#ABFFFFFF">
 
             <ImageView
                 android:id="@+id/cerdo"

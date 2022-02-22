@@ -25,6 +25,7 @@ import com.pedidos.kiosco.fragments.Categorias;
 import com.pedidos.kiosco.fragments.Home;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
+import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.other.MiPersona;
 import com.pedidos.kiosco.productos.ProdFragment;
@@ -38,7 +39,7 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    FloatingActionButton addButton, list, product, user, fiscal;
+    FloatingActionButton addButton, list, product, user, fiscal, comprobante;
     public static int gIdEstadoCliente, gIdEstado;
 
     @Override
@@ -95,6 +96,14 @@ public class Principal extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
         });
 
+        comprobante = findViewById(R.id.floatingActionButton6);
+        comprobante.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        comprobante.setOnClickListener(view -> {
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CorteCaja());
+            fr.commit();
+        });
+
         if (Login.gIdCliente == 0) {
 
             try {
@@ -130,6 +139,7 @@ public class Principal extends AppCompatActivity {
             product.startAnimation(fromBottom);
             user.startAnimation(fromBottom);
             fiscal.startAnimation(fromBottom);
+            comprobante.startAnimation(fromBottom);
             addButton.startAnimation(rotateOpen);
         }
         else {
@@ -137,6 +147,7 @@ public class Principal extends AppCompatActivity {
             product.startAnimation(toBottom);
             user.startAnimation(toBottom);
             fiscal.startAnimation(toBottom);
+            comprobante.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
         }
         
@@ -149,12 +160,14 @@ public class Principal extends AppCompatActivity {
             product.setVisibility(View.VISIBLE);
             user.setVisibility(View.VISIBLE);
             fiscal.setVisibility(View.VISIBLE);
+            comprobante.setVisibility(View.VISIBLE);
         }
         else {
             list.setVisibility(View.INVISIBLE);
             product.setVisibility(View.INVISIBLE);
             user.setVisibility(View.INVISIBLE);
             fiscal.setVisibility(View.INVISIBLE);
+            comprobante.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -197,5 +210,10 @@ public class Principal extends AppCompatActivity {
 
     return  true;
     };
+
+    @Override
+    public void onBackPressed() {
+
+    }
 
 }

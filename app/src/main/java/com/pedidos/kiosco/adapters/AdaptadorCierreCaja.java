@@ -75,9 +75,9 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
         CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
         CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
 
-        if (CierreCaja.lIdTipoPago != 1){
+        /*if (CierreCaja.lIdTipoPago != 1){
             cierreCajaViewHolder.cvCierre.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         cierreCajaViewHolder.aceptar.setOnClickListener(view -> {
 

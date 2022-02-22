@@ -87,6 +87,9 @@
             android:id="@+id/pedido"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/trolley"
             android:layout_gravity="bottom|end" />
 
     </androidx.cardview.widget.CardView>
@@ -114,6 +117,7 @@
                 android:id="@+id/ver"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/lupa"
                 android:layout_gravity="bottom|end" />
 
         </androidx.cardview.widget.CardView>
@@ -143,7 +147,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|end"
-                android:src="@drawable/cajeroautomatico" />
+                android:background="@drawable/cashregister" />
 
         </androidx.cardview.widget.CardView>
 

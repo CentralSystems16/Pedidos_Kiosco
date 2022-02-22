@@ -30,9 +30,9 @@
 
         <ImageView
             android:id="@+id/imgItemProd"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription,RtlHardcoded" />
 

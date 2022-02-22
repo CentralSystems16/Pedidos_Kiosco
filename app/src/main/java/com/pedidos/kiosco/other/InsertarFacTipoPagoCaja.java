@@ -45,7 +45,7 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
             SumaMontoDevolucion.sumaMontoDevolucion = 0.00;
         }
 
-        double montoDif = CierreCaja.fondoInit + SumaMonto.sumaMonto - SumaMontoDevolucion.sumaMontoDevolucion - CierreCaja.montoFisico;
+        double montoDif = (CierreCaja.fondoInit + SumaMonto.sumaMonto) - (SumaMontoDevolucion.sumaMontoDevolucion + CierreCaja.montoFisico);
         System.out.println("Monto diferencia: " + montoDif);
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarTipoPagoCaja.php"

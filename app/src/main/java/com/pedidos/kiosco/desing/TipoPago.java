@@ -43,7 +43,7 @@ public class TipoPago extends Fragment {
         vista.setFocusableInTouchMode(false);
 
         rvLista = vista.findViewById(R.id.rvListaPago);
-        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         pago = new ArrayList<>();
 

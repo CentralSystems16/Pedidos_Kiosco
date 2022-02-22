@@ -63,19 +63,15 @@ public class CierreCaja extends Fragment {
 
         aceptar = vista.findViewById(R.id.btnAceptarTipoPago);
         aceptar.setEnabled(false);
-        aceptar.setOnClickListener(view -> {
-
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Confirmación de cierre")
-                    .setMessage("¿Esta seguro de cerrar la caja?")
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
-                            + "?fecha_fin=" + fechacComplString + " a las " + horaString
-                            + "&state=2"
-                            + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja)).setNegativeButton(android.R.string.no, (dialog, which) ->{})
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .show();
-
-        });
+        aceptar.setOnClickListener(view -> new AlertDialog.Builder(getContext())
+                .setTitle("Confirmación de cierre")
+                .setMessage("¿Esta seguro de cerrar la caja?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
+                        + "?fecha_fin=" + fechacComplString + " a las " + horaString
+                        + "&state=2"
+                        + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja)).setNegativeButton(android.R.string.no, (dialog, which) ->{})
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show());
 
         Button cerrar = vista.findViewById(R.id.btnCancelarTipoPago);
         cerrar.setOnClickListener(view -> ejecutarServicio2("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarFacTipoPago.php" + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja));
@@ -212,7 +208,6 @@ public class CierreCaja extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_layout, fragmento);
                     fragmentTransaction.addToBackStack(null);
-
                     fragmentTransaction.commit();
 
 

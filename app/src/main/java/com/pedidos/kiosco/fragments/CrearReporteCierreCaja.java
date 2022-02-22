@@ -3,13 +3,14 @@ package com.pedidos.kiosco.fragments;
 import static com.pedidos.kiosco.fragments.ResumenPago.PERMISSION_BLUETOOTH;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,21 +32,21 @@ import com.pedidos.kiosco.VariablesGlobales;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import pl.droidsonroids.gif.GifImageView;
 
 public class CrearReporteCierreCaja extends Fragment {
 
-    private Double gMonto, gMontoFisico, gMontoDevolucion, gMontoDiferencia, gMontoInicial;
+    private Double monto, montoFisico, montoDevolucion, montoDiferencia, montoInicial;
     private int idTipoPago, numeroCaja;
     private String gTipoPago;
     private String nombreCajero, fechaInicio, fechaFin;
-    private double ventTotal = 0.00, devTotal = 0.00, montoInicial = 0.00;
+    private double ventaTotal = 0.00, montoDevolucionTotal = 0.00, gastos = 0.00, gastosTotal = 0.00,
+            entregarTotal = 0.00, montoFisicoTotal = 0.00 , montoDiferenciaTotal = 0.00, montoInicialTotal = 0.00;
     private int cierre;
-    private  String pago;
     ArrayList arrayList = new ArrayList();
-    ArrayList arrayList2 = new ArrayList();
-    String detalle = "";
+    String detalle = "", resultado = "";
+    GifImageView imprimiendo;
 
     public CrearReporteCierreCaja(){
     }
@@ -60,14 +61,18 @@ public class CrearReporteCierreCaja extends Fragment {
         }
 
         cierre = datosRecuperados.getInt("cierre");
+        System.out.println("Corte en reimpresion: " + cierre);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+         View vista =  inflater.inflate(R.layout.crear_reporte_cierre_caja, container, false);
          obtenerTipoPagoFacTipoPagoCaja(cierre);
-         return inflater.inflate(R.layout.crear_reporte_cierre_caja, container, false);
+         imprimiendo = vista.findViewById(R.id.imprimiendo);
+         return vista;
 
     }
 
@@ -132,11 +137,11 @@ public class CrearReporteCierreCaja extends Fragment {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                             gTipoPago = jsonObject1.getString("tipo_pago");
-                            gMonto = jsonObject1.getDouble("monto");
-                            gMontoDevolucion = jsonObject1.getDouble("monto_devolucion");
-                            gMontoDiferencia = jsonObject1.getDouble("monto_diferencia");
-                            gMontoInicial= jsonObject1.getDouble("monto_inicial");
-                            gMontoFisico = jsonObject1.getDouble("monto_fisico");
+                            monto = jsonObject1.getDouble("monto");
+                            montoDevolucion = jsonObject1.getDouble("monto_devolucion");
+                            montoDiferencia = jsonObject1.getDouble("monto_diferencia");
+                            montoInicial= jsonObject1.getDouble("monto_inicial");
+                            montoFisico = jsonObject1.getDouble("monto_fisico");
                             numeroCaja = jsonObject1.getInt("no_caja");
                             nombreCajero = jsonObject1.getString("nombre_usuario");
                             fechaInicio  = jsonObject1.getString("fecha_ini");
@@ -144,10 +149,10 @@ public class CrearReporteCierreCaja extends Fragment {
 
                             detalle = gTipoPago + "\n" +
                                     "[C]================================\n" +
-                                    "[R]" + "Venta(+) $" + gMonto + "\n" +
-                                    "[R]" + "Devolución(-) $" + String.format("%.2f", gMontoDevolucion) + "\n" +
-                                    "[R]" + "Encontrado(-) $" + String.format("%.2f", gMontoFisico) + "\n" +
-                                    "[R]" + "Monto diferencia(-) $" + String.format("%.2f", gMontoDiferencia) + "\n" +
+                                    "[R]" + "Venta(+) $" + String.format("%.2f", monto) + "\n" +
+                                    "[R]" + "Devolución(-) $" + String.format("%.2f", montoDevolucion) + "\n" +
+                                    "[R]" + "Encontrado(-) $" + String.format("%.2f", montoFisico) + "\n" +
+                                    "[R]" + "Monto diferencia(=) $" + String.format("%.2f", montoDiferencia) + "\n" +
                                     "[C]================================\n";
 
                             arrayList.add(detalle);
@@ -156,11 +161,40 @@ public class CrearReporteCierreCaja extends Fragment {
 
                         }
 
-                        ventTotal = ventTotal + gMonto;
-                        devTotal = devTotal + gMontoDevolucion;
-                        montoInicial = montoInicial + gMontoInicial;
+                        ventaTotal = ventaTotal + monto;
+
+                        montoDevolucionTotal = montoDevolucionTotal + montoDevolucion;
+
+                        gastos = 0.00;
+
+                        montoInicialTotal = montoInicialTotal + montoInicial;
+
+                        entregarTotal = montoInicialTotal + ventaTotal - gastosTotal;
+
+                        montoFisicoTotal = montoFisicoTotal + montoFisico;
+
+                        montoDiferenciaTotal = montoDiferenciaTotal + montoDiferencia;
+
+                        if (montoDiferenciaTotal == 0) {
+                            resultado = "[C]================================" +
+                                    "[C]" + "CAJA CUADRADA" +
+                                    "[C]================================";
+                        } else {
+                            if (montoDiferenciaTotal > 0) {
+                                resultado = "[R]" + "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                        "[C]================================" +
+                                        "[C]" + "CAJA DESCUADRADA" +
+                                        "[C]================================";
+                            } else if (montoDiferenciaTotal < 0){
+                                resultado = "[R]" + "Sobrante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                        "[C]================================" + "\n" +
+                                        "[C]" + "CAJA DESCUADRADA" + "\n" +
+                                        "[C]================================";
+                            }
+                        }
+
                         for (int i = 0; i < arrayList.size(); i++) {
-                            if (arrayList.size() == 2){
+                            if (arrayList.size() == arrayList.size()){
                             try {
                                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
                                     ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
@@ -168,7 +202,7 @@ public class CrearReporteCierreCaja extends Fragment {
                                     BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
                                     if (connection != null) {
                                         EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
-                                        final String text =
+                                        @SuppressLint("DefaultLocale") final String text =
                                                 "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
                                                         getContext().getResources().getDrawableForDensity(R.drawable.logochicharroneria,
                                                                 DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
@@ -185,25 +219,29 @@ public class CrearReporteCierreCaja extends Fragment {
                                                         "[C]" + "Fecha negocio: " + fechaInicio + "\n" +
                                                         "[C]" + "Fecha Sistema: " + fechaFin + "\n" +
                                                         "[C]================================" +
-                                                        "[R]" + "Monto inicial(+) $" + String.format("%.2f", montoInicial) + "\n" +
+                                                        "[R]" + "Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n" +
                                                         "[L]" + arrayList + "\n" +
                                                         "[C]================================\n" +
                                                         "[C]" + "Totales " +
                                                         "[C]================================\n" +
-                                                        "[R]" + "Venta Total " + "$" + String.format("%.2f", ventTotal) + "\n" +
-                                                        "[R]" + "Devolución total $" + String.format("%.2f", devTotal) + "\n" +
-                                                        "[R]" + "Gastos $" + "0.00" + "\n" +
-                                                        "[R]" + "Total gastos $" + "0.00" + "\n" +
-                                                        "[R]" + "Monto a Entregar (Efectivo + Tarjeta) $" + "0.00" + "\n" +
-                                                        "[R]" + "Monto Declarado $" + "0.00" + "\n" +
+                                                        "[R]" + "Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n" +
+                                                        "[R]" + "Devolución total $" + String.format("%.2f", montoDevolucionTotal) + "\n" +
+                                                        "[R]" + "Gastos $" +  String.format("%.2f", gastos) + "\n" +
+                                                        "[R]" + "Total gastos $" +  String.format("%.2f", gastosTotal) + "\n" +
+                                                        "[R]" + "Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n" +
+                                                        "[R]" + "Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n" +
                                                         "[C]================================\n" +
-                                                        "[R]" + "Sobrante $" + "0.00" + "\n" +
-                                                        "[C]================================" +
-                                                        "[C]" + "CAJA DESCUADRADA" +
+                                                        "[R]" + resultado + "\n" +
                                                         "[C]================================";
 
                                         printer.printFormattedText(text);
                                         System.out.println(text);
+                                        Fragment fragmento = new Home();
+                                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.replace(R.id.fragment_layout, fragmento);
+                                        fragmentTransaction.addToBackStack(null);
+                                        fragmentTransaction.commit();
 
                                     } else {
                                         Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();

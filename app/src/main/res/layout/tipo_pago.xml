@@ -17,19 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/about"
-            android:clickable="true"
-            android:backgroundTint="#FFFFFF"
-           android:background="@drawable/boton_borde"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="payment.json"
-            app:lottie_imageAssetsFolder="assets"
-            app:lottie_loop="true"
-            android:focusable="true" />
-
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/animacionEmpresa"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/payment"
+            android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="match_parent"

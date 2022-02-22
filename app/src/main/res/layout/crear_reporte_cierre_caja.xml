@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CrearReporteCierreCaja">
+    tools:context=".fragments.CrearReporteCierreCaja"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/imprimiendo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/imprimiendo"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

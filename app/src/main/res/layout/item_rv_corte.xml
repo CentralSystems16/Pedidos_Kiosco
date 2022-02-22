@@ -18,34 +18,68 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tvFechaCorte"
+            android:id="@+id/tvFecha"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Numero de caja:"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvNoCaja"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Cajero:"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvNombreEmpleado"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:gravity="center"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
             android:textSize="12sp" />
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

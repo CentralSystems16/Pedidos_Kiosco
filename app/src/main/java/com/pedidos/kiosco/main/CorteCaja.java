@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -19,9 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
-import com.pedidos.kiosco.adapters.AdaptadorTipoPago;
 import com.pedidos.kiosco.model.Cierre;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +42,7 @@ public class CorteCaja extends Fragment {
         View vista = inflater.inflate(R.layout.corte_caja, container,false);
 
         rvLista = vista.findViewById(R.id.rvListaCorteCaja);
-        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvLista.setLayoutManager(new LinearLayoutManager(getContext()));
 
         cierre = new ArrayList<>();
 
@@ -77,8 +76,11 @@ public class CorteCaja extends Fragment {
                             cierre.add(
                                     new Cierre(
 
-                                            jsonObject1.getString("tipo_pago"),
-                                            jsonObject1.getString("activo")));
+                                            jsonObject1.getInt("id_cierre_caja"),
+                                            jsonObject1.getInt("no_caja"),
+                                            jsonObject1.getString("fecha_ini"),
+                                            jsonObject1.getString("nombre_usuario")
+                                            ));
                         }
 
                         adaptador = new AdaptadorCorteCaja(getContext(), cierre);

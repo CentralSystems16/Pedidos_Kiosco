@@ -76,8 +76,8 @@ public class Home extends Fragment {
         hacer = view.findViewById(R.id.pedido);
         ver = view.findViewById(R.id.ver);
 
-        Glide.with(Home.this).load(gFoto3).into(hacer);
-        Glide.with(Home.this).load(gFoto2).into(ver);
+        //Glide.with(Home.this).load(gFoto3).into(hacer);
+        //Glide.with(Home.this).load(gFoto2).into(ver);
 
         TextView nombre = view.findViewById(R.id.nombrePrincipal);
         nombre.setText(Login.nombre);
@@ -168,21 +168,18 @@ public class Home extends Fragment {
     }
 
     private void setSliderViews() {
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 3; i++){
             DefaultSliderView sliderView = new DefaultSliderView(getContext());
 
             switch (i){
                 case 0:
-                    sliderView.setImageUrl("http://34.239.139.117/android/kiosco/cliente/recursos/imagenes/slider1.jpg");
+                    sliderView.setImageUrl("https://www.comedera.com/wp-content/uploads/2017/06/recetas-de-comida-mexicana.jpg");
                     break;
                 case 1:
-                    sliderView.setImageUrl("http://34.239.139.117/android/kiosco/cliente/recursos/imagenes/slider2.jpg");
+                    sliderView.setImageUrl("https://tipsparatuviaje.com/wp-content/uploads/2018/09/tacos-comida-mexicana.jpg");
                     break;
                 case 2:
-                    sliderView.setImageUrl("http://34.239.139.117/android/kiosco/cliente/recursos/imagenes/slider3.jpg");
-                    break;
-                case 3:
-                    sliderView.setImageUrl("http://34.239.139.117/android/kiosco/cliente/recursos/imagenes/slider4.jpg");
+                    sliderView.setImageUrl("https://www.mylatinatable.com/wp-content/uploads/2019/03/Entomatadas-5.jpg");
                     break;
             }
 
