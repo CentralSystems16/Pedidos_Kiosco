@@ -4,9 +4,6 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gFoto;
 import static com.pedidos.kiosco.Splash.gGif;
 import static com.pedidos.kiosco.Splash.gGreen;
-import static com.pedidos.kiosco.Splash.gRecBlue;
-import static com.pedidos.kiosco.Splash.gRecGreen;
-import static com.pedidos.kiosco.Splash.gRecRed;
 import static com.pedidos.kiosco.Splash.gRed;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -38,17 +35,14 @@ import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.other.ContadorProductos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class TicketDatos extends Fragment {
@@ -96,7 +90,7 @@ public class TicketDatos extends Fragment {
         total.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
         ln1.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         ln2.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
-        ln3.setBackgroundColor(Color.rgb(gRecRed, gRecGreen, gRecBlue));
+        //ln3.setBackgroundColor(Color.rgb(gRed, gRed, gBlue));
 
         anular = vista.findViewById(R.id.anularPedido);
 

@@ -48,6 +48,7 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnection
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.google.android.material.card.MaterialCardView;
 import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -82,6 +83,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -98,14 +101,13 @@ public class ResumenPago extends Fragment {
     String fechacComplString = fecc.format(d);
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
     String horaString = ho.format(d);
-    String gNombre, sucursal, gFecha, gNombreProd, encodedPDF;
+    String gNombre, sucursal, gFecha, gNombreProd;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto;
     int gIdFacMovimiento, noCaja, hasta;
     public static final int PERMISSION_BLUETOOTH = 1;
     StringBuilder sb1 = new StringBuilder("");
     StringBuilder sb2 = new StringBuilder("");
     public static int no_comprobante;
-    private int REQ_PDF = 21;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,6 +149,9 @@ public class ResumenPago extends Fragment {
 
         etMoney = vista.findViewById(R.id.etMoney);
         cambio = vista.findViewById(R.id.montoCambio);
+
+        etMoney.setText(totalCompra.getText().toString());
+        cambio.setText("0.00");
 
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
@@ -216,31 +221,10 @@ public class ResumenPago extends Fragment {
                 response -> {
                     gCount = 0.00;
                     progressDialog.dismiss();
-                    String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
-                            + "?monto_pago=" + etMoney.getText().toString()
-                            + "&monto_cambio=" + cambio.getText().toString()
-                            + "&id_estado_comprobante=2"
-                            + "&id_fac_movimiento=" + Login.gIdMovimiento;
-                    ejecutarServicio2(url);
+                    startActivity(new Intent(getActivity(), EnviandoTicket.class));
+
                 },
                 volleyError -> progressDialog.dismiss()
-        );
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        requestQueue.add(stringRequest);
-    }
-
-    public void ejecutarServicio2(String URL) {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-                    encodePDF();
-                    uploadDocument();
-
-                },
-                volleyError -> {
-
-                }
         );
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
@@ -379,38 +363,33 @@ public class ResumenPago extends Fragment {
                             e.printStackTrace();
                         }
                         assert writer != null;
+                        Rectangle one = new Rectangle(70,140);
                         PdfDocument pdfDocument = new PdfDocument(writer);
+
                         com.itextpdf.layout.Document document = new Document(pdfDocument);
-
-                        Paragraph nombre = new Paragraph(Splash.gNombre);
-                        Paragraph direccion = new Paragraph(Splash.gDireccion);
-                        Paragraph sucursal1 = new Paragraph("Sucursal: " + sucursal);
-                        Paragraph telefono = new Paragraph("Teléfono: " + Splash.gTelefono);
-                        Paragraph nitynrc = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit);
-                        Paragraph cajatickt = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento);
-                        Paragraph atendio = new Paragraph("Atendio: " + Login.nombre);
-                        Paragraph fecha = new Paragraph("Fecha: " + gFecha);
-
-                        float[] medidaCeldas = {0.78f, 2.40f, 1.40f, 0.63f};
-                        Table table = new Table(medidaCeldas);
-                        Border border1 = new GrooveBorder(2);
-                        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
-
-                        table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("CANTIDAD").setTextAlignment(TextAlignment.CENTER)));
-                        table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("PRODUCTO").setTextAlignment(TextAlignment.CENTER)));
-                        table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("PRECIO UNITARIO").setTextAlignment(TextAlignment.CENTER)));
-                        table.addCell(new Cell().setBackgroundColor(new DeviceRgb(gRed, gGreen, gBlue)).setBorder(border1).add(new Paragraph("MONTO").setTextAlignment(TextAlignment.CENTER)));
-
-                        table.addCell(new Cell(1, 4).add(new Paragraph(sb2.toString()))).setTextAlignment(TextAlignment.LEFT);
-
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Desc $" + String.format("%.2f", gDesc))).setTextAlignment(TextAlignment.RIGHT));
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Exento $" + String.format("%.2f", exento)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Gravado $" + String.format("%.2f", gravado)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Ventas no sujetas $" + String.format("%.2f", noSujeto)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Total a pagar $" + String.format("%.2f", gTotal)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Son: " + NumLetra.Convertir(numero, band()))).setTextAlignment(TextAlignment.RIGHT));
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Recibido: " + "$" + String.format("%.2f", change)))).setTextAlignment(TextAlignment.RIGHT);
-                        table.addFooterCell(new Cell(1, 4).add(new Paragraph("Cambio: $" + cambio.getText().toString()))).setTextAlignment(TextAlignment.RIGHT);
+                        
+                        Paragraph nombre = new Paragraph(Splash.gNombre).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph direccion = new Paragraph(Splash.gDireccion).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph sucursal1 = new Paragraph("Sucursal: " + sucursal).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph telefono = new Paragraph("Teléfono: " + Splash.gTelefono).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph nitynrc = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph cajatickt = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph atendio = new Paragraph("Atendio: " + Login.nombre).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph fecha = new Paragraph("Fecha: " + gFecha).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph linea = new Paragraph("================================").setTextAlignment(TextAlignment.CENTER);
+                        Paragraph sb = new Paragraph(sb1.toString()).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph total = new Paragraph("SubTotal $" + String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph desc  = new Paragraph("Desc $" + String.format("%.2f", gDesc)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph exe = new Paragraph("Exento $" + String.format("%.2f", exento)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph grav = new Paragraph("Gravado $" + String.format("%.2f", gravado)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph noS = new Paragraph("Ventas no sujetas $" + String.format("%.2f", noSujeto)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph linea2 = new Paragraph("================================").setTextAlignment(TextAlignment.CENTER);
+                        Paragraph totalFin = new Paragraph(String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph totalAbsolut = new Paragraph("Total a pagar $" + String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
+                        Paragraph numLetra = new Paragraph("Son: " + NumLetra.Convertir(numero, band())).setTextAlignment(TextAlignment.CENTER);;
+                        Paragraph recib = new Paragraph("Recibido: " + "$" + String.format("%.2f", change)).setTextAlignment(TextAlignment.CENTER);;
+                        Paragraph mCambi = new Paragraph("Cambio: $" + cambio.getText().toString()).setTextAlignment(TextAlignment.CENTER);;
+                        Paragraph face = new Paragraph("FB: " + Splash.gFacebook).setTextAlignment(TextAlignment.CENTER);;
 
                         document.add(nombre);
                         document.add(direccion);
@@ -420,7 +399,20 @@ public class ResumenPago extends Fragment {
                         document.add(cajatickt);
                         document.add(atendio);
                         document.add(fecha);
-                        document.add(table);
+                        document.add(linea);
+                        document.add(sb);
+                        document.add(total);
+                        document.add(desc);
+                        document.add(exe);
+                        document.add(grav);
+                        document.add(noS);
+                        document.add(linea2);
+                        document.add(totalFin);
+                        document.add(totalAbsolut);
+                        document.add(numLetra);
+                        document.add(recib);
+                        document.add(mCambi);
+                        document.add(face);
 
                         document.close();
 
@@ -491,6 +483,7 @@ public class ResumenPago extends Fragment {
 
                                     if (Splash.gImagen == 1) {
                                         printer.printFormattedText(text);
+                                        System.out.println(text);
                                     } else {
                                         printer.printFormattedText(text2);
                                     }
@@ -596,7 +589,7 @@ public class ResumenPago extends Fragment {
                         }
 
                         if (no_comprobante <= hasta) {
-                            new InsertarFacMovimientos(getContext()).execute();
+                            new InsertarFacMovimientos(getContext()).execute().get();
                             obtenerMovimientos();
                             new InsertarFacDetMovimientos(getContext()).execute();
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
@@ -604,11 +597,17 @@ public class ResumenPago extends Fragment {
                                     + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
                                     + "&id_prefactura=" + Login.gIdPedido);
 
+                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
+                                    + "?monto_pago=" + etMoney.getText().toString()
+                                    + "&monto_cambio=" + cambio.getText().toString()
+                                    + "&id_estado_comprobante=2"
+                                    + "&id_fac_movimiento=" + Login.gIdMovimiento);
+
+
                         } else {
 
-                            String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
-                                    + "?id_aut_fiscal=" + Login.gIdAutFiscal;
-                            ejecutarServicio(url);
+                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
+                                    + "?id_aut_fiscal=" + Login.gIdAutFiscal);
 
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Autorización finalizada")
@@ -619,7 +618,7 @@ public class ResumenPago extends Fragment {
                                     .show();
                         }
 
-                    } catch (JSONException e) {
+                    } catch (JSONException | InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
 
@@ -636,53 +635,5 @@ public class ResumenPago extends Fragment {
     }
 
 
-    private void uploadDocument() {
-
-        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF, Login.gIdPedido, Login.gIdCliente);
-        call.enqueue(new Callback<ResponsePOJO>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-                startActivity(new Intent(getContext(), EnviandoTicket.class));
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponsePOJO> call, @NonNull Throwable t) {
-
-            }
-        });
-    }
-
-    void encodePDF() {
-        File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/" + Login.gIdPedido + " Examen.pdf")));
-        Uri uri = Uri.fromFile(file);
-        try {
-            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
-            byte[] pdfInBytes = new byte[inputStream.available()];
-            inputStream.read(pdfInBytes);
-            encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_PDF && resultCode == RESULT_OK && data != null){
-
-            Uri path = data.getData();
-
-            try {
-                InputStream inputStream = getActivity().getContentResolver().openInputStream(path);
-                byte[] pdfInBytes = new byte[inputStream.available()];
-                inputStream.read(pdfInBytes);
-                encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
 }

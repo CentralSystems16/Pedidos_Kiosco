@@ -33,6 +33,7 @@ public class MontoInicial extends Fragment {
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
     String horaString = ho.format(d);
     int resultado;
+    Button cant1, cant2, cant3, cant4, cant5, cant6;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +43,54 @@ public class MontoInicial extends Fragment {
         montoInicial = vista.findViewById(R.id.montoInicial);
 
         Button aceptar = vista.findViewById(R.id.btnAceptar);
+        cant1 = vista.findViewById(R.id.btnCant1);
+        cant2 = vista.findViewById(R.id.btnCant2);
+        cant3 = vista.findViewById(R.id.btnCant3);
+        cant4 = vista.findViewById(R.id.btnCant4);
+        cant5 = vista.findViewById(R.id.btnCant5);
+        cant6 = vista.findViewById(R.id.btnCant6);
+
+        cant1.setOnClickListener(view -> {
+            String[] parts = cant1.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
+        });
+
+        cant2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                montoInicial.setText(cant2.getText().toString());
+            }
+        });
+
+        cant3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                montoInicial.setText(cant3.getText().toString());
+            }
+        });
+
+        cant4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                montoInicial.setText(cant4.getText().toString());
+            }
+        });
+
+        cant5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                montoInicial.setText(cant5.getText().toString());
+            }
+        });
+
+        cant6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                montoInicial.setText(cant6.getText().toString());
+            }
+        });
 
         SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
         resultado = preferences2.getInt("sucursal", 0);

@@ -18,6 +18,10 @@ public class Caja {
         return idCaja;
     }
 
+    public String getNombreCaja() {
+        return nombreCaja;
+    }
+
     public void setIdCaja(int idCaja) {
         this.idCaja = idCaja;
     }

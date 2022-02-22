@@ -11,7 +11,7 @@
         android:layout_width="300dp"
         android:layout_height="400dp"
         android:orientation="vertical"
-        android:background="@drawable/boton_borde"
+        android:background="@drawable/boton_borde_verde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/about"
             android:clickable="true"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="#FFFFFF"
            android:background="@drawable/boton_borde"
             android:layout_width="match_parent"
             android:layout_height="120dp"

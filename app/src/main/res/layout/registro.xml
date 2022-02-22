@@ -174,20 +174,20 @@
             android:id="@+id/cardViewRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:strokeWidth="1dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginStart="40dp"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="4dp">
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="1dp">
 
             <Spinner
                 android:id="@+id/spinnerSucursales"
                 android:layout_width="match_parent"
-                android:popupBackground="@color/white"
-                android:backgroundTint="@color/black"
                 android:layout_height="45dp"
-                android:padding="5dp"/>
+                android:backgroundTint="@color/black"
+                android:padding="5dp"
+                android:popupBackground="@color/white" />
 
         </com.google.android.material.card.MaterialCardView>
 

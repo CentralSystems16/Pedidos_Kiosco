@@ -149,7 +149,6 @@ public class Splash extends AppCompatActivity {
     private void llenarSpinner2(){
 
         String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php" + "?id_sucursal=" + gIdSucursal;
-        System.out.println(url);
 
         datos2.post(url, new AsyncHttpResponseHandler() {
 
@@ -247,6 +246,7 @@ public class Splash extends AppCompatActivity {
     }
 
     public void obtenerIdCaja(){
+
         int indice = spDatos2.getSelectedItemPosition();
         gIdCaja = lista2.get(indice).getIdCaja();
 
@@ -255,6 +255,7 @@ public class Splash extends AppCompatActivity {
         editor.putInt("sucursal", gIdCaja);
         editor.putBoolean("sesion", true);
         editor.apply();
+
     }
 
     public void obtenerIdSucursal(){
@@ -389,7 +390,19 @@ public class Splash extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }, volleyError -> Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show()
+                }, volleyError ->{
+
+            new AlertDialog.Builder(Splash.this)
+                    .setTitle("Error")
+                    .setCancelable(false)
+                    .setMessage("Posibles problemas con la red, por favor intentelo nuevamente.")
+                    .setPositiveButton("Recargar", (dialog, which) -> {
+                        startActivity(new Intent(Splash.this, Splash.class));
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+
+        }
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(

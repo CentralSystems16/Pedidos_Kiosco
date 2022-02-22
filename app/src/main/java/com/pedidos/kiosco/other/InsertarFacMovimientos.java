@@ -138,7 +138,7 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
 
             JSONObject responseJSON = new JSONObject(String.valueOf(stringBuilder));
             Login.gIdMovimiento = Integer.parseInt(responseJSON.getString("last_insert_id()"));
-
+            System.out.println("ID movimiento al insertar: " + Login.gIdMovimiento);
             resultado = stringBuilder.toString();
             bufferedReader.close();
             inputStream.close();

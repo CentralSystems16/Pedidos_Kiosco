@@ -134,7 +134,7 @@
             android:id="@+id/crearCuenta"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Crea una"
+            android:text="Registrarse"
             android:clickable="true"
             android:focusable="true"
             android:textSize="15sp"

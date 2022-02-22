@@ -129,39 +129,6 @@
         android:layout_marginEnd="10dp"
         android:background="#A88C8C8C" />
 
-    <LinearLayout
-        android:id="@+id/ln3"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="Descuentos:"
-            android:textColor="#B9000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$"
-            android:textColor="#B9000000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/TotalDescuento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:gravity="center"
-            android:text="00.00"
-            android:textColor="#B9000000"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
     <View
         android:id="@+id/view4"
         android:layout_width="match_parent"

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
@@ -42,8 +44,9 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
 
     Context cContext;
     public static List<Pago> listaPago;
-    public static Boolean seleccionado;
     Double fondoInit;
+    int selectedItemPosition = 0;
+
 
     public AdaptadorCierreCaja(Context cContext, List<Pago> listaPago) {
 
@@ -72,43 +75,38 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
         CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
         CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
 
-        System.out.println("id tipo pago: " + CierreCaja.lIdTipoPago);
-        /*if (CierreCaja.lIdTipoPago != 1){
+        if (CierreCaja.lIdTipoPago != 1){
             cierreCajaViewHolder.cvCierre.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
         cierreCajaViewHolder.aceptar.setOnClickListener(view -> {
 
-            CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
-            CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
-
-            if (cierreCajaViewHolder.cierre != null && cierreCajaViewHolder.cierre.length() > 0) {
-                CierreCaja.montoFisico = Double.parseDouble(cierreCajaViewHolder.cierre.getText().toString());
+            if (cierreCajaViewHolder.cierre.getText().toString().equals("")){
+                Toast.makeText(cContext, "Por favor, agregue el monto.", Toast.LENGTH_SHORT).show();
             }
 
-            obtenerCierreCaja();
-            new SumaMonto().execute();
-            new SumaMontoDevolucion().execute();
+            else {
 
-            new InsertarFacTipoPagoCaja(cContext).execute();
+                CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
+                CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
 
-            cierreCajaViewHolder.aceptar.setEnabled(false);
-            cierreCajaViewHolder.aceptar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(117,117,117)));
-            cierreCajaViewHolder.cierre.setEnabled(false);
+                if (cierreCajaViewHolder.cierre != null && cierreCajaViewHolder.cierre.length() > 0) {
+                    CierreCaja.montoFisico = Double.parseDouble(cierreCajaViewHolder.cierre.getText().toString());
+                }
 
-                AdaptadorCierreCaja.seleccionado = true;
+                obtenerCierreCaja();
+                new SumaMonto().execute();
+                new SumaMontoDevolucion().execute();
+
+                new InsertarFacTipoPagoCaja(cContext).execute();
+
+                cierreCajaViewHolder.aceptar.setEnabled(false);
+                cierreCajaViewHolder.aceptar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(117, 117, 117)));
+                cierreCajaViewHolder.cierre.setEnabled(false);
 
                 CierreCaja.aceptar.setEnabled(true);
                 CierreCaja.aceptar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(63, 81, 181)));
-
-            /*for (int i = 0; i < posicion; i++) {
-                 cierreCajaViewHolder.cvCierre.setVisibility(View.VISIBLE);
-             }*/
-
-           // System.out.println("Posicion: " + posicion);
-
-            //cierreCajaViewHolder.cvCierre.setVisibility(View.VISIBLE);
-
+            }
         });
     }
 
@@ -156,8 +154,8 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
         ImageView imagen;
         TextView tvUsers;
         EditText cierre;
-        Button aceptar;
         CardView cvCierre;
+        Button aceptar;
 
         public CierreCajaViewHolder(@NonNull View itemView) {
             super(itemView);
