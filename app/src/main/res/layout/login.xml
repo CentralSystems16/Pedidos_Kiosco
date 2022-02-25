@@ -43,53 +43,47 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldNombre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
         android:hint="Número de teléfono"
         android:textColorHint="#9F807E7E"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:boxCornerRadiusBottomStart="20dp"
-        app:boxCornerRadiusBottomEnd="20dp"
-        app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
-        android:layout_marginTop="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:boxStrokeColor="#c6391e"
+        app:hintTextColor="#c6391e">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:textColor="#9F807E7E"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldPass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
         android:hint="Contraseña"
         android:textColorHint="#9F807E7E"
-        app:endIconMode="password_toggle"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:boxCornerRadiusBottomStart="20dp"
-        app:boxCornerRadiusBottomEnd="20dp"
-        app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
-        android:layout_marginTop="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:boxStrokeColor="#c6391e"
+        app:hintTextColor="#c6391e">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:textColor="@color/black"
             android:inputType="textPassword"
-            android:textSize="12sp"
-            />
+            android:textColor="#9F807E7E"
+            android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

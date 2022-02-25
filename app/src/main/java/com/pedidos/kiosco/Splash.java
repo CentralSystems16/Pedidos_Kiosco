@@ -220,7 +220,6 @@ public class Splash extends AppCompatActivity {
                 .setView(spDatos2)
                 .setPositiveButton("Realizado", (dialogInterface, i) -> {
                     obtenerIdCaja();
-
                     ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php" + "?id_caja=" + gIdCaja + "&id_sucursal=" + gIdSucursal);
 
                 })
@@ -390,19 +389,13 @@ public class Splash extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }, volleyError ->{
-
-            new AlertDialog.Builder(Splash.this)
-                    .setTitle("Error")
-                    .setCancelable(false)
-                    .setMessage("Posibles problemas con la red, por favor intentelo nuevamente.")
-                    .setPositiveButton("Recargar", (dialog, which) -> {
-                        startActivity(new Intent(Splash.this, Splash.class));
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .show();
-
-        }
+                }, volleyError -> new AlertDialog.Builder(Splash.this)
+                        .setTitle("Error")
+                        .setCancelable(false)
+                        .setMessage("Posibles problemas con la red, por favor intentelo nuevamente.")
+                        .setPositiveButton("Recargar", (dialog, which) -> startActivity(new Intent(Splash.this, Splash.class)))
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show()
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(

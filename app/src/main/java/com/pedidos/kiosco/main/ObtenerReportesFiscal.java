@@ -68,7 +68,7 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepClientes.php" + "?activo=" + ObtenerEstadoFiscal.fiscalActivo + "&id_usuario=" + Login.gIdUsuario;
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutorizaciones.php" + "?activo=" + ObtenerEstadoFiscal.fiscalActivo;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {

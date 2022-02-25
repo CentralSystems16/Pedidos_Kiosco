@@ -2,6 +2,7 @@ package com.pedidos.kiosco.adapters;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gImagenSplah;
 import static com.pedidos.kiosco.Splash.gRed;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,11 +22,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.DetReporte;
+import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ActualizarDetPedido;
 import com.pedidos.kiosco.other.ActualizarPedido;
 import com.pedidos.kiosco.other.EliminarDetPedido;
@@ -63,6 +66,8 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
 
         holder.setIsRecyclable(false);
 
+        final DetReporte detReporte = listaProdReport.get(position);
+
         holder.tvNombre.setText(listaProdReport.get(position).getNombreProducto());
         lDetMonto = listaProdReport.get(position).getMonto();
         lDetMontoIva = listaProdReport.get(position).getMontoIva();
@@ -79,6 +84,8 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
         if(lCantProducto == 1.0){
             holder.btnMenos.setEnabled(false);
         }
+
+        Glide.with(context).load(detReporte.getImgProducto()).into(holder.producto);
 
         holder.btnMas.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         holder.btnMenos.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));

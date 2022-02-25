@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,12 +28,26 @@ import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
+import com.pedidos.kiosco.main.CorteCaja;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -56,12 +72,10 @@ public class CrearReporteCierreCaja extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle datosRecuperados = getArguments();
         if (datosRecuperados == null) {
-            // No hay datos, manejar excepción
             return;
         }
 
         cierre = datosRecuperados.getInt("cierre");
-        System.out.println("Corte en reimpresion: " + cierre);
 
     }
 
@@ -78,10 +92,7 @@ public class CrearReporteCierreCaja extends Fragment {
 
     public void obtenerTipoPagoFacTipoPagoCaja(int idCierreCaja) {
 
-        System.out.println("Entro al metodo");
-
         String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPagoFacTipoPagoCaja.php" + "?id_cierre_caja=" + idCierreCaja;
-        System.out.println(url);
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -148,16 +159,14 @@ public class CrearReporteCierreCaja extends Fragment {
                             fechaFin = jsonObject1.getString("fecha_fin");
 
                             detalle = gTipoPago + "\n" +
-                                    "[C]================================\n" +
+                                    "[R ]================================\n" +
                                     "[R]" + "Venta(+) $" + String.format("%.2f", monto) + "\n" +
                                     "[R]" + "Devolución(-) $" + String.format("%.2f", montoDevolucion) + "\n" +
                                     "[R]" + "Encontrado(-) $" + String.format("%.2f", montoFisico) + "\n" +
                                     "[R]" + "Monto diferencia(=) $" + String.format("%.2f", montoDiferencia) + "\n" +
-                                    "[C]================================\n";
+                                    "[R]================================\n";
 
                             arrayList.add(detalle);
-                            System.out.println(arrayList);
-                            Toast.makeText(getContext(), ""+arrayList.size(), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -234,16 +243,93 @@ public class CrearReporteCierreCaja extends Fragment {
                                                         "[R]" + resultado + "\n" +
                                                         "[C]================================";
 
-                                        printer.printFormattedText(text);
-                                        System.out.println(text);
-                                        Fragment fragmento = new Home();
-                                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.replace(R.id.fragment_layout, fragmento);
-                                        fragmentTransaction.addToBackStack(null);
-                                        fragmentTransaction.commit();
+                                        if (AdaptadorCorteCaja.noImprimir == 0) {
+                                            printer.printFormattedText(text);
+
+                                            Fragment fragmento = new Home();
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.fragment_layout, fragmento);
+                                            fragmentTransaction.addToBackStack(null);
+                                            fragmentTransaction.commit();
+
+                                        }
 
                                     } else {
+
+                                        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+                                        File file = new File(pdfPath, CorteCaja.idCorteCaja + " CorteCaja.pdf");
+
+                                        PdfWriter writer = null;
+                                        try {
+                                            writer = new PdfWriter(file);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        assert writer != null;
+                                        PdfDocument pdfDocument = new PdfDocument(writer);
+
+                                        pdfDocument.setDefaultPageSize(PageSize.A3);
+
+                                        Document document = new Document(pdfDocument);
+
+                                        Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph direccion = new Paragraph(Splash.gDireccion + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph departamento = new Paragraph("Departamento" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph nitnrc = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea1 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph corte = new Paragraph("Corte de cajero" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea2 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph noCaja = new Paragraph("No Caja: " + numeroCaja + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph cajero = new Paragraph("Cajero: " + nombreCajero + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph fecNegocio = new Paragraph("Fecha negocio: " + fechaInicio + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph fecSistema = new Paragraph("Fecha Sistema: " + fechaFin + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea3 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph montoInit = new Paragraph("Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph datos = new Paragraph(arrayList + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea4 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph totales = new Paragraph("Totales " + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea5 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph vTotal = new Paragraph("Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph devTotal = new Paragraph("Devolución total $" + String.format("%.2f", montoDevolucionTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph gastos1 = new Paragraph("Gastos $" +  String.format("%.2f", gastos) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph tGastos = new Paragraph("Total gastos $" +  String.format("%.2f", gastosTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph tEntregar = new Paragraph("Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph mDeclarado = new Paragraph("Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea6 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph resultado1 = new Paragraph(resultado + "\n").setTextAlignment(TextAlignment.RIGHT);
+                                        Paragraph linea7 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+
+                                        document.add(nombre);
+                                        document.add(direccion);
+                                        document.add(departamento);
+                                        document.add(nitnrc);
+                                        document.add(linea1);
+                                        document.add(corte);
+                                        document.add(linea2);
+                                        document.add(noCaja);
+                                        document.add(cajero);
+                                        document.add(fecNegocio);
+                                        document.add(fecSistema);
+                                        document.add(montoInit);
+                                        document.add(linea3);
+                                        document.add(datos);
+                                        document.add(linea4);
+                                        document.add(totales);
+                                        document.add(linea5);
+                                        document.add(vTotal);
+                                        document.add(devTotal);
+                                        document.add(gastos1);
+                                        document.add(tGastos);
+                                        document.add(tEntregar);
+                                        document.add(mDeclarado);
+                                        document.add(linea6);
+                                        document.add(resultado1);
+                                        document.add(linea7);
+
+                                        document.close();
+
                                         Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
                                     }
                                 }

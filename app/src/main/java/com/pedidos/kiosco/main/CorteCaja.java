@@ -28,8 +28,7 @@ import java.util.ArrayList;
 
 public class CorteCaja extends Fragment {
 
-    public static int idTipoPago;
-
+    public static int idCorteCaja;
     RecyclerView rvLista;
     ArrayList<Cierre> cierre;
     AdaptadorCorteCaja adaptador;

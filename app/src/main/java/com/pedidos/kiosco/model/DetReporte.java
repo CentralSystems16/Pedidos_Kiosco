@@ -1,19 +1,23 @@
 package com.pedidos.kiosco.model;
 
+import android.widget.ImageView;
+
 public class DetReporte {
 
     int idDetPedido;
     String nombreProducto;
     double cantiProd;
     Double precioVenta, monto, montoIva;
+    String imgProducto;
 
-    public DetReporte(int idDetPedido, String nombreProducto, double cantiProd, Double precioVenta, Double monto, Double montoIva) {
+    public DetReporte(int idDetPedido, String nombreProducto, double cantiProd, Double precioVenta, Double monto, Double montoIva, String imgProducto) {
         this.idDetPedido = idDetPedido;
         this.nombreProducto = nombreProducto;
         this.cantiProd = cantiProd;
         this.precioVenta = precioVenta;
         this.monto = monto;
         this.montoIva = montoIva;
+        this.imgProducto = imgProducto;
     }
 
     public int getIdDetPedido() {
@@ -52,4 +56,7 @@ public class DetReporte {
         this.montoIva = montoIva;
     }
 
+    public String getImgProducto() {
+        return imgProducto;
+    }
 }

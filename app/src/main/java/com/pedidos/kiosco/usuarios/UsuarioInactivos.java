@@ -62,11 +62,7 @@ public class UsuarioInactivos extends AppCompatActivity {
                                             gPasswordRepeatUsuario = jsonObject1.getString("password_repeat_usuario"),
                                             gEmailUsuario = jsonObject1.getString("email_usuario"),
                                             gIdCargo = jsonObject1.getInt("id_cargo"),
-                                            gEstado = jsonObject1.getInt("estado_usuario"),
-                                            gEdadUsuario = jsonObject1.getInt("edad_usuario"),
-                                            gFechaNacimiento = jsonObject1.getString("nacimiento_usuario"),
-                                            gDuiUsuario = jsonObject1.getInt("dui_usuario"),
-                                            gSexoUsuario = jsonObject1.getString("sexo_usuario")));
+                                            gEstado = jsonObject1.getInt("estado_usuario")));
 
                                         }
 

@@ -260,7 +260,8 @@ public class TicketDatos extends Fragment {
                                             jsonObject1.getDouble("cantidad_producto"),
                                             jsonObject1.getDouble("precio_venta"),
                                             jsonObject1.getDouble("monto"),
-                                            jsonObject1.getDouble("monto_iva")));
+                                            jsonObject1.getDouble("monto_iva"),
+                                            jsonObject1.getString("img_producto")));
 
                         }
 

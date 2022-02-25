@@ -21,6 +21,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.CrearReporteCierreCaja;
 import com.pedidos.kiosco.fragments.TicketDatos;
+import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.model.Cierre;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
 
     Context cContext;
     public static List<Cierre> listaCorte;
+    public static int noImprimir;
 
     public AdaptadorCorteCaja(Context cContext, List<Cierre> listaCorte) {
 
@@ -55,12 +57,27 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
 
         categoriaViewHolder.reimprimir.setOnClickListener(view -> {
 
-
         int corte = listaCorte.get(posicion).getIdCierreCaja();
-            System.out.println("Corte en el adaptador: " + corte);
             Bundle datosAEnviar = new Bundle();
             datosAEnviar.putInt("cierre", corte);
             
+            Fragment fragmento = new CrearReporteCierreCaja();
+            fragmento.setArguments(datosAEnviar);
+            FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.cortecaja, fragmento);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+        });
+
+        categoriaViewHolder.verCorte.setOnClickListener(view -> {
+
+            noImprimir = 1;
+            int corte = listaCorte.get(posicion).getIdCierreCaja();
+            Bundle datosAEnviar = new Bundle();
+            datosAEnviar.putInt("cierre", corte);
+
             Fragment fragmento = new CrearReporteCierreCaja();
             fragmento.setArguments(datosAEnviar);
             FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
@@ -83,7 +100,7 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
     public static class CategoriaViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvUsers, tvFecha, tvCaja;
-        Button reimprimir;
+        Button reimprimir, verCorte;
 
         public CategoriaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +109,7 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
         tvFecha = itemView.findViewById(R.id.tvFecha);
         tvCaja = itemView.findViewById(R.id.tvNoCaja);
         reimprimir = itemView.findViewById(R.id.reimprimirCorte);
+        verCorte = itemView.findViewById(R.id.verCorte);
 
         }
     }

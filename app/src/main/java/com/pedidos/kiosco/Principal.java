@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -40,6 +42,7 @@ public class Principal extends AppCompatActivity {
     Animation toBottom;
     Boolean clicked = false;
     FloatingActionButton addButton, list, product, user, fiscal, comprobante;
+    TextView txtCategorias, txtProductos, txtUsuarios, txtFiscal, txtComprobantes;
     public static int gIdEstadoCliente, gIdEstado;
 
     @Override

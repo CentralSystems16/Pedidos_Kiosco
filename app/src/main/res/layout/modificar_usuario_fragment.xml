@@ -7,8 +7,7 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".usuarios.ModificarUsuario">
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <TextView
         android:textSize="15sp"
@@ -57,56 +56,6 @@
                 android:background="@drawable/caja_texto_circular"
                 android:hint="Nombre de usuario"
                 android:inputType="textPersonName"
-                android:padding="12sp"
-                android:textColor="@color/black"
-                android:textColorHint="#9F807E7E"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/obtenerEditarFecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/caja_texto_circular"
-                android:clickable="true"
-                android:focusable="false"
-                android:hint="Fecha de nacimiento"
-                android:inputType="date"
-                android:maxLines="1"
-                android:padding="12sp"
-                android:textColor="@color/black"
-                android:textColorHint="#9F807E7E"
-                android:textSize="13sp" />
-
-            <EditText
-                android:id="@+id/obtenerEditarEdad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="60dp"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="8dp"
-                android:autofillHints="EdadRegistro"
-                android:background="@drawable/caja_texto_circular"
-                android:hint="Edad"
-                android:inputType="number"
-                android:padding="12sp"
-                android:textColor="@color/black"
-                android:textColorHint="#9F807E7E"
-                android:textSize="13sp" />
-
-            <EditText
-                android:id="@+id/obtenerEditarDui"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="60dp"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="8dp"
-                android:autofillHints="EdadRegistro"
-                android:background="@drawable/caja_texto_circular"
-                android:hint="DUI"
-                android:inputType="number"
                 android:padding="12sp"
                 android:textColor="@color/black"
                 android:textColorHint="#9F807E7E"
@@ -193,39 +142,6 @@
                     android:text="Inactivo" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
-                    android:text="Notificaciones:"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:layout_marginStart="5dp"
-                    android:id="@+id/btnSiUsuario"
-                    android:layout_width="50dp"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#8800FF"
-                    android:text="Si" />
-
-                <Button
-                    android:id="@+id/btnNoUsuario"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#CB3234"
-                    android:textColor="@color/white"
-                    android:text="No" />
-
-            </LinearLayout>
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/editarUsuario"

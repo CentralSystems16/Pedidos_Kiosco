@@ -50,6 +50,13 @@ public class MontoInicial extends Fragment {
         cant5 = vista.findViewById(R.id.btnCant5);
         cant6 = vista.findViewById(R.id.btnCant6);
 
+        Button regresar = vista.findViewById(R.id.btnRegresar);
+        regresar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Home());
+            fr.commit();
+        });
+
         cant1.setOnClickListener(view -> {
             String[] parts = cant1.getText().toString().split(" ");
             String part1 = parts[0];

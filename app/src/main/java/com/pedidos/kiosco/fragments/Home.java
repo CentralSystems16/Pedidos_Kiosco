@@ -71,14 +71,6 @@ public class Home extends Fragment {
 
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
 
-        ImageView hacer, ver;
-
-        hacer = view.findViewById(R.id.pedido);
-        ver = view.findViewById(R.id.ver);
-
-        //Glide.with(Home.this).load(gFoto3).into(hacer);
-        //Glide.with(Home.this).load(gFoto2).into(ver);
-
         TextView nombre = view.findViewById(R.id.nombrePrincipal);
         nombre.setText(Login.nombre);
 

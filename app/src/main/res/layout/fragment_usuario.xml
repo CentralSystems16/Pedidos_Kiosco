@@ -33,9 +33,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Número de teléfono"
-            android:textColorHint="#9F807E7E"
-            app:boxStrokeColor="#c6391e"
-            app:hintTextColor="#c6391e">
+            android:textColorHint="#9F807E7E">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/EditNumero"
@@ -203,6 +201,19 @@
             android:layout_height="wrap_content" >
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/esAdmin"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="50dp"
+                android:backgroundTint="#FF9800"
+                android:text="¿Es administrador?"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/cerrarSesion"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -215,18 +226,6 @@
                 android:textSize="11sp"
                 app:cornerRadius="15dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/soyAdmin"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="50dp"
-                android:backgroundTint="#FF9800"
-                android:text="¿ERES ADMINISTRADOR?"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                app:cornerRadius="15dp" />
         </LinearLayout>
 
     </LinearLayout>

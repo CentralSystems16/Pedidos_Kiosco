@@ -9,7 +9,7 @@ public class Usuarios {
     }
 
     public Usuarios(int idUsuario, String nombreUsuario, String loginUsuario, String passwordUsuarios, String passwordRepeatUsuarios,
-                    String emailUsuario, int idCargo, int idEstado, int gEdad, String fechaNac, int gDui, String gSexo) {
+                    String emailUsuario, int idCargo, int idEstado) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.loginUsuario = loginUsuario;
@@ -18,10 +18,8 @@ public class Usuarios {
         this.emailUsuario = emailUsuario;
         this.idCargo = idCargo;
         this.idEstado = idEstado;
-        this.gEdad = gEdad;
         this.fechaNac = fechaNac;
-        this.gDui = gDui;
-        this.gSexo = gSexo;
+
     }
 
     public int getIdUsuario() {

@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.fragments.ModificarUsuario;
+import com.pedidos.kiosco.fragments.TicketDatos;
 
 import java.util.List;
 
@@ -52,8 +57,11 @@ public class Adaptadorsuarios extends RecyclerView.Adapter<Adaptadorsuarios.Cate
             UsuarioFragment.gIdCargo = listaUsuarios.get(posicion).getIdCargo();
             UsuarioFragment.gEstadoUsuario = listaUsuarios.get(posicion).getIdEstado();
 
-            Intent i = new Intent(categoriaViewHolder.itemView.getContext(), ModificarUsuario.class);
-            categoriaViewHolder.itemView.getContext().startActivity(i);
+            FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment_layout, new ModificarUsuario());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
         });
     }
