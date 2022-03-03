@@ -18,7 +18,7 @@
             tools:ignore="UselessParent">
 
             <ImageView
-                android:id="@+id/imgItem"
+                android:id="@+id/imgItemCategorias"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

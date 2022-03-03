@@ -36,7 +36,8 @@ public class InsertarFacDetMovimientos extends AsyncTask<String, Void, String> {
     protected String doInBackground (String...params){
 
     String registrar_url = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/insertarDetMovimiento.php"
-            +"?id_fac_movimiento=" + Login.gIdMovimiento
+            +"?base=" + VariablesGlobales.dataBase
+            +"&id_fac_movimiento=" + Login.gIdMovimiento
             + "&id_prefactura=" + Login.gIdPedido;
 
     System.out.println(registrar_url);

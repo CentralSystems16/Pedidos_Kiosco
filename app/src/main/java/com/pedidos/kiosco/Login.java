@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
 
     public static int gIdCliente, cargo, gIdUsuario, gVerificacion, gIdCategoria,
             gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento,
-            gIdPedidoReporte, gIdClienteReporte, gIdAutFiscal;
+            gIdPedidoReporte, gIdAutFiscal;
 
     public static String nombre, email, repeatContra, usuario, contra;
 

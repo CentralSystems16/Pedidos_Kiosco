@@ -3,13 +3,7 @@ package com.pedidos.kiosco.model;
 public class Sucursales {
 
     String nomSucursal;
-    int idSucursal;
-
-    public Sucursales(String nomSucursal, int idSucursal) {
-        this.nomSucursal = nomSucursal;
-        this.idSucursal = idSucursal;
-
-    }
+    int idSucursal, ocupada;
 
     public Sucursales() {
 
@@ -30,6 +24,7 @@ public class Sucursales {
     public void setIdSucursal(int idSucursal) {
         this.idSucursal = idSucursal;
     }
+
 
 
     @Override

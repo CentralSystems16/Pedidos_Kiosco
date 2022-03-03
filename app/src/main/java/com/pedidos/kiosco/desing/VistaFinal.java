@@ -40,7 +40,6 @@ import retrofit2.Response;
 
 public class VistaFinal extends AppCompatActivity {
 
-    Button btnRepetir, btnCerrarSesion;
     String encodedPDF;
     int REQ_PDF;
     @Override
@@ -54,8 +53,8 @@ public class VistaFinal extends AppCompatActivity {
         new SumaMonto().execute();
         new SumaMontoDevolucion().execute();
 
-        encodePDF();
-        uploadDocument();
+        //encodePDF();
+        //uploadDocument();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
@@ -92,7 +91,7 @@ public class VistaFinal extends AppCompatActivity {
 
     private void uploadDocument() {
 
-        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF, Login.gIdPedido, Login.gIdCliente);
+        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF);
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {

@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
+import com.pedidos.kiosco.fragments.ModificarCategorias;
+import com.pedidos.kiosco.main.ObtenerProductos;
+
 import java.util.List;
 
 public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.CategoriaViewHolder> {
@@ -41,7 +46,6 @@ public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.Cate
 
         categoriaViewHolder.tvCategorias.setText(listaCategorias.get(posicion).getNombreCategoria());
 
-
         Glide.with(cContext).load(categorias.getImgCategoria()).into(categoriaViewHolder.imageView);
 
         categoriaViewHolder.itemView.setOnClickListener(v -> {
@@ -50,8 +54,10 @@ public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.Cate
             CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
 
             CatFragment.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
-            Intent i = new Intent(cContext, ObtenerProductos.class);
-            categoriaViewHolder.itemView.getContext().startActivity(i);
+            System.out.println("ID de categoria en productos: " + CatFragment.gIdCategoria);
+            FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerProductos());
+            fr.commit();
 
         });
     }
@@ -70,7 +76,7 @@ public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.Cate
             super(itemView);
 
             tvCategorias = itemView.findViewById(R.id.tvNombreCat);
-            imageView = itemView.findViewById(R.id.imgItem);
+            imageView = itemView.findViewById(R.id.imgItemCategorias);
 
         }
     }

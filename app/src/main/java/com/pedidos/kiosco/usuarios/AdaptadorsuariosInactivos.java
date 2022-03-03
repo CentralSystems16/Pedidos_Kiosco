@@ -62,7 +62,7 @@ public class AdaptadorsuariosInactivos extends RecyclerView.Adapter<Adaptadorsua
 
             ModificarUsuario.gEstadoUs = 1;
 
-            ejecutarServicio("http://"+ VariablesGlobales.host +"/android/LCB/administrador/scripts/scripts_php/ModificarUsuariosInactivos.php"
+            ejecutarServicio("http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/modificarUsuariosInactivos.php"
                     + "?estado_usuario=" + ModificarUsuario.gEstadoUs
                     + "&id_usuario=" + UsuarioFragment.gIdUsuario);
 

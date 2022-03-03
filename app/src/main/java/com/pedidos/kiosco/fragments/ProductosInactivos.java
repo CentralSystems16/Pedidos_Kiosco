@@ -1,67 +1,70 @@
-package com.pedidos.kiosco.productos;
+package com.pedidos.kiosco.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
+import com.pedidos.kiosco.productos.AdaptadorProductosInactivos;
+import com.pedidos.kiosco.productos.Productos;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObtenerProductos extends AppCompatActivity {
+public class ProductosInactivos extends Fragment {
 
     RecyclerView rvLista = null;
     @SuppressLint("StaticFieldLeak")
-    public static AdaptadorProductos adaptador = null;
+    public static AdaptadorProductosInactivos adaptador = null;
     public static List<Productos> listaProductos;
     RequestQueue requestQueue11;
-    public static final String URL_PRODUCTOS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerProductos.php";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.obtener_productos);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View vista = inflater.inflate(R.layout.fragment_productos_inactivos, container, false);
 
-        requestQueue11 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue11 = Volley.newRequestQueue(getContext());
 
-        rvLista = findViewById(R.id.rvListaProductos);
-        rvLista.setLayoutManager(new GridLayoutManager(this, 3));
+        rvLista = vista.findViewById(R.id.rvListaProductosInactivos);
+        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         listaProductos = new ArrayList<>();
 
-        adaptador = new AdaptadorProductos(ObtenerProductos.this, listaProductos);
+        adaptador = new AdaptadorProductosInactivos(getContext(), listaProductos);
         rvLista.setAdapter(adaptador);
 
         obtenerProductos();
 
-        FloatingActionButton fab = findViewById(R.id.fabProd);
-        fab.setOnClickListener(view -> {
-            Intent i = new Intent(getApplicationContext(), AgregarProducto.class);
-            startActivity(i);
-        });
-
+        return vista;
     }
 
     public void obtenerProductos() {
-
-        String url = URL_PRODUCTOS  + "?id_categoria=" + CatFragment.gIdCategoria;
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        String URL_PRODUCTOS = "http://"+ VariablesGlobales.host
+                + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductosInactivos.php"
+                + "?estado_producto=0";
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        System.out.println(URL_PRODUCTOS);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTOS,
 
                 response -> {
                     try {
@@ -81,7 +84,7 @@ public class ObtenerProductos extends AppCompatActivity {
                                             jsonObject1.getString("img_producto")));
                         }
 
-                        adaptador = new AdaptadorProductos(ObtenerProductos.this, listaProductos);
+                        adaptador = new AdaptadorProductosInactivos(getContext(), listaProductos);
                         rvLista.setAdapter(adaptador);
 
                     } catch (JSONException e) {
@@ -99,4 +102,5 @@ public class ObtenerProductos extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
 }

@@ -39,12 +39,15 @@ public class InsertarDetPedido extends AsyncTask<String, Void, String> {
     Login.gIdFacDetPedido = 0;
 
     String registrar_url = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/insertarDetPedido.php"
-            +"?id_prefactura=" + Login.gIdPedido
+            + "?base=" + VariablesGlobales.dataBase
+            +"&id_prefactura=" + Login.gIdPedido
             +"&id_producto=" + ObtenerProductos.gIdProducto
             +"&cantidad_producto=1"
             +"&precio_venta=" + ObtenerProductos.gPrecio
             +"&monto=" + ObtenerProductos.gDetMonto
             +"&monto_iva=" + ObtenerProductos.gDetMontoIva;
+
+        System.out.println(registrar_url);
 
     String resultado = null;
 

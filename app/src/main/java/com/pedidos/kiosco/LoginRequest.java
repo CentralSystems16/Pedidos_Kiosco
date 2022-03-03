@@ -9,7 +9,7 @@ public class LoginRequest extends StringRequest {
 
     private final Map<String, String> params;
 
-    public static final String URL = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/loginIngreso.php";
+    public static final String URL = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/loginIngreso.php" + "?base=" + VariablesGlobales.dataBase;
 
     public LoginRequest(String username, String password, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);

@@ -33,8 +33,7 @@ public class MiPersona extends AsyncTask<String, Void, String>{
 
         protected String doInBackground (String...params){
 
-            String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/clientes.php";
-
+            String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/clientes.php" + "?base=" + VariablesGlobales.dataBase;
             String resultado = null;
 
             try {

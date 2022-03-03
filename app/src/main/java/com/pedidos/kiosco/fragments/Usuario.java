@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
@@ -54,7 +55,7 @@ public class Usuario extends Fragment {
             }
         });
 
-        ImageView esAmin = vista.findViewById(R.id.esAdmin);
+        Button esAmin = vista.findViewById(R.id.esAdmin);
 
         esAmin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,13 +104,15 @@ public class Usuario extends Fragment {
             } else {
 
                 String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarUsuario.php"
-                        + "?nombre_cliente=" + nombre.getText().toString()
+                        + "?base=" + VariablesGlobales.dataBase
+                        + "&nombre_cliente=" + nombre.getText().toString()
                         + "&email_cliente=" + email.getText().toString()
                         + "&id_usuario=" + Login.gIdUsuario
                         + "&id_cliente=" + Login.gIdCliente;
 
                 String url2 = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarClienteUsuario.php"
-                        + "?login_usuario=" + numero.getText().toString()
+                        + "?base=" + VariablesGlobales.dataBase
+                        + "&login_usuario=" + numero.getText().toString()
                         + "&nombre_usuario=" + nombre.getText().toString()
                         + "&email_usuario=" + email.getText().toString()
                         + "&password_usuarios=" + password.getText().toString()
@@ -151,7 +154,7 @@ public class Usuario extends Fragment {
 
     public void getInfoUser() {
 
-        String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerUsuarios.php" + "?id_usuario=" + Login.gIdUsuario;
+        String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerUsuarios.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario;
 
         ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");

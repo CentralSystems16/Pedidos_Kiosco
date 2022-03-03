@@ -2,7 +2,7 @@ package com.pedidos.kiosco.model;
 
 public class Caja {
 
-    int idCaja;
+    int idCaja, ocupada;
     String nombreCaja;
 
     public Caja(int idCaja, String nombreCaja) {
@@ -28,6 +28,10 @@ public class Caja {
 
     public void setNombreCaja(String nombreCaja) {
         this.nombreCaja = nombreCaja;
+    }
+
+    public int getOcupada() {
+        return ocupada;
     }
 
     @Override

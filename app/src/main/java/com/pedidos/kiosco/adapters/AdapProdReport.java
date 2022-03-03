@@ -1,5 +1,6 @@
 package com.pedidos.kiosco.adapters;
 
+import static android.view.View.GONE;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gImagenSplah;
@@ -121,7 +122,6 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
                         montoIva = monto * 0.13;
 
                         try {
-                            new ActualizarDetPedido(holder.itemView.getContext()).execute().get();
 
                             /*exitoLocal =*/  new ActualizarDetPedido(holder.itemView.getContext()).execute().get();
 
@@ -139,20 +139,6 @@ public class AdapProdReport extends RecyclerView.Adapter<AdapProdReport.ProdRepo
                         } catch (ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }
-
-            String actualizar_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMovimiento.php"
-                    + "?monto=" + AdapProdReport.monto
-                    + "&monto_iva=" + AdapProdReport.montoIva
-                    + "&id_prefactura=" + Login.gIdPedido;
-
-            String actualizar_url2 = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarDetMovimiento.php"
-                    + "?cantidad_producto=" + AdapProdReport.lNewCantProducto
-                    + "&monto=" + AdapProdReport.lNewDetMonto
-                    + "&monto_iva=" + AdapProdReport.lNewDetMontoIva
-                    + "&id_fac_det_movimiento=" + AdapProdReport.lidDetPedido;
-
-                        ejecutarServicio(actualizar_url);
-                        ejecutarServicio(actualizar_url2);
 
         });
 

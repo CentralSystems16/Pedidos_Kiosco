@@ -24,7 +24,9 @@ public class SumaMonto extends AsyncTask<Void, Void, Void>{
         String StringHolder = "" ;
 
         String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMonto.php"
-                + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja + "&id_tipo_pago=" + CierreCaja.lIdTipoPago;
+                + "?base=" + VariablesGlobales.dataBase
+                + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
+                + "&id_tipo_pago=" + CierreCaja.lIdTipoPago;
 
         public static Double sumaMonto;
 

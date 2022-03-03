@@ -27,7 +27,7 @@ public class ContadorProductos {
         HttpResponse httpResponse;
         JSONArray jsonObject = null;
         String StringHolder = "" ;
-        String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/contadorProdPedidos.php" + "?id_prefactura=" + Login.gIdPedido;
+        String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/contadorProdPedidos.php" + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido;
         public static Double gCount = 0.0;
         DecimalFormat formatoDecimal = new DecimalFormat("#");
 
@@ -44,7 +44,7 @@ public class ContadorProductos {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-
+            System.out.println(contador_url);
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(contador_url);
 

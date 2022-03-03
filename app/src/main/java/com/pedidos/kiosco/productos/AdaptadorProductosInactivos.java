@@ -1,6 +1,7 @@
 package com.pedidos.kiosco.productos;
 
-import static com.pedidos.kiosco.productos.ModificarProductos.gEstadoProd;
+import static com.pedidos.kiosco.fragments.ModificarProductos.gEstadoProd;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +23,9 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.categorias.CatFragment;
+import com.pedidos.kiosco.fragments.ModificarProductos;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +89,13 @@ public class AdaptadorProductosInactivos extends RecyclerView.Adapter<AdaptadorP
             gEstadoProd = 1;
 
             ejecutarservicio(
-                    "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/consultas/ActualizarProductosInactivos.php"
+                    "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarProductosInactivos.php"
                             + "?estado_producto=" + gEstadoProd
                             + "&id_producto=" + ProdFragment.gIdProducto);
 
-            Intent j = new Intent(productosViewHolder.itemView.getContext(), Principal.class);
-            productosViewHolder.itemView.getContext().startActivity(j);
+            FragmentTransaction fr = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ProdFragment());
+            fr.commit();
 
              });
         }

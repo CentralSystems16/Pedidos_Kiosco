@@ -29,7 +29,8 @@ public class ActualizarDetPedido extends AsyncTask<String, Void, String> {
     protected String doInBackground (String...params){
 
         String actualizar_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarDetPedido.php"
-                + "?cantidad_producto=" + AdapProdReport.lNewCantProducto
+                + "?base=" + VariablesGlobales.dataBase
+                + "&cantidad_producto=" + AdapProdReport.lNewCantProducto
                 + "&monto=" + AdapProdReport.lNewDetMonto
                 + "&monto_iva=" + AdapProdReport.lNewDetMontoIva
                 + "&id_det_prefactura=" + AdapProdReport.lidDetPedido;

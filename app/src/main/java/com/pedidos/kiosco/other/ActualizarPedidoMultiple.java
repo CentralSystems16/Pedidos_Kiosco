@@ -33,7 +33,8 @@ public class ActualizarPedidoMultiple extends AsyncTask<String, Void, String> {
 
     protected String doInBackground (String...params){
                 String actualizar_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPedido.php"
-                + "?id_prefactura=" + Login.gIdPedido
+                + "?base=" + VariablesGlobales.dataBase
+                + "&id_prefactura=" + Login.gIdPedido
                 + "&monto=" + SumaMontoMultiple.sumaMontoMultiple
                 + "&monto_iva=" + SumaMontoMultipleIva.sumaMontoMultipleIva;
 

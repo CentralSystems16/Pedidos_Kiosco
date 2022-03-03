@@ -32,11 +32,6 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
 
     protected String doInBackground (String...params){
 
-        System.out.println("Monto incial: " + CierreCaja.fondoInit);
-        System.out.println("Monto: " + SumaMonto.sumaMonto);
-        System.out.println("Monto devolucion: " + SumaMontoDevolucion.sumaMontoDevolucion);
-        System.out.println("Monto fisico: " + CierreCaja.montoFisico);
-
         if (SumaMonto.sumaMonto == null){
             SumaMonto.sumaMonto = 0.00;
         }
@@ -46,10 +41,10 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
         }
 
         double montoDif = (CierreCaja.fondoInit + SumaMonto.sumaMonto) - (SumaMontoDevolucion.sumaMontoDevolucion + CierreCaja.montoFisico);
-        System.out.println("Monto diferencia: " + montoDif);
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarTipoPagoCaja.php"
-                +"?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
+                +"?base=" + VariablesGlobales.dataBase
+                +"&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
                 +"&tipo_pago=" + CierreCaja.lTipoPago
                 +"&monto=" + SumaMonto.sumaMonto
                 +"&monto_devolucion=" + SumaMontoDevolucion.sumaMontoDevolucion
@@ -60,8 +55,6 @@ public class InsertarFacTipoPagoCaja extends AsyncTask<String, Void, String> {
                 +"&monto_fisico=" + CierreCaja.montoFisico;
 
         String resultado = null;
-
-        System.out.println(registrar_url);
 
         try {
 

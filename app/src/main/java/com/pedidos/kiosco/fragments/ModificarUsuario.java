@@ -3,6 +3,8 @@ package com.pedidos.kiosco.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,14 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
 
 public class ModificarUsuario extends Fragment {
 
     EditText editUsuario, editNombre, editPass, editRepeatPass, editEmail;
     RequestQueue requestQueue;
-    Button modificarUsuario, btnActivoUser, btnInactivoUser, btnNotSi, btnNotiNo;
+    Button modificarUsuario, btnActivoUser, btnInactivoUser;
     public static int gEstadoUs = 1, gNotiUs = 1;
 
     @Override
@@ -32,25 +35,6 @@ public class ModificarUsuario extends Fragment {
                              Bundle savedInstanceState) {
 
         View vista = inflater.inflate(R.layout.modificar_usuario_fragment, container, false);
-
-        btnNotiNo.setOnClickListener(v -> {
-
-            gNotiUs = 0;
-            btnNotSi.setEnabled(true);
-            btnNotiNo.setEnabled(false);
-            Toast.makeText(getContext(), "Este usuario dejará de recibir notificaciones", Toast.LENGTH_SHORT).show();
-
-        });
-
-        btnNotSi.setEnabled(false);
-        btnNotSi.setOnClickListener(v -> {
-
-            gNotiUs = 1;
-            btnNotSi.setEnabled(false);
-            btnNotiNo.setEnabled(true);
-            Toast.makeText(getContext(), "Este usuario recibirá notificaciones", Toast.LENGTH_SHORT).show();
-
-        });
 
         btnActivoUser = vista.findViewById(R.id.btnActivoUsuario);
         btnActivoUser.setEnabled(false);
@@ -68,7 +52,6 @@ public class ModificarUsuario extends Fragment {
         btnInactivoUser.setOnClickListener(v -> {
 
             gEstadoUs = 0;
-            System.out.println("Estado actual: " + gEstadoUs);
             btnActivoUser.setEnabled(true);
             btnInactivoUser.setEnabled(false);
             Toast.makeText(getContext(), "Usuario desactivado", Toast.LENGTH_SHORT).show();
@@ -109,8 +92,9 @@ public class ModificarUsuario extends Fragment {
 
         ejecutarServicio(url);
 
-        Intent i = new Intent(getContext(), Principal.class);
-        startActivity(i);
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_layout, new UsuarioFragment());
+        fr.commit();
 
     }
 

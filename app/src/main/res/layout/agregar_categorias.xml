@@ -1,100 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:id="@+id/agregarCategoria"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".categorias.AgregarCategorias">
-
-    <TextView
-        android:id="@+id/nuevaCategoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NUEVA CATEGORIA"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="15sp"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField"
+        <ImageView
+            android:id="@+id/imageViewAddCat"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:backgroundTint="#3F51B5"
+            android:layout_marginTop="33dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelectImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"
-            app:boxStrokeColor="#7D9E34"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:text="BUSCAR IMAGEN"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:backgroundTint="#3F51B5"
+            android:textColor="@color/white"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            app:cornerRadius="15dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldNombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:hint="Nombre categoria"
+            android:textColorHint="#9F807E7E"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText"
+                android:id="@+id/nombreImagen"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textColorHint="#9F807E7E"
-                android:textSize="12sp"
-                />
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/imagenNueva"
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUploadImage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cargar imagen:"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"/>
-
-        <ImageView
-            android:id="@+id/imageView"
+            android:text="completado"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_width="130dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_menu_camera"
-            android:layout_marginStart="20dp" />
+            android:textSize="12sp"
+            android:backgroundTint="#3F51B5"
+            android:textColor="@color/white"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            app:cornerRadius="15dp"/>
 
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnBuscar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buscar"
-        android:textSize="12sp"
-        android:backgroundTint="#7D9E34"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        app:cornerRadius="15dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSubir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CREAR CATEGORÍA"
-        android:layout_marginTop="10dp"
-        android:textSize="12sp"
-        android:backgroundTint="#7D9E34"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:cornerRadius="15dp"/>
-
-</LinearLayout>
+</RelativeLayout>

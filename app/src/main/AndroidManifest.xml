@@ -16,13 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".main.ObtenerMovimientos"
-            android:exported="false" />
-        <activity
-            android:name=".other.Ayuda"
             android:exported="false" />
         <activity
             android:name=".pay.ModificarAutorizacion"
@@ -58,28 +56,14 @@
             android:name=".main.ObtenerEstados"
             android:exported="false" />
         <activity
-            android:name=".main.ObtenerDetReporte"
-            android:exported="false" />
-        <activity
             android:name=".categorias.AgregarCategorias"
-            android:exported="false" />
-        <activity
-            android:name=".categorias.CategoriasInactivas"
             android:exported="false" />
         <activity
             android:name=".productos.AgregarProducto"
             android:exported="false" />
         <activity
-            android:name=".productos.ModificarProductos"
-            android:exported="false" />
-        <activity
-            android:name=".productos.ObtenerProductos"
-            android:exported="false" />
-        <activity
             android:name=".main.ObtenerReportesFiscal"
             android:exported="false" />
-        <activity android:name=".productos.ProductosInactivos"
-            android:exported="false"/>
         <activity
             android:name=".Splash"
             android:exported="true">

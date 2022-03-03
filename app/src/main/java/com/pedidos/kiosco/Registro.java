@@ -142,7 +142,7 @@ public class Registro extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/registroUsuario.php",
+        StringRequest request = new StringRequest(Request.Method.POST, "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/registroUsuario.php" + "?base=" + VariablesGlobales.dataBase,
                 response -> {
 
                     if(response.equalsIgnoreCase("Usuario registrado")){
@@ -195,7 +195,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void llenarSpinner(){
-        String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerSucursales.php";
+        String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerSucursales.php" + "?base=" + VariablesGlobales.dataBase;
         System.out.println(url);
         cliente.post(url, new AsyncHttpResponseHandler() {
 

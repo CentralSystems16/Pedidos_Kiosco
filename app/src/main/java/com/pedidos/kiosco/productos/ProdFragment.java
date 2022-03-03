@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
@@ -20,6 +21,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
+import com.pedidos.kiosco.fragments.ProductosInactivos;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,8 +57,9 @@ public class ProdFragment extends Fragment {
 
         inactivos = vista.findViewById(R.id.btnInactivos);
         inactivos.setOnClickListener(v -> {
-            Intent i = new Intent(getContext(), ProductosInactivos.class);
-            startActivity(i);
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ProductosInactivos());
+            fr.commit();
         });
 
         return vista;

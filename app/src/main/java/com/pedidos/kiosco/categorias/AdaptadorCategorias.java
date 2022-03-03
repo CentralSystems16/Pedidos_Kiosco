@@ -13,10 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.MediaStoreSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.ModificarCategorias;
-import com.pedidos.kiosco.fragments.ResumenPago;
 import java.util.List;
+import java.util.UUID;
 
 public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategorias.CategoriaViewHolder> {
 
@@ -44,15 +47,20 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
 
         Categorias categorias = listaCategorias.get(posicion);
 
-    categoriaViewHolder.tvCategorias.setText(listaCategorias.get(posicion).getNombreCategoria());
 
-     Glide.with(cContext).load(categorias.getImgCategoria()).into(categoriaViewHolder.imageView);
+        categoriaViewHolder.tvCategorias.setText(listaCategorias.get(posicion).getNombreCategoria());
+
+        Glide.with(cContext).load(categorias.getImgCategoria()).into(categoriaViewHolder.imageView);
+        Glide.with(cContext)
+                .load(categorias.getImgCategoria())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(categoriaViewHolder.imageView);
 
         categoriaViewHolder.itemView.setOnClickListener(v -> {
 
             CatFragment.gNombreCat = listaCategorias.get(posicion).getNombreCategoria();
             CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
-
             CatFragment.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
             FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ModificarCategorias());
@@ -75,7 +83,7 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
             super(itemView);
 
         tvCategorias = itemView.findViewById(R.id.tvNombreCat);
-        imageView = itemView.findViewById(R.id.imgItem);
+        imageView = itemView.findViewById(R.id.imgItemCategorias);
 
         }
     }

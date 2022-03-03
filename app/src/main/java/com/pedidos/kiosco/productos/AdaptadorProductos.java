@@ -11,9 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.fragments.ModificarCategorias;
+import com.pedidos.kiosco.fragments.ModificarProductos;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +79,9 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
             ProdFragment.gDetMontoIva = ProdFragment.gDetMonto * 0.13;
             ProdFragment.gOpciones = listaProductos.get(i).getOpciones();
 
-            Intent j = new Intent(context, ModificarProductos.class);
-            productosViewHolder.itemView.getContext().startActivity(j);
+            FragmentTransaction fr = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ModificarProductos());
+            fr.commit();
 
              });
         }

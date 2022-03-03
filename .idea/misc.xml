@@ -10,12 +10,14 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_view_list_24.xml" value="0.334" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/spinner_background.xml" value="0.187" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/activity_ayuda.xml" value="0.2953703703703704" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/agregar_categorias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/agregar_producto.xml" value="0.2953703703703704" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/agregar_usuario.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/autenticacion_fiscal.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/categorias_inactivas.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/cierre_caja_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/corte_caja.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/crear_reporte_cierre_caja.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/enviando_ticket.xml" value="0.36666666666666664" />
@@ -23,9 +25,15 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_carrito.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_cat.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_categorias.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_categorias_inactivas.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_modificar_productos.xml" value="0.1953125" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_obtener_det_reporte.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_obtener_productos.xml" value="0.1953125" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_prod.xml" value="0.2601851851851852" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_productos_inactivos.xml" value="0.1953125" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_usuario_inactivo.xml" value="0.1953125" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_categorias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_cierre_caja.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_corte.xml" value="0.36666666666666664" />

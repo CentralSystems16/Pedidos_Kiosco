@@ -47,7 +47,8 @@ public class InsertarPedido extends AsyncTask<String, Void, String> {
         Login.gIdPedido = 0;
 
         String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarPedido.php"
-                +"?id_cliente=" + Login.gIdCliente
+                +"?base=" + VariablesGlobales.dataBase
+                +"&id_cliente=" + Login.gIdCliente
                 +"&fecha_creo=" + fechacComplString + " a las " + horaString
                 +"&id_estado_prefactura=1"
                 +"&monto=" + ObtenerProductos.gDetMonto
@@ -55,7 +56,7 @@ public class InsertarPedido extends AsyncTask<String, Void, String> {
                 +"&id_usuario=" + Login.gIdUsuario
                 +"&fecha_finalizo=" + fechacComplString + " a las " + horaString
                 +"&id_sucursal=" + Login.gIdSucursal;
-
+        System.out.println(registrar_url);
         String resultado = null;
 
         try {

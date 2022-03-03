@@ -33,7 +33,9 @@ public class EliminarDetPedido extends AsyncTask<String, Void, String> {
     }
 
     protected String doInBackground (String... params) {
-        String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarDetPedido.php"+"?id_det_prefactura="+ AdapProdReport.lidDetPedido;
+        String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarDetPedido.php"
+                +"?base=" + VariablesGlobales.dataBase
+                +"&id_det_prefactura="+ AdapProdReport.lidDetPedido;
 
         String resultado;
 

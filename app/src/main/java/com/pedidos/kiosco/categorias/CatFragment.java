@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
@@ -16,12 +17,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.fragments.CategoriasInactivas;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CatFragment extends Fragment {
 
@@ -57,8 +63,9 @@ public class CatFragment extends Fragment {
         inactivas = vista.findViewById(R.id.btnInactivas);
         inactivas.setOnClickListener(v -> {
 
-            Intent i = new Intent(getContext(), CategoriasInactivas.class);
-            startActivity(i);
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CategoriasInactivas());
+            fr.commit();
 
         });
 

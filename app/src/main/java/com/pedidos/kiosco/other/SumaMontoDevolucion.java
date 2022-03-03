@@ -28,7 +28,9 @@ public class SumaMontoDevolucion extends AsyncTask<Void, Void, Void>{
         JSONArray jsonObject = null;
         String StringHolder = "" ;
         String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDevolucion.php"
-                + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja + "&id_tipo_pago=" + CierreCaja.lIdTipoPago;
+                + "?base=" + VariablesGlobales.dataBase
+                + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
+                + "&id_tipo_pago=" + CierreCaja.lIdTipoPago;
 
         public static Double sumaMontoDevolucion;
 

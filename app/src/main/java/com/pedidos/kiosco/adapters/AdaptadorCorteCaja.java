@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -60,7 +62,7 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
         int corte = listaCorte.get(posicion).getIdCierreCaja();
             Bundle datosAEnviar = new Bundle();
             datosAEnviar.putInt("cierre", corte);
-            
+            noImprimir = 0;
             Fragment fragmento = new CrearReporteCierreCaja();
             fragmento.setArguments(datosAEnviar);
             FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
@@ -72,7 +74,7 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
         });
 
         categoriaViewHolder.verCorte.setOnClickListener(view -> {
-
+            Toast.makeText(cContext, "Se presiono el boton", Toast.LENGTH_SHORT).show();
             noImprimir = 1;
             int corte = listaCorte.get(posicion).getIdCierreCaja();
             Bundle datosAEnviar = new Bundle();
@@ -87,8 +89,6 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
             fragmentTransaction.commit();
 
         });
-
-
 
     }
 

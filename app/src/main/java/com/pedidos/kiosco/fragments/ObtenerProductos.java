@@ -113,7 +113,7 @@ public class ObtenerProductos extends Fragment {
 
     public void obtenerProductos() {
 
-        String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductos.php" + "?id_categoria=" + Login.gIdCategoria;
+        String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductos.php" + "?base=" + VariablesGlobales.dataBase + "&id_categoria=" + Login.gIdCategoria;
 
         ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");

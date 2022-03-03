@@ -42,7 +42,6 @@ public class Principal extends AppCompatActivity {
     Animation toBottom;
     Boolean clicked = false;
     FloatingActionButton addButton, list, product, user, fiscal, comprobante;
-    TextView txtCategorias, txtProductos, txtUsuarios, txtFiscal, txtComprobantes;
     public static int gIdEstadoCliente, gIdEstado;
 
     @Override
@@ -106,7 +105,7 @@ public class Principal extends AppCompatActivity {
             fr.replace(R.id.fragment_layout, new CorteCaja());
             fr.commit();
         });
-
+        System.out.println("ID cliente: " + Login.gIdCliente);
         if (Login.gIdCliente == 0) {
 
             try {
@@ -117,7 +116,7 @@ public class Principal extends AppCompatActivity {
             }
 
             if (MiPersona.exito) {
-                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarClienteUsuario.php" + "?id_cliente=" + Login.gIdCliente + "&id_usuario=" + Login.gIdUsuario);
+                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarClienteUsuario.php" + "?base=" + VariablesGlobales.dataBase + "&id_cliente=" + Login.gIdCliente + "&id_usuario=" + Login.gIdUsuario);
             }
         }
 
@@ -160,17 +159,27 @@ public class Principal extends AppCompatActivity {
 
         if (!clicked){
             list.setVisibility(View.VISIBLE);
+            list.setEnabled(true);
             product.setVisibility(View.VISIBLE);
+            product.setEnabled(true);
             user.setVisibility(View.VISIBLE);
+            user.setEnabled(true);
             fiscal.setVisibility(View.VISIBLE);
+            fiscal.setEnabled(true);
             comprobante.setVisibility(View.VISIBLE);
+            comprobante.setEnabled(true);
         }
         else {
             list.setVisibility(View.INVISIBLE);
+            list.setEnabled(false);
             product.setVisibility(View.INVISIBLE);
+            product.setEnabled(false);
             user.setVisibility(View.INVISIBLE);
+            user.setEnabled(false);
             fiscal.setVisibility(View.INVISIBLE);
+            fiscal.setEnabled(false);
             comprobante.setVisibility(View.INVISIBLE);
+            comprobante.setEnabled(false);
         }
 
     }

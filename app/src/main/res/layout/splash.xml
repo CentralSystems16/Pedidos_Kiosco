@@ -27,8 +27,8 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/animacionEmpresa"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="100dp"
         android:layout_gravity="center"/>
 

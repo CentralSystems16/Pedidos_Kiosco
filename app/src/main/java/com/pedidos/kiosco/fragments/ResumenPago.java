@@ -1,30 +1,20 @@
 package com.pedidos.kiosco.fragments;
 
-import static android.app.Activity.RESULT_OK;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.other.ContadorProductos.GetDataFromServerIntoTextView.gCount;
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +27,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,18 +40,10 @@ import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
-import com.google.android.material.card.MaterialCardView;
-import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.borders.GrooveBorder;
-import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
@@ -69,25 +55,17 @@ import com.pedidos.kiosco.other.InsertarFacDetMovimientos;
 import com.pedidos.kiosco.other.InsertarFacMovimientos;
 import com.pedidos.kiosco.other.SumaMontoMultiple;
 import com.pedidos.kiosco.other.SumaMontoMultipleIva;
-import com.pedidos.kiosco.pdf.ResponsePOJO;
-import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ResumenPago extends Fragment {
 
@@ -237,7 +215,7 @@ public class ResumenPago extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + Login.gIdMovimiento;
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
 
@@ -275,7 +253,7 @@ public class ResumenPago extends Fragment {
 
     public void obtenerAutFiscal() {
 
-        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?id_tipo_comprobante=4";
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?base=" + VariablesGlobales.dataBase + "&id_tipo_comprobante=4";
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
 
@@ -315,7 +293,7 @@ public class ResumenPago extends Fragment {
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php" + "?id_fac_movimiento=" + Login.gIdMovimiento;
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + Login.gIdMovimiento;
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         System.out.println(url_det_pedido);
         @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET, url_det_pedido,
@@ -517,7 +495,7 @@ public class ResumenPago extends Fragment {
 
     public void obtenerCaja() {
 
-        String URL_REPORTES = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCaja.php";
+        String URL_REPORTES = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCaja.php" + "?base=" + VariablesGlobales.dataBase;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
@@ -564,7 +542,9 @@ public class ResumenPago extends Fragment {
 
         String URL_REPORTES = "http://" + VariablesGlobales.host +
                 "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobante.php"
-                + "?id_aut_fiscal=" + Login.gIdAutFiscal;
+                + "?base=" + VariablesGlobales.dataBase
+                + "&base=" + VariablesGlobales.dataBase
+                + "&id_aut_fiscal=" + Login.gIdAutFiscal;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
@@ -592,12 +572,14 @@ public class ResumenPago extends Fragment {
                             obtenerMovimientos();
                             new InsertarFacDetMovimientos(getContext()).execute();
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
-                                    + "?id_estado_prefactura=2"
+                                    + "?base=" + VariablesGlobales.dataBase
+                                    + "&id_estado_prefactura=2"
                                     + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
                                     + "&id_prefactura=" + Login.gIdPedido);
 
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
-                                    + "?monto_pago=" + etMoney.getText().toString()
+                                    + "?base=" + VariablesGlobales.dataBase
+                                    + "&monto_pago=" + etMoney.getText().toString()
                                     + "&monto_cambio=" + cambio.getText().toString()
                                     + "&id_estado_comprobante=2"
                                     + "&id_fac_movimiento=" + Login.gIdMovimiento);
@@ -606,7 +588,8 @@ public class ResumenPago extends Fragment {
                         } else {
 
                             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
-                                    + "?id_aut_fiscal=" + Login.gIdAutFiscal);
+                                    + "?base=" + VariablesGlobales.dataBase
+                                    + "&id_aut_fiscal=" + Login.gIdAutFiscal);
 
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Autorización finalizada")

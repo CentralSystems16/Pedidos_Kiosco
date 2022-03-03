@@ -1,8 +1,6 @@
 package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.Splash.gBlue3;
-import static com.pedidos.kiosco.Splash.gFoto2;
-import static com.pedidos.kiosco.Splash.gFoto3;
 import static com.pedidos.kiosco.Splash.gGreen3;
 import static com.pedidos.kiosco.Splash.gRecBlue2;
 import static com.pedidos.kiosco.Splash.gRecGreen2;
@@ -29,7 +27,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
@@ -102,7 +99,7 @@ public class Home extends Fragment {
         SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
         resultado = preferences2.getInt("sucursal", 0);
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCierreCaja.php" + "?id_usuario=" + Login.gIdUsuario + "&id_caja=" + resultado;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCierreCaja.php"  + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&id_caja=" + resultado;
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
@@ -128,7 +125,7 @@ public class Home extends Fragment {
                         }
 
                         abrirCaja.setOnClickListener(view12 -> {
-                            System.out.println("Estado: " + state);
+
                             if (state == 0) {
 
                                 FragmentTransaction fr = getFragmentManager().beginTransaction();
@@ -188,7 +185,7 @@ public class Home extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos.php" + "?id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos.php"  + "?base=" + VariablesGlobales.dataBase + "&id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -240,7 +237,7 @@ public class Home extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos2.php" + "?id_estado_comprobante=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos2.php"  + "?base=" + VariablesGlobales.dataBase + "&id_estado_comprobante=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 

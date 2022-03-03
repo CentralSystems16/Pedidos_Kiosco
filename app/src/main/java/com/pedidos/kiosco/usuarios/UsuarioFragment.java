@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.CierreCaja;
+import com.pedidos.kiosco.fragments.UsuarioInactivo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,7 @@ public class UsuarioFragment extends Fragment {
         usuariosInactivos = vista.findViewById(R.id.usuariosInactivos);
         usuariosInactivos.setOnClickListener(v -> {
             FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new CierreCaja());
+            fr.replace(R.id.fragment_layout, new UsuarioInactivo());
             fr.commit();
         });
 

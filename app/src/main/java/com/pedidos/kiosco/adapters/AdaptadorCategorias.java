@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
 import com.pedidos.kiosco.model.Categorias;
 import java.util.List;
@@ -51,6 +52,7 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
         categoriaViewHolder.itemView.setOnClickListener(v -> {
 
                 Login.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
+                CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
                 FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_layout, new ObtenerProductos());
                 fr.commit();
@@ -72,7 +74,7 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
             super(itemView);
 
             tvCategorias = itemView.findViewById(R.id.tvNombreCat);
-            imageView = itemView.findViewById(R.id.imgItem);
+            imageView = itemView.findViewById(R.id.imgItemCategorias);
 
         }
     }

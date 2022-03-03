@@ -67,7 +67,7 @@ public class Categorias extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_CATEGORIAS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"+"?estado_categoria=1";
+        String URL_CATEGORIAS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"  + "?base=" + VariablesGlobales.dataBase +"&estado_categoria=1";
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CATEGORIAS,

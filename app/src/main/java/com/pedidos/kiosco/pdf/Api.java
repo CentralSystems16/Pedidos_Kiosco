@@ -11,9 +11,7 @@ public interface Api {
     @POST("server_upload_pdf.php")
 
     Call<ResponsePOJO> uploadDocument(
-            @Field("PDF") String encodedPDF,
-            @Field("id_prefactura") int id_prefactura,
-            @Field("id_cliente") int id_cliente
+            @Field("PDF") String encodedPDF
     );
 
 }

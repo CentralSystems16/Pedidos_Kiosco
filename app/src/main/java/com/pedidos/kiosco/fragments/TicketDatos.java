@@ -90,14 +90,13 @@ public class TicketDatos extends Fragment {
         total.setTextColor((Color.rgb(gRed, gGreen, gBlue)));
         ln1.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         ln2.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
-        //ln3.setBackgroundColor(Color.rgb(gRed, gRed, gBlue));
 
         anular = vista.findViewById(R.id.anularPedido);
 
         anular.setOnClickListener(view -> new AlertDialog.Builder(requireContext())
                 .setTitle("Confirmación")
                 .setMessage("¿Seguro que quieres anular el pedido?")
-                .setPositiveButton("Si", (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarPedido.php" + "?id_prefactura=" + Login.gIdPedido))
+                .setPositiveButton("Si", (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarPedido.php" + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido))
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                 })
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -184,7 +183,7 @@ public class TicketDatos extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerPedido.php" + "?id_prefactura=" + Login.gIdPedido;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerPedido.php" + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
@@ -229,7 +228,7 @@ public class TicketDatos extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetPedido.php"+"?id_prefactura=" + Login.gIdPedido;
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetPedido.php" + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
