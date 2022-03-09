@@ -27,12 +27,11 @@ public class CategoriasInactivas extends Fragment {
     RecyclerView rvLista;
     ArrayList<Categorias> categorias;
     int MY_DEFAULT_TIMEOUT = 15000;
-    String URL_CATEGORIAS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"+ "?id_categoria=" + CatFragment.gIdCategoria + "?estado_producto=0";
+    String URL_CATEGORIAS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php" + "?base=" + VariablesGlobales.dataBase + "&id_categoria=" + CatFragment.gIdCategoria + "&estado_producto=0";
     AdaptadorCategoriasInvalidas adaptadorCat;
     int gIdCategoria;
     String gNombreCat;
     String gImagen;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

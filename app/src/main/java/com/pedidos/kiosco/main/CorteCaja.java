@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 
 public class CorteCaja extends Fragment {
 
-    public static int idCorteCaja;
     RecyclerView rvLista;
     ArrayList<Cierre> cierre;
     AdaptadorCorteCaja adaptador;
@@ -57,7 +55,7 @@ public class CorteCaja extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCorteCaja.php";
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCorteCaja.php" + "?base=" + VariablesGlobales.dataBase;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 

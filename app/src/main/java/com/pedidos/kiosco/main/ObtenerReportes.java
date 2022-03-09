@@ -2,16 +2,20 @@ package com.pedidos.kiosco.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
@@ -29,53 +33,56 @@ import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportes;
 import com.pedidos.kiosco.model.Reportes;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class ObtenerReportes extends AppCompatActivity {
+public class ObtenerReportes extends Fragment {
 
     RecyclerView rvLista;
     ArrayList<Reportes> reportes;
     AdaptadorReportes adaptador;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.obtener_reportes);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View vista = inflater.inflate(R.layout.fragment_obtener_reportes, container, false);
 
-        TextView orden = findViewById(R.id.orden);
+        TextView orden = vista.findViewById(R.id.orden);
         orden.setText(ObtenerEstados.estadosNombre);
 
-        Toolbar fiscal = findViewById(R.id.toolbarPrefac);
+        Toolbar fiscal = vista.findViewById(R.id.toolbarPrefac);
         fiscal.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
-        final ImageButton regresa = findViewById(R.id.regresarDatos);
+        final ImageButton regresa = vista.findViewById(R.id.regresarDatos);
         regresa.setOnClickListener(v -> {
-                startActivity(new Intent(getApplicationContext(), ObtenerEstados.class));
-                obtenerPedidosAct();
+            startActivity(new Intent(getContext(), ObtenerEstados.class));
+            obtenerPedidosAct();
         });
 
-        rvLista = findViewById(R.id.rvListaReportes);
-        rvLista.setLayoutManager(new LinearLayoutManager(this));
+        rvLista = vista.findViewById(R.id.rvListaReportes);
+        rvLista.setLayoutManager(new LinearLayoutManager(getContext()));
 
         reportes = new ArrayList<>();
 
         obtenerReportes();
 
+        return vista;
     }
 
     public void obtenerReportes() {
 
-        ProgressDialog progressDialog = new ProgressDialog(ObtenerReportes.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepPrefactura.php" + "?id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {
 
@@ -96,13 +103,13 @@ public class ObtenerReportes extends AppCompatActivity {
                                             jsonObject1.getInt("id_cliente"),
                                             jsonObject1.getInt("id_estado_prefactura"),
                                             jsonObject1.getString("fecha_finalizo")));
-                                    }
+                        }
 
-                            adaptador = new AdaptadorReportes(this, reportes);
-                            rvLista.setAdapter(adaptador);
+                        adaptador = new AdaptadorReportes(getContext(), reportes);
+                        rvLista.setAdapter(adaptador);
 
 
-                            progressDialog.dismiss();
+                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -110,7 +117,7 @@ public class ObtenerReportes extends AppCompatActivity {
                     }
 
                 }, volleyError -> {
-            Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         });
 
@@ -126,7 +133,7 @@ public class ObtenerReportes extends AppCompatActivity {
 
         String url = "http://"+ VariablesGlobales.host + "/android/res/cliente/scripts/scripts_php/obtenerPedidosActivos.php" + "?id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
 
@@ -158,7 +165,7 @@ public class ObtenerReportes extends AppCompatActivity {
             } else if (volleyError instanceof TimeoutError) {
                 message = "Connection TimeOut! Please check your internet connection.";
             }
-            Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "" + message, Toast.LENGTH_LONG).show();
         }
         );
 
@@ -168,11 +175,6 @@ public class ObtenerReportes extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
-
-    }
-
-    @Override
-    public void onBackPressed() {
 
     }
 

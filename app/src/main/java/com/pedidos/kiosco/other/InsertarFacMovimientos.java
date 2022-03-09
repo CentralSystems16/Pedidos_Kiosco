@@ -31,7 +31,7 @@ import java.util.Locale;
 public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
 
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d'-'MMMM'-'yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d'-'MÜ'-'yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
@@ -58,7 +58,7 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_prefactura=" + Login.gIdPedido
                 +"&id_tipo_pago=" + TipoPago.idTipoPago
                 +"&fecha=" + "1/1/1"
-                +"&fecha_creo=" + fechacComplString + " " + horaString
+                +"&fecha_creo=" + fechacComplString
                 +"&fecha_mod=" + "1/1/1"
                 +"&monto=" + SumaMontoMultiple.sumaMontoMultiple
                 +"&monto_iva=" + SumaMontoMultipleIva.sumaMontoMultipleIva
@@ -71,8 +71,6 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
                 +"&monto_no_sujeto=" + "0.00"
                 +"&numero_comprobante=" + ResumenPago.no_comprobante
                 +"&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
-
-        System.out.println(registrar_url);
 
         String resultado = null;
 

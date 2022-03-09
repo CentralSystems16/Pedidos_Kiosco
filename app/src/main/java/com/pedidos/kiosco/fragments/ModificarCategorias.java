@@ -130,12 +130,14 @@ public class ModificarCategorias extends Fragment {
             encodedImage = Base64.encodeToString(imageInByte, Base64.DEFAULT);
 
 
-            Call<ResponsePOJO> call = RetroClient2.getInstance().getApi2().uploadImage(encodedImage, nombreImagen.getText().toString(), gEstadoAct, CatFragment.gIdCategoria);
+            Call<ResponsePOJO> call = RetroClient2.getInstance().getApi2().uploadImage(VariablesGlobales.dataBase, encodedImage, nombreImagen.getText().toString(), gEstadoAct, CatFragment.gIdCategoria);
             call.enqueue(new Callback<ResponsePOJO>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-                    Toast.makeText(getContext(), "Categoria actualizada correctamente", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(), Principal.class));
+                    Toast.makeText(getContext(), "Se actualizo con Retrofit", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new CatFragment());
+                    fr.commit();
                 }
 
                 @Override
@@ -147,7 +149,8 @@ public class ModificarCategorias extends Fragment {
         else {
             ejecutarServicio("http://" + VariablesGlobales.host
                     + "/android/kiosco/cliente/scripts/scripts_php/actualizarCategoria.php"
-                    + "?nombre_categoria=" + nombreImagen.getText().toString()
+                    + "?base=" + VariablesGlobales.dataBase
+                    + "&nombre_categoria=" + nombreImagen.getText().toString()
                     + "&estado_categoria=" + gEstadoAct
                     + "&id_categoria=" + CatFragment.gIdCategoria);
         }
@@ -163,7 +166,7 @@ public class ModificarCategorias extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(), "Categoria actualizada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Se actualizo con Volley", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_layout, new CatFragment());
                     fr.commit();

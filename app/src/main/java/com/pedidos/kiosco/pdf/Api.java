@@ -11,6 +11,7 @@ public interface Api {
     @POST("server_upload_pdf.php")
 
     Call<ResponsePOJO> uploadDocument(
+            @Field("base") String base,
             @Field("PDF") String encodedPDF
     );
 

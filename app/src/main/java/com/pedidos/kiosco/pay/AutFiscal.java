@@ -162,7 +162,7 @@ public class AutFiscal extends AppCompatActivity {
     }
 
     private void llenarComprobante(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarComprobantes.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarComprobantes.php" + "?base=" + VariablesGlobales.dataBase;
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -205,7 +205,7 @@ public class AutFiscal extends AppCompatActivity {
     }
 
     private void llenarSucursal(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php" + "?base=" + VariablesGlobales.dataBase;
         cliente2.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -248,7 +248,7 @@ public class AutFiscal extends AppCompatActivity {
     }
 
     private void llenarCaja(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php" + "?base=" + VariablesGlobales.dataBase;
         cliente3.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -301,7 +301,7 @@ public class AutFiscal extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/registroFiscal.php",
+        StringRequest request = new StringRequest(Request.Method.POST, "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/registroFiscal.php" + "?base=" + VariablesGlobales.dataBase,
                 response -> {
 
                     if(response.equalsIgnoreCase("Usuario registrado")){

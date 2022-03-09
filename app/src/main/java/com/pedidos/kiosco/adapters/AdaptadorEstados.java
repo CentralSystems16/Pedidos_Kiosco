@@ -17,7 +17,6 @@ import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.pedidos.kiosco.main.ObtenerMovimientos;
-import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.model.Estados;
 import java.util.List;
 
@@ -98,7 +97,7 @@ public class AdaptadorEstados extends RecyclerView.Adapter<AdaptadorEstados.Esta
             } else {
                 Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
                 ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
-                cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
+                //cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
             }
         });
     }

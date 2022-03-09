@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.utils.RecibirPDFReportes;
 
@@ -41,17 +42,13 @@ public class ObtenerDetReporte extends Fragment {
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         ImageView flechaReturn = vista.findViewById(R.id.returnDetReporte);
-        flechaReturn.setOnClickListener(v -> {
-
-            startActivity(new Intent(getContext(), ObtenerReportes.class));
-
-        });
+        flechaReturn.setOnClickListener(v -> startActivity(new Intent(getContext(), Principal.class)));
 
         boolean granded = checkPermissionForReadExtertalStorage();
         if (!granded) {
             requestPermissionForReadExtertalStorage();
         } else {
-            String urlPdf = "http://34.239.139.117/android/kiosco/cliente/pedidos/CorteCaja.pdf";
+            String urlPdf = "http://34.239.139.117/android/kiosco/cliente/pedidos/ComprobanteCorteCaja.pdf";
 
             new RecibirPDFReportes(pdfView, progressBar).execute(urlPdf);
         }

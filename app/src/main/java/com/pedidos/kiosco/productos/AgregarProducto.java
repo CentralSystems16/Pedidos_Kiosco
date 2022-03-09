@@ -33,7 +33,7 @@ public class AgregarProducto extends AppCompatActivity {
     EditText etAddProd, etAddPrec;
     Bitmap bitmap;
     int PICK_IMAGE_REQUEST = 1;
-    String UPLOAD_URL = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/uploadProducto.php";
+    String UPLOAD_URL = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/uploadProducto.php" + "?base=" + VariablesGlobales.dataBase;
     String KEY_IMAGE = "img_producto";
     String KEY_NOMBRE = "nombre_producto";
     String KEY_PRECIO = "precio_producto";

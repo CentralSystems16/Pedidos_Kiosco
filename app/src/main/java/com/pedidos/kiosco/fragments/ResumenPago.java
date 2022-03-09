@@ -255,6 +255,7 @@ public class ResumenPago extends Fragment {
 
         String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?base=" + VariablesGlobales.dataBase + "&id_tipo_comprobante=4";
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
 
                 response -> {

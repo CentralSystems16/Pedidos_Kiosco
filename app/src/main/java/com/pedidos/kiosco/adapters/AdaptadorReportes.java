@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -68,7 +67,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-
         });
 
         if (Principal.gIdEstadoCliente == 2){
@@ -83,7 +81,10 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
                 .setPositiveButton("CONFIRMAR", (dialog, which) -> {
 
                     Login.gIdPedidoReporte = listaReportes.get(posicion).getPedido();
-                    ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarEstado.php" + "?id_estado_prefactura=3" + "&id_prefactura=" + Login.gIdPedidoReporte);
+                    ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarEstado.php"
+                            + "?base=" + VariablesGlobales.dataBase
+                            + "&id_estado_prefactura=3"
+                            + "&id_prefactura=" + Login.gIdPedidoReporte);
                     Toast.makeText(cContext, "El pedido se ha anulado", Toast.LENGTH_SHORT).show();
                     cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
 

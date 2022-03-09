@@ -1,5 +1,10 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +58,7 @@ public class ModificarProductos extends Fragment {
         spProductos = vista.findViewById(R.id.spinnerCategoria);
 
         cargarImagen = vista.findViewById(R.id.cargarImagenProd);
+        cargarImagen.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         cargarImagen.setOnClickListener(v -> Toast.makeText(getContext(), "Temporalmente desabilitada", Toast.LENGTH_LONG).show());
 
         modifProd = vista.findViewById(R.id.etModifProd);
@@ -84,9 +90,8 @@ public class ModificarProductos extends Fragment {
         llenarSpinner();
 
         btnGuardarProd = vista.findViewById(R.id.btnGuardarProd);
-        btnGuardarProd.setOnClickListener(v -> {
-            ejecutar();
-        });
+        btnGuardarProd.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+        btnGuardarProd.setOnClickListener(v -> ejecutar());
 
 
         return vista;
@@ -97,7 +102,8 @@ public void ejecutar(){
     obtenerIdCategoria();
 
     String url = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/ActualizarPorducto.php"
-            + "?nombre_producto=" + modifProd.getText().toString()
+            + "?base=" + VariablesGlobales.dataBase
+            + "&nombre_producto=" + modifProd.getText().toString()
             + "&precio_producto=" + modifPrec.getText().toString()
             + "&estado_producto=" + gEstadoProd
             + "&id_categoria=" + gOpcionUser2
@@ -122,7 +128,7 @@ public void ejecutar(){
     }
 
     private void llenarSpinner(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/LlenarCategorias.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/LlenarCategorias.php"+ "?base=" + VariablesGlobales.dataBase;
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

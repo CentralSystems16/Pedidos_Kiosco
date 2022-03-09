@@ -59,7 +59,7 @@ public class TipoPago extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPago.php";
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPago.php" + "?base=" + VariablesGlobales.dataBase;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 

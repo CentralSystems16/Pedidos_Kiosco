@@ -35,8 +35,8 @@ public class Registro extends AppCompatActivity {
     String usuario;
     EditText regPhoneNo, pas, nom, pr, em;
     int gIdSucursal;
-    Spinner spSucursales;
     CheckBox politica;
+    Spinner spSucursales;
     AsyncHttpClient cliente;
     ArrayList<Sucursales> lista = new ArrayList<>();
 

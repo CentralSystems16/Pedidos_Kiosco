@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.productos;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +71,9 @@ public class ProdFragment extends Fragment {
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-        String URL_PRODUCTOS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"+"?estado_categoria=1";
+        String URL_PRODUCTOS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"
+                + "?base=" + VariablesGlobales.dataBase
+                + "&estado_categoria=1";
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 

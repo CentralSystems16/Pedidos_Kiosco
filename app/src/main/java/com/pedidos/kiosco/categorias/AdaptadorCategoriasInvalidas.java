@@ -69,7 +69,8 @@ public class AdaptadorCategoriasInvalidas extends RecyclerView.Adapter<Adaptador
             gEstadoAct = 1;
 
             ejecutarservicio("http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarCategoriasInactivas.php"
-                    + "?estado_categoria=" + gEstadoAct
+                    + "?base=" + VariablesGlobales.dataBase
+                    + "&estado_categoria=" + gEstadoAct
                     + "&id_categoria=" + CatFragment.gIdCategoria);
 
             FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();

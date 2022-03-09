@@ -107,7 +107,8 @@ public class MontoInicial extends Fragment {
                 montoInit = Double.valueOf((montoInicial.getText().toString()));
             }
             ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php"
-                    + "?id_usuario=" + Login.gIdUsuario
+                    + "?base=" + VariablesGlobales.dataBase
+                    + "&id_usuario=" + Login.gIdUsuario
                     + "&id_caja=" + resultado
                     + "&fecha_ini=" + fechacComplString + " a las " + horaString
                     + "&fecha_fin=Activo"

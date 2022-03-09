@@ -67,14 +67,15 @@ public class CierreCaja extends Fragment {
                 .setTitle("Confirmación de cierre")
                 .setMessage("¿Esta seguro de cerrar la caja?")
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
-                        + "?fecha_fin=" + fechacComplString + " a las " + horaString
+                        + "?base=" + VariablesGlobales.dataBase
+                        + "&fecha_fin=" + fechacComplString + " a las " + horaString
                         + "&state=2"
                         + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja)).setNegativeButton(android.R.string.no, (dialog, which) ->{})
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show());
 
         Button cerrar = vista.findViewById(R.id.btnCancelarTipoPago);
-        cerrar.setOnClickListener(view -> ejecutarServicio2("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarFacTipoPago.php" + "?id_cierre_caja=" + VariablesGlobales.gIdCierreCaja));
+        cerrar.setOnClickListener(view -> ejecutarServicio2("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarFacTipoPago.php" + "?base=" + VariablesGlobales.dataBase + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja));
 
         obtenerTipoPagoLiquidar();
 
@@ -88,7 +89,7 @@ public class CierreCaja extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPagoLiquidar.php";
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerTipoPagoLiquidar.php" + "?base=" + VariablesGlobales.dataBase;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
@@ -140,7 +141,7 @@ public class CierreCaja extends Fragment {
 
     public void obtenerCierreCaja(){
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerIdCierre.php" + "?id_usuario=" + Login.gIdUsuario;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerIdCierre.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario;
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
@@ -181,24 +182,6 @@ public class CierreCaja extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
 
-                    /*String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCierreMovCaja.php"
-                            + "?id_cierre_caja=" +VariablesGlobales.gIdCierreCaja
-                            + "&id_usuario=" + Login.gIdUsuario
-                            + "&monto_inicial=0.00"
-                            + "&monto_venta=0.00"
-                            + "&monto_gastos=0.00"
-                            + "&monto_fisico=0.00"
-                            + "&diferencia=0.00"
-                            + "&monto_devolucion=0.00"
-                            + "&fecha_movimiento=1/1/1";
-                    System.out.println(url);
-                    ejecutarServicioMovCaja(url);*/
-
-                    /*CrearReporteCierreCaja cierreCaja = new CrearReporteCierreCaja();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("cierre", 4);
-                    cierreCaja.setArguments(bundle);*/
-
                     Bundle datosAEnviar = new Bundle();
                     datosAEnviar.putInt("cierre", VariablesGlobales.gIdCierreCaja);
 
@@ -210,31 +193,10 @@ public class CierreCaja extends Fragment {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
-
-
                     progressDialog.dismiss();
                 },
                 volleyError -> {
-                    progressDialog.dismiss();
-                }
-        );
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        requestQueue.add(stringRequest);
-    }
-
-    public void ejecutarServicioMovCaja (String URL){
-
-        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-                    progressDialog.dismiss();
-                },
-                volleyError -> {
+                    Toast.makeText(getContext(), "Ocurrió un error inesperado: " + volleyError, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
         );
@@ -250,13 +212,8 @@ public class CierreCaja extends Fragment {
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-                    progressDialog.dismiss();
-                },
-                volleyError -> {
-                    progressDialog.dismiss();
-                }
+                response -> progressDialog.dismiss(),
+                volleyError -> progressDialog.dismiss()
         );
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);

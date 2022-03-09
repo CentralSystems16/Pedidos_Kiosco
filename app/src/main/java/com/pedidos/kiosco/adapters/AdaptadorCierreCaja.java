@@ -13,12 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,7 +31,6 @@ import com.pedidos.kiosco.model.Pago;
 import com.pedidos.kiosco.other.InsertarFacTipoPagoCaja;
 import com.pedidos.kiosco.other.SumaMonto;
 import com.pedidos.kiosco.other.SumaMontoDevolucion;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +42,6 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
     Context cContext;
     public static List<Pago> listaPago;
     Double fondoInit;
-    int selectedItemPosition = 0;
-
 
     public AdaptadorCierreCaja(Context cContext, List<Pago> listaPago) {
 
@@ -74,10 +69,6 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
 
         CierreCaja.lIdTipoPago = listaPago.get(posicion).getIdPago();
         CierreCaja.lTipoPago = listaPago.get(posicion).getNombrePago();
-
-        /*if (CierreCaja.lIdTipoPago != 1){
-            cierreCajaViewHolder.cvCierre.setVisibility(View.INVISIBLE);
-        }*/
 
         cierreCajaViewHolder.aceptar.setOnClickListener(view -> {
 
@@ -112,7 +103,7 @@ public class AdaptadorCierreCaja extends RecyclerView.Adapter<AdaptadorCierreCaj
 
     public void obtenerCierreCaja(){
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerIdCierre.php" + "?id_usuario=" + Login.gIdUsuario;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerIdCierre.php"  + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario;
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,

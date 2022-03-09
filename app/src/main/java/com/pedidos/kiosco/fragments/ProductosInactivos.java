@@ -61,7 +61,8 @@ public class ProductosInactivos extends Fragment {
     public void obtenerProductos() {
         String URL_PRODUCTOS = "http://"+ VariablesGlobales.host
                 + "/android/kiosco/cliente/scripts/scripts_php/obtenerProductosInactivos.php"
-                + "?estado_producto=0";
+                + "?base=" + VariablesGlobales.dataBase
+                + "&estado_producto=0";
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         System.out.println(URL_PRODUCTOS);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTOS,

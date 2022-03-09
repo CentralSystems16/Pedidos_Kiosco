@@ -4,7 +4,6 @@ import static com.pedidos.kiosco.fragments.ModificarProductos.gEstadoProd;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +19,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.categorias.CatFragment;
-import com.pedidos.kiosco.fragments.ModificarProductos;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +85,8 @@ public class AdaptadorProductosInactivos extends RecyclerView.Adapter<AdaptadorP
 
             ejecutarservicio(
                     "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarProductosInactivos.php"
-                            + "?estado_producto=" + gEstadoProd
+                            + "?base=" + VariablesGlobales.dataBase
+                            + "&estado_producto=" + gEstadoProd
                             + "&id_producto=" + ProdFragment.gIdProducto);
 
             FragmentTransaction fr = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();

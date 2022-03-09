@@ -19,7 +19,6 @@ import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.ModificarUsuario;
-
 import java.util.List;
 
 public class AdaptadorsuariosInactivos extends RecyclerView.Adapter<AdaptadorsuariosInactivos.CategoriaViewHolder> {
@@ -63,7 +62,8 @@ public class AdaptadorsuariosInactivos extends RecyclerView.Adapter<Adaptadorsua
             ModificarUsuario.gEstadoUs = 1;
 
             ejecutarServicio("http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/modificarUsuariosInactivos.php"
-                    + "?estado_usuario=" + ModificarUsuario.gEstadoUs
+                    + "?base=" + VariablesGlobales.dataBase
+                    + "&estado_usuario=" + ModificarUsuario.gEstadoUs
                     + "&id_usuario=" + UsuarioFragment.gIdUsuario);
 
             Intent i = new Intent(categoriaViewHolder.itemView.getContext(), Principal.class);

@@ -61,7 +61,7 @@ public class ObtenerEstados extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarEstados.php";
+        String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarEstados.php" + "?base=" + VariablesGlobales.dataBase;
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 

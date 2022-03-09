@@ -27,8 +27,8 @@ public class SumaMontoMultiple extends AsyncTask<Void, Void, Void>{
         JSONArray jsonObject = null;
         String StringHolder = "" ;
         String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerSumaMonto.php"
-                + "&base=" + VariablesGlobales.dataBase
-                + "?id_prefactura=" + Login.gIdPedido;
+                + "?base=" + VariablesGlobales.dataBase
+                + "&id_prefactura=" + Login.gIdPedido;
 
         public static String sumaMontoMultiple;
 

@@ -10,11 +10,11 @@ public interface Api2 {
     @FormUrlEncoded
     @POST("server_update_image.php")
     Call<ResponsePOJO> uploadImage(
+            @Field("base") String base,
             @Field("EN_IMAGE") String encodedImage,
             @Field("nombre_categoria") String nombre_categoria,
             @Field("estado_categoria") int estado_categoria,
             @Field("id_categoria") int id_categoria
-
 
     );
 }

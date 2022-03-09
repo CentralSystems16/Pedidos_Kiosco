@@ -52,9 +52,7 @@ public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.Cate
 
             CatFragment.gNombreCat = listaCategorias.get(posicion).getNombreCategoria();
             CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
-
             CatFragment.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
-            System.out.println("ID de categoria en productos: " + CatFragment.gIdCategoria);
             FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ObtenerProductos());
             fr.commit();

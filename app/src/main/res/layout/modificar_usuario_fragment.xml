@@ -143,6 +143,27 @@
 
             </LinearLayout>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewCargos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="4dp"
+                app:strokeWidth="1dp">
+
+                <Spinner
+                    android:id="@+id/spinnerCargo"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:backgroundTint="@color/black"
+                    android:padding="5dp"
+                    android:popupBackground="@color/white" />
+
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/editarUsuario"
                 android:layout_width="match_parent"

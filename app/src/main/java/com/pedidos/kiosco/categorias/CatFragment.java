@@ -17,26 +17,22 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.fragments.AgregarCategorias;
 import com.pedidos.kiosco.fragments.CategoriasInactivas;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class CatFragment extends Fragment {
 
     RecyclerView rvLista;
     public static ArrayList<Categorias> categorias;
     public static final int MY_DEFAULT_TIMEOUT = 15000;
-    public static final String URL_CATEGORIAS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"+"?estado_categoria=1";
-    public static AdaptadorCategorias adaptadorCat;
-    public static Button inactivas;
+    AdaptadorCategorias adaptadorCat;
+    Button inactivas;
     public static int gIdCategoria;
     public static String gNombreCat, gImagen;
 
@@ -56,7 +52,11 @@ public class CatFragment extends Fragment {
         categorias = new ArrayList<>();
 
         Button crearCat = vista.findViewById(R.id.btnCrearCat);
-        crearCat.setOnClickListener(view -> startActivity(new Intent(getActivity(), AgregarCategorias.class)));
+        crearCat.setOnClickListener(view -> {
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new AgregarCategorias());
+            fr.commit();
+        });
 
         rvLista = vista.findViewById(R.id.rvListaCategorias);
 
@@ -80,6 +80,10 @@ public class CatFragment extends Fragment {
         progressDialog.setMessage("Por favor espera...");
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+
+        String URL_CATEGORIAS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php"
+                +"?base=" + VariablesGlobales.dataBase
+                +"&estado_categoria=1";
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 

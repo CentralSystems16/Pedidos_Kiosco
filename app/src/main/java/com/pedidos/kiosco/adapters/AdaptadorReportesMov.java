@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -55,7 +54,6 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.CrearReporteCierreCaja;
 import com.pedidos.kiosco.fragments.ObtenerDetReporte;
 import com.pedidos.kiosco.main.ObtenerMovimientos;
 import com.pedidos.kiosco.model.Movimientos;
@@ -65,13 +63,11 @@ import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,12 +102,10 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
         reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombreCliente());
-        listaReportes.get(posicion).getNombreCliente();
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
         reportesViewHolder.numeroComprobante.setText(listaReportes.get(posicion).getNumeroComprobante());
         reportesViewHolder.tipoPago.setText(listaReportes.get(posicion).getTipoPago());
-
         reportesViewHolder.editar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         reportesViewHolder.editar3.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
@@ -133,7 +127,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         //anular
         reportesViewHolder.editar2.setOnClickListener(view -> {
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            String url = "http://34.239.139.117/android/kiosco/cliente/scripts/scripts_php/anularFacMovimientos.php" + "?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+            String url = "http://34.239.139.117/android/kiosco/cliente/scripts/scripts_php/anularFacMovimientos.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + ObtenerMovimientos.idMov;
             ejecutarServicio(url);
         });
     }
@@ -165,7 +159,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         progressDialog.show();
         progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?base="+VariablesGlobales.dataBase+"&id_fac_movimiento=" + ObtenerMovimientos.idMov;
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
 
         @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
@@ -209,9 +203,6 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                                     EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
 
                                     final String text =
-                                            "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
-                                                    cContext.getResources().getDrawableForDensity(R.drawable.logokiosko,
-                                                            DisplayMetrics.DENSITY_LOW, cContext.getTheme())) + "</img>\n" +
                                                     "[L]\n" +
                                                     "[C]" + Splash.gNombre + "\n" +
                                                     "[C]" + Splash.gDireccion + "\n" +
@@ -304,12 +295,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     public void obtenerDetMovimientos2(){
 
-        final ProgressDialog progressDialog = new ProgressDialog(cContext);
-        progressDialog.setMessage("Por favor espera...");
-        progressDialog.show();
-        progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-
-        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php"+"?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+        String url_det_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerDetMovimiento.php" + "?base=" + VariablesGlobales.dataBase+"&id_fac_movimiento=" + ObtenerMovimientos.idMov;
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
 
         @SuppressLint("DefaultLocale") StringRequest stringRequest = new StringRequest(Request.Method.GET,url_det_pedido,
@@ -340,97 +326,10 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             sb1.append("\n");
                         }
 
-                        Numero_a_Letra NumLetra = new Numero_a_Letra();
-                        String numero;
-                        numero = String.valueOf(gTotal);
+                        createPDF();
 
-                                    String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-                                    File file = new File(pdfPath, "CorteCaja.pdf");
-
-                                    PdfWriter writer = null;
-                                    try {
-                                        writer = new PdfWriter(file);
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    assert writer != null;
-                                    PdfDocument pdfDocument = new PdfDocument(writer);
-                                    PageSize pageSize = new PageSize(300, 1200);
-                                    pdfDocument.setDefaultPageSize(pageSize);
-
-                                    Document document = new Document(pdfDocument);
-
-                                    Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph direccion = new Paragraph(Splash.gDireccion + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph departamento = new Paragraph("Sucursal: " + sucursal + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph nitnrc = new Paragraph("Teléfono: " + Splash.gTelefono + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph linea1 = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph corte = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph linea2 = new Paragraph("Atendio: " + Login.nombre + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph noCaja = new Paragraph("Fecha: " + gFecha + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph cajero = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.CENTER);
-                                    Paragraph montoInit = new Paragraph(sb1.toString() + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph datos = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph totales = new Paragraph("SubTotal $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph linea5 = new Paragraph("Desc $" + String.format("%.2f", gDesc) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph vTotal = new Paragraph("Exento $" + String.format("%.2f",exento) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph devTotal = new Paragraph("Gravado $" + String.format("%.2f",gravado) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph gastos1 = new Paragraph("Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph tGastos = new Paragraph("Total a pagar $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph tEntregar = new Paragraph("Son: " + NumLetra.Convertir(numero, true) + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph mDeclarado = new Paragraph("Recibido: " + "$"+ change + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph linea6 = new Paragraph("Cambio: $" + cambio + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph resultado1 = new Paragraph("FB: " + Splash.gFacebook + "\n").setTextAlignment(TextAlignment.RIGHT);
-                                    Paragraph linea7 = new Paragraph("Gracias por su compra :)" + "\n").setTextAlignment(TextAlignment.RIGHT);
-
-                                    document.add(nombre);
-                                    document.add(direccion);
-                                    document.add(departamento);
-                                    document.add(nitnrc);
-                                    document.add(linea1);
-                                    document.add(corte);
-                                    document.add(linea2);
-                                    document.add(noCaja);
-                                    document.add(cajero);
-                                    document.add(montoInit);
-                                    document.add(datos);
-                                    document.add(totales);
-                                    document.add(linea5);
-                                    document.add(vTotal);
-                                    document.add(devTotal);
-                                    document.add(gastos1);
-                                    document.add(tGastos);
-                                    document.add(tEntregar);
-                                    document.add(mDeclarado);
-                                    document.add(linea6);
-                                    document.add(resultado1);
-                                    document.add(linea7);
-
-                                    document.close();
-
-                                    encodePDF();
-                                    uploadDocument();
-
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Fragment fragmento = new ObtenerDetReporte();
-                                FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.movimientos, fragmento);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                                progressDialog.dismiss();
-                            }
-                        }, 10000);
-
-                        progressDialog.dismiss();
-
-                    } catch (JSONException e) {
+                    } catch (JSONException | FileNotFoundException e) {
                         e.printStackTrace();
-                        progressDialog.dismiss();
                     }
                 }, Throwable::printStackTrace
         );
@@ -444,6 +343,74 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     }
 
+    public void createPDF() throws FileNotFoundException{
+
+        Numero_a_Letra NumLetra = new Numero_a_Letra();
+        String numero;
+        numero = String.valueOf(gTotal);
+
+        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        File file = new File(pdfPath, "ComprobanteCorteCaja.pdf");
+
+        PdfWriter writer = new PdfWriter(file);
+        PdfDocument pdfDocument = new PdfDocument(writer);
+        Document document = new Document(pdfDocument);
+        PageSize pageSize = new PageSize(300, 1200);
+        pdfDocument.setDefaultPageSize(pageSize);
+
+        Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph direccion = new Paragraph(Splash.gDireccion + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph departamento = new Paragraph("Sucursal: " + sucursal + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph nitnrc = new Paragraph("Teléfono: " + Splash.gTelefono + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph linea1 = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph corte = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph linea2 = new Paragraph("Atendio: " + Login.nombre + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph noCaja = new Paragraph("Fecha: " + gFecha + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph cajero = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph montoInit = new Paragraph(sb1.toString() + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph datos = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph totales = new Paragraph("SubTotal $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph linea5 = new Paragraph("Desc $" + String.format("%.2f", gDesc) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph vTotal = new Paragraph("Exento $" + String.format("%.2f",exento) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph devTotal = new Paragraph("Gravado $" + String.format("%.2f",gravado) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph gastos1 = new Paragraph("Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph tGastos = new Paragraph("Total a pagar $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph tEntregar = new Paragraph("Son: " + NumLetra.Convertir(numero, true) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph mDeclarado = new Paragraph("Recibido: " + "$"+ change + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph linea6 = new Paragraph("Cambio: $" + cambio + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph resultado1 = new Paragraph("FB: " + Splash.gFacebook + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph linea7 = new Paragraph("Gracias por su compra :)" + "\n").setTextAlignment(TextAlignment.RIGHT);
+
+        document.add(nombre);
+        document.add(direccion);
+        document.add(departamento);
+        document.add(nitnrc);
+        document.add(linea1);
+        document.add(corte);
+        document.add(linea2);
+        document.add(noCaja);
+        document.add(cajero);
+        document.add(montoInit);
+        document.add(datos);
+        document.add(totales);
+        document.add(linea5);
+        document.add(vTotal);
+        document.add(devTotal);
+        document.add(gastos1);
+        document.add(tGastos);
+        document.add(tEntregar);
+        document.add(mDeclarado);
+        document.add(linea6);
+        document.add(resultado1);
+        document.add(linea7);
+
+        document.close();
+
+        encodePDF();
+        uploadDocument();
+
+    }
+
     public void obtenerMovimientos() {
 
         ProgressDialog progressDialog = new ProgressDialog(cContext, R.style.Custom);
@@ -451,7 +418,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?id_fac_movimiento=" + ObtenerMovimientos.idMov;
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + ObtenerMovimientos.idMov;
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
 
@@ -487,12 +454,16 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     }
 
     private void uploadDocument() {
-        System.out.println("Entro al metodo");
-        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(encodedPDF);
+        Call<ResponsePOJO> call = RetrofitClient.getInstance().getAPI().uploadDocument(VariablesGlobales.dataBase, encodedPDF);
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-
+                Fragment fragmento = new ObtenerDetReporte();
+                FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.movimientos, fragmento);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
 
             @Override
@@ -503,8 +474,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     }
 
     void encodePDF() {
-        System.out.println("Encontro el archivo");
-        File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/" + "CorteCaja.pdf")));
+        File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/" + "ComprobanteCorteCaja.pdf")));
         Uri uri = Uri.fromFile(file);
         try {
             InputStream inputStream = cContext.getContentResolver().openInputStream(uri);

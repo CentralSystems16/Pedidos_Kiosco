@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -20,10 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.CrearReporteCierreCaja;
-import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.model.Cierre;
 import java.util.List;
 
@@ -45,8 +39,6 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
     public CategoriaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rv_corte, viewGroup, false);
         return new CategoriaViewHolder(v);
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -74,7 +66,6 @@ public class AdaptadorCorteCaja extends RecyclerView.Adapter<AdaptadorCorteCaja.
         });
 
         categoriaViewHolder.verCorte.setOnClickListener(view -> {
-            Toast.makeText(cContext, "Se presiono el boton", Toast.LENGTH_SHORT).show();
             noImprimir = 1;
             int corte = listaCorte.get(posicion).getIdCierreCaja();
             Bundle datosAEnviar = new Bundle();

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 public class Categorias {
 
     String nombreCategoria;
-    int idCategoria, gEstadoCat;
+    int idCategoria;
     String imgCategoria;
 
     public Categorias(){

@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -41,7 +39,7 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    FloatingActionButton addButton, list, product, user, fiscal, comprobante;
+    FloatingActionButton addButton, list, product, user, fiscal, comprobante, reportes;
     public static int gIdEstadoCliente, gIdEstado;
 
     @Override
@@ -101,11 +99,25 @@ public class Principal extends AppCompatActivity {
         comprobante = findViewById(R.id.floatingActionButton6);
         comprobante.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         comprobante.setOnClickListener(view -> {
+
             FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new CorteCaja());
             fr.commit();
+
         });
-        System.out.println("ID cliente: " + Login.gIdCliente);
+
+        reportes = findViewById(R.id.floatingActionButton7);
+        reportes.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        reportes.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new BuscarReportes());
+            fr.commit();
+
+        });
+
+
+
         if (Login.gIdCliente == 0) {
 
             try {
@@ -142,6 +154,7 @@ public class Principal extends AppCompatActivity {
             user.startAnimation(fromBottom);
             fiscal.startAnimation(fromBottom);
             comprobante.startAnimation(fromBottom);
+            reportes.startAnimation(fromBottom);
             addButton.startAnimation(rotateOpen);
         }
         else {
@@ -150,6 +163,7 @@ public class Principal extends AppCompatActivity {
             user.startAnimation(toBottom);
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
+            reportes.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
         }
         
@@ -168,6 +182,8 @@ public class Principal extends AppCompatActivity {
             fiscal.setEnabled(true);
             comprobante.setVisibility(View.VISIBLE);
             comprobante.setEnabled(true);
+            reportes.setVisibility(View.VISIBLE);
+            reportes.setEnabled(true);
         }
         else {
             list.setVisibility(View.INVISIBLE);
@@ -180,6 +196,8 @@ public class Principal extends AppCompatActivity {
             fiscal.setEnabled(false);
             comprobante.setVisibility(View.INVISIBLE);
             comprobante.setEnabled(false);
+            reportes.setVisibility(View.INVISIBLE);
+            reportes.setEnabled(false);
         }
 
     }

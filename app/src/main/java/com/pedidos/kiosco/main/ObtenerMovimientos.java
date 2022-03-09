@@ -65,7 +65,7 @@ public class ObtenerMovimientos extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobantesVenta.php" + "?id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobantesVenta.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,

@@ -65,7 +65,7 @@ public class ObtenerProductos extends Fragment {
 
     public void obtenerProductos() {
 
-        String url = URL_PRODUCTOS  + "?id_categoria=" + CatFragment.gIdCategoria;
+        String url = URL_PRODUCTOS  + "?base=" + VariablesGlobales.dataBase + "&id_categoria=" + CatFragment.gIdCategoria;
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 

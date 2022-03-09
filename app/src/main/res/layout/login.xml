@@ -50,16 +50,14 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:hint="Número de teléfono"
-        android:textColorHint="#9F807E7E"
-        app:boxStrokeColor="#c6391e"
-        app:hintTextColor="#c6391e">
+        android:textColorHint="#9F807E7E">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:inputType="number"
-            android:textColor="#9F807E7E"
+            android:textColor="#9F000000"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,16 +71,14 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:hint="Contraseña"
-        android:textColorHint="#9F807E7E"
-        app:boxStrokeColor="#c6391e"
-        app:hintTextColor="#c6391e">
+        android:textColorHint="#9F807E7E">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:inputType="textPassword"
-            android:textColor="#9F807E7E"
+            android:textColor="#9F000000"
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +127,7 @@
             android:text="Registrarse"
             android:clickable="true"
             android:focusable="true"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginStart="5dp"/>

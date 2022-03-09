@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
@@ -68,7 +67,7 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutorizaciones.php" + "?activo=" + ObtenerEstadoFiscal.fiscalActivo;
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutorizaciones.php" + "?base=" + VariablesGlobales.dataBase + "&activo=" + ObtenerEstadoFiscal.fiscalActivo;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {

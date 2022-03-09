@@ -52,7 +52,7 @@ public class Splash extends AppCompatActivity {
     ArrayList<Sucursales> lista = new ArrayList<>();
     Spinner spDatos2;
     ArrayList<Caja> lista2 = new ArrayList<>();
-    int resultado, ocupada;
+    int resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +106,9 @@ public class Splash extends AppCompatActivity {
 
     private void llenarSpinner(){
 
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
+
         String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php" + "?base=" + VariablesGlobales.dataBase;
 
         datos.post(url, new AsyncHttpResponseHandler() {
@@ -145,6 +148,9 @@ public class Splash extends AppCompatActivity {
     }
 
     private void llenarSpinner2(){
+
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
 
         String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCajas.php" + "?id_sucursal=" + gIdSucursal + "&base=" + VariablesGlobales.dataBase;
 
@@ -187,6 +193,7 @@ public class Splash extends AppCompatActivity {
     private void mostrarBaseDeDatos(Context context) {
 
         EditText editText = new EditText(context);
+        editText.setTextColor(Color.WHITE);
 
         AlertDialog dialog = new AlertDialog.Builder(Splash.this)
                 .setTitle("Base de datos")
@@ -229,8 +236,6 @@ public class Splash extends AppCompatActivity {
                 .setView(spDatos)
                 .setPositiveButton("Realizado", (dialogInterface, i) -> {
                     obtenerIdSucursal();
-
-
                 })
                 .create();
 
@@ -241,25 +246,24 @@ public class Splash extends AppCompatActivity {
 
     private void showAlertWithTextInputLayout2(Context context) {
 
-        Toast.makeText(this, "Ya que habian cajas disponibles si entro a la ultima seleccion", Toast.LENGTH_SHORT).show();
-
         spDatos2 = new Spinner(context);
         spDatos2.setPopupBackgroundResource(R.drawable.spinner_background);
-        llenarSpinner2();
+            llenarSpinner2();
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("Cajas")
+                    .setMessage("Por favor, seleccione el número de caja")
+                    .setView(spDatos2)
+                    .setPositiveButton("Realizado", (dialogInterface, i) -> {
+                        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+                        VariablesGlobales.dataBase = preferences.getString("database", "");
+                        obtenerIdCaja();
+                        ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php" + "?id_caja=" + gIdCaja + "&id_sucursal=" + gIdSucursal + "&base=" + VariablesGlobales.dataBase);
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Cajas")
-                .setMessage("Por favor, seleccione el número de caja")
-                .setView(spDatos2)
-                .setPositiveButton("Realizado", (dialogInterface, i) -> {
-                    obtenerIdCaja();
-                    ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php" + "?id_caja=" + gIdCaja + "&id_sucursal=" + gIdSucursal + "&base=" + VariablesGlobales.dataBase);
+                    })
+                    .create();
 
-                })
-                .create();
-
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        dialog.show();
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+            dialog.show();
 
     }
 
@@ -293,11 +297,14 @@ public class Splash extends AppCompatActivity {
     public void obtenerIdSucursal(){
         int indice = spDatos.getSelectedItemPosition();
         gIdSucursal = lista.get(indice).getIdSucursal();
-        obtenerDispCaja();
+        showAlertWithTextInputLayout2(getApplicationContext());
 
     }
 
     public void obtenerRecursos(){
+
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
 
         String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=1" + "&base=" + VariablesGlobales.dataBase;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -328,6 +335,9 @@ public class Splash extends AppCompatActivity {
 
     public void obtenerRecursos2(){
 
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=2" + "&base=" + VariablesGlobales.dataBase,
@@ -356,6 +366,9 @@ public class Splash extends AppCompatActivity {
 
     public void obtenerRecursos3(){
 
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerRecursos.php" + "?id_recurso=3" + "&base=" + VariablesGlobales.dataBase,
@@ -382,39 +395,10 @@ public class Splash extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void obtenerDispCaja(){
-
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerDispCaja.php" + "?id_sucursal=" + gIdSucursal + "&base=" + VariablesGlobales.dataBase;
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("Ocupada");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                             ocupada = jsonObject1.getInt("ocupada");
-
-                        }
-
-                        if (ocupada == 0) {
-                            showAlertWithTextInputLayout2(getApplicationContext());
-                        }
-                        else {
-                            Toast.makeText(this, "No hay cajas disponibles par la sucursal seleccionada.", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } catch (JSONException ignored) {}
-                }, volleyError ->{}
-        );
-        requestQueue.add(stringRequest);
-    }
-
     public void obtenerEmpresa(){
+
+        SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
+        VariablesGlobales.dataBase = preferences.getString("database", "");
 
         String URL_REPORTES = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerInfoEmpresa.php" + "?base=" + VariablesGlobales.dataBase;
 

@@ -31,8 +31,8 @@ public class UsuarioInactivo extends Fragment {
     RecyclerView rvLista;
     public static ArrayList<Usuarios> usuarios;
     AdaptadorsuariosInactivos adaptadorUsers;
-    public static final String URL_USERS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerUsuariosInactivos.php" + "?estado_usuario=0";
-    public static String gNombreUsuario, gLoginUusario, gPasswordUsuario, gPasswordRepeatUsuario, gEmailUsuario, gFechaNacimiento, gSexoUsuario;
+    public static final String URL_USERS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerUsuariosInactivos.php" + "?base=" + VariablesGlobales.dataBase + "&estado_usuario=0";
+    public static String gNombreUsuario, gLoginUusario, gPasswordUsuario, gPasswordRepeatUsuario, gEmailUsuario;
     public static int gIdUsuario, gIdCargo, gEstado;
 
     @Override

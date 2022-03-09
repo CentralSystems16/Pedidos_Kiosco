@@ -106,6 +106,19 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_content_paste_24" />
+        app:srcCompat="@drawable/documento" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:visibility="invisible"
+        android:focusable="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/verarchivo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.pedidos.kiosco.productos;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.fragments.ModificarCategorias;
 import com.pedidos.kiosco.fragments.ModificarProductos;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.ProductosViewHolder> {
@@ -107,10 +103,5 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
             iv = itemView.findViewById(R.id.imgItemProd);
 
         }
-    }
-
-    public void filtrar(ArrayList<Productos> filtroUsuarios) {
-        listaProductos = filtroUsuarios;
-        notifyDataSetChanged();
     }
 }
