@@ -50,6 +50,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:hint="Número de teléfono"
+        app:boxStrokeColor="#000000"
+        app:hintTextColor="#000000"
         android:textColorHint="#9F807E7E">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -71,6 +73,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:hint="Contraseña"
+        app:boxStrokeColor="#000000"
+        app:hintTextColor="#000000"
         android:textColorHint="#9F807E7E">
 
         <com.google.android.material.textfield.TextInputEditText

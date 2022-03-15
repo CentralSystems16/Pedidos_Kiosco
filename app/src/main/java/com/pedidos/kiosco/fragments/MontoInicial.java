@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -64,39 +63,39 @@ public class MontoInicial extends Fragment {
             montoInicial.setText(part2);
         });
 
-        cant2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                montoInicial.setText(cant2.getText().toString());
-            }
+        cant2.setOnClickListener(view -> {
+            String[] parts = cant2.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
         });
 
-        cant3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                montoInicial.setText(cant3.getText().toString());
-            }
+        cant3.setOnClickListener(view -> {
+            String[] parts = cant3.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
         });
 
-        cant4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                montoInicial.setText(cant4.getText().toString());
-            }
+        cant4.setOnClickListener(view -> {
+            String[] parts = cant4.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
         });
 
-        cant5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                montoInicial.setText(cant5.getText().toString());
-            }
+        cant5.setOnClickListener(view -> {
+            String[] parts = cant5.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
         });
 
-        cant6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                montoInicial.setText(cant6.getText().toString());
-            }
+        cant6.setOnClickListener(view -> {
+            String[] parts = cant6.getText().toString().split(" ");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            montoInicial.setText(part2);
         });
 
         SharedPreferences preferences2 = requireActivity().getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);

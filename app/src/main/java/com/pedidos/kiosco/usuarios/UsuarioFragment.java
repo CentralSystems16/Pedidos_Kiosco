@@ -59,9 +59,6 @@ public class UsuarioFragment extends Fragment {
         rvLista = vista.findViewById(R.id.rvListaUsuarios);
         rvLista.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
-        MaterialCardView registro = vista.findViewById(R.id.cardViewCargos);
-        registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
-
         usuariosInactivos = vista.findViewById(R.id.usuariosInactivos);
         usuariosInactivos.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         usuariosInactivos.setOnClickListener(v -> {

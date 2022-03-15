@@ -31,14 +31,13 @@ import java.util.Locale;
 public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
 
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d'-'MÜ'-'yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d'-'M'-'yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
+    SimpleDateFormat ho = new SimpleDateFormat("h:mm:ss");
     String horaString = ho.format(d);
 
     private final WeakReference<Context> context;
-
 
     public InsertarFacMovimientos(Context context) {
         this.context = new WeakReference<>(context);
@@ -58,7 +57,7 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_prefactura=" + Login.gIdPedido
                 +"&id_tipo_pago=" + TipoPago.idTipoPago
                 +"&fecha=" + "1/1/1"
-                +"&fecha_creo=" + fechacComplString
+                +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
                 +"&monto=" + SumaMontoMultiple.sumaMontoMultiple
                 +"&monto_iva=" + SumaMontoMultipleIva.sumaMontoMultipleIva

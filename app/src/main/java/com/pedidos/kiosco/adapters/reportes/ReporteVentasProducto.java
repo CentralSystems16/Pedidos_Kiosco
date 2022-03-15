@@ -20,7 +20,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.BuscarReportes;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import org.json.JSONArray;
@@ -29,7 +28,8 @@ import org.json.JSONObject;
 
 public class ReporteVentasProducto extends Fragment {
 
-    TextView nombreProducto, cantProducto, cajero, fechaCierre;
+    TextView nombreProducto, cantProducto, cantTotal;
+    double cantidadTotal = 0.00;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,9 +53,12 @@ public class ReporteVentasProducto extends Fragment {
 
         nombreProducto = vista.findViewById(R.id.nombreProducto);
         cantProducto = vista.findViewById(R.id.cantProducto);
+        cantTotal = vista.findViewById(R.id.cantTotal);
 
-        cajero = vista.findViewById(R.id.cajero);
-        fechaCierre = vista.findViewById(R.id.fCierre);
+        TextView desde = vista.findViewById(R.id.fDesde);
+        desde.setText(BuscarReportes.sFecInicial + " " + BuscarReportes.sHoraInicial);
+        TextView hasta = vista.findViewById(R.id.fHasta);
+        hasta.setText(BuscarReportes.sFecFinal + " " + BuscarReportes.sHoraFinal);
 
         return vista;
     }
@@ -67,12 +70,14 @@ public class ReporteVentasProducto extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductos.php"
-                + "?base=" + VariablesGlobales.dataBase + "&fecha_inicio=" + BuscarReportes.sFecInicial + "&fecha_fin=" + BuscarReportes.sFecFinal;
+        String URL_REPORTE = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductos.php"
+                + "?base=" + VariablesGlobales.dataBase
+                + "&fecha_inicio=" + BuscarReportes.sFecInicial + " " + BuscarReportes.sHoraInicial
+                + "&fecha_fin=" + BuscarReportes.sFecFinal + " " + BuscarReportes.sHoraFinal;
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTE,
 
                 response -> {
                     try {
@@ -85,9 +90,11 @@ public class ReporteVentasProducto extends Fragment {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                              sb.append(jsonObject1.getString("nombre_producto")+"\n\n");
-                             sb2.append(jsonObject1.getInt("cantidad")+"\n\n");
-                             cajero.setText(jsonObject1.getString("nombre_cliente"));
-                             fechaCierre.setText(jsonObject1.getString("fecha_fin"));
+                             sb2.append(jsonObject1.getDouble("cantidad") + "0" +"\n\n");
+                             jsonObject1.getString("nombre_cliente");
+
+                             cantidadTotal = jsonObject1.getDouble("cantidad");
+                             cantTotal.setText(cantidadTotal + "0");
 
                         }
                         nombreProducto.setText(sb.toString());

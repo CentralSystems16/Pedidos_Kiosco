@@ -4,6 +4,8 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -38,11 +41,13 @@ import java.util.ArrayList;
 
 public class ReporteVentasProductoCorte extends Fragment {
 
-    TextView nombreProducto, cantProducto, cajero, fechaCierre;
+    TextView nombreProducto, cantProducto, fechaCierre, cantTotal, cajero;
 
     AsyncHttpClient datos;
     ArrayList<Corte> lista = new ArrayList<>();
     Spinner spinner;
+
+    double cantidadTotal = 0.00;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,11 +66,21 @@ public class ReporteVentasProductoCorte extends Fragment {
         registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
         spinner = vista.findViewById(R.id.spinnerCorte);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                obtenerIdCierreCaja();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        cajero = vista.findViewById(R.id.nombreCliente2);
         nombreProducto = vista.findViewById(R.id.nombreProductoCorte);
         cantProducto = vista.findViewById(R.id.cantProductoCorte);
-
-        cajero = vista.findViewById(R.id.cajeroC);
+        cantTotal = vista.findViewById(R.id.total);
         fechaCierre = vista.findViewById(R.id.fCierreC);
 
         Button mostrarPorCorte = vista.findViewById(R.id.btnMostrarPorFecha);
@@ -91,7 +106,6 @@ public class ReporteVentasProductoCorte extends Fragment {
 
         String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductosCorte.php"
                 + "?base=" + VariablesGlobales.dataBase + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
-        System.out.println(URL_ESTADOS);
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
@@ -107,13 +121,17 @@ public class ReporteVentasProductoCorte extends Fragment {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                             sb.append(jsonObject1.getString("nombre_producto")+"\n\n");
-                            sb2.append(jsonObject1.getInt("cantidad")+"\n\n");
+                            sb2.append(jsonObject1.getDouble("cantidad")+ "0" + "\n\n");
                             cajero.setText(jsonObject1.getString("nombre_cliente"));
                             fechaCierre.setText(jsonObject1.getString("fecha_fin"));
 
+                            cantidadTotal = jsonObject1.getDouble("cantidad");
+                            cantTotal.setText(cantidadTotal + "0");
+
                         }
+
                         nombreProducto.setText(sb.toString());
-                        cantProducto.setText(sb2.toString());
+                        cantProducto.setText(sb2.toString()) ;
 
                         progressDialog.dismiss();
 
@@ -137,7 +155,7 @@ public class ReporteVentasProductoCorte extends Fragment {
 
     private void llenarSpinner(){
 
-        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCortes.php" + "?base=" + VariablesGlobales.dataBase;
+        String url ="http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarCorte.php" + "?base=" + VariablesGlobales.dataBase;
 
         datos.post(url, new AsyncHttpResponseHandler() {
 
@@ -162,6 +180,7 @@ public class ReporteVentasProductoCorte extends Fragment {
             for (int i = 0; i < jsonArreglo.length(); i++){
 
                 Corte e = new Corte();
+                e.setNombreCajero(jsonArreglo.getJSONObject(i).getString("nombre_usuario"));
                 e.setIdCierreCaja(jsonArreglo.getJSONObject(i).getInt("id_cierre_caja"));
                 lista.add(e);
             }
@@ -173,5 +192,12 @@ public class ReporteVentasProductoCorte extends Fragment {
         }
     }
 
+    public void obtenerIdCierreCaja(){
+
+        int indice = spinner.getSelectedItemPosition();
+        VariablesGlobales.gIdCierreCaja = lista.get(indice).getIdCierreCaja();
+        obtenerReporteProductos();
+
+    }
 
 }

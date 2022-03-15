@@ -47,6 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             android:layout_marginEnd="50dp"
             android:hint="Número de teléfono"
             android:textColorHint="#9F807E7E">
@@ -69,6 +71,8 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             android:hint="Nombre y apellido"
             android:textColorHint="#9F807E7E">
 
@@ -91,6 +95,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Contraseña"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             android:textColorHint="#9F807E7E"
             app:endIconMode="password_toggle"
             >
@@ -114,6 +120,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Repetir contraseña"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             android:textColorHint="#9F807E7E"
             app:endIconMode="password_toggle">
 
@@ -136,6 +144,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Email"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             android:textColorHint="#9F807E7E">
 
             <com.google.android.material.textfield.TextInputEditText

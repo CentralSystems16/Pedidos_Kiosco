@@ -43,6 +43,8 @@ public class Splash extends AppCompatActivity {
             gBlue, gRecRed, gRecGreen, gRecBlue, gRecRed2, gRecGreen2, gRecBlue2,
             gRed3, gGreen3, gBlue3, gIdCaja, gIdSucursal;
 
+    int validBase;
+
     TextView tvEmpresa;
     ImageView imgEmpresa;
     GifImageView animEmpresa;
@@ -226,21 +228,7 @@ public class Splash extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void showAlertWithTextInputLayout(Context context) {
 
-         spDatos = new Spinner(context);
-         spDatos.setPopupBackgroundResource(R.drawable.spinner_background);
-         llenarSpinner();
-
-        AlertDialog dialog = new AlertDialog.Builder(Splash.this)
-                .setTitle("Sucursal")
-                .setMessage("Por favor seleccione la sucursal a la que pertenece")
-                .setView(spDatos)
-                .setPositiveButton("Realizado", (dialogInterface, i) -> {
-                    obtenerIdSucursal();
-                })
-                .create();
-
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        dialog.show();
+        validarBase();
 
     }
 
@@ -295,9 +283,10 @@ public class Splash extends AppCompatActivity {
     }
 
     public void obtenerIdSucursal(){
-        int indice = spDatos.getSelectedItemPosition();
-        gIdSucursal = lista.get(indice).getIdSucursal();
-        showAlertWithTextInputLayout2(getApplicationContext());
+
+            int indice = spDatos.getSelectedItemPosition();
+            gIdSucursal = lista.get(indice).getIdSucursal();
+            showAlertWithTextInputLayout2(getApplicationContext());
 
     }
 
@@ -389,6 +378,54 @@ public class Splash extends AppCompatActivity {
                             gBlue3  = jsonObject1.getInt("blue_recurso");
 
                         }
+                    } catch (JSONException ignored) {}
+                }, volleyError ->{}
+        );
+        requestQueue.add(stringRequest);
+    }
+
+    public void validarBase(){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/validarBaseDeDatos.php" + "?base=" + VariablesGlobales.dataBase,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Sucursales");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            validBase = jsonObject1.getInt("id_sucursal");
+
+                        }
+
+                        System.out.println("ID sucursal: " + validBase);
+
+                        if (validBase == 0) {
+                            Toast.makeText(getApplicationContext(), "Base de datos incorrecta porfavor intentelo nuevamente", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else {
+
+                            spDatos = new Spinner(getApplicationContext());
+                            spDatos.setPopupBackgroundResource(R.drawable.spinner_background);
+                            llenarSpinner();
+
+                            AlertDialog dialog = new AlertDialog.Builder(Splash.this)
+                                    .setTitle("Sucursal")
+                                    .setMessage("Por favor seleccione la sucursal a la que pertenece")
+                                    .setView(spDatos)
+                                    .setPositiveButton("Realizado", (dialogInterface, i) -> obtenerIdSucursal())
+                                    .create();
+
+                            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                            dialog.show();
+                        }
+
                     } catch (JSONException ignored) {}
                 }, volleyError ->{}
         );

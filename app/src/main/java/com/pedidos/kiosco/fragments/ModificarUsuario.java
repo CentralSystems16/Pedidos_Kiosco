@@ -40,6 +40,8 @@ public class ModificarUsuario extends Fragment {
     AsyncHttpClient cliente;
     ArrayList<Cargos> lista = new ArrayList<>();
 
+    int gCargoUser;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,15 +97,18 @@ public class ModificarUsuario extends Fragment {
 
     private void ejecutar(){
 
+        gModifUser();
+
         String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarUsuario.php"
-                + "&base=" + VariablesGlobales.dataBase
-                + "?login_usuario=" + editUsuario.getText().toString()
+                + "?base=" + VariablesGlobales.dataBase
+                + "&login_usuario=" + editUsuario.getText().toString()
                 + "&nombre_usuario=" + editNombre.getText().toString()
                 + "&email_usuario=" + editEmail.getText().toString()
                 + "&password_usuarios=" + editPass.getText().toString()
                 + "&password_repeat_usuario=" + editRepeatPass.getText().toString()
                 + "&estado_usuario=" + gEstadoUs
-                + "&id_usuario=" + Login.gIdUsuario;
+                + "&cargo_usuario=" + gCargoUser
+                + "&id_usuario=" + UsuarioFragment.gIdUsuario;
 
         ejecutarServicio(url);
 
@@ -114,7 +119,7 @@ public class ModificarUsuario extends Fragment {
     }
 
     private void llenarSpinner(){
-        String url ="http://"+ VariablesGlobales.host +"/android/LCB/administrador/scripts/scripts_php/llenarCargos.php" + "?base=" + VariablesGlobales.dataBase;
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCargos.php" + "?base=" + VariablesGlobales.dataBase;
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -132,7 +137,6 @@ public class ModificarUsuario extends Fragment {
 
     private void cargarSpinner(String respuesta){
 
-        ArrayList<Cargos> lista = new ArrayList<>();
         try {
             JSONArray jsonArreglo = new JSONArray(respuesta);
             for (int i = 0; i < jsonArreglo.length(); i++){
@@ -143,11 +147,16 @@ public class ModificarUsuario extends Fragment {
                 lista.add(c);
             }
 
-            ArrayAdapter<Cargos> a  = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, lista);
+            ArrayAdapter<Cargos> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, lista);
             spCargos.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void gModifUser(){
+        int idUser = spCargos.getSelectedItemPosition();
+        gCargoUser = lista.get(idUser).getIdCargo();
     }
 
     public void ejecutarServicio (String URL){

@@ -88,11 +88,11 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:layout_height="wrap_content">
 
@@ -100,12 +100,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Cajero:" />
+            android:text="Fecha Cierre:" />
 
         <TextView
-            android:id="@+id/cajeroC"
+            android:id="@+id/fCierreC"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
-            android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -123,11 +123,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Fecha Cierre:" />
+            android:text="Cajero:" />
 
         <TextView
-            android:id="@+id/fCierreC"
-            android:layout_marginStart="20dp"
+            android:id="@+id/nombreCliente2"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
             android:textColor="@color/black"/>
 
         <TextView
-            android:text="13"
+            android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_height="wrap_content"
