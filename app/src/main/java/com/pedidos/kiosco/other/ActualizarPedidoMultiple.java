@@ -3,12 +3,9 @@ package com.pedidos.kiosco.other;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
-import com.pedidos.kiosco.fragments.ObtenerProductos;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

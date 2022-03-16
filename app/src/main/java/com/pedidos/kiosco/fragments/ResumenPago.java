@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -40,11 +39,6 @@ import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
@@ -59,8 +53,6 @@ import com.pedidos.kiosco.utils.Numero_a_Letra;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -255,13 +247,15 @@ public class ResumenPago extends Fragment {
 
         String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutFiscal.php" + "?base=" + VariablesGlobales.dataBase + "&id_tipo_comprobante=4";
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        System.out.println(url_pedido);
+        Login.gIdAutFiscal = 0;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
-
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
+
                         JSONArray jsonArray = jsonObject.getJSONArray("AutFiscal");
+
+
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -270,10 +264,18 @@ public class ResumenPago extends Fragment {
                             hasta = jsonObject1.getInt("hasta");
                         }
 
-                        obtenerNoComprobante();
+                            obtenerNoComprobante();
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Autorización no creada")
+                                .setMessage("La autorización fiscal no ha sido creada, por favor comuniquese con su administrador")
+                                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
 
                     }
                 }, Throwable::printStackTrace
@@ -331,68 +333,6 @@ public class ResumenPago extends Fragment {
                         Numero_a_Letra NumLetra = new Numero_a_Letra();
                         String numero;
                         numero = String.valueOf(gTotal);
-
-                        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-                        File file = new File(pdfPath, Login.gIdPedido + " Examen.pdf");
-
-                        PdfWriter writer = null;
-                        try {
-                            writer = new PdfWriter(file);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        assert writer != null;
-                        PdfDocument pdfDocument = new PdfDocument(writer);
-
-                        com.itextpdf.layout.Document document = new Document(pdfDocument);
-                        
-                        Paragraph nombre = new Paragraph(Splash.gNombre).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph direccion = new Paragraph(Splash.gDireccion).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph sucursal1 = new Paragraph("Sucursal: " + sucursal).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph telefono = new Paragraph("Teléfono: " + Splash.gTelefono).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph nitynrc = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph cajatickt = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph atendio = new Paragraph("Atendio: " + Login.nombre).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph fecha = new Paragraph("Fecha: " + gFecha).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph linea = new Paragraph("================================").setTextAlignment(TextAlignment.CENTER);
-                        Paragraph sb = new Paragraph(sb1.toString()).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph total = new Paragraph("SubTotal $" + String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph desc  = new Paragraph("Desc $" + String.format("%.2f", gDesc)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph exe = new Paragraph("Exento $" + String.format("%.2f", exento)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph grav = new Paragraph("Gravado $" + String.format("%.2f", gravado)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph noS = new Paragraph("Ventas no sujetas $" + String.format("%.2f", noSujeto)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph linea2 = new Paragraph("================================").setTextAlignment(TextAlignment.CENTER);
-                        Paragraph totalFin = new Paragraph(String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph totalAbsolut = new Paragraph("Total a pagar $" + String.format("%.2f", gTotal)).setTextAlignment(TextAlignment.CENTER);
-                        Paragraph numLetra = new Paragraph("Son: " + NumLetra.Convertir(numero, band())).setTextAlignment(TextAlignment.CENTER);;
-                        Paragraph recib = new Paragraph("Recibido: " + "$" + String.format("%.2f", change)).setTextAlignment(TextAlignment.CENTER);;
-                        Paragraph mCambi = new Paragraph("Cambio: $" + cambio.getText().toString()).setTextAlignment(TextAlignment.CENTER);;
-                        Paragraph face = new Paragraph("FB: " + Splash.gFacebook).setTextAlignment(TextAlignment.CENTER);;
-
-                        document.add(nombre);
-                        document.add(direccion);
-                        document.add(sucursal1);
-                        document.add(telefono);
-                        document.add(nitynrc);
-                        document.add(cajatickt);
-                        document.add(atendio);
-                        document.add(fecha);
-                        document.add(linea);
-                        document.add(sb);
-                        document.add(total);
-                        document.add(desc);
-                        document.add(exe);
-                        document.add(grav);
-                        document.add(noS);
-                        document.add(linea2);
-                        document.add(totalFin);
-                        document.add(totalAbsolut);
-                        document.add(numLetra);
-                        document.add(recib);
-                        document.add(mCambi);
-                        document.add(face);
-
-                        document.close();
 
                         try {
                             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
@@ -568,38 +508,37 @@ public class ResumenPago extends Fragment {
                             no_comprobante = 1;
                         }
 
-                        if (no_comprobante <= hasta) {
-                            new InsertarFacMovimientos(getContext()).execute().get();
-                            obtenerMovimientos();
-                            new InsertarFacDetMovimientos(getContext()).execute();
-                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
-                                    + "?base=" + VariablesGlobales.dataBase
-                                    + "&id_estado_prefactura=2"
-                                    + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
-                                    + "&id_prefactura=" + Login.gIdPedido);
+                            if (no_comprobante <= hasta) {
+                                new InsertarFacMovimientos(getContext()).execute().get();
+                                obtenerMovimientos();
+                                new InsertarFacDetMovimientos(getContext()).execute();
+                                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarPrefac.php"
+                                        + "?base=" + VariablesGlobales.dataBase
+                                        + "&id_estado_prefactura=2"
+                                        + "&fecha_finalizo=" + fechacComplString + " a las " + horaString
+                                        + "&id_prefactura=" + Login.gIdPedido);
 
-                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
-                                    + "?base=" + VariablesGlobales.dataBase
-                                    + "&monto_pago=" + etMoney.getText().toString()
-                                    + "&monto_cambio=" + cambio.getText().toString()
-                                    + "&id_estado_comprobante=2"
-                                    + "&id_fac_movimiento=" + Login.gIdMovimiento);
+                                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarMov.php"
+                                        + "?base=" + VariablesGlobales.dataBase
+                                        + "&monto_pago=" + etMoney.getText().toString()
+                                        + "&monto_cambio=" + cambio.getText().toString()
+                                        + "&id_estado_comprobante=2"
+                                        + "&id_fac_movimiento=" + Login.gIdMovimiento);
 
+                            } else {
 
-                        } else {
+                                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
+                                        + "?base=" + VariablesGlobales.dataBase
+                                        + "&id_aut_fiscal=" + Login.gIdAutFiscal);
 
-                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarActivoFiscal.php"
-                                    + "?base=" + VariablesGlobales.dataBase
-                                    + "&id_aut_fiscal=" + Login.gIdAutFiscal);
-
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("Autorización finalizada")
-                                    .setMessage("La autorización fiscal ha finalizado, por favor comuniquese con su administrador")
-                                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .show();
-                        }
+                                new AlertDialog.Builder(getContext())
+                                        .setTitle("Autorización finalizada")
+                                        .setMessage("La autorización fiscal ha finalizado, por favor comuniquese con su administrador")
+                                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_info)
+                                        .show();
+                            }
 
                     } catch (JSONException | InterruptedException | ExecutionException e) {
                         e.printStackTrace();

@@ -3,10 +3,8 @@ package com.pedidos.kiosco.other;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.reportes.BuscarReportes;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -15,7 +13,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class SumaMontoTarjeta extends AsyncTask<Void, Void, Void>{
@@ -28,8 +25,8 @@ public class SumaMontoTarjeta extends AsyncTask<Void, Void, Void>{
 
         String contador_url = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerMontoEfectivo.php"
                 + "?base=" + VariablesGlobales.dataBase
-                + "&fecha_inicial=" + BuscarReportes.sFecInicial + " " + BuscarReportes.sHoraInicial
-                + "&fecha_fin=" + BuscarReportes.sFecFinal + " " + BuscarReportes.sHoraFinal
+                + "&fecha_inicial=" + BuscarReportes.sFecInicial + "%20" + BuscarReportes.sHoraInicial
+                + "&fecha_fin=" + BuscarReportes.sFecFinal + "%20" + BuscarReportes.sHoraFinal
                 + "&id_tipo_pago=2";
 
         public static Double sumaMontoTargeta;

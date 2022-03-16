@@ -15,9 +15,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +41,6 @@ import com.android.volley.toolbox.Volley;
 import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
-import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -64,7 +61,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -328,7 +324,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
                         createPDF();
 
-                    } catch (JSONException | FileNotFoundException e) {
+                    } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
                 }, Throwable::printStackTrace
@@ -343,14 +339,16 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     }
 
-    public void createPDF() throws FileNotFoundException{
-
+    public void createPDF() throws IOException {
         Numero_a_Letra NumLetra = new Numero_a_Letra();
         String numero;
         numero = String.valueOf(gTotal);
 
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         File file = new File(pdfPath, "ComprobanteCorteCaja.pdf");
+
+        if (!file.exists())
+            file.createNewFile();
 
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdfDocument = new PdfDocument(writer);

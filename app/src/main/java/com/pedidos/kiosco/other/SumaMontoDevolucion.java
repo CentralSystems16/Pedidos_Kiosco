@@ -3,11 +3,8 @@ package com.pedidos.kiosco.other;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.fragments.CierreCaja;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

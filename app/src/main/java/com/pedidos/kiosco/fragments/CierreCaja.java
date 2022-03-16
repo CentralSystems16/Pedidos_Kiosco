@@ -182,11 +182,11 @@ public class CierreCaja extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
 
-                    Bundle datosAEnviar = new Bundle();
-                    datosAEnviar.putInt("cierre", VariablesGlobales.gIdCierreCaja);
+                    //Bundle datosAEnviar = new Bundle();
+                    //datosAEnviar.putInt("cierre", VariablesGlobales.gIdCierreCaja);
 
-                    Fragment fragmento = new CrearReporteCierreCaja();
-                    fragmento.setArguments(datosAEnviar);
+                    Fragment fragmento = new Home();
+                    //fragmento.setArguments(datosAEnviar);
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_layout, fragmento);

@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -48,27 +46,17 @@ public class Usuario extends Fragment {
         getInfoUser();
 
         Button cerrarSesion = vista.findViewById(R.id.cerrarSesion);
-        cerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), Login.class));
-            }
-        });
+        cerrarSesion.setOnClickListener(view -> startActivity(new Intent(getContext(), Login.class)));
 
         Button esAmin = vista.findViewById(R.id.esAdmin);
 
-        esAmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        esAmin.setOnClickListener(view -> {
 
-            }
         });
 
         if(Login.cargo == 1 || Login.cargo == 2){
             esAmin.setVisibility(View.INVISIBLE);
         }
-
-
 
         numero = vista.findViewById(R.id.EditNumero);
         numero.setEnabled(false);
@@ -188,6 +176,8 @@ public class Usuario extends Fragment {
 
                             gRepatContra = jsonObject1.getString("password_repeat_usuario");
                             repeatPassword.setText(gRepatContra);
+
+
 
                         }
 

@@ -1,8 +1,6 @@
 package com.pedidos.kiosco.fragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.usuarios.Cargos;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-
 import org.json.JSONArray;
-
 import java.util.ArrayList;
-
 import cz.msebera.android.httpclient.Header;
 
 public class ModificarUsuario extends Fragment {
@@ -53,13 +49,11 @@ public class ModificarUsuario extends Fragment {
         llenarSpinner();
 
         btnActivoUser = vista.findViewById(R.id.btnActivoUsuario);
-        btnActivoUser.setEnabled(false);
         btnActivoUser.setOnClickListener(v -> {
 
             gEstadoUs = 1;
-            System.out.println("Estado actual: " + gEstadoUs);
-            btnActivoUser.setEnabled(false);
-            btnInactivoUser.setEnabled(true);
+            btnActivoUser.setVisibility(View.INVISIBLE);
+            btnInactivoUser.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), "Usuario activado nuevamente", Toast.LENGTH_SHORT).show();
 
         });
@@ -68,11 +62,19 @@ public class ModificarUsuario extends Fragment {
         btnInactivoUser.setOnClickListener(v -> {
 
             gEstadoUs = 0;
-            btnActivoUser.setEnabled(true);
-            btnInactivoUser.setEnabled(false);
+            btnActivoUser.setVisibility(View.VISIBLE);
+            btnInactivoUser.setVisibility(View.INVISIBLE);
             Toast.makeText(getContext(), "Usuario desactivado", Toast.LENGTH_SHORT).show();
 
         });
+
+        if (UsuarioFragment.gEstadoUsuario == 0) {
+            btnInactivoUser.setVisibility(View.INVISIBLE);
+
+        }
+        else {
+            btnActivoUser.setVisibility(View.INVISIBLE);
+        }
 
         editUsuario = vista.findViewById(R.id.obtenerEditarUsuario);
         editUsuario.setText(UsuarioFragment.gLoginUusario);
@@ -149,6 +151,7 @@ public class ModificarUsuario extends Fragment {
 
             ArrayAdapter<Cargos> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, lista);
             spCargos.setAdapter(a);
+            spCargos.setSelection(UsuarioFragment.gIdCargo-1);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.pedidos.kiosco;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.adapters.reportes.BuscarReportes;
 import com.pedidos.kiosco.categorias.CatFragment;
@@ -40,9 +43,11 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    FloatingActionButton addButton, list, product, user, fiscal, comprobante, reportes;
+    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes;
+    FloatingActionButton addButton;
     public static int gIdEstadoCliente, gIdEstado;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +122,6 @@ public class Principal extends AppCompatActivity {
 
         });
 
-
-
         if (Login.gIdCliente == 0) {
 
             try {
@@ -141,9 +144,11 @@ public class Principal extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void onAddButtonClickListener() {
         setVisibility(clicked);
         setAnimation(clicked);
+        setClicleable(clicked);
         clicked = !clicked;
     }
 
@@ -170,37 +175,47 @@ public class Principal extends AppCompatActivity {
         
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setVisibility(Boolean clicked) {
 
         if (!clicked){
             list.setVisibility(View.VISIBLE);
-            list.setEnabled(true);
             product.setVisibility(View.VISIBLE);
-            product.setEnabled(true);
             user.setVisibility(View.VISIBLE);
-            user.setEnabled(true);
             fiscal.setVisibility(View.VISIBLE);
-            fiscal.setEnabled(true);
             comprobante.setVisibility(View.VISIBLE);
-            comprobante.setEnabled(true);
             reportes.setVisibility(View.VISIBLE);
-            reportes.setEnabled(true);
+
         }
         else {
-            list.setVisibility(View.INVISIBLE);
-            list.setEnabled(false);
-            product.setVisibility(View.INVISIBLE);
-            product.setEnabled(false);
-            user.setVisibility(View.INVISIBLE);
-            user.setEnabled(false);
-            fiscal.setVisibility(View.INVISIBLE);
-            fiscal.setEnabled(false);
-            comprobante.setVisibility(View.INVISIBLE);
-            comprobante.setEnabled(false);
-            reportes.setVisibility(View.INVISIBLE);
-            reportes.setEnabled(false);
-        }
+            list.setVisibility(View.GONE);
+            product.setVisibility(View.GONE);
+            user.setVisibility(View.GONE);
+            fiscal.setVisibility(View.GONE);
+            comprobante.setVisibility(View.GONE);
+            reportes.setVisibility(View.GONE);
 
+
+        }
+    }
+
+    public void setClicleable(Boolean clicked){
+        if (!clicked){
+            list.setClickable(true);
+            product.setClickable(true);
+            user.setClickable(true);
+            fiscal.setClickable(true);
+            comprobante.setClickable(true);
+            reportes.setClickable(true);
+        }
+        else {
+            list.setClickable(false);
+            product.setClickable(false);
+            user.setClickable(false);
+            fiscal.setClickable(false);
+            comprobante.setClickable(false);
+            reportes.setClickable(false);
+        }
     }
 
     public void ejecutarServicio (String URL){

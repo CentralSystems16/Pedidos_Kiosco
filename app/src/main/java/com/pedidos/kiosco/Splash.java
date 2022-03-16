@@ -103,7 +103,6 @@ public class Splash extends AppCompatActivity {
             new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
 
         }
-
     }
 
     private void llenarSpinner(){

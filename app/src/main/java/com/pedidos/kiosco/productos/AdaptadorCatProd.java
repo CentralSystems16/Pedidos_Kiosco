@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.productos;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,7 @@ import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
-import com.pedidos.kiosco.fragments.ModificarCategorias;
 import com.pedidos.kiosco.main.ObtenerProductos;
-
 import java.util.List;
 
 public class AdaptadorCatProd extends RecyclerView.Adapter<AdaptadorCatProd.CategoriaViewHolder> {

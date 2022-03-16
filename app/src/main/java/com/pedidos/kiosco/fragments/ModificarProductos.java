@@ -3,7 +3,6 @@ package com.pedidos.kiosco.fragments;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,10 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -26,14 +23,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
 import com.pedidos.kiosco.productos.ProdFragment;
-
 import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Objects;
-
 import cz.msebera.android.httpclient.Header;
 
 public class ModificarProductos extends Fragment {
@@ -159,6 +153,7 @@ public void ejecutar(){
 
             ArrayAdapter<Categorias> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, lista);
             spProductos.setAdapter(a);
+            spProductos.setSelection(CatFragment.gIdCategoria-1);
         }catch (Exception e){
             e.printStackTrace();
         }

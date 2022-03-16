@@ -2,15 +2,12 @@ package com.pedidos.kiosco.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,11 +18,9 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.productos.AdaptadorProductosInactivos;
 import com.pedidos.kiosco.productos.Productos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -49,7 +49,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -168,15 +167,32 @@ public class CrearReporteCierreCaja extends Fragment {
                             fechaInicio  = jsonObject1.getString("fecha_ini");
                             fechaFin = jsonObject1.getString("fecha_fin");
 
-                            detalle = gTipoPago + "\n" +
-                                    "[R ]================================\n" +
-                                    "[R]" + "Venta(+) $" + String.format("%.2f", monto) + "\n" +
-                                    "[R]" + "Devolución(-) $" + String.format("%.2f", montoDevolucion) + "\n" +
-                                    "[R]" + "Encontrado(-) $" + String.format("%.2f", montoFisico) + "\n" +
-                                    "[R]" + "Monto diferencia(=) $" + String.format("%.2f", montoDiferencia) + "\n" +
-                                    "[R]================================\n";
+                            if (AdaptadorCorteCaja.noImprimir == 0) {
+                                detalle = gTipoPago + "\n" +
+                                        "[R]================================\n" +
+                                        "[R]" + "Venta(+) $" + String.format("%.2f", monto) + "\n" +
+                                        "[R]" + "Devolución(-) $" + String.format("%.2f", montoDevolucion) + "\n" +
+                                        "[R]" + "Encontrado(-) $" + String.format("%.2f", montoFisico) + "\n" +
+                                        "[R]" + "Monto diferencia(=) $" + String.format("%.2f", montoDiferencia) + "\n" +
+                                        "[R]================================\n";
 
-                            arrayList.add(detalle);
+                                arrayList.add(detalle);
+                                detalle.split("\\[");
+                            }
+
+                            else {
+
+                                detalle = gTipoPago + "\n" +
+                                        "================================\n" +
+                                        "Venta(+) $" + String.format("%.2f", monto) + "\n" +
+                                        "Devolución(-) $" + String.format("%.2f", montoDevolucion) + "\n" +
+                                        "Encontrado(-) $" + String.format("%.2f", montoFisico) + "\n" +
+                                        "Monto diferencia(=) $" + String.format("%.2f", montoDiferencia) + "\n" +
+                                        "================================\n";
+
+                                arrayList.add(detalle);
+
+                            }
 
                         }
 
@@ -194,21 +210,42 @@ public class CrearReporteCierreCaja extends Fragment {
 
                         montoDiferenciaTotal = montoDiferenciaTotal + montoDiferencia;
 
-                        if (montoDiferenciaTotal == 0) {
-                            resultado = "[C]================================" +
-                                    "[C]" + "CAJA CUADRADA" +
-                                    "[C]================================";
-                        } else {
-                            if (montoDiferenciaTotal > 0) {
-                                resultado = "[R]" + "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
-                                        "[C]================================" +
-                                        "[C]" + "CAJA DESCUADRADA" +
+                        if (AdaptadorCorteCaja.noImprimir == 0) {
+                            if (montoDiferenciaTotal == 0) {
+                                resultado = "[C]================================" +
+                                        "[C]" + "CAJA CUADRADA" +
                                         "[C]================================";
-                            } else if (montoDiferenciaTotal < 0){
-                                resultado = "[R]" + "Sobrante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
-                                        "[C]================================" + "\n" +
-                                        "[C]" + "CAJA DESCUADRADA" + "\n" +
-                                        "[C]================================";
+                            } else {
+                                if (montoDiferenciaTotal > 0) {
+                                    resultado = "[R]" + "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                            "[C]================================" +
+                                            "[C]" + "CAJA DESCUADRADA" +
+                                            "[C]================================";
+                                } else if (montoDiferenciaTotal < 0) {
+                                    resultado = "[R]" + "Sobrante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                            "[C]================================" + "\n" +
+                                            "[C]" + "CAJA DESCUADRADA" + "\n" +
+                                            "[C]================================";
+                                }
+                            }
+                        }
+                        else {
+                            if (montoDiferenciaTotal == 0) {
+                                resultado = "================================" +
+                                        "CAJA CUADRADA" +
+                                        "================================";
+                            } else {
+                                if (montoDiferenciaTotal > 0) {
+                                    resultado = "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                            "================================" +
+                                            "CAJA DESCUADRADA" +
+                                            "================================";
+                                } else if (montoDiferenciaTotal < 0) {
+                                    resultado = "Sobrante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
+                                            "================================" + "\n" +
+                                            "CAJA DESCUADRADA" + "\n" +
+                                            "================================";
+                                }
                             }
                         }
 
@@ -299,10 +336,13 @@ public class CrearReporteCierreCaja extends Fragment {
 
     }
 
-    public void createPDF() throws FileNotFoundException{
+    public void createPDF() throws IOException {
 
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         File file = new File(pdfPath, "ComprobanteCorteCaja.pdf");
+
+        if (!file.exists())
+            file.createNewFile();
 
             PdfWriter writer = new PdfWriter(file);
             PdfDocument pdfDocument = new PdfDocument(writer);

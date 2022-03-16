@@ -1,7 +1,6 @@
 package com.pedidos.kiosco.usuarios;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.fragments.ModificarUsuario;
-import com.pedidos.kiosco.fragments.TicketDatos;
-
 import java.util.List;
 
 public class Adaptadorsuarios extends RecyclerView.Adapter<Adaptadorsuarios.CategoriaViewHolder> {

@@ -3,7 +3,6 @@ package com.pedidos.kiosco.fragments;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
@@ -15,7 +14,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Environment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -42,7 +40,6 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.reportes.BuscarReportes;
-import com.pedidos.kiosco.adapters.reportes.ReporteVentasProducto;
 import com.pedidos.kiosco.other.SumaMontoEfectivo;
 import com.pedidos.kiosco.other.SumaMontoTarjeta;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
@@ -96,6 +93,8 @@ public class ReporteVentas extends Fragment {
                 + "&fecha_inicio=" + BuscarReportes.sFecInicial + " " + BuscarReportes.sHoraInicial
                 + "&fecha_fin=" + BuscarReportes.sFecFinal + " " + BuscarReportes.sHoraFinal;
 
+        System.out.println(URL_ESTADOS);
+
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
@@ -138,8 +137,13 @@ public class ReporteVentas extends Fragment {
                         com.itextpdf.layout.element.Image image = new Image(imageData);
                         image.setHeight(100);
                         image.setWidth(100);
+
                         if (SumaMontoTarjeta.sumaMontoTargeta == null){
                             SumaMontoTarjeta.sumaMontoTargeta = 0.00;
+                        }
+
+                        if (SumaMontoEfectivo.sumaMontoEfectivo == null){
+                            SumaMontoEfectivo.sumaMontoEfectivo = 0.00;
                         }
 
                         double totalFinal = SumaMontoEfectivo.sumaMontoEfectivo + SumaMontoTarjeta.sumaMontoTargeta;

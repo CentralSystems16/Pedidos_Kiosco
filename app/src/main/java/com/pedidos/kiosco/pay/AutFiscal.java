@@ -3,7 +3,6 @@ package com.pedidos.kiosco.pay;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -41,7 +40,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
 import cz.msebera.android.httpclient.Header;
 
 public class AutFiscal extends AppCompatActivity {

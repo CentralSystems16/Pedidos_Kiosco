@@ -4,10 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.adapters.AdaptadorCierreCaja;
 import com.pedidos.kiosco.fragments.CierreCaja;
-import com.pedidos.kiosco.fragments.MontoInicial;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
