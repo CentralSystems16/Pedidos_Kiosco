@@ -1,6 +1,6 @@
 package com.pedidos.kiosco.productos;
 
-import static com.pedidos.kiosco.fragments.ModificarProductos.gEstadoProd;
+import static com.pedidos.kiosco.productos.ModificarProductos.gEstadoProd;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.utils.RecibirPDFReportes;
+import java.io.File;
 
 public class ObtenerDetReporte extends Fragment {
 
@@ -42,7 +44,12 @@ public class ObtenerDetReporte extends Fragment {
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         ImageView flechaReturn = vista.findViewById(R.id.returnDetReporte);
-        flechaReturn.setOnClickListener(v -> startActivity(new Intent(getContext(), Principal.class)));
+        flechaReturn.setOnClickListener(v -> {
+            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+            File file = new File(dir, "ComprobanteCorteCaja.pdf");
+            boolean deleted = file.delete();
+            startActivity(new Intent(getContext(), Principal.class));
+        });
 
         boolean granded = checkPermissionForReadExtertalStorage();
         if (!granded) {

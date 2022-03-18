@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".adapters.reportes.BuscarReportes">
+    tools:context=".reportes.BuscarReportes">
 
     <Toolbar
         android:id="@+id/toolbarReportes"

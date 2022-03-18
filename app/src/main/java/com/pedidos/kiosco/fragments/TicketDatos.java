@@ -84,7 +84,6 @@ public class TicketDatos extends Fragment {
 
         LinearLayout ln1 = vista.findViewById(R.id.linearTicket);
         LinearLayout ln2 = vista.findViewById(R.id.linearTicket2);
-        Toolbar ln3 = vista.findViewById(R.id.toolbarTicket);
         TextView total = vista.findViewById(R.id.tvPagar);
 
         total.setTextColor((Color.rgb(gRed, gGreen, gBlue)));

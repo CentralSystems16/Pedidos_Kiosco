@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.adapters.reportes.BuscarReportes;
+import com.pedidos.kiosco.reportes.BuscarReportes;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

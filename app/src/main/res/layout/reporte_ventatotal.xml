@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".adapters.reportes.ReporteVentatotal">
+    tools:context=".reportes.ReporteVentatotal">
 
     <Toolbar
         android:id="@+id/toolbarReporteTotal"

@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.fragments;
+package com.pedidos.kiosco.productos;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;

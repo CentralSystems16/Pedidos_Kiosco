@@ -36,10 +36,11 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.adapters.reportes.BuscarReportes;
+import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.other.SumaMontoEfectivo;
 import com.pedidos.kiosco.other.SumaMontoTarjeta;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
@@ -114,7 +115,7 @@ public class ReporteVentas extends Fragment {
                             tPago = jsonObject1.getString("tipo_pago");
                             tComprobante = jsonObject1.getString("tipo_comprobante");
 
-                            sb.append(fecha + "        " + tComprobante + "        " + numeroComprobante + "        " + tPago + "        " + "Adiel" + "        " + monto + "        " + "0.00" + "        " + "Activo" + "\n");
+                            sb.append(tComprobante + "            " + numeroComprobante + "            " + tPago + "            " + Login.nombre + "           " + monto + "            " + "0.00" + "            " + "Activo" + "\n");
 
                         }
 
@@ -139,11 +140,11 @@ public class ReporteVentas extends Fragment {
                         image.setWidth(100);
 
                         if (SumaMontoTarjeta.sumaMontoTargeta == null){
-                            SumaMontoTarjeta.sumaMontoTargeta = 0.00;
+                            SumaMontoTarjeta.sumaMontoTargeta = 00.00;
                         }
 
                         if (SumaMontoEfectivo.sumaMontoEfectivo == null){
-                            SumaMontoEfectivo.sumaMontoEfectivo = 0.00;
+                            SumaMontoEfectivo.sumaMontoEfectivo = 00.00;
                         }
 
                         double totalFinal = SumaMontoEfectivo.sumaMontoEfectivo + SumaMontoTarjeta.sumaMontoTargeta;
@@ -151,14 +152,14 @@ public class ReporteVentas extends Fragment {
                         Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
                         Paragraph direccion = new Paragraph("Venta total" + "\n").setTextAlignment(TextAlignment.CENTER);
                         Paragraph departamento = new Paragraph("Desde: " + "Hasta: " + "\n").setTextAlignment(TextAlignment.CENTER);
-                        Paragraph linea1 = new Paragraph("Fecha" + "      " + "Tipo comp" + "      " + "No" + "      " + "Tipo pago" + "      " + "Nombre del cliente" + "      " + "Monto" + "      " + "Propina" + "      "  + "Estado" + "\n").setTextAlignment(TextAlignment.CENTER);
+                        Paragraph linea1 = new Paragraph("Tipo comp" + "      " + "No" + "      " + "Tipo pago" + "      " + "Nombre del cliente" + "      " + "Monto" + "      " + "Propina" + "      "  + "Estado" + "\n").setTextAlignment(TextAlignment.CENTER);
                         Paragraph cajero = new Paragraph("================================================================" + "\n").setTextAlignment(TextAlignment.CENTER);
                         Paragraph noCaja = new Paragraph(sb.toString() + "\n").setTextAlignment(TextAlignment.CENTER);
                         Paragraph datos = new Paragraph("================================================================" + "\n").setTextAlignment(TextAlignment.CENTER);
-                        Paragraph totales = new Paragraph("Tipo pago    " + "Venta " + "Propina " + "SubTotal " + "\n").setTextAlignment(TextAlignment.RIGHT);
+                        Paragraph totales = new Paragraph("Tipo pago  " + "Venta  " + "Propina  " + "SubTotal  " + "\n").setTextAlignment(TextAlignment.RIGHT);
                         Paragraph datos2 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
-                        Paragraph linea5 = new Paragraph("Efectivo" + "          " + SumaMontoEfectivo.sumaMontoEfectivo + "      " + "0.00" + "      " + SumaMontoEfectivo.sumaMontoEfectivo + "\n").setTextAlignment(TextAlignment.RIGHT);
-                        Paragraph vTotal = new Paragraph("Tarjeta " + "          " + SumaMontoTarjeta.sumaMontoTargeta + "          " + "0.00" + "          " + SumaMontoTarjeta.sumaMontoTargeta + "\n").setTextAlignment(TextAlignment.RIGHT);
+                        Paragraph linea5 = new Paragraph("Efectivo" + "           " + SumaMontoEfectivo.sumaMontoEfectivo + "      " + "00.00" + "        " + SumaMontoEfectivo.sumaMontoEfectivo + "\n").setTextAlignment(TextAlignment.RIGHT);
+                        Paragraph vTotal = new Paragraph("Tarjeta " + "           " + SumaMontoTarjeta.sumaMontoTargeta + "      " + "00.00" + "        " + SumaMontoTarjeta.sumaMontoTargeta + "\n").setTextAlignment(TextAlignment.RIGHT);
                         Paragraph datos3 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
                         Paragraph devTotal = new Paragraph("Total final " + totalFinal + "\n").setTextAlignment(TextAlignment.RIGHT);
 

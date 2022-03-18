@@ -43,8 +43,6 @@ public class Splash extends AppCompatActivity {
             gBlue, gRecRed, gRecGreen, gRecBlue, gRecRed2, gRecGreen2, gRecBlue2,
             gRed3, gGreen3, gBlue3, gIdCaja, gIdSucursal;
 
-    int validBase;
-
     TextView tvEmpresa;
     ImageView imgEmpresa;
     GifImageView animEmpresa;
@@ -73,16 +71,8 @@ public class Splash extends AppCompatActivity {
 
         if (resultado == 0) {
 
-            Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
-            Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
-
-            tvEmpresa = findViewById(R.id.tvEmpresa);
-            imgEmpresa = findViewById(R.id.imgEmpresa);
-            animEmpresa = findViewById(R.id.animacionEmpresa);
-            tvEmpresa.setAnimation(animacion2);
-            imgEmpresa.setAnimation(animacion1);
-
             mostrarBaseDeDatos(getApplicationContext());
+
         }
 
         else {
@@ -95,12 +85,12 @@ public class Splash extends AppCompatActivity {
             animEmpresa = findViewById(R.id.animacionEmpresa);
             tvEmpresa.setAnimation(animacion2);
             imgEmpresa.setAnimation(animacion1);
+
             obtenerEmpresa();
             obtenerRecursos();
             obtenerRecursos2();
             obtenerRecursos3();
 
-            new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
 
         }
     }
@@ -123,7 +113,12 @@ public class Splash extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(Splash.this).setTitle("Error")
+                        .setCancelable(false)
+                        .setMessage("Parece la base es incorrecta, por favor intentelo nuevamente")
+                        .setPositiveButton("Recargar", (dialog, which) -> startActivity(new Intent(Splash.this, Splash.class)))
+                        .setIcon(android.R.drawable.stat_notify_error)
+                        .show();
             }
 
         });
@@ -144,7 +139,12 @@ public class Splash extends AppCompatActivity {
             ArrayAdapter<Sucursales> a = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item_inicial, lista);
             spDatos.setAdapter(a);
         }catch (Exception e){
-            e.printStackTrace();
+            new AlertDialog.Builder(Splash.this).setTitle("Error")
+                    .setCancelable(false)
+                    .setMessage("Parece la base es incorrecta, por favor intentelo nuevamente")
+                    .setPositiveButton("Recargar", (dialog, which) -> startActivity(new Intent(Splash.this, Splash.class)))
+                    .setIcon(android.R.drawable.stat_notify_error)
+                    .show();
         }
     }
 
@@ -212,10 +212,7 @@ public class Splash extends AppCompatActivity {
                     editor.apply();
 
                     showAlertWithTextInputLayout(getApplicationContext());
-                    obtenerEmpresa();
-                    obtenerRecursos();
-                    obtenerRecursos2();
-                    obtenerRecursos3();
+
                 })
                 .create();
 
@@ -227,7 +224,19 @@ public class Splash extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void showAlertWithTextInputLayout(Context context) {
 
-        validarBase();
+        spDatos = new Spinner(context);
+        spDatos.setPopupBackgroundResource(R.drawable.spinner_background);
+        llenarSpinner();
+
+        AlertDialog dialog = new AlertDialog.Builder(Splash.this)
+                .setTitle("Sucursal")
+                .setMessage("Por favor seleccione la sucursal a la que pertenece")
+                .setView(spDatos)
+                .setPositiveButton("Realizado", (dialogInterface, i) -> obtenerIdSucursal())
+                .create();
+
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        dialog.show();
 
     }
 
@@ -244,7 +253,12 @@ public class Splash extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
                         VariablesGlobales.dataBase = preferences.getString("database", "");
                         obtenerIdCaja();
-                        ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php" + "?id_caja=" + gIdCaja + "&id_sucursal=" + gIdSucursal + "&base=" + VariablesGlobales.dataBase);
+                        ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php"
+                                + "?id_caja=" + gIdCaja
+                                + "&id_sucursal="
+                                + gIdSucursal
+                                + "&base="
+                                + VariablesGlobales.dataBase);
 
                     })
                     .create();
@@ -258,7 +272,22 @@ public class Splash extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
             Toast.makeText(getApplicationContext(), "¡Datos registrados correctamente!", Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),7000);
+            new Handler().postDelayed(() -> {
+
+                Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_arriba);
+                Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo2);
+
+                tvEmpresa = findViewById(R.id.tvEmpresa);
+                imgEmpresa = findViewById(R.id.imgEmpresa);
+                animEmpresa = findViewById(R.id.animacionEmpresa);
+                tvEmpresa.setAnimation(animacion2);
+                imgEmpresa.setAnimation(animacion1);
+
+                obtenerEmpresa();
+                obtenerRecursos();
+                obtenerRecursos2();
+                obtenerRecursos3();
+            },7000);
 
         }, error -> Toast.makeText(getApplicationContext(), "Ocurrió un error: " + error.getMessage(), Toast.LENGTH_SHORT).show()) {
         };
@@ -377,53 +406,8 @@ public class Splash extends AppCompatActivity {
                             gBlue3  = jsonObject1.getInt("blue_recurso");
 
                         }
-                    } catch (JSONException ignored) {}
-                }, volleyError ->{}
-        );
-        requestQueue.add(stringRequest);
-    }
 
-    public void validarBase(){
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/validarBaseDeDatos.php" + "?base=" + VariablesGlobales.dataBase,
-
-                response -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("Sucursales");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                            validBase = jsonObject1.getInt("id_sucursal");
-
-                        }
-
-                        System.out.println("ID sucursal: " + validBase);
-
-                        if (validBase == 0) {
-                            Toast.makeText(getApplicationContext(), "Base de datos incorrecta porfavor intentelo nuevamente", Toast.LENGTH_SHORT).show();
-                        }
-
-                        else {
-
-                            spDatos = new Spinner(getApplicationContext());
-                            spDatos.setPopupBackgroundResource(R.drawable.spinner_background);
-                            llenarSpinner();
-
-                            AlertDialog dialog = new AlertDialog.Builder(Splash.this)
-                                    .setTitle("Sucursal")
-                                    .setMessage("Por favor seleccione la sucursal a la que pertenece")
-                                    .setView(spDatos)
-                                    .setPositiveButton("Realizado", (dialogInterface, i) -> obtenerIdSucursal())
-                                    .create();
-
-                            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-                            dialog.show();
-                        }
+                        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
 
                     } catch (JSONException ignored) {}
                 }, volleyError ->{}
@@ -473,7 +457,12 @@ public class Splash extends AppCompatActivity {
                         }
 
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        new AlertDialog.Builder(Splash.this).setTitle("Error")
+                                .setCancelable(false)
+                                .setMessage("Parece la base es incorrecta, por favor intentelo nuevamente")
+                                .setPositiveButton("Recargar", (dialog, which) -> startActivity(new Intent(Splash.this, Splash.class)))
+                                .setIcon(android.R.drawable.stat_notify_error)
+                                .show();
                     }
 
                 }, volleyError -> new AlertDialog.Builder(Splash.this)
@@ -481,7 +470,7 @@ public class Splash extends AppCompatActivity {
                         .setCancelable(false)
                         .setMessage("Posibles problemas con la red, por favor intentelo nuevamente.")
                         .setPositiveButton("Recargar", (dialog, which) -> startActivity(new Intent(Splash.this, Splash.class)))
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(android.R.drawable.stat_notify_error)
                         .show()
         );
 

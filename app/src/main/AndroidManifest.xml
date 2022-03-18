@@ -35,9 +35,6 @@
             android:name=".desing.EnviandoTicket"
             android:exported="false" />
         <activity
-            android:name=".utils.OpcionesSoporte"
-            android:exported="false" />
-        <activity
             android:name=".Principal"
             android:exported="false" />
         <activity

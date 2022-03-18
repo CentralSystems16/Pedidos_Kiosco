@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.fragments;
+package com.pedidos.kiosco.categorias;
 
 import static android.app.Activity.RESULT_OK;
 import android.app.ProgressDialog;
@@ -27,8 +27,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.adapters.imgtoserver.ResponsePOJO;
-import com.pedidos.kiosco.adapters.imgtoserver.RetroClient2;
+import com.pedidos.kiosco.imgtoserver.ResponsePOJO;
+import com.pedidos.kiosco.imgtoserver.RetroClient2;
 import com.pedidos.kiosco.categorias.CatFragment;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -131,7 +131,6 @@ public class ModificarCategorias extends Fragment {
             call.enqueue(new Callback<ResponsePOJO>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-                    Toast.makeText(getContext(), "Se actualizo con Retrofit", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_layout, new CatFragment());
                     fr.commit();
@@ -163,7 +162,6 @@ public class ModificarCategorias extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(), "Se actualizo con Volley", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_layout, new CatFragment());
                     fr.commit();

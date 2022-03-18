@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    tools:context=".adapters.reportes.ReporteVentasProductoCorte">
+    tools:context=".reportes.ReporteVentasProductoCorte">
 
     <Toolbar
         android:id="@+id/toolbarReporteProductoCorte"
@@ -173,6 +173,15 @@
         android:text="--------------------------------------------------------------------------------------------"
         android:textColor="@color/black"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -215,5 +224,9 @@
             android:textColor="@color/black"/>
 
     </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

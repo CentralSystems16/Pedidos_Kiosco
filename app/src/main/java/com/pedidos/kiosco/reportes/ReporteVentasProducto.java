@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.reportes;
+package com.pedidos.kiosco.reportes;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
@@ -22,6 +22,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.other.ContadorCantidad;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +77,8 @@ public class ReporteVentasProducto extends Fragment {
                 + "&fecha_inicio=" + BuscarReportes.sFecInicial + " " + BuscarReportes.sHoraInicial
                 + "&fecha_fin=" + BuscarReportes.sFecFinal + " " + BuscarReportes.sHoraFinal;
 
+        new ContadorCantidad.GetDataFromServerIntoTextView(getContext()).execute();
+
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTE,
@@ -92,11 +96,10 @@ public class ReporteVentasProducto extends Fragment {
                              sb.append(jsonObject1.getString("nombre_producto")+"\n\n");
                              sb2.append(jsonObject1.getDouble("cantidad") + "0" +"\n\n");
                              jsonObject1.getString("nombre_cliente");
-
-                             cantidadTotal = jsonObject1.getDouble("cantidad");
-                             cantTotal.setText(cantidadTotal + "0");
+                            jsonObject1.getString("fecha_fin");
 
                         }
+                        cantTotal.setText(String.valueOf(ContadorCantidad.GetDataFromServerIntoTextView.cantidad));
                         nombreProducto.setText(sb.toString());
                         cantProducto.setText(sb2.toString());
 

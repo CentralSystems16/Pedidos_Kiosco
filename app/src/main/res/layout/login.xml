@@ -87,17 +87,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvRecuperarPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Olvidaste tu contraseña?"
-        android:gravity="end"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="10dp" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEntrar"
         android:layout_width="150dp"
@@ -128,10 +117,10 @@
             android:id="@+id/crearCuenta"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Registrarse"
+            android:text="@string/registrarse"
             android:clickable="true"
             android:focusable="true"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginStart="5dp"/>

@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.reportes;
+package com.pedidos.kiosco.reportes;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
@@ -29,6 +29,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.Corte;
+import com.pedidos.kiosco.other.ContadorCorteCantidad;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,6 +102,9 @@ public class ReporteVentasProductoCorte extends Fragment {
 
         String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductosCorte.php"
                 + "?base=" + VariablesGlobales.dataBase + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
+
+        new ContadorCorteCantidad.GetDataFromServerIntoTextView(getContext()).execute();
+
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
@@ -121,9 +125,10 @@ public class ReporteVentasProductoCorte extends Fragment {
                             fechaCierre.setText(jsonObject1.getString("fecha_fin"));
 
                             cantidadTotal = jsonObject1.getDouble("cantidad");
-                            cantTotal.setText(cantidadTotal + "0");
 
                         }
+
+                        cantTotal.setText(String.valueOf(ContadorCorteCantidad.GetDataFromServerIntoTextView.cantidadCorte));
 
                         nombreProducto.setText(sb.toString());
                         cantProducto.setText(sb2.toString()) ;

@@ -1,8 +1,13 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
@@ -46,9 +51,11 @@ public class Usuario extends Fragment {
         getInfoUser();
 
         Button cerrarSesion = vista.findViewById(R.id.cerrarSesion);
+        cerrarSesion.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         cerrarSesion.setOnClickListener(view -> startActivity(new Intent(getContext(), Login.class)));
 
         Button esAmin = vista.findViewById(R.id.esAdmin);
+        esAmin.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         esAmin.setOnClickListener(view -> {
 

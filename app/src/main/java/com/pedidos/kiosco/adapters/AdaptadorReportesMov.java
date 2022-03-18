@@ -182,7 +182,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             Double total = gCantidad * gPrecioUni;
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gNombreProd+"\n" + " $" + gCantidad +  " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
+                            sb1.append(gNombreProd+"\n" + gCantidad +  "[C]" + String.format("%.2f", gPrecioUni) + "[R]" + " $" + String.format("%.2f",total) + " G");
                             sb1.append("\n");
                         }
 
@@ -318,7 +318,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             Double total = gCantidad * gPrecioUni;
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gNombreProd+"\n" + " $" + gCantidad +  " " + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
+                            sb1.append(gNombreProd + "\n" + gCantidad + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
                             sb1.append("\n");
                         }
 

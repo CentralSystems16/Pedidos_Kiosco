@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.imgtoserver;
+package com.pedidos.kiosco.imgtoserver;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

@@ -34,7 +34,7 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
     SimpleDateFormat fecc = new SimpleDateFormat("d'-'M'-'yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm:ss");
+    SimpleDateFormat ho = new SimpleDateFormat("HH:mm:ss");
     String horaString = ho.format(d);
 
     private final WeakReference<Context> context;

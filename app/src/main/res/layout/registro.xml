@@ -47,11 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
             android:layout_marginEnd="50dp"
             android:hint="Número de teléfono"
-            android:textColorHint="#9F807E7E">
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/telefono"
@@ -71,10 +71,10 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
             android:hint="Nombre y apellido"
-            android:textColorHint="#9F807E7E">
+            android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nombre"
@@ -95,11 +95,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Contraseña"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
             android:textColorHint="#9F807E7E"
+            app:boxStrokeColor="#000000"
             app:endIconMode="password_toggle"
-            >
+            app:hintTextColor="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass"
@@ -120,10 +119,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Repetir contraseña"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
             android:textColorHint="#9F807E7E"
-            app:endIconMode="password_toggle">
+            app:boxStrokeColor="#000000"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/repeatPass"
@@ -144,9 +143,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:hint="Email"
+            android:textColorHint="#9F807E7E"
             app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
-            android:textColorHint="#9F807E7E">
+            app:hintTextColor="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -162,9 +161,9 @@
             android:id="@+id/cardViewRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="50dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="4dp"
             app:strokeWidth="1dp">
@@ -184,10 +183,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:buttonTint="@color/black"
             android:layout_marginTop="20dp"
-            android:text="Acepto los términos y políticas de privacidad" />
+            android:buttonTint="@color/black"
+            android:text="Acepto los términos y políticas de privacidad"
+            android:textColor="@color/black" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistro"
@@ -201,6 +200,8 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             app:cornerRadius="15dp" />
+
+
 
     </LinearLayout>
 

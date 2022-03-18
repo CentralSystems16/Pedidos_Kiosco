@@ -1,6 +1,6 @@
 package com.pedidos.kiosco.categorias;
 
-import static com.pedidos.kiosco.fragments.ModificarCategorias.gEstadoAct;
+import static com.pedidos.kiosco.categorias.ModificarCategorias.gEstadoAct;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -19,10 +19,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.ModificarCategorias;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.imgtoserver;
+package com.pedidos.kiosco.imgtoserver;
 
 public class ResponsePOJO {
 

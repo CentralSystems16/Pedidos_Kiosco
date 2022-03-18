@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.reportes;
+package com.pedidos.kiosco.reportes;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;

@@ -45,6 +45,8 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
+import com.pedidos.kiosco.reportes.BuscarReportes;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -177,7 +179,8 @@ public class CrearReporteCierreCaja extends Fragment {
                                         "[R]================================\n";
 
                                 arrayList.add(detalle);
-                                detalle.split("\\[");
+                                arrayList.toString().replace("[", "").replace("]", "").replace(",", "");
+
                             }
 
                             else {
@@ -191,6 +194,8 @@ public class CrearReporteCierreCaja extends Fragment {
                                         "================================\n";
 
                                 arrayList.add(detalle);
+                                arrayList.toString().replace("[", "").replace("]", "").replace(",", "");
+
 
                             }
 
@@ -212,14 +217,14 @@ public class CrearReporteCierreCaja extends Fragment {
 
                         if (AdaptadorCorteCaja.noImprimir == 0) {
                             if (montoDiferenciaTotal == 0) {
-                                resultado = "[C]================================" +
-                                        "[C]" + "CAJA CUADRADA" +
+                                resultado = "[C]================================" + "\n" +
+                                        "[C]" + "CAJA CUADRADA" + "\n" +
                                         "[C]================================";
                             } else {
                                 if (montoDiferenciaTotal > 0) {
                                     resultado = "[R]" + "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
-                                            "[C]================================" +
-                                            "[C]" + "CAJA DESCUADRADA" +
+                                            "[C]================================" + "\n" +
+                                            "[C]" + "CAJA DESCUADRADA" + "\n" +
                                             "[C]================================";
                                 } else if (montoDiferenciaTotal < 0) {
                                     resultado = "[R]" + "Sobrante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +
@@ -231,8 +236,8 @@ public class CrearReporteCierreCaja extends Fragment {
                         }
                         else {
                             if (montoDiferenciaTotal == 0) {
-                                resultado = "================================" +
-                                        "CAJA CUADRADA" +
+                                resultado = "================================" + "\n" +
+                                        "CAJA CUADRADA" + "\n" +
                                         "================================";
                             } else {
                                 if (montoDiferenciaTotal > 0) {
@@ -350,6 +355,8 @@ public class CrearReporteCierreCaja extends Fragment {
             PageSize pageSize = new PageSize(300, 1200);
             pdfDocument.setDefaultPageSize(pageSize);
 
+        Paragraph fecha = new Paragraph("Desde: " + BuscarReportes.sFecInicial + BuscarReportes.sHoraInicial + " Hasta: " + BuscarReportes.sFecFinal + BuscarReportes.sHoraFinal).setTextAlignment(TextAlignment.CENTER);
+
         Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph direccion = new Paragraph(Splash.gDireccion + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph departamento = new Paragraph("Departamento" + "\n").setTextAlignment(TextAlignment.CENTER);
@@ -363,7 +370,7 @@ public class CrearReporteCierreCaja extends Fragment {
         Paragraph fecSistema = new Paragraph("Fecha Sistema: " + fechaFin + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph linea3 = new Paragraph("======                                                                                                                                                                                                                                                                                                                                                                           ==========================" + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph montoInit = new Paragraph("Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n").setTextAlignment(TextAlignment.LEFT);
-        Paragraph datos = new Paragraph(arrayList + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph datos = new Paragraph(arrayList.toString().replace("[", "").replace("]", "").replace(",", "") + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea4 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph totales = new Paragraph("Totales " + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea5 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
@@ -377,6 +384,7 @@ public class CrearReporteCierreCaja extends Fragment {
         Paragraph resultado1 = new Paragraph(resultado + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea7 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
 
+        document.add(fecha);
         document.add(nombre);
         document.add(direccion);
         document.add(departamento);

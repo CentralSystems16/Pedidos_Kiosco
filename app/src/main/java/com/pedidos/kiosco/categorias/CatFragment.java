@@ -1,6 +1,11 @@
 package com.pedidos.kiosco.categorias;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +56,7 @@ public class CatFragment extends Fragment {
         categorias = new ArrayList<>();
 
         Button crearCat = vista.findViewById(R.id.btnCrearCat);
+        crearCat.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         crearCat.setOnClickListener(view -> {
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new AgregarCategorias());
@@ -60,6 +66,7 @@ public class CatFragment extends Fragment {
         rvLista = vista.findViewById(R.id.rvListaCategorias);
 
         inactivas = vista.findViewById(R.id.btnInactivas);
+        inactivas.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         inactivas.setOnClickListener(v -> {
 
             FragmentTransaction fr = getFragmentManager().beginTransaction();

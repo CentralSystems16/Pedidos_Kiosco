@@ -41,7 +41,7 @@ public class CierreCaja extends Fragment {
     AdaptadorCierreCaja adaptador;
     View vista;
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d '-' MMMM '-' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
     SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
     String horaString = ho.format(d);

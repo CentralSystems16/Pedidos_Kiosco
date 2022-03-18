@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.adapters.imgtoserver;
+package com.pedidos.kiosco.imgtoserver;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
