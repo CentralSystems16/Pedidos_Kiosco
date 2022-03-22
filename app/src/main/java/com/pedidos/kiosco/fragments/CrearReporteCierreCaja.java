@@ -196,7 +196,6 @@ public class CrearReporteCierreCaja extends Fragment {
                                 arrayList.add(detalle);
                                 arrayList.toString().replace("[", "").replace("]", "").replace(",", "");
 
-
                             }
 
                         }
@@ -216,10 +215,12 @@ public class CrearReporteCierreCaja extends Fragment {
                         montoDiferenciaTotal = montoDiferenciaTotal + montoDiferencia;
 
                         if (AdaptadorCorteCaja.noImprimir == 0) {
+
                             if (montoDiferenciaTotal == 0) {
                                 resultado = "[C]================================" + "\n" +
                                         "[C]" + "CAJA CUADRADA" + "\n" +
                                         "[C]================================";
+
                             } else {
                                 if (montoDiferenciaTotal > 0) {
                                     resultado = "[R]" + "Faltante $" + String.format("%.2f", montoDiferenciaTotal) + "\n" +

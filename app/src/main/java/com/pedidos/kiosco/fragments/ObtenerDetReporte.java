@@ -57,6 +57,7 @@ public class ObtenerDetReporte extends Fragment {
         } else {
             String urlPdf = "http://34.239.139.117/android/kiosco/cliente/pedidos/ComprobanteCorteCaja.pdf";
 
+
             new RecibirPDFReportes(pdfView, progressBar).execute(urlPdf);
         }
 

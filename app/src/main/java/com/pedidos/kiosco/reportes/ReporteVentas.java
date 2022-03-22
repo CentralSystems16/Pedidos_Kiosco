@@ -1,4 +1,4 @@
-package com.pedidos.kiosco.fragments;
+package com.pedidos.kiosco.reportes;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
@@ -40,7 +40,7 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.reportes.BuscarReportes;
+import com.pedidos.kiosco.fragments.ObtenerDetReporte;
 import com.pedidos.kiosco.other.SumaMontoEfectivo;
 import com.pedidos.kiosco.other.SumaMontoTarjeta;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
@@ -122,6 +122,9 @@ public class ReporteVentas extends Fragment {
                         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
                         File file = new File(pdfPath, "ComprobanteCorteCaja.pdf");
 
+                        if (!file.exists())
+                            file.createNewFile();
+
                         PdfWriter writer = new PdfWriter(file);
                         PdfDocument pdfDocument = new PdfDocument(writer);
                         Document document = new Document(pdfDocument);
@@ -187,6 +190,8 @@ public class ReporteVentas extends Fragment {
                     } catch (JSONException | FileNotFoundException e) {
                         e.printStackTrace();
                         progressDialog.dismiss();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     progressDialog.dismiss();
                 }, volleyError -> {

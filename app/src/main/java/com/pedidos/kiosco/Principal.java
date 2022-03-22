@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -32,10 +34,11 @@ import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
 import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
-import com.pedidos.kiosco.other.MiPersona;
 import com.pedidos.kiosco.productos.ProdFragment;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-import java.util.concurrent.ExecutionException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Principal extends AppCompatActivity {
 
@@ -124,7 +127,7 @@ public class Principal extends AppCompatActivity {
 
         });
 
-        if (Login.gIdCliente == 0) {
+        /*if (Login.gIdCliente == 0) {
 
             try {
                 new MiPersona(this).execute().get();
@@ -136,7 +139,9 @@ public class Principal extends AppCompatActivity {
             if (MiPersona.exito) {
                 ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarClienteUsuario.php" + "?base=" + VariablesGlobales.dataBase + "&id_cliente=" + Login.gIdCliente + "&id_usuario=" + Login.gIdUsuario);
             }
-        }
+        }*/
+
+        obtenerClientes();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -164,6 +169,7 @@ public class Principal extends AppCompatActivity {
             comprobante.startAnimation(fromBottom);
             reportes.startAnimation(fromBottom);
             addButton.startAnimation(rotateOpen);
+
         }
         else {
             list.startAnimation(toBottom);
@@ -174,7 +180,6 @@ public class Principal extends AppCompatActivity {
             reportes.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
         }
-        
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -187,6 +192,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.VISIBLE);
             comprobante.setVisibility(View.VISIBLE);
             reportes.setVisibility(View.VISIBLE);
+
 
         }
         else {
@@ -209,6 +215,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setClickable(true);
             comprobante.setClickable(true);
             reportes.setClickable(true);
+
         }
         else {
             list.setClickable(false);
@@ -217,6 +224,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setClickable(false);
             comprobante.setClickable(false);
             reportes.setClickable(false);
+
         }
     }
 
@@ -258,6 +266,53 @@ public class Principal extends AppCompatActivity {
 
     return  true;
     };
+
+    public void obtenerClientes() {
+
+        ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerClientes.php"  + "?base=" + VariablesGlobales.dataBase;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Clientes");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            Login.gIdCliente = jsonObject1.getInt("id_cliente");
+                            Login.nombre = jsonObject1.getString("nombre_cliente");
+
+                        }
+                        progressDialog.dismiss();
+
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+                }, volleyError -> {
+            Toast.makeText(getApplicationContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
+
+    }
 
     @Override
     public void onBackPressed() {

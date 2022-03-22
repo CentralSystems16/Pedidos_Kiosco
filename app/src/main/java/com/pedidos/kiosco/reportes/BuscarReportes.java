@@ -23,7 +23,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.fragments.ReporteVentas;
 import com.pedidos.kiosco.model.Reporte;
 import org.json.JSONArray;
 import java.text.SimpleDateFormat;

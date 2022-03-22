@@ -32,6 +32,7 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
+import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.other.ContadorProductos;
@@ -56,7 +57,6 @@ public class TicketDatos extends Fragment {
     public static TextView totalFinal;
     public static Double gTotal = 0.00;
     public static String gNombre, sucursal;
-    String email;
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
@@ -95,7 +95,9 @@ public class TicketDatos extends Fragment {
         anular.setOnClickListener(view -> new AlertDialog.Builder(requireContext())
                 .setTitle("Confirmación")
                 .setMessage("¿Seguro que quieres anular el pedido?")
-                .setPositiveButton("Si", (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarPedido.php" + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido))
+                .setPositiveButton("Si", (dialog, which) -> ejecutarServicio("http://" +
+                        VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/eliminarPedido.php"
+                        + "?base=" + VariablesGlobales.dataBase + "&id_prefactura=" + Login.gIdPedido))
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                 })
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -119,7 +121,7 @@ public class TicketDatos extends Fragment {
         btnConfirmarEnviar.setOnClickListener(view -> {
 
             FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new TipoPago());
+            fr.replace(R.id.fragment_layout, new Clientes());
             fr.commit();
 
         });
@@ -198,7 +200,6 @@ public class TicketDatos extends Fragment {
                             gNombre = jsonObject1.getString("nombre_cliente");
                             nombreTicket.setText(gNombre);
                             jsonObject1.getString("fecha_creo");
-                            email = jsonObject1.getString("email_cliente");
                             sucursal = jsonObject1.getString("nombre_sucursal");
 
                         }

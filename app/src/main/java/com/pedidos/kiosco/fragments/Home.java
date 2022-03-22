@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.RegistroCliente;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstados;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -49,6 +51,7 @@ public class Home extends Fragment {
     CardView hacerPedido, verPedido, abrirCaja;
     int resultado, state;
     TextView cierreCaja;
+    ImageButton cliente;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,9 @@ public class Home extends Fragment {
         verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
 
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
+
+        cliente = view.findViewById(R.id.cliente);
+        cliente.setOnClickListener(view13 -> startActivity(new Intent(getContext(), RegistroCliente.class)));
 
         TextView nombre = view.findViewById(R.id.nombrePrincipal);
         nombre.setText(Login.nombre);

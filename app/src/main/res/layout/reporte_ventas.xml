@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".fragments.ReporteVentas">
+    tools:context=".reportes.ReporteVentas">
 
     <Toolbar
         android:id="@+id/toolbarReportesVentas"
