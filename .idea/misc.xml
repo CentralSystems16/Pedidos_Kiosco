@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/boton_borde.xml" value="0.2855" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_admin_panel_settings_24.xml" value="0.334" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_content_paste_24.xml" value="0.292" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/drawable/ic_baseline_find_in_page_24.xml" value="0.2855" />
@@ -38,10 +39,12 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_obtener_productos.xml" value="0.1953125" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_prod.xml" value="0.2601851851851852" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_productos_inactivos.xml" value="0.1953125" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_registro_cliente.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/fragment_usuario_inactivo.xml" value="0.1953125" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_categorias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_cierre_caja.xml" value="0.33" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_clientes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_corte.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_estados.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/item_rv_pago.xml" value="0.36666666666666664" />
@@ -55,6 +58,7 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_autorizacion.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_categorias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_categorias_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_cliente_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_productos.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_usuario.xml" value="0.25" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/modificar_usuario_fragment.xml" value="0.33" />
@@ -88,6 +92,7 @@
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/spinner_item_inicial.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/tipo_pago.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/update_app.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/usuario_frament.xml" value="0.33" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/usuarios_inactivos.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/adiel/StudioProjects/Pedidos_Kiosco/app/src/main/res/layout/verificar_numero.xml" value="0.36666666666666664" />

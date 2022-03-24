@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,11 +33,11 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
@@ -47,90 +46,103 @@
         android:id="@+id/floatingActionButton2"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="invisible"
         android:text="Categorias"
         android:theme="@style/MyMaterialTheme"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
+        android:visibility="invisible"
+        app:icon="@drawable/ic_baseline_view_list_24"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/ic_baseline_view_list_24" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/floatingActionButton3"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:theme="@style/MyMaterialTheme"
-        android:focusable="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Productos"
+        android:theme="@style/MyMaterialTheme"
         android:visibility="invisible"
+        app:icon="@drawable/box"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/box" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/floatingActionButton4"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
-        android:visibility="invisible"
         android:focusable="true"
         android:text="Usuarios"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
         android:theme="@style/MyMaterialTheme"
+        android:visibility="invisible"
+        app:icon="@drawable/ic_baseline_person_24"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/ic_baseline_person_24" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/floatingActionButton5"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="invisible"
-        android:focusable="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Legal"
         android:theme="@style/MyMaterialTheme"
+        android:visibility="invisible"
+        app:icon="@drawable/ic_baseline_admin_panel_settings_24"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/ic_baseline_admin_panel_settings_24" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/floatingActionButton6"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="invisible"
-        android:focusable="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Cortes"
         android:theme="@style/MyMaterialTheme"
+        android:visibility="invisible"
+        app:icon="@drawable/documento"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/documento" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/floatingActionButton7"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="invisible"
-        android:focusable="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Reportes"
         android:theme="@style/MyMaterialTheme"
+        android:visibility="invisible"
+        app:icon="@drawable/verarchivo"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/verarchivo" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingActionButton8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:focusable="true"
+        app:icon="@drawable/ic_baseline_person_24"
+        android:theme="@style/MyMaterialTheme"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_layout"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,6 @@
             app:backgroundTint="@color/rojo"
             tools:ignore="RtlHardcoded" />
 
-
     </RelativeLayout>
 
     <EditText
@@ -81,9 +80,9 @@
         android:focusable="true"
         android:gravity="center"
         android:hint="Buscar"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="15sp"
-        android:textColor="@color/black"
         app:backgroundTint="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView

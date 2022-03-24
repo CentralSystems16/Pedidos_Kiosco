@@ -334,96 +334,108 @@ public class ResumenPago extends Fragment {
                         String numero;
                         numero = String.valueOf(gTotal);
 
-                        try {
-                            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
-                            } else {
-                                BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
-                                if (connection != null) {
-                                    EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
+                        new Thread(new Runnable() {
+                            public void run() {
 
-                                    final String text =
-                                            "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
-                                                    getContext().getResources().getDrawableForDensity(R.drawable.logochicharroneria,
-                                                            DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
-                                                    "[L]\n" +
-                                                    "[C]" + Splash.gNombre + "\n" +
-                                                    "[C]" + Splash.gDireccion + "\n" +
-                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
-                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
-                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
-                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
-                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
-                                                    "[L]" + "Fecha: " + gFecha + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[C]" + sb1.toString() +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "SubTotal $" + String.format("%.2f", gTotal) + "\n" +
-                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
-                                                    "[R]" + "Exento $" + String.format("%.2f", exento) + "\n" +
-                                                    "[R]" + "Gravado $" + String.format("%.2f", gravado) + "\n" +
-                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f", noSujeto) + "\n" +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "Total a pagar $" + String.format("%.2f", gTotal) + "\n" +
-                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, band()) + "\n" +
-                                                    "[R]" + "Recibido: " + "$" + String.format("%.2f", change) + "\n" +
-                                                    "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
-                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
-                                                    "[C]Gracias por su compra :)\n";
-
-                                    final String text2 =
-                                            "[L]\n" +
-                                                    "[C]" + Splash.gNombre + "\n" +
-                                                    "[C]" + Splash.gDireccion + "\n" +
-                                                    "[C]" + "Sucursal: " + sucursal + "\n" +
-                                                    "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
-                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
-                                                    "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
-                                                    "[C]" + "Atendio: " + Login.nombre + "\n" +
-                                                    "[L]" + "Fecha: " + gFecha + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
-                                                    "[C]================================\n" +
-                                                    "[L]" + sb1.toString() +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "SubTotal $" + String.format("%.2f", gTotal) + "\n" +
-                                                    "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
-                                                    "[R]" + "Exento $" + String.format("%.2f", exento) + "\n" +
-                                                    "[R]" + "Gravado $" + String.format("%.2f", gravado) + "\n" +
-                                                    "[R]" + "Ventas no sujetas $" + String.format("%.2f", noSujeto) + "\n" +
-                                                    "[R]" + "---------------------------" + "\n" +
-                                                    "[R]" + "Total a pagar $" + String.format("%.2f", gTotal) + "\n" +
-                                                    "[R]" + "Son: " + NumLetra.Convertir(numero, band()) + "\n" +
-                                                    "[R]" + "Recibido: " + "$" + String.format("%.2f", change) + "\n" +
-                                                    "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
-                                                    "[C]" + "FB: " + Splash.gFacebook + "\n" +
-                                                    "[C]Gracias por su compra :)\n";
-
-                                    if (Splash.gImagen == 1) {
-                                        printer.printFormattedText(text);
-                                        System.out.println(text);
+                                try {
+                                    if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
                                     } else {
-                                        printer.printFormattedText(text2);
+
+                                        BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
+
+                                        if (connection != null) {
+                                            EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
+
+                                            final String text =
+                                                    "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
+                                                            getContext().getResources().getDrawableForDensity(R.drawable.logochicharroneria,
+                                                                    DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
+                                                            "[L]\n" +
+                                                            "[C]" + Splash.gNombre + "\n" +
+                                                            "[C]" + Splash.gDireccion + "\n" +
+                                                            "[C]" + "Sucursal: " + sucursal + "\n" +
+                                                            "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
+                                                            "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
+                                                            "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
+                                                            "[C]" + "Atendio: " + Login.nombre + "\n" +
+                                                            "[L]" + "Fecha: " + gFecha + "\n" +
+                                                            "[C]================================\n" +
+                                                            "[C]" + sb1.toString() +
+                                                            "[R]" + "---------------------------" + "\n" +
+                                                            "[R]" + "SubTotal $" + String.format("%.2f", gTotal) + "\n" +
+                                                            "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
+                                                            "[R]" + "Exento $" + String.format("%.2f", exento) + "\n" +
+                                                            "[R]" + "Gravado $" + String.format("%.2f", gravado) + "\n" +
+                                                            "[R]" + "Ventas no sujetas $" + String.format("%.2f", noSujeto) + "\n" +
+                                                            "[R]" + "---------------------------" + "\n" +
+                                                            "[R]" + "Total a pagar $" + String.format("%.2f", gTotal) + "\n" +
+                                                            "[R]" + "Son: " + NumLetra.Convertir(numero, band()) + "\n" +
+                                                            "[R]" + "Recibido: " + "$" + String.format("%.2f", change) + "\n" +
+                                                            "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                            "[C]" + "FB: " + Splash.gFacebook + "\n" +
+                                                            "[C]Gracias por su compra :)\n";
+
+                                            final String text2 =
+                                                    "[L]\n" +
+                                                            "[C]" + Splash.gNombre + "\n" +
+                                                            "[C]" + Splash.gDireccion + "\n" +
+                                                            "[C]" + "Sucursal: " + sucursal + "\n" +
+                                                            "[C]" + "Teléfono: " + Splash.gTelefono + "\n" +
+                                                            "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
+                                                            "[C]" + "Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n" +
+                                                            "[C]" + "Atendio: " + Login.nombre + "\n" +
+                                                            "[L]" + "Fecha: " + gFecha + "\n" +
+                                                            "[C]================================\n" +
+                                                            "[L]" + "Cant" + " Descripción" + "[R]" + "P/Un" + "[R]" + "Total" + "\n" +
+                                                            "[C]================================\n" +
+                                                            "[L]" + sb1.toString() +
+                                                            "[R]" + "---------------------------" + "\n" +
+                                                            "[R]" + "SubTotal $" + String.format("%.2f", gTotal) + "\n" +
+                                                            "[R]" + "Desc $" + String.format("%.2f", gDesc) + "\n" +
+                                                            "[R]" + "Exento $" + String.format("%.2f", exento) + "\n" +
+                                                            "[R]" + "Gravado $" + String.format("%.2f", gravado) + "\n" +
+                                                            "[R]" + "Ventas no sujetas $" + String.format("%.2f", noSujeto) + "\n" +
+                                                            "[R]" + "---------------------------" + "\n" +
+                                                            "[R]" + "Total a pagar $" + String.format("%.2f", gTotal) + "\n" +
+                                                            "[R]" + "Son: " + NumLetra.Convertir(numero, band()) + "\n" +
+                                                            "[R]" + "Recibido: " + "$" + String.format("%.2f", change) + "\n" +
+                                                            "[R]" + "Cambio: $" + cambio.getText().toString() + "\n\n" +
+                                                            "[C]" + "FB: " + Splash.gFacebook + "\n" +
+                                                            "[C]Gracias por su compra :)\n";
+
+                                            if (Splash.gImagen == 1) {
+                                                printer.printFormattedText(text);
+                                                System.out.println(text);
+                                            } else {
+                                                printer.printFormattedText(text2);
+                                            }
+
+                                        } else {
+                                            Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     }
 
-                                } else {
-                                    Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    Log.e("APP", "No se puede imprimir, error: ", e);
                                 }
 
                             }
+                        }).start();
 
-                        } catch (Exception e) {
-                            Log.e("APP", "No se puede imprimir, error: ", e);
-                        }
+                                progressDialog.dismiss();
 
-                        progressDialog.dismiss();
+                            } catch(JSONException e)
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        progressDialog.dismiss();
-                    }
-                }, Throwable::printStackTrace
-        );
+                            {
+                                e.printStackTrace();
+                                progressDialog.dismiss();
+                            }
+
+                        }, Throwable::printStackTrace
+                        );
+
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 0,

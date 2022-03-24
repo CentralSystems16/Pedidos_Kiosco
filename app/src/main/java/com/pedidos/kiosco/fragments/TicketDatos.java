@@ -121,7 +121,7 @@ public class TicketDatos extends Fragment {
         btnConfirmarEnviar.setOnClickListener(view -> {
 
             FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new Clientes());
+            fr.replace(R.id.fragment_layout, new TipoPago());
             fr.commit();
 
         });

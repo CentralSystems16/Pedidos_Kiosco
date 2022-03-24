@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.fragments.Categorias;
@@ -47,7 +48,7 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes;
+    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes, nombreConsumidor;
     FloatingActionButton addButton;
     public static int gIdEstadoCliente, gIdEstado;
 
@@ -68,6 +69,17 @@ public class Principal extends AppCompatActivity {
         if(Login.cargo == 1 || Login.cargo == 2){
             addButton.setVisibility(View.VISIBLE);
         }
+
+        nombreConsumidor = findViewById(R.id.floatingActionButton8);
+        nombreConsumidor.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        nombreConsumidor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new Clientes());
+                fr.commit();
+            }
+        });
 
         addButton.setOnClickListener(view -> onAddButtonClickListener());
 
@@ -126,22 +138,6 @@ public class Principal extends AppCompatActivity {
             fr.commit();
 
         });
-
-        /*if (Login.gIdCliente == 0) {
-
-            try {
-                new MiPersona(this).execute().get();
-
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (MiPersona.exito) {
-                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarClienteUsuario.php" + "?base=" + VariablesGlobales.dataBase + "&id_cliente=" + Login.gIdCliente + "&id_usuario=" + Login.gIdUsuario);
-            }
-        }*/
-
-        obtenerClientes();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -266,53 +262,6 @@ public class Principal extends AppCompatActivity {
 
     return  true;
     };
-
-    public void obtenerClientes() {
-
-        ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerClientes.php"  + "?base=" + VariablesGlobales.dataBase;
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-
-                response -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("Clientes");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                            Login.gIdCliente = jsonObject1.getInt("id_cliente");
-                            Login.nombre = jsonObject1.getString("nombre_cliente");
-
-                        }
-                        progressDialog.dismiss();
-
-                    } catch (JSONException e) {
-                        progressDialog.dismiss();
-                        e.printStackTrace();
-                    }
-                }, volleyError -> {
-            Toast.makeText(getApplicationContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-
-        });
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        requestQueue.add(stringRequest);
-
-    }
 
     @Override
     public void onBackPressed() {

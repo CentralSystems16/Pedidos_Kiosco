@@ -28,11 +28,31 @@
             android:background="@drawable/person" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:text="El cliente seleccionado es:"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/clienteActual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="¿Desea mantener el cliente generico o registrar uno?"
+            android:text="Consumidor Final"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="¿Desea cambiar el cliente seleccionado o cambiarlo?"
             android:textColor="@color/black"
             android:textSize="17sp" />
 
@@ -43,40 +63,9 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnMantener"
+                android:id="@+id/btnRegistrar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:backgroundTint="#F44336"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rabits"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Mantener"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/pedido"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/repetir" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnPedidos"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="10dp"
                 android:backgroundTint="#4CAF50"
                 android:clickable="true"
                 android:focusable="true"
@@ -88,18 +77,47 @@
                     android:fontFamily="@font/rabits"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Registrar"
+                    android:text="Cambiar"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
                 <ImageView
-                    android:id="@+id/btnRegistrar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom|end"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/agregar" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnMantener"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:backgroundTint="#FD5A4F"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="10dp"
+                app:cardCornerRadius="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rabits"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Cerrar"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/cerrar" />
 
             </androidx.cardview.widget.CardView>
 

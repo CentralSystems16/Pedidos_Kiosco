@@ -1,5 +1,10 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +97,7 @@ public class ModificarUsuario extends Fragment {
         editEmail.setText(UsuarioFragment.gEmailUsuario);
 
         modificarUsuario = vista.findViewById(R.id.editarUsuario);
+        modificarUsuario.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         modificarUsuario.setOnClickListener(v -> ejecutar());
 
         return vista;

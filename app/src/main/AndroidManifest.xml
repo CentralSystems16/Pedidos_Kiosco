@@ -56,9 +56,6 @@
             android:name=".main.ObtenerReportesFiscal"
             android:exported="false" />
         <activity
-            android:name=".RegistroCliente"
-            android:exported="false" />
-        <activity
             android:name=".Splash"
             android:exported="true">
             <intent-filter>

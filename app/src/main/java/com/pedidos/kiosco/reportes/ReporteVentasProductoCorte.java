@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.Corte;
@@ -82,7 +83,7 @@ public class ReporteVentasProductoCorte extends Fragment {
         Button mostrarPorCorte = vista.findViewById(R.id.btnMostrarPorFecha);
         mostrarPorCorte.setOnClickListener(view -> {
 
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            FragmentTransaction fr =requireActivity().getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ReporteVentasProducto());
             fr.commit();
 
@@ -100,14 +101,14 @@ public class ReporteVentasProductoCorte extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductosCorte.php"
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerReporteProductosCorte.php"
                 + "?base=" + VariablesGlobales.dataBase + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
 
         new ContadorCorteCantidad.GetDataFromServerIntoTextView(getContext()).execute();
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
 
                 response -> {
                     try {
@@ -121,7 +122,7 @@ public class ReporteVentasProductoCorte extends Fragment {
 
                             sb.append(jsonObject1.getString("nombre_producto")+"\n\n");
                             sb2.append(jsonObject1.getDouble("cantidad")+ "0" + "\n\n");
-                            cajero.setText(jsonObject1.getString("nombre_cliente"));
+                            cajero.setText(Login.nombre);
                             fechaCierre.setText(jsonObject1.getString("fecha_fin"));
 
                             cantidadTotal = jsonObject1.getDouble("cantidad");
@@ -199,5 +200,4 @@ public class ReporteVentasProductoCorte extends Fragment {
         obtenerReporteProductos();
 
     }
-
 }

@@ -25,7 +25,6 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
-import com.pedidos.kiosco.productos.ProdFragment;
 import org.json.JSONArray;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;

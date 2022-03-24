@@ -97,7 +97,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
-        reportesViewHolder.tvNombre.setText(listaReportes.get(posicion).getNombreCliente());
+        reportesViewHolder.tvNombre.setText(Login.nombre);
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
         reportesViewHolder.numeroComprobante.setText(listaReportes.get(posicion).getNumeroComprobante());
