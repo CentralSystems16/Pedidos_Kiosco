@@ -2,7 +2,7 @@ package com.pedidos.kiosco.model;
 
 public class Caja {
 
-    int idCaja, ocupada;
+    int idCaja, ocupada, numeroCaja;
     String nombreCaja;
 
     public Caja(int idCaja, String nombreCaja) {
@@ -16,6 +16,14 @@ public class Caja {
 
     public int getIdCaja() {
         return idCaja;
+    }
+
+    public int getNumeroCaja() {
+        return numeroCaja;
+    }
+
+    public void setNumeroCaja(int numeroCaja) {
+        this.numeroCaja = numeroCaja;
     }
 
     public String getNombreCaja() {

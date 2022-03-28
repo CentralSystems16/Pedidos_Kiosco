@@ -149,7 +149,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
     }
 
     private void llenarComprobante(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarComprobantes.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarComprobantes.php" + "?base=" + VariablesGlobales.dataBase;
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -192,7 +192,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
     }
 
     private void llenarSucursal(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarSucursales.php" + "?base=" + VariablesGlobales.dataBase;
         cliente2.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -235,7 +235,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
     }
 
     private void llenarCaja(){
-        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php";
+        String url ="http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/llenarCajasAdd.php" + "?base=" + VariablesGlobales.dataBase;
         cliente3.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -279,7 +279,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
 
     public void getInfoUser() {
 
-        String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerFiscal.php" + "?id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
+        String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerFiscal.php" + "?base=" + VariablesGlobales.dataBase + "&id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
         ProgressDialog progressDialog = new ProgressDialog(ModificarAutorizacion.this, R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);

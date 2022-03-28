@@ -1,14 +1,7 @@
 package com.pedidos.kiosco.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,26 +22,22 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorClientes;
-import com.pedidos.kiosco.adapters.AdaptadorTipoPago;
 import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.model.Clients;
-import com.pedidos.kiosco.model.Pago;
-import com.pedidos.kiosco.model.Productos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.Normalizer;
 import java.util.ArrayList;
 
-public class Cliente extends Fragment {
+public class Cliente extends DialogFragment {
 
     RecyclerView rvLista;
     ArrayList<Clients> clientes;
     AdaptadorClientes adaptador;
 
     public static String numero, direccion, dui, nombre;
+    public static Button regresar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +61,7 @@ public class Cliente extends Fragment {
 
         Button cliente = vista.findViewById(R.id.cliente);
         cliente.setOnClickListener(view13 -> {
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new RegistroCliente());
             fr.commit();
         });

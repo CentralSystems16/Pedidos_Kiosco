@@ -54,6 +54,7 @@ public class ModificarUsuario extends Fragment {
         llenarSpinner();
 
         btnActivoUser = vista.findViewById(R.id.btnActivoUsuario);
+        btnActivoUser.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         btnActivoUser.setOnClickListener(v -> {
 
             gEstadoUs = 1;
@@ -75,8 +76,8 @@ public class ModificarUsuario extends Fragment {
 
         if (UsuarioFragment.gEstadoUsuario == 0) {
             btnInactivoUser.setVisibility(View.INVISIBLE);
-
         }
+
         else {
             btnActivoUser.setVisibility(View.INVISIBLE);
         }

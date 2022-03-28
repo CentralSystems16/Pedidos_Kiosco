@@ -61,12 +61,11 @@ public class ModificarProductos extends Fragment {
         modifPrec.setText(String.valueOf(ProdFragment.gPrecio));
 
         btnActivo = vista.findViewById(R.id.btnActivoProducto);
-        btnActivo.setEnabled(false);
         btnActivo.setOnClickListener(v -> {
 
             gEstadoProd = 1;
-            btnActivo.setEnabled(false);
-            btnInactivo.setEnabled(true);
+            btnActivo.setVisibility(View.INVISIBLE);
+            btnInactivo.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), "Producto activado nuevamente", Toast.LENGTH_SHORT).show();
         });
 
@@ -74,11 +73,19 @@ public class ModificarProductos extends Fragment {
         btnInactivo.setOnClickListener(v -> {
 
             gEstadoProd = 0;
-            btnActivo.setEnabled(true);
-            btnInactivo.setEnabled(false);
+            btnActivo.setVisibility(View.VISIBLE);
+            btnInactivo.setVisibility(View.INVISIBLE);
             Toast.makeText(getContext(), "Producto desactivado", Toast.LENGTH_SHORT).show();
 
         });
+
+        if (ProdFragment.estado == 0) {
+            btnInactivo.setVisibility(View.INVISIBLE);
+        }
+
+        else {
+            btnActivo.setVisibility(View.INVISIBLE);
+        }
 
         llenarSpinner();
 

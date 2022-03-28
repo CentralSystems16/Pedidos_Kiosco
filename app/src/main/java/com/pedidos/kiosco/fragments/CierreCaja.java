@@ -41,9 +41,9 @@ public class CierreCaja extends Fragment {
     AdaptadorCierreCaja adaptador;
     View vista;
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d '-' MMMM '-' yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d '-' MMM '-' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
+    SimpleDateFormat ho = new SimpleDateFormat("HH:mm:ss");
     String horaString = ho.format(d);
     public static Button aceptar;
     public static Double fondoInit;
@@ -68,7 +68,7 @@ public class CierreCaja extends Fragment {
                 .setMessage("¿Esta seguro de cerrar la caja?")
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
                         + "?base=" + VariablesGlobales.dataBase
-                        + "&fecha_fin=" + fechacComplString + " a las " + horaString
+                        + "&fecha_fin=" + fechacComplString + " " + horaString
                         + "&state=2"
                         + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja)).setNegativeButton(android.R.string.no, (dialog, which) ->{})
                 .setIcon(android.R.drawable.ic_dialog_info)

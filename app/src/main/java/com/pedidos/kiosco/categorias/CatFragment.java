@@ -37,7 +37,7 @@ public class CatFragment extends Fragment {
     public static final int MY_DEFAULT_TIMEOUT = 15000;
     AdaptadorCategorias adaptadorCat;
     Button inactivas;
-    public static int gIdCategoria;
+    public static int gIdCategoria, estadoCategoria;
     public static String gNombreCat, gImagen;
 
     @Override
@@ -108,7 +108,8 @@ public class CatFragment extends Fragment {
                                     new Categorias(
                                             gIdCategoria = jsonObject1.getInt("id_categoria"),
                                             gNombreCat = jsonObject1.getString("nombre_categoria"),
-                                            gImagen = jsonObject1.getString("img_categoria")));
+                                            gImagen = jsonObject1.getString("img_categoria"),
+                                            estadoCategoria = jsonObject1.getInt("estado_categoria")));
 
                         }
 

@@ -75,7 +75,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     String sucursal, gFecha, gNombre, gNombreProd;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto, cambio, change;
     StringBuilder sb1 = new StringBuilder("");
-    int gIdFacMovimiento, noCaja;
+    int gIdFacMovimiento, noCaja, tickete;
     String encodedPDF;
 
     public AdaptadorReportesMov(Context cContext, List<Movimientos> listaReportes) {
@@ -98,6 +98,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
         reportesViewHolder.tvNombre.setText(Login.nombre);
+        reportesViewHolder.nombreCliente.setText(listaReportes.get(posicion).getNombreCliente());
         reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
         reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
         reportesViewHolder.numeroComprobante.setText(listaReportes.get(posicion).getNumeroComprobante());
@@ -109,14 +110,15 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         //ver
         reportesViewHolder.editar3.setOnClickListener(view -> {
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            obtenerDetMovimientos2();
+            obtenerMovimientos();
+
 
         });
 
         //reimprimir
         reportesViewHolder.editar.setOnClickListener(v -> {
             ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            obtenerMovimientos();
+            obtenerMovimientosImp();
 
         });
 
@@ -302,7 +304,9 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                         JSONObject jsonObject = new JSONObject(response);
 
                         JSONArray jsonArray = jsonObject.getJSONArray("DetMovimiento");
+
                         sb1 = new StringBuilder("");
+
                         gTotal = 0.00;
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -318,8 +322,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             Double total = gCantidad * gPrecioUni;
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gNombreProd + "\n" + gCantidad + String.format("%.2f", gPrecioUni) + " $" + String.format("%.2f",total) + " G");
-                            sb1.append("\n");
+                            sb1.append(gNombreProd + "           " + gCantidad + " " + "$" + String.format("%.2f", gPrecioUni) + " " + "$" + String.format("%.2f",total) + " G" + "\n");
                         }
 
                         createPDF();
@@ -340,6 +343,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     }
 
     public void createPDF() throws IOException {
+
         Numero_a_Letra NumLetra = new Numero_a_Letra();
         String numero;
         numero = String.valueOf(gTotal);
@@ -361,11 +365,12 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         Paragraph departamento = new Paragraph("Sucursal: " + sucursal + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph nitnrc = new Paragraph("Teléfono: " + Splash.gTelefono + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph linea1 = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n").setTextAlignment(TextAlignment.CENTER);
-        Paragraph corte = new Paragraph("Caja: " + noCaja + " Tiquete: " + Login.gIdMovimiento + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph corte = new Paragraph("Caja: " + noCaja + " Tiquete: " + tickete + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph linea2 = new Paragraph("Atendio: " + Login.nombre + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph cliente = new Paragraph("Atendio: " + gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph noCaja = new Paragraph("Fecha: " + gFecha + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph cajero = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.CENTER);
-        Paragraph montoInit = new Paragraph(sb1.toString() + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph montoInit = new Paragraph(sb1.toString()).setTextAlignment(TextAlignment.RIGHT);
         Paragraph datos = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph totales = new Paragraph("SubTotal $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea5 = new Paragraph("Desc $" + String.format("%.2f", gDesc) + "\n").setTextAlignment(TextAlignment.RIGHT);
@@ -374,10 +379,10 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         Paragraph gastos1 = new Paragraph("Ventas no sujetas $" + String.format("%.2f",noSujeto) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph tGastos = new Paragraph("Total a pagar $" + String.format("%.2f",gTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph tEntregar = new Paragraph("Son: " + NumLetra.Convertir(numero, true) + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph mDeclarado = new Paragraph("Recibido: " + "$"+ change + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph linea6 = new Paragraph("Cambio: $" + cambio + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph resultado1 = new Paragraph("FB: " + Splash.gFacebook + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph linea7 = new Paragraph("Gracias por su compra :)" + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph mDeclarado = new Paragraph("Recibido: " + "$"+ String.format("%.2f",change) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph linea6 = new Paragraph("Cambio: $" + String.format("%.2f",cambio) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph resultado1 = new Paragraph("FB: " + Splash.gFacebook + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph linea7 = new Paragraph("Gracias por su compra :)" + "\n").setTextAlignment(TextAlignment.CENTER);
 
         document.add(nombre);
         document.add(direccion);
@@ -386,6 +391,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         document.add(linea1);
         document.add(corte);
         document.add(linea2);
+        document.add(cliente);
         document.add(noCaja);
         document.add(cajero);
         document.add(montoInit);
@@ -431,6 +437,54 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             gNombre = jsonObject1.getString("nombre_cliente");
                             gFecha = jsonObject1.getString("fecha_creo");
                             sucursal = jsonObject1.getString("nombre_sucursal");
+                            cambio = jsonObject1.getDouble("monto_cambio");
+                            change = jsonObject1.getDouble("monto_pago");
+                            tickete = jsonObject1.getInt("numero_comprobante");
+
+                        }
+
+                        progressDialog.dismiss();
+                        obtenerDetMovimientos2();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressDialog.dismiss();
+                    }
+                }, Throwable::printStackTrace
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void obtenerMovimientosImp() {
+
+        ProgressDialog progressDialog = new ProgressDialog(cContext, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        String url_pedido = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/generarMovimientos.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + ObtenerMovimientos.idMov;
+        RequestQueue requestQueue = Volley.newRequestQueue(cContext);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_pedido,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Movimiento");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            gNombre = jsonObject1.getString("nombre_cliente");
+                            gFecha = jsonObject1.getString("fecha_creo");
+                            sucursal = jsonObject1.getString("nombre_sucursal");
+                            cambio = jsonObject1.getDouble("monto_cambio");
+                            change = jsonObject1.getDouble("monto_pago");
                         }
 
                         progressDialog.dismiss();
@@ -491,7 +545,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvComprobante, numeroComprobante, tipoPago;
+   TextView tvNombre, tvFecha, tvComprobante, numeroComprobante, tipoPago, nombreCliente;
    Button editar, editar2, editar3;
 
         public ReportesViewHolder(@NonNull View itemView) {
@@ -505,6 +559,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         editar3 = itemView.findViewById(R.id.reimprimir3);
         numeroComprobante = itemView.findViewById(R.id.comprobante);
         tipoPago = itemView.findViewById(R.id.tipoPago);
+        nombreCliente = itemView.findViewById(R.id.nombreClient);
 
         }
     }

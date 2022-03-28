@@ -27,19 +27,19 @@
         android:textSize="15sp"
         />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/cliente"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="Agregar"
-        android:layout_gravity="start"
-        android:layout_marginTop="20dp"
-        android:textSize="12sp"
-        android:backgroundTint="@color/rojo"
-        android:textColor="@color/white"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="30dp"
-        app:cornerRadius="15dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cliente"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Agregar"
+            android:layout_gravity="start"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/rojo"
+            android:textColor="@color/white"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            app:cornerRadius="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvClientes"

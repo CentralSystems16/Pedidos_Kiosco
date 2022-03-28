@@ -22,7 +22,7 @@ import com.pedidos.kiosco.VariablesGlobales;
 
 public class ModificarCliente extends Fragment {
 
-    EditText editUsuario, editNombre, editPass, editEmail;
+    EditText editNumero, editNombre, editPass, editEmail;
     Button btnModificar;
 
     @Override
@@ -31,11 +31,11 @@ public class ModificarCliente extends Fragment {
 
         View vista = inflater.inflate(R.layout.modificar_cliente_fragment, container, false);
 
-        editUsuario = vista.findViewById(R.id.obtenerEditarNumero);
-        editUsuario.setText(Cliente.nombre);
+        editNumero = vista.findViewById(R.id.obtenerEditarNumero);
+        editNumero.setText(Cliente.numero);
 
         editNombre = vista.findViewById(R.id.obtenerEditarCliente);
-        editNombre.setText(Cliente.numero);
+        editNombre.setText(Cliente.nombre);
 
         editPass = vista.findViewById(R.id.obtenerEditarDireccion);
         editPass.setText(Cliente.direccion);
@@ -54,8 +54,8 @@ public class ModificarCliente extends Fragment {
 
         String url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/modificarCliente.php"
                 + "?base=" + VariablesGlobales.dataBase
-                + "&nombre_cliente=" + editUsuario.getText().toString()
-                + "&numero_cliente=" + editNombre.getText().toString()
+                + "&nombre_cliente=" + editNombre.getText().toString()
+                + "&numero_cliente=" + editNumero.getText().toString()
                 + "&dui_cliente=" + editEmail.getText().toString()
                 + "&direccion_cliente=" + editPass.getText().toString()
                 + "&id_cliente=" + Login.gIdCliente;

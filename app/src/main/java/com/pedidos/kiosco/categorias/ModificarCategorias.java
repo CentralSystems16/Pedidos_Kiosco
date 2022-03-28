@@ -30,6 +30,8 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.imgtoserver.ResponsePOJO;
 import com.pedidos.kiosco.imgtoserver.RetroClient2;
 import com.pedidos.kiosco.categorias.CatFragment;
+import com.pedidos.kiosco.usuarios.UsuarioFragment;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import retrofit2.Call;
@@ -58,6 +60,14 @@ public class ModificarCategorias extends Fragment {
         btnActiva = vista.findViewById(R.id.btnActivo);
         btnInactiva = vista.findViewById(R.id.btnInactivo);
 
+        if (CatFragment.estadoCategoria == 0) {
+            btnInactiva.setVisibility(View.INVISIBLE);
+        }
+
+        else {
+            btnActiva.setVisibility(View.INVISIBLE);
+        }
+
         nombreImagen = vista.findViewById(R.id.nombreImagenEdit);
         nombreImagen.setText(CatFragment.gNombreCat);
 
@@ -77,12 +87,11 @@ public class ModificarCategorias extends Fragment {
 
         });
 
-        btnActiva.setEnabled(false);
         btnActiva.setOnClickListener(v -> {
 
             gEstadoAct = 1;
-            btnActiva.setEnabled(false);
-            btnInactiva.setEnabled(true);
+            btnActiva.setVisibility(View.INVISIBLE);
+            btnInactiva.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), "Categoría activada nuevamente", Toast.LENGTH_SHORT).show();
         });
 
@@ -90,8 +99,8 @@ public class ModificarCategorias extends Fragment {
         btnInactiva.setOnClickListener(v -> {
 
             gEstadoAct = 0;
-            btnActiva.setEnabled(true);
-            btnInactiva.setEnabled(false);
+            btnActiva.setVisibility(View.VISIBLE);
+            btnInactiva.setVisibility(View.INVISIBLE);
             Toast.makeText(getContext(), "La categoría a sido desactivada", Toast.LENGTH_SHORT).show();
         });
 
@@ -99,6 +108,8 @@ public class ModificarCategorias extends Fragment {
 
         return vista;
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

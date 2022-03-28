@@ -181,6 +181,7 @@ public class Splash extends AppCompatActivity {
                 Caja e = new Caja();
                 e.setNombreCaja(jsonArreglo.getJSONObject(i).getString("nombre_caja"));
                 e.setIdCaja(jsonArreglo.getJSONObject(i).getInt("id_caja"));
+                e.setNumeroCaja(jsonArreglo.getJSONObject(i).getInt("no_caja"));
                 lista2.add(e);
             }
 
@@ -253,12 +254,11 @@ public class Splash extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("preferenciasIp", Context.MODE_PRIVATE);
                         VariablesGlobales.dataBase = preferences.getString("database", "");
                         obtenerIdCaja();
+                        obtenerNoCaja();
                         ejecutarServicio("http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarSucursal.php"
                                 + "?id_caja=" + gIdCaja
-                                + "&id_sucursal="
-                                + gIdSucursal
-                                + "&base="
-                                + VariablesGlobales.dataBase);
+                                + "&id_sucursal=" + gIdSucursal
+                                + "&base=" + VariablesGlobales.dataBase);
 
                     })
                     .create();
@@ -305,6 +305,19 @@ public class Splash extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("preferenciasSucursal", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =  preferences.edit();
         editor.putInt("sucursal", gIdCaja);
+        editor.putBoolean("sesion", true);
+        editor.apply();
+
+    }
+
+    public void obtenerNoCaja(){
+
+        int indice = spDatos2.getSelectedItemPosition();
+        VariablesGlobales.noCaja = lista2.get(indice).getNumeroCaja();
+
+        SharedPreferences preferences = getSharedPreferences("preferenciasCaja", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =  preferences.edit();
+        editor.putInt("numeroCaja", VariablesGlobales.noCaja);
         editor.putBoolean("sesion", true);
         editor.apply();
 

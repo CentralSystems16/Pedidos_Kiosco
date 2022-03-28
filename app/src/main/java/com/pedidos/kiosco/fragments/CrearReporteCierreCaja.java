@@ -280,10 +280,8 @@ public class CrearReporteCierreCaja extends Fragment {
                                                         "[C]" + "Cajero: " + nombreCajero + "\n" +
                                                         "[C]" + "Fecha negocio: " + fechaInicio + "\n" +
                                                         "[C]" + "Fecha Sistema: " + fechaFin + "\n" +
-                                                        "[C]================================" +
                                                         "[R]" + "Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n" +
                                                         "[L]" + arrayList + "\n" +
-                                                        "[C]================================\n" +
                                                         "[C]" + "Totales " +
                                                         "[C]================================\n" +
                                                         "[R]" + "Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n" +
@@ -293,8 +291,7 @@ public class CrearReporteCierreCaja extends Fragment {
                                                         "[R]" + "Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n" +
                                                         "[R]" + "Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n" +
                                                         "[C]================================\n" +
-                                                        "[R]" + resultado + "\n" +
-                                                        "[C]================================";
+                                                        "[R]" + resultado;
 
                                         if (AdaptadorCorteCaja.noImprimir == 0) {
                                             printer.printFormattedText(text);
@@ -369,10 +366,9 @@ public class CrearReporteCierreCaja extends Fragment {
         Paragraph cajero = new Paragraph("Cajero: " + nombreCajero + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph fecNegocio = new Paragraph("Fecha negocio: " + fechaInicio + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph fecSistema = new Paragraph("Fecha Sistema: " + fechaFin + "\n").setTextAlignment(TextAlignment.CENTER);
-        Paragraph linea3 = new Paragraph("======                                                                                                                                                                                                                                                                                                                                                                           ==========================" + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph linea3 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph montoInit = new Paragraph("Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n").setTextAlignment(TextAlignment.LEFT);
-        Paragraph datos = new Paragraph(arrayList.toString().replace("[", "").replace("]", "").replace(",", "") + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph linea4 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph datos = new Paragraph(arrayList.toString().replace("[", "").replace("]", "").replace(",", "")).setTextAlignment(TextAlignment.RIGHT);
         Paragraph totales = new Paragraph("Totales " + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea5 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph vTotal = new Paragraph("Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
@@ -383,7 +379,6 @@ public class CrearReporteCierreCaja extends Fragment {
         Paragraph mDeclarado = new Paragraph("Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea6 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph resultado1 = new Paragraph(resultado + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph linea7 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
 
         document.add(fecha);
         document.add(nombre);
@@ -400,7 +395,6 @@ public class CrearReporteCierreCaja extends Fragment {
         document.add(montoInit);
         document.add(linea3);
         document.add(datos);
-        document.add(linea4);
         document.add(totales);
         document.add(linea5);
         document.add(vTotal);
@@ -411,7 +405,6 @@ public class CrearReporteCierreCaja extends Fragment {
         document.add(mDeclarado);
         document.add(linea6);
         document.add(resultado1);
-        document.add(linea7);
 
         document.close();
 

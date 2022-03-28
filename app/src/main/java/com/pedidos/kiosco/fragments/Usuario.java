@@ -23,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import org.json.JSONArray;
@@ -60,6 +61,8 @@ public class Usuario extends Fragment {
         esAmin.setOnClickListener(view -> {
 
         });
+
+        Principal.nombreConsumidor.setVisibility(View.GONE);
 
         if(Login.cargo == 1 || Login.cargo == 2){
             esAmin.setVisibility(View.INVISIBLE);

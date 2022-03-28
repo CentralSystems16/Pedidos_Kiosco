@@ -74,6 +74,7 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
             ProdFragment.gDetMonto = ProdFragment.gPrecio / 1.13;
             ProdFragment.gDetMontoIva = ProdFragment.gDetMonto * 0.13;
             ProdFragment.gOpciones = listaProductos.get(i).getOpciones();
+            ProdFragment.estado = listaProductos.get(i).getEstadoProducto();
 
             FragmentTransaction fr = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ModificarProductos());

@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCategorias;
@@ -32,12 +33,6 @@ public class Categorias extends Fragment {
     GifImageView conejo, gato;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_categorias, container, false);
@@ -46,6 +41,8 @@ public class Categorias extends Fragment {
         conejo.setVisibility(View.INVISIBLE);
         gato = vista.findViewById(R.id.gato);
         gato.setVisibility(View.INVISIBLE);
+
+        Principal.nombreConsumidor.setVisibility(View.GONE);
 
         rvListaCategorias = vista.findViewById(R.id.rvListaCategorias);
         rvListaCategorias.setLayoutManager(new GridLayoutManager(getContext(), 3));

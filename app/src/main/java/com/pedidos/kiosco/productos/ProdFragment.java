@@ -31,7 +31,7 @@ public class ProdFragment extends Fragment {
     RecyclerView rvLista;
     ArrayList<Categorias>  categorias;
     AdaptadorCatProd adaptador;
-    public static int gIdProducto, gOpciones;
+    public static int gIdProducto, gOpciones, estado;
     public static double gPrecio, gDetMonto, gDetMontoIva;
     public static String gNombreProd;
     Button inactivos;
@@ -92,7 +92,8 @@ public class ProdFragment extends Fragment {
                                     new Categorias(
                                             jsonObject1.getInt("id_categoria"),
                                             jsonObject1.getString("nombre_categoria"),
-                                            jsonObject1.getString("img_categoria")));
+                                            jsonObject1.getString("img_categoria"),
+                                            jsonObject1.getInt("estado_categoria")));
                         }
 
                         adaptador = new AdaptadorCatProd(getContext(), categorias);

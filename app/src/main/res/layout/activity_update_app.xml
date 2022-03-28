@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    tools:context=".UpdateApp">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/animacionEmpresa"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="92dp"
-        android:background="@drawable/payment"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/updaterobot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,32 +25,31 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
+        android:padding="15dp"
         android:gravity="center"
-        android:padding="10dp"
-        android:text="Tenemos una nueva actualización para tí!!!"
+        android:fontFamily="@font/rabits"
+        android:text="Hay una actualizacion disponible, debe actualizar a la nueva version para recibir nuevas y mejores funcionalidades!"
         android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animacionEmpresa" />
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/animacionEmpresa"
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnEntrar"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnActualizar"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:text="ACTUALIZAR AHORA"
+        android:text="Actualizar"
         android:textColor="@color/white"
         android:textSize="12sp"
-        android:backgroundTint="@color/rojo"
+        android:backgroundTint="#8BC34A"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.114" />
-
+        app:layout_constraintVertical_bias="0.178" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

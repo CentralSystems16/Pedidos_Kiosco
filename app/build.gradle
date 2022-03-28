@@ -11,8 +11,8 @@ android {
         applicationId "com.pedidos.kiosco"
         minSdk 23
         targetSdk 31
-        versionCode 17
-        versionName "1.1.3"
+        versionCode 20
+        versionName "1.1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

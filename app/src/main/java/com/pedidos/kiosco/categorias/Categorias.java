@@ -5,17 +5,18 @@ import org.jetbrains.annotations.NotNull;
 public class Categorias {
 
     String nombreCategoria;
-    int idCategoria;
+    int idCategoria, estadoCategoria;
     String imgCategoria;
 
     public Categorias(){
     }
 
-    public Categorias(int idCategoria, String nombreCategoria, String imgCategoria) {
+    public Categorias(int idCategoria, String nombreCategoria, String imgCategoria, int estadoCategoria) {
 
         this.nombreCategoria = nombreCategoria;
         this.imgCategoria = imgCategoria;
         this.idCategoria = idCategoria;
+        this.estadoCategoria = estadoCategoria;
 
     }
 
@@ -39,6 +40,9 @@ public class Categorias {
         return imgCategoria;
     }
 
+    public int getEstadoCategoria() {
+        return estadoCategoria;
+    }
 
     @NotNull
     @Override

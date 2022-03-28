@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
@@ -91,6 +92,8 @@ public class TicketDatos extends Fragment {
         ln2.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         anular = vista.findViewById(R.id.anularPedido);
+
+        Principal.nombreConsumidor.setVisibility(View.VISIBLE);
 
         anular.setOnClickListener(view -> new AlertDialog.Builder(requireContext())
                 .setTitle("Confirmación")

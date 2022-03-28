@@ -27,9 +27,9 @@ public class MontoInicial extends Fragment {
     EditText montoInicial;
     public static Double montoInit;
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("d '-' MMMM '-' yyyy", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("d '-' MMM '-' yyyy", Locale.getDefault());
     String fechacComplString = fecc.format(d);
-    SimpleDateFormat ho = new SimpleDateFormat("h:mm a");
+    SimpleDateFormat ho = new SimpleDateFormat("HH:mm:ss");
     String horaString = ho.format(d);
     int resultado;
     Button cant1, cant2, cant3, cant4, cant5, cant6;
@@ -109,7 +109,7 @@ public class MontoInicial extends Fragment {
                     + "?base=" + VariablesGlobales.dataBase
                     + "&id_usuario=" + Login.gIdUsuario
                     + "&id_caja=" + resultado
-                    + "&fecha_ini=" + fechacComplString + " a las " + horaString
+                    + "&fecha_ini=" + fechacComplString + " " + horaString
                     + "&fecha_fin=Activo"
                     + "&state=1"
                     + "&fondo_inicial=" + montoInicial.getText().toString());

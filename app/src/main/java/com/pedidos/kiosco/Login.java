@@ -57,8 +57,12 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        Button btnEntrar = findViewById(R.id.btnEntrar);
+
         HashMap<String, Object> defaultsRate = new HashMap<>();
-        defaultsRate.put("new_version_code", String.valueOf(getVersionCode()));
+        defaultsRate.put("nueva_version_disponible", String.valueOf(getVersionCode()));
+
+        System.out.println("Version en Android: " + getVersionCode());
 
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
@@ -71,9 +75,9 @@ public class Login extends AppCompatActivity {
         mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 final String new_version_code = mFirebaseRemoteConfig.getString("nueva_version_disponible");
-
+                System.out.println("Version en firebase: " + new_version_code);
                 if(Integer.parseInt(new_version_code) > getVersionCode())
-                    showTheDialog();
+                    mostrarDialogo();
             }
             else Log.e("MYLOG", "mFirebaseRemoteConfig.fetchAndActivate() NOT Successful");
 
@@ -99,7 +103,6 @@ public class Login extends AppCompatActivity {
             startActivity(i);
         });
 
-        Button btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         btnEntrar.setOnClickListener(v -> {
@@ -157,26 +160,10 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void showTheDialog(){
-        final AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("ACTUALIZACIÓN")
-                .setMessage("¡Hay una nueva versión disponible, por favor actualiza tu app a la última versión para recibir nuevas y mejores funcionalidades!")
-                .setPositiveButton("ACTUALIZAR", null)
-                .show();
+    private void mostrarDialogo() {
 
-        dialog.setCancelable(false);
+        startActivity(new Intent(getApplicationContext(), UpdateApp.class));
 
-        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setOnClickListener(v -> {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=" + "com.pedidos.kiosco")));
-            }
-            catch (android.content.ActivityNotFoundException anfe) {
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=" + "com.pedidos.kiosco")));
-            }
-        });
     }
 
     private PackageInfo pInfo;

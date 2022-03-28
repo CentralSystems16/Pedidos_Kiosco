@@ -59,6 +59,7 @@ public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategoria
             CatFragment.gNombreCat = listaCategorias.get(posicion).getNombreCategoria();
             CatFragment.gImagen = listaCategorias.get(posicion).getImgCategoria();
             CatFragment.gIdCategoria = listaCategorias.get(posicion).getIdCategoria();
+            CatFragment.estadoCategoria = listaCategorias.get(posicion).getEstadoCategoria();
             FragmentTransaction fr = ((AppCompatActivity)cContext).getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ModificarCategorias());
             fr.commit();

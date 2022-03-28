@@ -29,7 +29,7 @@ public class CategoriasInactivas extends Fragment {
     int MY_DEFAULT_TIMEOUT = 15000;
     String URL_CATEGORIAS = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerCategorias.php" + "?base=" + VariablesGlobales.dataBase + "&id_categoria=" + CatFragment.gIdCategoria + "&estado_producto=0";
     AdaptadorCategoriasInvalidas adaptadorCat;
-    int gIdCategoria;
+    int gIdCategoria, estadoCategoria;
     String gNombreCat;
     String gImagen;
 
@@ -67,7 +67,8 @@ public class CategoriasInactivas extends Fragment {
                                     new Categorias(
                                             gIdCategoria = jsonObject1.getInt("id_categoria"),
                                             gNombreCat = jsonObject1.getString("nombre_categoria"),
-                                            gImagen = jsonObject1.getString("img_categoria")));
+                                            gImagen = jsonObject1.getString("img_categoria"),
+                                            estadoCategoria = jsonObject1.getInt("estado_categoria")));
                         }
 
                         adaptadorCat = new AdaptadorCategoriasInvalidas(getContext(), categorias);

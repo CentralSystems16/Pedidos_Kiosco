@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -32,6 +33,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstados;
@@ -63,12 +65,19 @@ public class Home extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        verifyStoragePermissions(getActivity());
+        SharedPreferences preferences = requireActivity().getSharedPreferences("preferenciasCaja", Context.MODE_PRIVATE);
+        VariablesGlobales.noCaja = preferences.getInt("numeroCaja", 0);
+
+        System.out.println("Numero de caja: " + VariablesGlobales.noCaja);
+
+
 
         cierreCaja = view.findViewById(R.id.txtCierreCaja);
         obtenerCierreCaja();
         obtenerPedidosAct();
         obtenerPedidosAct2();
+
+        Principal.nombreConsumidor.setVisibility(View.GONE);
 
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
@@ -85,6 +94,7 @@ public class Home extends Fragment {
                 fr.replace(R.id.fragment_layout, new Categorias());
                 fr.commit();
                 Login.gIdPedido = 0;
+                Login.gIdCliente = 1;
 
         });
 

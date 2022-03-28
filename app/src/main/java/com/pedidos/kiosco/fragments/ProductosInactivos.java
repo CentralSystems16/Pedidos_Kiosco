@@ -77,7 +77,8 @@ public class ProductosInactivos extends Fragment {
                                             jsonObject1.getString("nombre_producto"),
                                             jsonObject1.getDouble("precio_producto"),
                                             jsonObject1.getInt("opciones"),
-                                            jsonObject1.getString("img_producto")));
+                                            jsonObject1.getString("img_producto"),
+                                            jsonObject1.getInt("estado_producto")));
                         }
 
                         adaptador = new AdaptadorProductosInactivos(getContext(), listaProductos);

@@ -48,8 +48,9 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes, nombreConsumidor;
+    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes;
     FloatingActionButton addButton;
+    public static ExtendedFloatingActionButton nombreConsumidor;
     public static int gIdEstadoCliente, gIdEstado;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,9 +76,9 @@ public class Principal extends AppCompatActivity {
         nombreConsumidor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new Clientes());
-                fr.commit();
+                Clientes myDialogFragment = new Clientes();
+                myDialogFragment.show(getSupportFragmentManager(), "MyFragment");
+                myDialogFragment.setCancelable(false);
             }
         });
 
