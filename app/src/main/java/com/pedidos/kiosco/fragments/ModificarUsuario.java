@@ -4,6 +4,7 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.usuarios.Cargos;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
@@ -121,10 +124,16 @@ public class ModificarUsuario extends Fragment {
 
         ejecutarServicio(url);
 
-        FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_layout, new UsuarioFragment());
-        fr.commit();
+        if (gCargoUser != UsuarioFragment.gIdCargo){
+            startActivity(new Intent(getContext(), Login.class));
+            Toast.makeText(getContext(), "Su cargo ha cambiado por favor inicie sesion nuevamente.", Toast.LENGTH_SHORT).show();
+        }
 
+        else {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new UsuarioFragment());
+            fr.commit();
+        }
     }
 
     private void llenarSpinner(){

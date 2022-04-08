@@ -26,13 +26,13 @@
     <LinearLayout
         android:id="@+id/linearLogin"
         android:layout_width="match_parent"
-       android:gravity="center"
+        android:gravity="center"
         android:layout_height="200dp" >
 
-    <ImageView
-        android:id="@+id/imageViewLogin"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        <ImageView
+            android:id="@+id/imageViewLogin"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
 
     </LinearLayout>
 
@@ -121,11 +121,11 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No tienes cuenta?"
-        android:gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No tienes cuenta?"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/crearCuenta"

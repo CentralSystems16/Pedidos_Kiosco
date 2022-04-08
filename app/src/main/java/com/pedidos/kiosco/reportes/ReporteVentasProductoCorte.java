@@ -26,7 +26,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.Corte;
@@ -39,6 +38,7 @@ import java.util.ArrayList;
 public class ReporteVentasProductoCorte extends Fragment {
 
     TextView nombreProducto, cantProducto, fechaCierre, cantTotal, cajero;
+    String nombre;
 
     AsyncHttpClient datos;
     ArrayList<Corte> lista = new ArrayList<>();
@@ -122,9 +122,6 @@ public class ReporteVentasProductoCorte extends Fragment {
 
                             sb.append(jsonObject1.getString("nombre_producto")+"\n\n");
                             sb2.append(jsonObject1.getDouble("cantidad")+ "0" + "\n\n");
-                            cajero.setText(Login.nombre);
-                            fechaCierre.setText(jsonObject1.getString("fecha_fin"));
-
                             cantidadTotal = jsonObject1.getDouble("cantidad");
 
                         }
@@ -164,6 +161,7 @@ public class ReporteVentasProductoCorte extends Fragment {
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                 if (statusCode == 200){
                     cargarSpinner(new String(responseBody));
+                    obtenerNombreUsuario();
                 }
             }
 
@@ -198,6 +196,14 @@ public class ReporteVentasProductoCorte extends Fragment {
         int indice = spinner.getSelectedItemPosition();
         VariablesGlobales.gIdCierreCaja = lista.get(indice).getIdCierreCaja();
         obtenerReporteProductos();
+
+    }
+
+    public void obtenerNombreUsuario(){
+
+        int indice = spinner.getSelectedItemPosition();
+        nombre = lista.get(indice).getNombreCajero();
+        cajero.setText(nombre);
 
     }
 }

@@ -18,11 +18,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCierreCaja;
 import com.pedidos.kiosco.model.Pago;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -212,7 +213,13 @@ public class CierreCaja extends Fragment {
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> progressDialog.dismiss(),
+                response -> {
+                    progressDialog.dismiss();
+                    FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new Home());
+                    fr.commit();
+
+                },
                 volleyError -> progressDialog.dismiss()
         );
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());

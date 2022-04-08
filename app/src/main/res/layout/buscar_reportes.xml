@@ -50,6 +50,8 @@
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -75,6 +77,9 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
+            app:boxStrokeColor="#000000"
+            android:layout_marginEnd="10dp"
+            app:hintTextColor="#000000"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -118,6 +123,8 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -144,6 +151,9 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:layout_marginEnd="10dp"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 

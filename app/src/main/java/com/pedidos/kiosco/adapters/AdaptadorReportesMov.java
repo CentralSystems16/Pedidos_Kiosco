@@ -47,7 +47,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
@@ -57,6 +56,8 @@ import com.pedidos.kiosco.model.Movimientos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -148,7 +149,6 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         RequestQueue requestQueue = Volley.newRequestQueue(cContext);
         requestQueue.add(stringRequest);
     }
-
 
     public void obtenerDetMovimientos(){
 
@@ -322,7 +322,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
                             Double total = gCantidad * gPrecioUni;
                             gDesc = jsonObject1.getDouble("monto_desc");
                             gIdFacMovimiento = jsonObject1.getInt("id_fac_movimiento");
-                            sb1.append(gNombreProd + "           " + gCantidad + " " + "$" + String.format("%.2f", gPrecioUni) + " " + "$" + String.format("%.2f",total) + " G" + "\n");
+                            sb1.append(gNombreProd + "          " + gCantidad + " " + "$" + String.format("%.2f", gPrecioUni) + " " + "$" + String.format("%.2f",total) + "\n");
                         }
 
                         createPDF();
@@ -367,7 +367,7 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
         Paragraph linea1 = new Paragraph("NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph corte = new Paragraph("Caja: " + noCaja + " Tiquete: " + tickete + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph linea2 = new Paragraph("Atendio: " + Login.nombre + "\n").setTextAlignment(TextAlignment.CENTER);
-        Paragraph cliente = new Paragraph("Atendio: " + gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
+        Paragraph cliente = new Paragraph("Cliente: " + gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph noCaja = new Paragraph("Fecha: " + gFecha + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph cajero = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph montoInit = new Paragraph(sb1.toString()).setTextAlignment(TextAlignment.RIGHT);

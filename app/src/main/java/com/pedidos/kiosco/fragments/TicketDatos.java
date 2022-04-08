@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,15 +28,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
-import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.other.ContadorProductos;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

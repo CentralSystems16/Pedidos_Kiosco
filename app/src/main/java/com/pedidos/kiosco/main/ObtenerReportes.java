@@ -24,13 +24,14 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportes;
 import com.pedidos.kiosco.model.Reportes;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

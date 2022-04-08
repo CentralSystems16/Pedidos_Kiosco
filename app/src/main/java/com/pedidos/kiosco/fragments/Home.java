@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -32,11 +31,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.main.ObtenerEstados;
+import com.pedidos.kiosco.z.Login;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -44,8 +43,6 @@ import com.smarteist.autoimageslider.SliderLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.sql.SQLOutput;
 
 public class Home extends Fragment {
 
@@ -67,10 +64,6 @@ public class Home extends Fragment {
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("preferenciasCaja", Context.MODE_PRIVATE);
         VariablesGlobales.noCaja = preferences.getInt("numeroCaja", 0);
-
-        System.out.println("Numero de caja: " + VariablesGlobales.noCaja);
-
-
 
         cierreCaja = view.findViewById(R.id.txtCierreCaja);
         obtenerCierreCaja();
@@ -146,13 +139,13 @@ public class Home extends Fragment {
 
                             if (state == 0) {
 
-                                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                                 fr.replace(R.id.fragment_layout, new MontoInicial());
                                 fr.commit();
 
                             } else {
 
-                                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                                 fr.replace(R.id.fragment_layout, new CierreCaja());
                                 fr.commit();
 
@@ -291,27 +284,6 @@ public class Home extends Fragment {
 
         requestQueue.add(stringRequest);
 
-    }
-
-    // Storage Permissions
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static final String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
-    public static void verifyStoragePermissions(Activity activity) {
-
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
     }
 
 }

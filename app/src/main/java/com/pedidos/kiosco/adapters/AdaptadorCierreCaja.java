@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.CierreCaja;
@@ -31,6 +30,8 @@ import com.pedidos.kiosco.model.Pago;
 import com.pedidos.kiosco.other.InsertarFacTipoPagoCaja;
 import com.pedidos.kiosco.other.SumaMonto;
 import com.pedidos.kiosco.other.SumaMontoDevolucion;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

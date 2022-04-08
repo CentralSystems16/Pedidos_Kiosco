@@ -16,7 +16,7 @@ public class EnviandoTicket extends AppCompatActivity {
         new Handler().postDelayed(() -> {
                 startActivity(new Intent(getApplicationContext(), VistaFinal.class));
                 finish();
-            }, 8000);
+            }, 5000);
         }
 
     @Override

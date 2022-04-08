@@ -22,10 +22,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.desing.Administrador;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,17 +57,33 @@ public class Usuario extends Fragment {
         cerrarSesion.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         cerrarSesion.setOnClickListener(view -> startActivity(new Intent(getContext(), Login.class)));
 
-        Button esAmin = vista.findViewById(R.id.esAdmin);
-        esAmin.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+        Button admin = vista.findViewById(R.id.esAdmin);
+        admin.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
-        esAmin.setOnClickListener(view -> {
+        if (Login.cargo == 2) {
+            admin.setText("REGRESAR AL MODO CLIENTE");
+        } else {
+            admin.setText("¿DESEA CONVERTIRSE EN ADMINISTRADOR?");
+        }
+        admin.setOnClickListener(view -> {
 
+            if (Login.cargo == 1) {
+                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarAdministrador.php"
+                        + "?base=" + VariablesGlobales.dataBase
+                        + "&id_usuario=" + Login.gIdUsuario);
+                startActivity(new Intent(getContext(), Login.class));
+                Toast.makeText(getContext(), "Regresó al modo cliente.", Toast.LENGTH_SHORT).show();
+            } else {
+                Administrador myDialogFragment = new Administrador();
+                myDialogFragment.show(getFragmentManager(), "MyFragment");
+                myDialogFragment.setCancelable(false);
+            }
         });
 
         Principal.nombreConsumidor.setVisibility(View.GONE);
 
         if(Login.cargo == 1 || Login.cargo == 2){
-            esAmin.setVisibility(View.INVISIBLE);
+            admin.setVisibility(View.INVISIBLE);
         }
 
         numero = vista.findViewById(R.id.EditNumero);
@@ -186,8 +204,6 @@ public class Usuario extends Fragment {
 
                             gRepatContra = jsonObject1.getString("password_repeat_usuario");
                             repeatPassword.setText(gRepatContra);
-
-
 
                         }
 

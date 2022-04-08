@@ -3,8 +3,10 @@ package com.pedidos.kiosco.other;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import com.pedidos.kiosco.Login;
+
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;

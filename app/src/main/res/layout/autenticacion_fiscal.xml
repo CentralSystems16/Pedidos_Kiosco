@@ -177,6 +177,8 @@
             app:boxCornerRadiusTopEnd="20dp"
             android:layout_marginStart="30dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -209,6 +211,8 @@
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -245,6 +249,8 @@
             app:boxCornerRadiusTopEnd="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             app:boxCornerRadiusTopStart="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -277,6 +283,8 @@
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
                     app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeColor="#000000"
+                    app:hintTextColor="#000000"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -303,6 +311,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="30dp"
                     app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeColor="#000000"
+                    app:hintTextColor="#000000"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -334,6 +344,8 @@
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -361,6 +373,8 @@
             app:boxCornerRadiusTopEnd="20dp"
             android:layout_marginEnd="30dp"
             app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText

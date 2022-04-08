@@ -16,9 +16,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.z.Login;
 
 public class ModificarCliente extends Fragment {
 
@@ -62,7 +62,7 @@ public class ModificarCliente extends Fragment {
 
         ejecutarServicio(url);
 
-        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
         fr.replace(R.id.fragment_layout, new Cliente());
         fr.commit();
 

@@ -39,17 +39,18 @@ import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection;
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.desing.EnviandoTicket;
+import com.pedidos.kiosco.desing.VistaFinal;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarFacDetMovimientos;
 import com.pedidos.kiosco.other.InsertarFacMovimientos;
 import com.pedidos.kiosco.other.SumaMontoMultiple;
 import com.pedidos.kiosco.other.SumaMontoMultipleIva;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
+import com.pedidos.kiosco.z.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -191,7 +192,7 @@ public class ResumenPago extends Fragment {
                 response -> {
                     gCount = 0.00;
                     progressDialog.dismiss();
-                    startActivity(new Intent(getActivity(), EnviandoTicket.class));
+                    startActivity(new Intent(getActivity(), VistaFinal.class));
 
                 },
                 volleyError -> progressDialog.dismiss()
@@ -406,7 +407,6 @@ public class ResumenPago extends Fragment {
 
                                             if (Splash.gImagen == 1) {
                                                 printer.printFormattedText(text);
-                                                System.out.println(text);
                                             } else {
                                                 printer.printFormattedText(text2);
                                             }

@@ -13,11 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
 import com.pedidos.kiosco.model.Categorias;
+import com.pedidos.kiosco.z.Login;
+
 import java.util.List;
 
 public class AdaptadorCategorias extends RecyclerView.Adapter<AdaptadorCategorias.CategoriaViewHolder> {

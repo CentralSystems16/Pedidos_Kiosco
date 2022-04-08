@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.pedidos.kiosco.fragments.ResumenPago.PERMISSION_BLUETOOTH;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -46,7 +47,6 @@ import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.reportes.BuscarReportes;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +74,7 @@ public class CrearReporteCierreCaja extends Fragment {
     String encodedPDF;
     int REQ_PDF;
     private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1000;
+    ProgressDialog progressDialog;
 
     public CrearReporteCierreCaja(){
     }
@@ -87,6 +88,10 @@ public class CrearReporteCierreCaja extends Fragment {
         }
 
         cierre = datosRecuperados.getInt("cierre");
+        progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
     }
 
@@ -123,6 +128,8 @@ public class CrearReporteCierreCaja extends Fragment {
 
 
                         }
+
+                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
 
@@ -257,72 +264,82 @@ public class CrearReporteCierreCaja extends Fragment {
 
                         for (int i = 0; i < arrayList.size(); i++) {
                             if (arrayList.size() == 2){
-                            try {
-                                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
-                                } else {
-                                    BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
-                                    if (connection != null) {
-                                        EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
-                                        @SuppressLint("DefaultLocale") final String text =
-                                                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
-                                                        getContext().getResources().getDrawableForDensity(R.drawable.logochicharroneria,
-                                                                DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
-                                                        "[L]\n" +
-                                                        "[C]" + Splash.gNombre + "\n" +
-                                                        "[C]" + Splash.gDireccion + "\n" +
-                                                        "[C]" + "Departamento" + "\n" +
-                                                        "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
-                                                        "[C]================================\n" +
-                                                        "[L]" + "Corte de cajero" +
-                                                        "[C]================================\n" +
-                                                        "[C]" + "No Caja: " + numeroCaja + "\n" +
-                                                        "[C]" + "Cajero: " + nombreCajero + "\n" +
-                                                        "[C]" + "Fecha negocio: " + fechaInicio + "\n" +
-                                                        "[C]" + "Fecha Sistema: " + fechaFin + "\n" +
-                                                        "[R]" + "Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n" +
-                                                        "[L]" + arrayList + "\n" +
-                                                        "[C]" + "Totales " +
-                                                        "[C]================================\n" +
-                                                        "[R]" + "Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n" +
-                                                        "[R]" + "Devolución total $" + String.format("%.2f", montoDevolucionTotal) + "\n" +
-                                                        "[R]" + "Gastos $" +  String.format("%.2f", gastos) + "\n" +
-                                                        "[R]" + "Total gastos $" +  String.format("%.2f", gastosTotal) + "\n" +
-                                                        "[R]" + "Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n" +
-                                                        "[R]" + "Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n" +
-                                                        "[C]================================\n" +
-                                                        "[R]" + resultado;
 
-                                        if (AdaptadorCorteCaja.noImprimir == 0) {
-                                            printer.printFormattedText(text);
-                                            Fragment fragmento = new Home();
-                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            fragmentTransaction.replace(R.id.fragment_layout, fragmento);
-                                            fragmentTransaction.addToBackStack(null);
-                                            fragmentTransaction.commit();
+                                new Thread(new Runnable() {
+                                    public void run() {
 
-                                        }
-
-                                    } else {
-                                        if (AdaptadorCorteCaja.noImprimir == 1) {
-                                            boolean granded = checkPermissionForReadExtertalStorage();
-                                            if (!granded) {
-                                                requestPermissionForReadExtertalStorage();
+                                        try {
+                                            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                                                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_BLUETOOTH);
                                             } else {
-                                                createPDF();
+                                                BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
+                                                if (connection != null) {
+                                                    EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
+                                                    @SuppressLint("DefaultLocale") final String text =
+                                                            "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer,
+                                                                    getContext().getResources().getDrawableForDensity(R.drawable.logochicharroneria,
+                                                                            DisplayMetrics.DENSITY_LOW, getContext().getTheme())) + "</img>\n" +
+                                                                    "[L]\n" +
+                                                                    "[C]" + Splash.gNombre + "\n" +
+                                                                    "[C]" + Splash.gDireccion + "\n" +
+                                                                    "[C]" + "Departamento" + "\n" +
+                                                                    "[C]" + "NRC: " + Splash.gNrc + " NIT: " + Splash.gNit + "\n" +
+                                                                    "[C]================================\n" +
+                                                                    "[L]" + "Corte de cajero" +
+                                                                    "[C]================================\n" +
+                                                                    "[C]" + "No Caja: " + numeroCaja + "\n" +
+                                                                    "[C]" + "Cajero: " + nombreCajero + "\n" +
+                                                                    "[C]" + "Fecha negocio: " + fechaInicio + "\n" +
+                                                                    "[C]" + "Fecha Sistema: " + fechaFin + "\n" +
+                                                                    "[R]" + "Monto inicial(+) $" + String.format("%.2f", montoInicialTotal) + "\n" +
+                                                                    "[L]" + arrayList + "\n" +
+                                                                    "[C]" + "Totales " +
+                                                                    "[C]================================\n" +
+                                                                    "[R]" + "Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n" +
+                                                                    "[R]" + "Devolución total $" + String.format("%.2f", montoDevolucionTotal) + "\n" +
+                                                                    "[R]" + "Gastos $" +  String.format("%.2f", gastos) + "\n" +
+                                                                    "[R]" + "Total gastos $" +  String.format("%.2f", gastosTotal) + "\n" +
+                                                                    "[R]" + "Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n" +
+                                                                    "[R]" + "Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n" +
+                                                                    "[C]================================\n" +
+                                                                    "[R]" + resultado;
+
+                                                    if (AdaptadorCorteCaja.noImprimir == 0) {
+                                                        printer.printFormattedText(text);
+                                                        Fragment fragmento = new Home();
+                                                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                                        fragmentTransaction.replace(R.id.fragment_layout, fragmento);
+                                                        fragmentTransaction.addToBackStack(null);
+                                                        fragmentTransaction.commit();
+
+                                                    }
+
+                                                } else {
+                                                    if (AdaptadorCorteCaja.noImprimir == 1) {
+                                                        boolean granded = checkPermissionForReadExtertalStorage();
+                                                        if (!granded) {
+                                                            requestPermissionForReadExtertalStorage();
+                                                        } else {
+                                                            createPDF();
+                                                        }
+                                                    }
+                                                    Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
+                                        } catch (Exception e) {
+                                            Log.e("APP", "No se puede imprimir, error: ", e);
                                         }
-                                        Toast.makeText(getContext(), "¡No hay una impresora conectada!", Toast.LENGTH_SHORT).show();
+
                                     }
-                                }
-                            } catch (Exception e) {
-                                Log.e("APP", "No se puede imprimir, error: ", e);
-                            }
+                                }).start();
 
                             }
 
                         }
+
+                        progressDialog.dismiss();
+
                     } catch (JSONException e) {
 
                         e.printStackTrace();
@@ -421,6 +438,7 @@ public class CrearReporteCierreCaja extends Fragment {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_layout, new ObtenerDetReporte());
                 fr.commit();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -438,6 +456,7 @@ public class CrearReporteCierreCaja extends Fragment {
             byte[] pdfInBytes = new byte[inputStream.available()];
             inputStream.read(pdfInBytes);
             encodedPDF = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

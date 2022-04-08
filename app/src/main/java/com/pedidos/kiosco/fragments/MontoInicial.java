@@ -11,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.z.Login;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -102,20 +105,28 @@ public class MontoInicial extends Fragment {
         resultado = preferences2.getInt("sucursal", 0);
 
         aceptar.setOnClickListener(view -> {
-            if (montoInicial != null && montoInicial.length() > 0){
-                montoInit = Double.valueOf((montoInicial.getText().toString()));
+
+            if (montoInicial.getText().toString().equals("")){
+                Toast.makeText(getContext(), "Por favor, agrege un monto", Toast.LENGTH_SHORT).show();
             }
-            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php"
-                    + "?base=" + VariablesGlobales.dataBase
-                    + "&id_usuario=" + Login.gIdUsuario
-                    + "&id_caja=" + resultado
-                    + "&fecha_ini=" + fechacComplString + " " + horaString
-                    + "&fecha_fin=Activo"
-                    + "&state=1"
-                    + "&fondo_inicial=" + montoInicial.getText().toString());
-            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new Home());
-            fr.commit();
+
+            else {
+
+                if (montoInicial != null && montoInicial.length() > 0) {
+                    montoInit = Double.valueOf((montoInicial.getText().toString()));
+                }
+                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarCaja.php"
+                        + "?base=" + VariablesGlobales.dataBase
+                        + "&id_usuario=" + Login.gIdUsuario
+                        + "&id_caja=" + resultado
+                        + "&fecha_ini=" + fechacComplString + " " + horaString
+                        + "&fecha_fin=Activo"
+                        + "&state=1"
+                        + "&fondo_inicial=" + montoInicial.getText().toString());
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new Home());
+                fr.commit();
+            }
 
         });
 

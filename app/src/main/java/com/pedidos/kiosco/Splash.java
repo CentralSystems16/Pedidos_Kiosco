@@ -91,7 +91,6 @@ public class Splash extends AppCompatActivity {
             obtenerRecursos2();
             obtenerRecursos3();
 
-
         }
     }
 
@@ -241,6 +240,8 @@ public class Splash extends AppCompatActivity {
 
     }
 
+
+
     private void showAlertWithTextInputLayout2(Context context) {
 
         spDatos2 = new Spinner(context);
@@ -358,7 +359,7 @@ public class Splash extends AppCompatActivity {
 
                         }
                     } catch (JSONException ignored) {}
-                }, volleyError ->{}
+                }, volleyError -> {}
         );
         requestQueue.add(stringRequest);
     }
@@ -420,7 +421,7 @@ public class Splash extends AppCompatActivity {
 
                         }
 
-                        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Login.class)),10000);
+                        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), Principal.class)),10000);
 
                     } catch (JSONException ignored) {}
                 }, volleyError ->{}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:gravity="center"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:backgroundTint="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:background="@drawable/boton_borde"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/about"
+            android:clickable="true"
+            android:backgroundTint="#5E35B1"
+            android:background="@drawable/boton_borde"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="pass.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="Por favor ingrese la clave de acceso"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:textColor="@color/black"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContPass"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="GUARDAR"
+                android:textSize="11dp"
+                android:backgroundTint="#5E35B1"
+                android:textColor="@color/white"
+                app:cornerRadius="15dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReturnPass"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="CANCELAR"
+                android:textSize="11sp"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="#E53935"
+                android:textColor="@color/white"
+                app:cornerRadius="15dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
