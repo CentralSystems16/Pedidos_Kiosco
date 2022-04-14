@@ -16,11 +16,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.main.ObtenerReportesFiscal;
+import com.pedidos.kiosco.fragments.CrearReporteCierreCaja;
+import com.pedidos.kiosco.fragments.ModificarAutorizacion;
+import com.pedidos.kiosco.fragments.ObtenerReportesFiscal;
 import com.pedidos.kiosco.model.Fiscal;
-import com.pedidos.kiosco.pay.ModificarAutorizacion;
+
 import java.util.List;
 
 public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorReportesFiscal.ReportesViewHolder> {
@@ -57,7 +63,12 @@ public class AdaptadorReportesFiscal extends RecyclerView.Adapter<AdaptadorRepor
         reportesViewHolder.editar.setOnClickListener(v -> {
 
             ObtenerReportesFiscal.idAutFiscal = listaReportes.get(posicion).getIdFiscal();
-            cContext.startActivity(new Intent(cContext, ModificarAutorizacion.class));
+            Fragment fragmento = new ModificarAutorizacion();
+            FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_layout, fragmento);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
         });
     }

@@ -51,7 +51,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.ObtenerDetReporte;
-import com.pedidos.kiosco.main.ObtenerMovimientos;
+import com.pedidos.kiosco.fragments.ObtenerMovimientos;
 import com.pedidos.kiosco.model.Movimientos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;

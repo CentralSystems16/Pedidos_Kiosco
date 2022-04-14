@@ -1,15 +1,20 @@
-package com.pedidos.kiosco.pay;
+package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,25 +33,25 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
+import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
 import com.pedidos.kiosco.z.Login;
-
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
 import cz.msebera.android.httpclient.Header;
 
-public class AutFiscal extends AppCompatActivity {
+public class AutFiscal extends Fragment {
 
     EditText desde, hasta, serie, autorizacion, resolucion, numeroFilas, mDisplayDate;
     RadioGroup activos;
-    Button continuar;
+    Button continuar, btnCancelar;
 
     int gIdComprobante, gIdSucursal, gIdCaja;
 
@@ -86,57 +91,67 @@ public class AutFiscal extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.autenticacion_fiscal);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        mDisplayDate = findViewById(R.id.editFecha);
+        View vista = inflater.inflate(R.layout.fragment_aut_fiscal, container, false);
+
+        mDisplayDate = vista.findViewById(R.id.editFecha);
 
         final Calendar calendario = Calendar.getInstance();
         ultimoAnio = calendario.get(Calendar.YEAR);
         ultimoMes = calendario.get(Calendar.MONTH);
         ultimoDiaDelMes = calendario.get(Calendar.DAY_OF_MONTH);
 
+        btnCancelar = vista.findViewById(R.id.btncancelarAuth);
+        btnCancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstadoFiscal());
+            fr.commit();
+        });
+
         refrescarFechaEnEditText();
 
         mDisplayDate.setOnClickListener(v -> {
 
-            DatePickerDialog dialogoFecha = new DatePickerDialog(AutFiscal.this, listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
+            DatePickerDialog dialogoFecha = new DatePickerDialog(getContext(), listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
 
             dialogoFecha.show();
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbarAdd);
+        Toolbar toolbar = vista.findViewById(R.id.toolbarAdd);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
-        ImageButton agregar = findViewById(R.id.agregar);
-        agregar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class)));
+        ImageButton agregar = vista.findViewById(R.id.agregar);
+        agregar.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), ObtenerEstadoFiscal.class));
+        });
 
-        MaterialCardView registro = findViewById(R.id.cardView1Add);
+        MaterialCardView registro = vista.findViewById(R.id.cardView1Add);
         registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        MaterialCardView registro2 = findViewById(R.id.cardView2Add);
+        MaterialCardView registro2 = vista.findViewById(R.id.cardView2Add);
         registro2.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        MaterialCardView registro3 = findViewById(R.id.cardView3Add);
+        MaterialCardView registro3 = vista.findViewById(R.id.cardView3Add);
         registro3.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        desde = findViewById(R.id.etDesde);
-        hasta = findViewById(R.id.etHasta);
-        serie = findViewById(R.id.etSerie);
-        autorizacion = findViewById(R.id.etAuth);
-        resolucion = findViewById(R.id.etRes);
-        numeroFilas = findViewById(R.id.editFilas);
+        desde = vista.findViewById(R.id.etDesde);
+        hasta = vista.findViewById(R.id.etHasta);
+        serie = vista.findViewById(R.id.etSerie);
+        autorizacion = vista.findViewById(R.id.etAuth);
+        resolucion = vista.findViewById(R.id.etRes);
+        numeroFilas = vista.findViewById(R.id.editFilas);
 
-        activos = findViewById(R.id.rgActivo);
-        continuar = findViewById(R.id.btnRegistrarFiscal);
+        activos = vista.findViewById(R.id.rgActivo);
+        continuar = vista.findViewById(R.id.btnRegistrarFiscal);
 
         cliente = new AsyncHttpClient();
         cliente2 = new AsyncHttpClient();
         cliente3 = new AsyncHttpClient();
-        spComprobante = findViewById(R.id.spinnerComprobante);
-        spSucursal = findViewById(R.id.spinnerSucursal);
-        spCaja = findViewById(R.id.spinnerCajas);
+        spComprobante = vista.findViewById(R.id.spinnerComprobante);
+        spSucursal = vista.findViewById(R.id.spinnerSucursal);
+        spCaja = vista.findViewById(R.id.spinnerCajas);
 
         llenarCaja();
         llenarComprobante();
@@ -145,9 +160,9 @@ public class AutFiscal extends AppCompatActivity {
         continuar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         continuar.setOnClickListener(view -> {
             if (desde.getText().toString().equals("") || hasta.getText().toString().equals("") || serie.getText().toString().equals("") || autorizacion.getText().toString().equals("")
-                || resolucion.getText().toString().equals("") || numeroFilas.getText().toString().equals("") || mDisplayDate.getText().toString().equals("")){
+                    || resolucion.getText().toString().equals("") || numeroFilas.getText().toString().equals("") || mDisplayDate.getText().toString().equals("")){
 
-                Toast.makeText(getApplicationContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -157,6 +172,7 @@ public class AutFiscal extends AppCompatActivity {
 
         });
 
+        return vista;
     }
 
     private void llenarComprobante(){
@@ -189,7 +205,7 @@ public class AutFiscal extends AppCompatActivity {
                 comprobantes.add(c);
             }
 
-                ArrayAdapter<Comprobantes> a  = new ArrayAdapter<>(this, R.layout.spinner_item, comprobantes);
+            ArrayAdapter<Comprobantes> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, comprobantes);
             spComprobante.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -232,7 +248,7 @@ public class AutFiscal extends AppCompatActivity {
                 sucursal.add(c);
             }
 
-            ArrayAdapter<Sucursales> a  = new ArrayAdapter<>(this, R.layout.spinner_item, sucursal);
+            ArrayAdapter<Sucursales> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, sucursal);
             spSucursal.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -275,7 +291,7 @@ public class AutFiscal extends AppCompatActivity {
                 caja.add(c);
             }
 
-            ArrayAdapter<Caja> a  = new ArrayAdapter<>(this, R.layout.spinner_item, caja);
+            ArrayAdapter<Caja> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, caja);
             spCaja.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -294,7 +310,7 @@ public class AutFiscal extends AppCompatActivity {
         obtenerIdCaja();
         obtenerIdComprobante();
 
-        ProgressDialog progressDialog = new ProgressDialog(AutFiscal.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -304,17 +320,19 @@ public class AutFiscal extends AppCompatActivity {
 
                     if(response.equalsIgnoreCase("Usuario registrado")){
 
-                        startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
+                        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                        fr.replace(R.id.fragment_layout, new ObtenerEstadoFiscal());
+                        fr.commit();
                         progressDialog.dismiss();
 
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
 
                 }, volleyError -> {
-            Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 
@@ -352,13 +370,8 @@ public class AutFiscal extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
-
-    }
-
-    @Override
-    public void onBackPressed() {
 
     }
 

@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
@@ -33,6 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.desing.Clientes;
+import com.pedidos.kiosco.fragments.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.fragments.Categorias;
@@ -40,7 +40,6 @@ import com.pedidos.kiosco.fragments.Home;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
 import com.pedidos.kiosco.main.CorteCaja;
-import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.productos.ProdFragment;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
 import com.pedidos.kiosco.z.Login;
@@ -57,12 +56,12 @@ public class Principal extends AppCompatActivity {
     Animation toBottom;
     Boolean clicked = false;
     ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes;
-    FloatingActionButton addButton;
+    public static FloatingActionButton addButton;
     public static ExtendedFloatingActionButton nombreConsumidor;
     public static BottomNavigationView bottomNavigationView;
     public static int gIdEstadoCliente, gIdEstado, maximo, actual;
 
-    private long startTime=1*60*1000; // 15 MINS IDLE TIME
+    private long startTime=10*60*1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
     CountDownTimer countDownTimer;
 
@@ -182,7 +181,9 @@ public class Principal extends AppCompatActivity {
         fiscal = findViewById(R.id.floatingActionButton5);
         fiscal.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         fiscal.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstadoFiscal());
+            fr.commit();
         });
 
         comprobante = findViewById(R.id.floatingActionButton6);
@@ -362,7 +363,11 @@ public class Principal extends AppCompatActivity {
                             new AlertDialog.Builder(Principal.this)
                                     .setTitle("Limite de usuarios")
                                     .setMessage("El limite de usuarios permitidos esta completo. Para poder ingresar cierre sesion en otro dispositivo")
-                                    .setPositiveButton(android.R.string.yes, (dialog, which) -> startActivity(new Intent(getApplicationContext(), Login.class)))
+                                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                        FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+                                        fr.replace(R.id.fragment_layout, new Login());
+                                        fr.commit();
+                                    })
                                     .setIcon(android.R.drawable.ic_dialog_info)
                                     .show();
                         }

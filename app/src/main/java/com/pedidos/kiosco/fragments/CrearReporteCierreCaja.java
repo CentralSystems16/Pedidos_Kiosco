@@ -88,10 +88,6 @@ public class CrearReporteCierreCaja extends Fragment {
         }
 
         cierre = datosRecuperados.getInt("cierre");
-        progressDialog = new ProgressDialog(getContext(), R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
 
     }
 
@@ -102,6 +98,10 @@ public class CrearReporteCierreCaja extends Fragment {
          View vista =  inflater.inflate(R.layout.crear_reporte_cierre_caja, container, false);
          obtenerTipoPagoFacTipoPagoCaja(cierre);
          imprimiendo = vista.findViewById(R.id.imprimiendo);
+        progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
          return vista;
 
     }
@@ -435,7 +435,7 @@ public class CrearReporteCierreCaja extends Fragment {
         call.enqueue(new Callback<ResponsePOJO>() {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_layout, new ObtenerDetReporte());
                 fr.commit();
                 progressDialog.dismiss();

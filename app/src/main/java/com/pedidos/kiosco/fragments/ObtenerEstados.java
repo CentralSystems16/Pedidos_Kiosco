@@ -1,15 +1,18 @@
-package com.pedidos.kiosco.main;
+package com.pedidos.kiosco.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,46 +29,48 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class ObtenerEstados extends AppCompatActivity {
+public class ObtenerEstados extends Fragment {
 
     RecyclerView rvLista;
     ArrayList<Estados> estados;
     AdaptadorEstados adaptador;
     ImageButton regresar;
     public static String estadosNombre;
-
+    
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.obtener_estados);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        regresar = findViewById(R.id.regresara);
-        regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), Principal.class)));
+        View vista = inflater.inflate(R.layout.fragment_obtener_estados, container, false);
 
-        rvLista = findViewById(R.id.listaEstados);
-        rvLista.setLayoutManager(new GridLayoutManager(this, 3));
+        regresar = vista.findViewById(R.id.regresara);
+        regresar.setOnClickListener(view -> startActivity(new Intent(getContext(), Principal.class)));
+
+        rvLista = vista.findViewById(R.id.listaEstados);
+        rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         estados = new ArrayList<>();
 
-        Toolbar estado = findViewById(R.id.toolbarEstados);
+        Toolbar estado = vista.findViewById(R.id.toolbarEstados);
         estado.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
         obtenerEstados();
 
+        return vista;
     }
 
     public void obtenerEstados() {
 
-        ProgressDialog progressDialog = new ProgressDialog(ObtenerEstados.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarEstados.php" + "?base=" + VariablesGlobales.dataBase;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
 
                 response -> {
                     try {
@@ -84,7 +89,7 @@ public class ObtenerEstados extends AppCompatActivity {
                                             jsonObject1.getString("img_estado")));
                         }
 
-                        adaptador = new AdaptadorEstados(this, estados);
+                        adaptador = new AdaptadorEstados(getContext(), estados);
                         rvLista.setAdapter(adaptador);
                         progressDialog.dismiss();
 
@@ -94,7 +99,7 @@ public class ObtenerEstados extends AppCompatActivity {
                     }
                     progressDialog.dismiss();
                 }, volleyError -> {
-                Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         });
 
@@ -105,10 +110,5 @@ public class ObtenerEstados extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
     }
-
-    @Override
-    public void onBackPressed(){
-
-    }
-
+    
 }

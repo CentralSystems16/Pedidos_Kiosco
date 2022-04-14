@@ -23,7 +23,7 @@ import com.pedidos.kiosco.z.Login;
 public class ModificarCliente extends Fragment {
 
     EditText editNumero, editNombre, editPass, editEmail;
-    Button btnModificar;
+    Button btnModificar, btnCancelarCliente;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +47,13 @@ public class ModificarCliente extends Fragment {
         btnModificar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         btnModificar.setOnClickListener(v -> ejecutar());
 
+        btnCancelarCliente = vista.findViewById(R.id.btnCancelarCliente);
+        btnCancelarCliente.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Cliente());
+            fr.commit();
+        });
+
         return vista;
     }
 
@@ -62,16 +69,16 @@ public class ModificarCliente extends Fragment {
 
         ejecutarServicio(url);
 
-        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_layout, new Cliente());
-        fr.commit();
+
 
     }
 
     public void ejecutarServicio (String URL){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {},
+                response -> {FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new Cliente());
+                    fr.commit();},
                 error -> {
                     {}
                 });

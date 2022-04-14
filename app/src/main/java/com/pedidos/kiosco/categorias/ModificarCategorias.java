@@ -43,7 +43,7 @@ public class ModificarCategorias extends Fragment {
     int IMG_REQUEST = 21;
     Bitmap bitmap;
     ImageView imageView;
-    Button btnSelectImage, btnUploadImage, btnActiva, btnInactiva;
+    Button btnSelectImage, btnUploadImage, btnActiva, btnInactiva, btnCancelar;
     private EditText nombreImagen;
     public static int gEstadoAct = 1;
 
@@ -56,6 +56,13 @@ public class ModificarCategorias extends Fragment {
         imageView = vista.findViewById(R.id.imageViewEdit);
         btnSelectImage = vista.findViewById(R.id.btnSelectEditImage);
         btnUploadImage = vista.findViewById(R.id.btnSelectUploadImage);
+
+        btnCancelar = vista.findViewById(R.id.btncancelaract);
+        btnCancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CatFragment());
+            fr.commit();
+        });
 
         btnActiva = vista.findViewById(R.id.btnActivo);
         btnInactiva = vista.findViewById(R.id.btnInactivo);
@@ -142,7 +149,7 @@ public class ModificarCategorias extends Fragment {
             call.enqueue(new Callback<ResponsePOJO>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_layout, new CatFragment());
                     fr.commit();
                 }

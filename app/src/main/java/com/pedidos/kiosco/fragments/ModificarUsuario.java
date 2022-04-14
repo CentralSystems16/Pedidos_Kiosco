@@ -37,7 +37,7 @@ public class ModificarUsuario extends Fragment {
 
     EditText editUsuario, editNombre, editPass, editRepeatPass, editEmail;
     RequestQueue requestQueue;
-    Button modificarUsuario, btnActivoUser, btnInactivoUser;
+    Button modificarUsuario, btnActivoUser, btnInactivoUser, btnCancelar;
     public static int gEstadoUs = 1;
 
     Spinner spCargos;
@@ -55,6 +55,13 @@ public class ModificarUsuario extends Fragment {
         spCargos = vista.findViewById(R.id.spinnerCargo);
         cliente = new AsyncHttpClient();
         llenarSpinner();
+
+        btnCancelar = vista.findViewById(R.id.cancelarUsuario);
+        btnCancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new UsuarioFragment());
+            fr.commit();
+        });
 
         btnActivoUser = vista.findViewById(R.id.btnActivoUsuario);
         btnActivoUser.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));

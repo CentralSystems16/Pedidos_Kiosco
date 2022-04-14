@@ -1,17 +1,21 @@
-package com.pedidos.kiosco.main;
+package com.pedidos.kiosco.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,12 +26,14 @@ import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportesFiscal;
 import com.pedidos.kiosco.model.Fiscal;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class ObtenerReportesFiscal extends AppCompatActivity {
+public class ObtenerReportesFiscal extends Fragment {
 
     RecyclerView rvLista;
     ArrayList<Fiscal> reportes;
@@ -35,40 +41,41 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
     public static int idAutFiscal, numeroAut;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.obtener_reportes_fiscal);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        TextView orden = findViewById(R.id.orden);
+        View vista = inflater.inflate(R.layout.fragment_obtener_reportes_fiscal, container, false);
+
+        TextView orden = vista.findViewById(R.id.orden);
         orden.setText(ObtenerEstados.estadosNombre);
 
-        Toolbar fiscal = findViewById(R.id.toolbarRepFiscal);
+        Toolbar fiscal = vista.findViewById(R.id.toolbarRepFiscal);
         fiscal.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
-        final ImageButton regresa = findViewById(R.id.regresarDatosFiscal);
+        final ImageButton regresa = vista.findViewById(R.id.regresarDatosFiscal);
         regresa.setOnClickListener(v -> {
-                startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
+            startActivity(new Intent(getContext(), ObtenerEstadoFiscal.class));
         });
 
-        rvLista = findViewById(R.id.rvListaReportes);
-        rvLista.setLayoutManager(new LinearLayoutManager(this));
+        rvLista = vista.findViewById(R.id.rvListaReportes);
+        rvLista.setLayoutManager(new LinearLayoutManager(getContext()));
 
         reportes = new ArrayList<>();
 
         obtenerReportes();
 
+        return vista;
     }
 
     public void obtenerReportes() {
 
-        ProgressDialog progressDialog = new ProgressDialog(ObtenerReportesFiscal.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerAutorizaciones.php" + "?base=" + VariablesGlobales.dataBase + "&activo=" + ObtenerEstadoFiscal.fiscalActivo;
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {
 
@@ -90,11 +97,11 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
                                             jsonObject1.getInt("id_aut_fiscal"),
                                             jsonObject1.getString("serie"),
                                             jsonObject1.getString("fecha_autorizacion")));
-                                    }
+                        }
 
-                            adaptador = new AdaptadorReportesFiscal(this, reportes);
-                            rvLista.setAdapter(adaptador);
-                            progressDialog.dismiss();
+                        adaptador = new AdaptadorReportesFiscal(getContext(), reportes);
+                        rvLista.setAdapter(adaptador);
+                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -102,7 +109,7 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
                     }
 
                 }, volleyError -> {
-            Toast.makeText(getApplicationContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Ocurrió un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         });
 
@@ -112,11 +119,6 @@ public class ObtenerReportesFiscal extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
 }

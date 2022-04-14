@@ -121,4 +121,16 @@
         android:layout_marginEnd="30dp"
         app:cornerRadius="15dp"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btncancelarProd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CANCELAR"
+        android:layout_marginTop="20dp"
+        android:textSize="12sp"
+        android:backgroundTint="#000000"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:cornerRadius="15dp"/>
+
 </LinearLayout>

@@ -34,7 +34,7 @@ public class AgregarCategorias extends Fragment {
     int IMG_REQUEST = 21;
     Bitmap bitmap;
     ImageView imageView;
-    Button btnSelectImage, btnUploadImage;
+    Button btnSelectImage, btnUploadImage, btnCancelar;
     private EditText nombreImagen;
 
     @Override
@@ -48,6 +48,13 @@ public class AgregarCategorias extends Fragment {
         btnUploadImage = vista.findViewById(R.id.btnUploadImage);
 
         nombreImagen = vista.findViewById(R.id.nombreImagen);
+
+        btnCancelar = vista.findViewById(R.id.btncancelarAdd);
+        btnCancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CatFragment());
+            fr.commit();
+        });
 
         btnSelectImage.setOnClickListener(v -> {
 
@@ -93,7 +100,7 @@ public class AgregarCategorias extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ResponsePOJO> call, @NonNull Response<ResponsePOJO> response) {
                 Toast.makeText(getContext(), "Categoria agregada correctamente", Toast.LENGTH_SHORT).show();
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_layout, new CatFragment());
                 fr.commit();
             }

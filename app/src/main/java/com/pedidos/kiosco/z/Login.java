@@ -147,7 +147,7 @@ public class Login extends Fragment {
                             gVerificacion = jsonResponse.getInt("verificacion_usuario");
                             gIdSucursal = jsonResponse.getInt("id_sucursal");
 
-                            FragmentTransaction fr = getFragmentManager().beginTransaction();
+                            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                             fr.replace(R.id.fragment_layout, new Home());
                             fr.commit();
 

@@ -1,18 +1,25 @@
-package com.pedidos.kiosco.main;
+package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,9 +35,10 @@ import com.pedidos.kiosco.z.Login;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class ObtenerMovimientos extends AppCompatActivity {
+public class ObtenerMovimientos extends Fragment {
 
     RecyclerView rvLista;
     ArrayList<Movimientos> reportes;
@@ -38,36 +46,42 @@ public class ObtenerMovimientos extends AppCompatActivity {
     public static int idMov;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.obtener_movimientos);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.fragment_obtener_movimientos, container, false);
 
-        ImageButton regresar = findViewById(R.id.regresarDatos2);
-        regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerEstados.class)));
+        ImageButton regresar = vista.findViewById(R.id.regresarDatos2);
+        regresar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstados());
+            fr.commit();
+        });
 
-        rvLista = findViewById(R.id.rvListaReportesMov);
-        rvLista.setLayoutManager(new LinearLayoutManager(this));
+        rvLista = vista.findViewById(R.id.rvListaReportesMov);
+        rvLista.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Toolbar estado = findViewById(R.id.toolbarMovimientos);
+        Toolbar estado = vista.findViewById(R.id.toolbarMovimientos);
         estado.setBackgroundColor((Color.rgb(gRed, gGreen, gBlue)));
 
         reportes = new ArrayList<>();
 
-        TextView orden2 = findViewById(R.id.orden2);
+        TextView orden2 = vista.findViewById(R.id.orden2);
         orden2.setText(ObtenerEstados.estadosNombre);
 
         obtenerComprobantesVenta();
+
+        return vista;
     }
 
     public void obtenerComprobantesVenta(){
 
-        ProgressDialog progressDialog = new ProgressDialog(ObtenerMovimientos.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerComprobantesVenta.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&id_estado_comprobante=" + Principal.gIdEstadoCliente;
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
@@ -82,22 +96,22 @@ public class ObtenerMovimientos extends AppCompatActivity {
                             reportes.add(
                                     new Movimientos(
 
-                            jsonObject1.getString("nombre_cliente"),
-                            jsonObject1.getString("fecha_creo"),
-                            jsonObject1.getString("nombre_sucursal"),
-                            jsonObject1.getDouble("monto_exento"),
-                            jsonObject1.getDouble("monto_gravado"),
-                            jsonObject1.getDouble("monto_no_sujeto"),
-                            jsonObject1.getInt("id_fac_movimiento"),
-                            jsonObject1.getString("numero_comprobante"),
-                            jsonObject1.getString("tipo_pago"),
-                            jsonObject1.getInt("id_cliente"),
-                            jsonObject1.getInt("id_prefactura")
+                                            jsonObject1.getString("nombre_cliente"),
+                                            jsonObject1.getString("fecha_creo"),
+                                            jsonObject1.getString("nombre_sucursal"),
+                                            jsonObject1.getDouble("monto_exento"),
+                                            jsonObject1.getDouble("monto_gravado"),
+                                            jsonObject1.getDouble("monto_no_sujeto"),
+                                            jsonObject1.getInt("id_fac_movimiento"),
+                                            jsonObject1.getString("numero_comprobante"),
+                                            jsonObject1.getString("tipo_pago"),
+                                            jsonObject1.getInt("id_cliente"),
+                                            jsonObject1.getInt("id_prefactura")
 
-                            ));
+                                    ));
                         }
 
-                        adaptador = new AdaptadorReportesMov(this, reportes);
+                        adaptador = new AdaptadorReportesMov(getContext(), reportes);
                         rvLista.setAdapter(adaptador);
                         progressDialog.dismiss();
 

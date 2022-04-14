@@ -29,13 +29,12 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportes;
+import com.pedidos.kiosco.fragments.ObtenerEstados;
 import com.pedidos.kiosco.model.Reportes;
 import com.pedidos.kiosco.z.Login;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class ObtenerReportes extends Fragment {
@@ -105,7 +104,6 @@ public class ObtenerReportes extends Fragment {
 
                         adaptador = new AdaptadorReportes(getContext(), reportes);
                         rvLista.setAdapter(adaptador);
-
 
                         progressDialog.dismiss();
 

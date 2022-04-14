@@ -12,11 +12,13 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.button.MaterialButton;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.fragments.ObtenerMovimientos;
 import com.pedidos.kiosco.fragments.TicketDatos;
-import com.pedidos.kiosco.main.ObtenerMovimientos;
 import com.pedidos.kiosco.other.SumaMonto;
 import com.pedidos.kiosco.other.SumaMontoDevolucion;
 import com.pedidos.kiosco.z.Login;
@@ -62,7 +64,9 @@ public class VistaFinal extends AppCompatActivity {
             TicketDatos.gTotal = 0.00;
             Login.gIdPedido = 0;
             Principal.gIdEstadoCliente = 2;
-            startActivity(new Intent(getApplicationContext(), ObtenerMovimientos.class));
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerMovimientos());
+            fr.commit();
         });
 
     }

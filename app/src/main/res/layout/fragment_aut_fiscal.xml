@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
     android:background="@color/white"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
     android:orientation="vertical">
 
     <Toolbar
-        android:id="@+id/toolbarModif"
+        android:id="@+id/toolbarAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/returnmodif"
+            android:id="@+id/agregar"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ic_baseline_arrow_back_24"
@@ -24,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modificar Autorización Fiscal"
+            android:text="Agregar Autorización Fiscal"
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -41,36 +40,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:gravity="center"
-                 android:layout_marginTop="20dp"
-                 android:orientation="horizontal" >
-
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="center"
-                     android:text="Numero de autorización"
-                     android:textColor="@color/black"
-                     android:textSize="15sp" />
-
-                 <TextView
-                     android:id="@+id/numeroAut"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginStart="20dp"
-                     android:textColor="@color/black"
-                     android:textSize="15sp" />
-
-             </LinearLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -78,24 +51,23 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="30dp"
-                    android:text="Tipo comprobante:"
                     android:layout_marginTop="15dp"
+                    android:text="Tipo comprobante:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView1"
+                    android:id="@+id/cardView1Add"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="50dp"
                     app:cardCornerRadius="4dp"
-                    android:backgroundTint="@color/white"
                     app:strokeWidth="1dp">
 
                     <Spinner
-                        android:id="@+id/EditSpinnerComprobante"
+                        android:id="@+id/spinnerComprobante"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:backgroundTint="@color/black"
@@ -103,7 +75,6 @@
                         android:popupBackground="@color/white" />
 
                 </com.google.android.material.card.MaterialCardView>
-
 
             </RelativeLayout>
 
@@ -126,18 +97,17 @@
                     android:textSize="15sp" />
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView2"
+                    android:id="@+id/cardView2Add"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="50dp"
-                    android:backgroundTint="@color/white"
                     app:cardCornerRadius="4dp"
                     app:strokeWidth="1dp">
 
                     <Spinner
-                        android:id="@+id/editSpinnerSucursal"
+                        android:id="@+id/spinnerSucursal"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:backgroundTint="@color/black"
@@ -161,24 +131,23 @@
                     android:layout_alignParentStart="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="30dp"
-                    android:text="Caja:"
                     android:layout_marginTop="15dp"
+                    android:text="Caja:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView3"
+                    android:id="@+id/cardView3Add"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="50dp"
-                    android:backgroundTint="@color/white"
                     app:cardCornerRadius="4dp"
                     app:strokeWidth="1dp">
 
                     <Spinner
-                        android:id="@+id/EditSpinnerCajas"
+                        android:id="@+id/spinnerCajas"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:backgroundTint="@color/black"
@@ -207,13 +176,13 @@
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
                     android:layout_marginStart="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeColor="#000000"
                     app:hintTextColor="#000000"
-                    app:boxCornerRadiusTopStart="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editSerie"
+                        android:id="@+id/etSerie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
@@ -223,35 +192,44 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextFieldNombre4"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número autorización"
-                android:textColorHint="#9F807E7E"
+                android:gravity="center"
                 android:layout_marginTop="20dp"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxStrokeColor="#000000"
-                app:hintTextColor="#000000"
-                app:boxCornerRadiusTopStart="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:orientation="horizontal" >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editAuth"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextFieldNombre4"
                     android:layout_width="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:hint="Número autorización"
+                    android:textColorHint="#9F807E7E"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxStrokeColor="#000000"
+                    app:hintTextColor="#000000"
+                    app:boxCornerRadiusTopStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAuth"
+                        android:layout_width="match_parent"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -271,13 +249,13 @@
                     app:boxCornerRadiusTopEnd="20dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
-                    app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeColor="#000000"
                     app:hintTextColor="#000000"
+                    app:boxCornerRadiusTopStart="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editRes"
+                        android:id="@+id/etRes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
@@ -286,8 +264,6 @@
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
             </LinearLayout>
 
@@ -306,18 +282,18 @@
                     app:boxCornerRadiusBottomStart="20dp"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeColor="#000000"
                     app:hintTextColor="#000000"
-                    app:boxCornerRadiusTopStart="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editDesde"
+                        android:id="@+id/etDesde"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
                         android:layout_marginStart="30dp"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -333,18 +309,18 @@
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginEnd="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeColor="#000000"
                     app:hintTextColor="#000000"
-                    app:boxCornerRadiusTopStart="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editHasta"
+                        android:id="@+id/etHasta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:gravity="center"
                         android:padding="10dp"
+                        android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -373,12 +349,14 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tvFechaFiscal"
+                        android:id="@+id/editFecha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
+                        android:clickable="true"
                         android:layout_marginStart="30dp"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -393,20 +371,19 @@
                     app:boxCornerRadiusBottomStart="20dp"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="30dp"
+                    app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeColor="#000000"
                     app:hintTextColor="#000000"
-                    app:boxCornerRadiusTopStart="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etNumFilas"
+                        android:id="@+id/editFilas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:gravity="center"
-
                         android:padding="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="20dp"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -415,60 +392,77 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:text="Activo:"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/rgActivo"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnActivoProducto"
-                            style="?attr/materialButtonOutlinedStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="50dp"
-                            android:text="ACTIVAR"
-                            android:textColor="#FF1A73E8"
-                            android:textSize="11sp"
-                            app:cornerRadius="15dp"
-                            app:strokeColor="#FF1A73E8" />
+                    <RadioButton
+                        android:id="@+id/si"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textColor="@color/black"
+                        android:buttonTint="#c6391e"
+                        app:buttonTint="@color/black" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnInactivoProducto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="50dp"
-                            android:text="INACTIVAR"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            app:cornerRadius="15dp" />
+                    <RadioButton
+                        android:id="@+id/no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textColor="@color/black"
+                        android:buttonTint="#c6391e"
+                        app:buttonTint="@color/black" />
 
-                    </RelativeLayout>
+                </RadioGroup>
 
-                </LinearLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnModificarFiscal"
+                android:id="@+id/btnRegistrarFiscal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="GUARDAR"
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 android:textColor="@color/white"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="20dp"
+                android:backgroundTint="#3F51B5"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 app:cornerRadius="15dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btncancelarAuth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="#000000"
+                android:text="Cancelar"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:cornerRadius="15dp" />
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

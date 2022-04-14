@@ -1,14 +1,20 @@
-package com.pedidos.kiosco.pay;
+package com.pedidos.kiosco.fragments;
 
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,18 +35,18 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerEstadoFiscal;
-import com.pedidos.kiosco.main.ObtenerReportesFiscal;
 import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
-public class ModificarAutorizacion extends AppCompatActivity {
+public class ModificarAutorizacion extends Fragment {
 
     String desde, hasta, serie, autorizacion, resolucion, filas, fecha, activoEdit;
     EditText desdeet, hastaet, serieet, autorizacionet, resolucionet, filaset, fechaet;
@@ -67,57 +73,62 @@ public class ModificarAutorizacion extends AppCompatActivity {
     ImageView regresar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.modificar_autorizacion);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View vista = inflater.inflate(R.layout.fragment_modificar_autorizacion, container, false);
 
         getInfoUser();
 
-        TextView fiscal = findViewById(R.id.numeroAut);
+        TextView fiscal = vista.findViewById(R.id.numeroAut);
         fiscal.setText(String.valueOf(ObtenerReportesFiscal.numeroAut));
 
-        Toolbar toolbar = findViewById(R.id.toolbarModif);
+        Toolbar toolbar = vista.findViewById(R.id.toolbarModif);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
-        MaterialCardView registro = findViewById(R.id.cardView1);
+        MaterialCardView registro = vista.findViewById(R.id.cardView1);
         registro.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        MaterialCardView registro2 = findViewById(R.id.cardView2);
+        MaterialCardView registro2 = vista.findViewById(R.id.cardView2);
         registro2.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        MaterialCardView registro3 = findViewById(R.id.cardView3);
+        MaterialCardView registro3 = vista.findViewById(R.id.cardView3);
         registro3.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
 
-        regresar = findViewById(R.id.returnmodif);
-        regresar.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ObtenerReportesFiscal.class)));
+        regresar = vista.findViewById(R.id.returnmodif);
+        regresar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstadoFiscal());
+            fr.commit();
+        });
 
         cliente = new AsyncHttpClient();
         cliente2 = new AsyncHttpClient();
         cliente3 = new AsyncHttpClient();
-        spComprobante = findViewById(R.id.EditSpinnerComprobante);
-        spSucursal = findViewById(R.id.editSpinnerSucursal);
-        spCaja = findViewById(R.id.EditSpinnerCajas);
+        spComprobante = vista.findViewById(R.id.EditSpinnerComprobante);
+        spSucursal = vista.findViewById(R.id.editSpinnerSucursal);
+        spCaja = vista.findViewById(R.id.EditSpinnerCajas);
 
-        btnActivo = findViewById(R.id.btnActivoProducto);
+        btnActivo = vista.findViewById(R.id.btnActivoProducto);
         btnActivo.setOnClickListener(v -> {
 
             gEstadoProd = 1;
             btnActivo.setVisibility(View.INVISIBLE);
             btnInactivo.setVisibility(View.VISIBLE);
-            Toast.makeText(ModificarAutorizacion.this, "Activado nuevamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Activado nuevamente", Toast.LENGTH_SHORT).show();
         });
 
-        btnInactivo = findViewById(R.id.btnInactivoProducto);
+        btnInactivo = vista.findViewById(R.id.btnInactivoProducto);
         btnInactivo.setOnClickListener(v -> {
 
             gEstadoProd = 0;
             btnActivo.setVisibility(View.VISIBLE);
             btnInactivo.setVisibility(View.INVISIBLE);
-            Toast.makeText(ModificarAutorizacion.this, "Desactivado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Desactivado", Toast.LENGTH_SHORT).show();
 
         });
 
-        Button modificar = findViewById(R.id.btnModificarFiscal);
+        Button modificar = vista.findViewById(R.id.btnModificarFiscal);
         modificar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
         modificar.setOnClickListener(view -> {
 
@@ -133,19 +144,20 @@ public class ModificarAutorizacion extends AppCompatActivity {
                     + "&id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
             ejecutarServicio(url);
             System.out.println(url);
-            startActivity(new Intent(getApplicationContext(), ObtenerEstadoFiscal.class));
+            startActivity(new Intent(getContext(), ObtenerEstadoFiscal.class));
         });
 
-        desdeet = findViewById(R.id.editDesde);
-        hastaet = findViewById(R.id.editHasta);
-        serieet = findViewById(R.id.editSerie);
-        autorizacionet = findViewById(R.id.editAuth);
-        resolucionet = findViewById(R.id.editRes);
-        filaset = findViewById(R.id.etNumFilas);
-        fechaet = findViewById(R.id.tvFechaFiscal);
-        activo = findViewById(R.id.si);
-        inactivo = findViewById(R.id.no);
+        desdeet = vista.findViewById(R.id.editDesde);
+        hastaet = vista.findViewById(R.id.editHasta);
+        serieet = vista.findViewById(R.id.editSerie);
+        autorizacionet = vista.findViewById(R.id.editAuth);
+        resolucionet = vista.findViewById(R.id.editRes);
+        filaset = vista.findViewById(R.id.etNumFilas);
+        fechaet = vista.findViewById(R.id.tvFechaFiscal);
+        activo = vista.findViewById(R.id.si);
+        inactivo = vista.findViewById(R.id.no);
 
+        return vista;
     }
 
     private void llenarComprobante(){
@@ -178,7 +190,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
                 comprobantes.add(c);
             }
 
-            ArrayAdapter<Comprobantes> a  = new ArrayAdapter<>(this, R.layout.spinner_item, comprobantes);
+            ArrayAdapter<Comprobantes> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, comprobantes);
             spComprobante.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -221,7 +233,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
                 sucursal.add(c);
             }
 
-            ArrayAdapter<Sucursales> a  = new ArrayAdapter<>(this, R.layout.spinner_item, sucursal);
+            ArrayAdapter<Sucursales> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, sucursal);
             spSucursal.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -264,7 +276,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
                 caja.add(c);
             }
 
-            ArrayAdapter<Caja> a  = new ArrayAdapter<>(this, R.layout.spinner_item, caja);
+            ArrayAdapter<Caja> a  = new ArrayAdapter<>(getContext(), R.layout.spinner_item, caja);
             spCaja.setAdapter(a);
         }catch (Exception e){
             e.printStackTrace();
@@ -280,12 +292,12 @@ public class ModificarAutorizacion extends AppCompatActivity {
     public void getInfoUser() {
 
         String URL_USUARIOS = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerFiscal.php" + "?base=" + VariablesGlobales.dataBase + "&id_aut_fiscal=" + ObtenerReportesFiscal.idAutFiscal;
-        ProgressDialog progressDialog = new ProgressDialog(ModificarAutorizacion.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_USUARIOS,
 
@@ -356,7 +368,7 @@ public class ModificarAutorizacion extends AppCompatActivity {
 
     public void ejecutarServicio (String URL){
 
-        ProgressDialog progressDialog = new ProgressDialog(ModificarAutorizacion.this, R.style.Custom);
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -365,13 +377,8 @@ public class ModificarAutorizacion extends AppCompatActivity {
                 response -> progressDialog.dismiss(),
                 volleyError -> progressDialog.dismiss()
         );
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
 }

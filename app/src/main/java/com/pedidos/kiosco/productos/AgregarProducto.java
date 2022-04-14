@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,15 +29,14 @@ import java.util.Map;
 
 public class AgregarProducto extends AppCompatActivity {
 
-    Button guardarNewProd, btnBuscarProd;
+    Button guardarNewProd, btnBuscarProd, cancelar;
     ImageView iv;
     EditText etAddProd, etAddPrec;
     Bitmap bitmap;
     int PICK_IMAGE_REQUEST = 1;
     String UPLOAD_URL = "http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/uploadProducto.php" + "?base=" + VariablesGlobales.dataBase;
-    String KEY_IMAGE = "img_producto";
-    String KEY_NOMBRE = "nombre_producto";
-    String KEY_PRECIO = "precio_producto";
+    String KEY_IMAGE = "img_producto", KEY_PRECIO = "precio_producto", KEY_NOMBRE = "nombre_producto";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,12 @@ public class AgregarProducto extends AppCompatActivity {
         etAddPrec = findViewById(R.id.etAddPrec);
 
         iv = findViewById(R.id.ivProducto);
+
+        cancelar = findViewById(R.id.btncancelarProd);
+        cancelar.setOnClickListener(view -> {
+            Intent i = new Intent(getApplicationContext(), Principal.class);
+            startActivity(i);
+        });
 
         btnBuscarProd = findViewById(R.id.btnBuscarProducto);
         btnBuscarProd.setOnClickListener(v -> showFileChooser());

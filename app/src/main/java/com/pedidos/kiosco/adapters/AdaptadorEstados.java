@@ -11,12 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.main.ObtenerEstados;
-import com.pedidos.kiosco.main.ObtenerMovimientos;
+import com.pedidos.kiosco.fragments.CrearReporteCierreCaja;
+import com.pedidos.kiosco.fragments.ObtenerEstados;
+import com.pedidos.kiosco.fragments.ObtenerMovimientos;
 import com.pedidos.kiosco.model.Estados;
 import java.util.List;
 
@@ -93,7 +98,12 @@ public class AdaptadorEstados extends RecyclerView.Adapter<AdaptadorEstados.Esta
             if (Principal.gIdEstadoCliente == 2){
                 Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
                 ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();
-                cContext.startActivity(new Intent(cContext, ObtenerMovimientos.class));
+                Fragment fragmento = new ObtenerMovimientos();
+                FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_layout, fragmento);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             } else {
                 Principal.gIdEstadoCliente = listaEstados.get(posicion).getIdEstado();
                 ObtenerEstados.estadosNombre = listaEstados.get(posicion).getNomEstado();

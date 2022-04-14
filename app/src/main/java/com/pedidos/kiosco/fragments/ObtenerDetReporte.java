@@ -4,6 +4,7 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Toolbar;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.utils.RecibirPDFReportes;
 import java.io.File;
 
@@ -30,6 +34,7 @@ public class ObtenerDetReporte extends Fragment {
     PDFView pdfView;
     ProgressBar progressBar;
     Toolbar toolbar;
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,22 +48,30 @@ public class ObtenerDetReporte extends Fragment {
         toolbar = vista.findViewById(R.id.toolbarDetPedido);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
+        progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         ImageView flechaReturn = vista.findViewById(R.id.returnDetReporte);
         flechaReturn.setOnClickListener(v -> {
             File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
             File file = new File(dir, "ComprobanteCorteCaja.pdf");
             boolean deleted = file.delete();
-            startActivity(new Intent(getContext(), Principal.class));
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Home());
+            fr.commit();
         });
 
         boolean granded = checkPermissionForReadExtertalStorage();
         if (!granded) {
             requestPermissionForReadExtertalStorage();
+            progressDialog.dismiss();
         } else {
             String urlPdf = "http://34.239.139.117/android/kiosco/cliente/pedidos/ComprobanteCorteCaja.pdf";
 
-
             new RecibirPDFReportes(pdfView, progressBar).execute(urlPdf);
+            progressDialog.dismiss();
         }
 
         return vista;

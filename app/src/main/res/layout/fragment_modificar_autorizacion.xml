@@ -41,30 +41,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:gravity="center"
-                 android:layout_marginTop="20dp"
-                 android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
 
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="center"
-                     android:text="Numero de autorización"
-                     android:textColor="@color/black"
-                     android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Numero de autorización"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
-                 <TextView
-                     android:id="@+id/numeroAut"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginStart="20dp"
-                     android:textColor="@color/black"
-                     android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/numeroAut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
-             </LinearLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -415,44 +415,44 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_marginTop="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:layout_height="wrap_content">
 
-                    <RelativeLayout
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnActivoProducto"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="50dp"
+                        android:text="ACTIVAR"
+                        android:textColor="#FF1A73E8"
+                        android:textSize="11sp"
+                        app:cornerRadius="15dp"
+                        app:strokeColor="#FF1A73E8" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnActivoProducto"
-                            style="?attr/materialButtonOutlinedStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="50dp"
-                            android:text="ACTIVAR"
-                            android:textColor="#FF1A73E8"
-                            android:textSize="11sp"
-                            app:cornerRadius="15dp"
-                            app:strokeColor="#FF1A73E8" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnInactivoProducto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="50dp"
+                        android:text="INACTIVAR"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        app:cornerRadius="15dp" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnInactivoProducto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="50dp"
-                            android:text="INACTIVAR"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            app:cornerRadius="15dp" />
+                </RelativeLayout>
 
-                    </RelativeLayout>
-
-                </LinearLayout>
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnModificarFiscal"

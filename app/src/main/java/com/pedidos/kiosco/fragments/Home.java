@@ -1,23 +1,21 @@
 package com.pedidos.kiosco.fragments;
 
+import static com.pedidos.kiosco.Principal.addButton;
 import static com.pedidos.kiosco.Splash.gBlue3;
 import static com.pedidos.kiosco.Splash.gGreen3;
 import static com.pedidos.kiosco.Splash.gRecBlue2;
 import static com.pedidos.kiosco.Splash.gRecGreen2;
 import static com.pedidos.kiosco.Splash.gRecRed2;
 import static com.pedidos.kiosco.Splash.gRed3;
-import android.Manifest;
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -34,7 +32,6 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.main.ObtenerEstados;
 import com.pedidos.kiosco.z.Login;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -62,6 +59,8 @@ public class Home extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Principal.bottomNavigationView.setVisibility(View.VISIBLE);
+
         SharedPreferences preferences = requireActivity().getSharedPreferences("preferenciasCaja", Context.MODE_PRIVATE);
         VariablesGlobales.noCaja = preferences.getInt("numeroCaja", 0);
 
@@ -74,7 +73,11 @@ public class Home extends Fragment {
 
         hacerPedido = view.findViewById(R.id.btnPedidos);
         verPedido = view.findViewById(R.id.btnVerPedidos);
-        verPedido.setOnClickListener(view12 -> startActivity(new Intent(getContext(), ObtenerEstados.class)));
+        verPedido.setOnClickListener(view12 -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstados());
+            fr.commit();
+        });
 
         abrirCaja = view.findViewById(R.id.btnCrearCaja);
 
@@ -90,6 +93,10 @@ public class Home extends Fragment {
                 Login.gIdCliente = 1;
 
         });
+
+        if(Login.cargo == 1 || Login.cargo == 2){
+            addButton.setVisibility(View.VISIBLE);
+        }
 
         hacerPedido.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRecRed2, gRecGreen2, gRecBlue2)));
         verPedido.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed3, gGreen3, gBlue3)));

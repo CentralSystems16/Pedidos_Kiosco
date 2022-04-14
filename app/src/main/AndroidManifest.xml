@@ -23,18 +23,6 @@
             android:name=".UpdateApp"
             android:exported="false" />
         <activity
-            android:name=".main.ObtenerMovimientos"
-            android:exported="false" />
-        <activity
-            android:name=".pay.ModificarAutorizacion"
-            android:exported="false" />
-        <activity
-            android:name=".main.ObtenerEstadoFiscal"
-            android:exported="false" />
-        <activity
-            android:name=".pay.AutFiscal"
-            android:exported="false" />
-        <activity
             android:name=".desing.EnviandoTicket"
             android:exported="false" />
         <activity
@@ -47,13 +35,7 @@
             android:name=".desing.VistaFinal"
             android:exported="false" />
         <activity
-            android:name=".main.ObtenerEstados"
-            android:exported="false" />
-        <activity
             android:name=".productos.AgregarProducto"
-            android:exported="false" />
-        <activity
-            android:name=".main.ObtenerReportesFiscal"
             android:exported="false" />
         <activity
             android:name=".desing.acercaDe"
