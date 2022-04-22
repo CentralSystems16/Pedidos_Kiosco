@@ -8,7 +8,7 @@ import android.util.Log;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONException;
 import org.json.JSONObject;

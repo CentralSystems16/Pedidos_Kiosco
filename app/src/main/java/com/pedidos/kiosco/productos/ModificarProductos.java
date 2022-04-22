@@ -25,13 +25,16 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.categorias.Categorias;
+import com.pedidos.kiosco.fragments.ObtenerEstados;
+import com.pedidos.kiosco.fragments.ObtenerProductos;
+
 import org.json.JSONArray;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class ModificarProductos extends Fragment {
 
-    Button btnGuardarProd, btnActivo, btnInactivo, cargarImagen;
+    Button btnGuardarProd, btnActivo, btnInactivo, cargarImagen, cancelar;
     EditText modifProd;
     EditText modifPrec;
     RequestQueue requestQueue;
@@ -59,6 +62,16 @@ public class ModificarProductos extends Fragment {
 
         modifPrec = vista.findViewById(R.id.etModifPrec);
         modifPrec.setText(String.valueOf(ProdFragment.gPrecio));
+
+        cancelar = vista.findViewById(R.id.btnCancelarGuard);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new ProdFragment());
+                fr.commit();
+            }
+        });
 
         btnActivo = vista.findViewById(R.id.btnActivoProducto);
         btnActivo.setOnClickListener(v -> {

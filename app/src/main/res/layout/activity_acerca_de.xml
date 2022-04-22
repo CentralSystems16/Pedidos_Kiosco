@@ -144,12 +144,12 @@
 
         <ImageView
             android:id="@+id/error"
-            android:clickable="true"
             android:layout_width="380dp"
             android:layout_height="80dp"
-            android:background="@drawable/boton_borde"
-            android:layout_marginEnd="20dp"
             android:layout_marginStart="18dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/boton_borde"
+            android:clickable="true"
             android:focusable="true" />
 
         <ImageView
@@ -180,6 +180,52 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/manual"
+            android:layout_width="380dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/boton_borde"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp"
+            android:src="@drawable/manual" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="10dp"
+            android:text="Manual de usuario"
+            android:textColor="#d703082b"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="40dp"
+            android:text="Revisa nuestro manual de usuario"
+            android:textColor="#6003082b"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
 
@@ -192,7 +238,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center"
-            android:text="Versión 1.1.9"
+            android:text="Versión 1.2.1"
             android:textColor="@color/black"
             android:textSize="13sp"
             tools:ignore="HardcodedText" />

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdapProdReport;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

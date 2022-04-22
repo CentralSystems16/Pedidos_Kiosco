@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.fragments.ObtenerProductos;
-import com.pedidos.kiosco.fragments.ResumenPago;
-import com.pedidos.kiosco.Login;
+import com.pedidos.kiosco.gastos.CrearGastos;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
+public class InsertarGastos extends AsyncTask<String, Void, String> {
 
     Date d = new Date();
     SimpleDateFormat fecc = new SimpleDateFormat("d'-'M'-'yyyy", Locale.getDefault());
@@ -39,16 +39,16 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
 
     private final WeakReference<Context> context;
 
-    public InsertarFacMovimientos(Context context) {
+    public InsertarGastos(Context context) {
         this.context = new WeakReference<>(context);
     }
 
     protected String doInBackground (String...params){
 
-        String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/insertarMovimientos.php"
+        String registrar_url = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/registroGastos.php"
                 +"?base=" + VariablesGlobales.dataBase
                 +"&id_cliente=" + Login.gIdCliente
-                +"&id_tipo_comprobante=4"
+                +"&id_tipo_comprobante=1"
                 +"&id_usuario=" + Login.gIdUsuario
                 +"&id_forma_pago=1"
                 +"&id_estado_comprobante=1"
@@ -56,20 +56,23 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
                 +"&id_aut_fiscal=" + Login.gIdAutFiscal
                 +"&id_prefactura=" + Login.gIdPedido
                 +"&id_tipo_pago=" + TipoPago.idTipoPago
-                +"&fecha=" + "1/1/1"
+                +"&fecha=" + CrearGastos.Sfecha
                 +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
-                +"&monto=" + SumaMontoMultiple.sumaMontoMultiple
-                +"&monto_iva=" + SumaMontoMultipleIva.sumaMontoMultipleIva
-                +"&fac_tipo_movimiento=1"
+                +"&monto=" + CrearGastos.Smonto
+                +"&monto_iva=" + "0.00"
+                +"&fac_tipo_movimiento=2"
                 +"&monto_desc=" + "0.00"
                 +"&monto_pago=" + "0.00"
                 +"&monto_cambio=" + "0.00"
                 +"&monto_exento=" + "0.00"
                 +"&monto_gravado=" + "0.00"
                 +"&monto_no_sujeto=" + "0.00"
-                +"&numero_comprobante=" + ResumenPago.no_comprobante
-                +"&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja;
+                +"&numero_comprobante=0"
+                +"&id_cierre_caja=0"
+                +"&descripcion=" + CrearGastos.Sdescripcion;
+
+        System.out.println(registrar_url);
 
         String resultado = null;
 
@@ -91,11 +94,11 @@ public class InsertarFacMovimientos extends AsyncTask<String, Void, String> {
             String idAutFiscal = "1";
             String idPrefactura = String.valueOf(Login.gIdPedido);
             String idTipoPago = "1";
-            String fecha = "1/1/1";
+            String fecha = CrearGastos.Sfecha;
             String fechaCreo = fechacComplString + " a las " + horaString;
-            String fechaMod = "11/11/11";
-            String monto = String.valueOf(ObtenerProductos.gDetMonto);
-            String montoIva = String.valueOf(ObtenerProductos.gDetMontoIva);
+            String fechaMod = "1/1/1";
+            String monto = CrearGastos.Smonto;
+            String montoIva = "0.00";
             String facTipoMov = "1";
             String montoDesc = "0.00";
             String montoPago = "0.00";

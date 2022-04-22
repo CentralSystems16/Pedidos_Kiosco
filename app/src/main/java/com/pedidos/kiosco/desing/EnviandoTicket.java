@@ -1,10 +1,11 @@
 package com.pedidos.kiosco.desing;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.fragments.ObtenerMovimientos;
 
 public class EnviandoTicket extends AppCompatActivity {
 
@@ -14,7 +15,9 @@ public class EnviandoTicket extends AppCompatActivity {
         setContentView(R.layout.enviando_ticket);
 
         new Handler().postDelayed(() -> {
-                startActivity(new Intent(getApplicationContext(), VistaFinal.class));
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerMovimientos());
+            fr.commit();
                 finish();
             }, 5000);
         }

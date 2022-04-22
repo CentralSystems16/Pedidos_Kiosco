@@ -26,7 +26,7 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorProductos;
 import com.pedidos.kiosco.model.Productos;
 import com.pedidos.kiosco.other.ContadorProductos;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;

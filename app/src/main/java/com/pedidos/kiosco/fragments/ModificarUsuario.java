@@ -27,7 +27,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.usuarios.Cargos;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONArray;
 import java.util.ArrayList;

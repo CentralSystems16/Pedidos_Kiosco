@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -33,6 +32,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.fragments.ObtenerEstadoFiscal;
+import com.pedidos.kiosco.gastos.CrearGastos;
+import com.pedidos.kiosco.gastos.ListarGastos;
 import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.fragments.Categorias;
@@ -42,7 +43,6 @@ import com.pedidos.kiosco.fragments.Usuario;
 import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.productos.ProdFragment;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-import com.pedidos.kiosco.z.Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +55,7 @@ public class Principal extends AppCompatActivity {
     Animation fromBottom;
     Animation toBottom;
     Boolean clicked = false;
-    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes;
+    ExtendedFloatingActionButton list, product, user, fiscal, comprobante, reportes, gastos;
     public static FloatingActionButton addButton;
     public static ExtendedFloatingActionButton nombreConsumidor;
     public static BottomNavigationView bottomNavigationView;
@@ -111,6 +111,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
 
             list.setVisibility(View.GONE);
@@ -119,6 +120,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
             setClicleable(clicked);
 
@@ -138,6 +140,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
 
             list.setVisibility(View.GONE);
@@ -146,6 +149,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
             setClicleable(clicked);
 
@@ -165,6 +169,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
 
             list.setVisibility(View.GONE);
@@ -173,6 +178,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
             setClicleable(clicked);
 
@@ -200,6 +206,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
 
             list.setVisibility(View.GONE);
@@ -208,6 +215,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
             setClicleable(clicked);
 
@@ -227,6 +235,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
 
             list.setVisibility(View.GONE);
@@ -235,6 +244,36 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
+
+            setClicleable(clicked);
+
+        });
+
+        gastos = findViewById(R.id.floatingActionButton9);
+        gastos.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
+        gastos.setOnClickListener(view -> {
+
+            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ListarGastos());
+            fr.commit();
+
+            list.startAnimation(toBottom);
+            product.startAnimation(toBottom);
+            user.startAnimation(toBottom);
+            fiscal.startAnimation(toBottom);
+            comprobante.startAnimation(toBottom);
+            reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
+            addButton.startAnimation(rotateClose);
+
+            list.setVisibility(View.GONE);
+            product.setVisibility(View.GONE);
+            user.setVisibility(View.GONE);
+            fiscal.setVisibility(View.GONE);
+            comprobante.setVisibility(View.GONE);
+            reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
             setClicleable(clicked);
 
@@ -244,7 +283,7 @@ public class Principal extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         bottomNavigationView.setBackgroundColor((Color.rgb(Splash.gRed, Splash.gGreen, Splash.gBlue)));
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new com.pedidos.kiosco.z.Login()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new Login()).commit();
 
     }
 
@@ -265,6 +304,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(fromBottom);
             comprobante.startAnimation(fromBottom);
             reportes.startAnimation(fromBottom);
+            gastos.setAnimation(fromBottom);
             addButton.startAnimation(rotateOpen);
 
         }
@@ -276,6 +316,7 @@ public class Principal extends AppCompatActivity {
             fiscal.startAnimation(toBottom);
             comprobante.startAnimation(toBottom);
             reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
             addButton.startAnimation(rotateClose);
         }
     }
@@ -290,6 +331,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.VISIBLE);
             comprobante.setVisibility(View.VISIBLE);
             reportes.setVisibility(View.VISIBLE);
+            gastos.setVisibility(View.VISIBLE);
 
         }
 
@@ -300,6 +342,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setVisibility(View.GONE);
             comprobante.setVisibility(View.GONE);
             reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
 
         }
     }
@@ -313,6 +356,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setClickable(true);
             comprobante.setClickable(true);
             reportes.setClickable(true);
+            gastos.setClickable(true);
 
         }
 
@@ -324,6 +368,7 @@ public class Principal extends AppCompatActivity {
             fiscal.setClickable(false);
             comprobante.setClickable(false);
             reportes.setClickable(false);
+            gastos.setClickable(false);
 
         }
     }
@@ -494,5 +539,19 @@ public class Principal extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isFinishing()) {
+            Toast.makeText(getApplicationContext(), "Finalizo", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            Toast.makeText(getApplicationContext(), "Finalizo", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

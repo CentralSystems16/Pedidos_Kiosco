@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorReportes;
 import com.pedidos.kiosco.fragments.ObtenerEstados;
 import com.pedidos.kiosco.model.Reportes;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +48,7 @@ public class ObtenerReportes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View vista = inflater.inflate(R.layout.fragment_obtener_reportes, container, false);
+        View vista = inflater.inflate(R.layout.obtener_reportes, container, false);
 
         TextView orden = vista.findViewById(R.id.orden);
         orden.setText(ObtenerEstados.estadosNombre);
@@ -57,7 +58,9 @@ public class ObtenerReportes extends Fragment {
 
         final ImageButton regresa = vista.findViewById(R.id.regresarDatos);
         regresa.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), ObtenerEstados.class));
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ObtenerEstados());
+            fr.commit();
             obtenerPedidosAct();
         });
 
@@ -78,8 +81,9 @@ public class ObtenerReportes extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepPrefactura.php" + "?id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String URL_REPORTES = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerRepPrefactura.php"+ "?base=" + VariablesGlobales.dataBase + "&id_estado_prefactura=" + Principal.gIdEstadoCliente + "&id_usuario=" + Login.gIdUsuario;
+        System.out.println(URL_REPORTES);
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_REPORTES,
                 response -> {
 

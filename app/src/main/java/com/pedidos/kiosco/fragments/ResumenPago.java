@@ -42,14 +42,13 @@ import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.desing.VistaFinal;
 import com.pedidos.kiosco.other.ContadorProductos2;
 import com.pedidos.kiosco.other.InsertarFacDetMovimientos;
 import com.pedidos.kiosco.other.InsertarFacMovimientos;
 import com.pedidos.kiosco.other.SumaMontoMultiple;
 import com.pedidos.kiosco.other.SumaMontoMultipleIva;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;

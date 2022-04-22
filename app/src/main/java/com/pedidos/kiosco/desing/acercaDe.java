@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.pedidos.kiosco.R;
+import com.pedidos.kiosco.main.ObtenerManual;
 
 public class acercaDe extends AppCompatActivity {
 
@@ -40,7 +41,14 @@ public class acercaDe extends AppCompatActivity {
         ImageView facebook = findViewById(R.id.facebook);
         facebook.setOnClickListener(v -> {
 
-                    goToFacebook();
+            Toast.makeText(getApplicationContext(), "No se puede mostrar!", Toast.LENGTH_SHORT).show();
+
+        });
+
+        ImageView manual = findViewById(R.id.manual);
+        manual.setOnClickListener(v -> {
+
+            startActivity(new Intent(getApplicationContext(), ObtenerManual.class));
 
         });
 
@@ -52,7 +60,7 @@ public class acercaDe extends AppCompatActivity {
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"centralsystemsmanage2@gmail.com"});
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Asunto: ");
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, "Quiero comunicarme con Taqueria's Cachinflin porque:");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "Quiero comunicarme con ustedes porque:");
                     startActivity(emailIntent);
 
         });
@@ -65,8 +73,4 @@ public class acercaDe extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Politicas desabilitadas, intentelo nuevamente mas tarde!", Toast.LENGTH_SHORT).show();
     }
 
-    private void goToFacebook() {
-        Uri uri = Uri.parse("https://www.facebook.com/Taquerias-Cachinflin-113556606858092/?ref=page_internal");
-        startActivity(new Intent(Intent.ACTION_VIEW, uri));
-    }
 }

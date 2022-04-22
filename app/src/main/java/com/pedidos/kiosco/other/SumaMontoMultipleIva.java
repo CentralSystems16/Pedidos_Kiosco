@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

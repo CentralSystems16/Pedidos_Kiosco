@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".main.ObtenerManual"
+            android:exported="false" />
+        <activity
             android:name=".UpdateApp"
             android:exported="false" />
         <activity
@@ -30,9 +33,6 @@
             android:exported="false" />
         <activity
             android:name=".Registro"
-            android:exported="false" />
-        <activity
-            android:name=".desing.VistaFinal"
             android:exported="false" />
         <activity
             android:name=".productos.AgregarProducto"
@@ -55,11 +55,8 @@
             android:required="false" />
 
         <service
-            android:name="com.pedidos.kiosco.Principal"
+            android:name=".Principal"
             android:stopWithTask="true" />
-
     </application>
-
-
 
 </manifest>

@@ -35,7 +35,7 @@ import com.pedidos.kiosco.adapters.AdapProdReport;
 import com.pedidos.kiosco.desing.TipoPago;
 import com.pedidos.kiosco.model.DetReporte;
 import com.pedidos.kiosco.other.ContadorProductos;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;

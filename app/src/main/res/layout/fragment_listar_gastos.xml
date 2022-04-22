@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    tools:context=".gastos.ListarGastos">
+
+    <Toolbar
+        android:id="@+id/toolbarGastos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/backArrowGastos"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rabits"
+            android:text="GASTOS"
+            android:layout_marginStart="100dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/crearGasto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CREAR GASTO"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            app:cornerRadius="15dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gastoInactivos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INCACTIVOS"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
+            app:cornerRadius="15dp"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listaGastos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

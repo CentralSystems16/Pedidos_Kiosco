@@ -1,8 +1,5 @@
 package com.pedidos.kiosco.adapters;
 
-import static com.pedidos.kiosco.Splash.gBlue;
-import static com.pedidos.kiosco.Splash.gGreen;
-import static com.pedidos.kiosco.Splash.gRed;
 import static com.pedidos.kiosco.fragments.ResumenPago.PERMISSION_BLUETOOTH;
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,8 +7,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -47,17 +42,16 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.fragments.ObtenerDetReporte;
 import com.pedidos.kiosco.fragments.ObtenerMovimientos;
-import com.pedidos.kiosco.model.Movimientos;
+import com.pedidos.kiosco.model.Gastos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.utils.Numero_a_Letra;
-import com.pedidos.kiosco.Login;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,26 +63,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportesMov.ReportesViewHolder> {
+public class AdaptadorGastos extends RecyclerView.Adapter<AdaptadorGastos.ReportesViewHolder> {
 
     Context cContext;
-    public static List<Movimientos> listaReportes;
+    public static List<Gastos> listaReportes;
     String sucursal, gFecha, gNombre, gNombreProd;
     double gTotal, gCantidad, gPrecioUni, gDesc, exento, gravado, noSujeto, cambio, change;
     StringBuilder sb1 = new StringBuilder("");
     int gIdFacMovimiento, noCaja, tickete;
     String encodedPDF;
 
-    public AdaptadorReportesMov(Context cContext, List<Movimientos> listaReportes) {
+    public AdaptadorGastos(Context cContext, List<Gastos> listaReportes) {
 
         this.cContext = cContext;
-        AdaptadorReportesMov.listaReportes = listaReportes;
+        AdaptadorGastos.listaReportes = listaReportes;
     }
 
     @NonNull
     @Override
     public ReportesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rv_reportes_mov, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rv_gastos, viewGroup, false);
         return new ReportesViewHolder(v);
 
     }
@@ -98,37 +92,6 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
-        reportesViewHolder.tvNombre.setText(Login.nombre);
-        reportesViewHolder.nombreCliente.setText(listaReportes.get(posicion).getNombreCliente());
-        reportesViewHolder.tvFecha.setText(listaReportes.get(posicion).getFechaCreo());
-        reportesViewHolder.tvComprobante.setText(listaReportes.get(posicion).getNombreSucursal());
-        reportesViewHolder.numeroComprobante.setText(listaReportes.get(posicion).getNumeroComprobante());
-        reportesViewHolder.tipoPago.setText(listaReportes.get(posicion).getTipoPago());
-        reportesViewHolder.editar.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
-        reportesViewHolder.editar2.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
-        reportesViewHolder.editar3.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
-
-        //ver
-        reportesViewHolder.editar3.setOnClickListener(view -> {
-            ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            obtenerMovimientos();
-
-
-        });
-
-        //reimprimir
-        reportesViewHolder.editar.setOnClickListener(v -> {
-            ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            obtenerMovimientosImp();
-
-        });
-
-        //anular
-        reportesViewHolder.editar2.setOnClickListener(view -> {
-            ObtenerMovimientos.idMov = listaReportes.get(posicion).getIdMov();
-            String url = "http://34.239.139.117/android/kiosco/cliente/scripts/scripts_php/anularFacMovimientos.php" + "?base=" + VariablesGlobales.dataBase + "&id_fac_movimiento=" + ObtenerMovimientos.idMov;
-            ejecutarServicio(url);
-        });
     }
 
     public void ejecutarServicio (String URL){
@@ -545,23 +508,18 @@ public class AdaptadorReportesMov extends RecyclerView.Adapter<AdaptadorReportes
 
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tvNombre, tvFecha, tvComprobante, numeroComprobante, tipoPago, nombreCliente;
-   Button editar, editar2, editar3;
+   TextView fecha, comprobante, usuario;
+   Button ver, anular;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-        tvNombre = itemView.findViewById(R.id.nombreMov);
-        tvFecha = itemView.findViewById(R.id.tvFechaMov);
-        tvComprobante = itemView.findViewById(R.id.comprobanteMov);
-        editar = itemView.findViewById(R.id.reimprimir2);
-        editar2 = itemView.findViewById(R.id.reimprimir1);
-        editar3 = itemView.findViewById(R.id.reimprimir3);
-        numeroComprobante = itemView.findViewById(R.id.comprobante);
-        tipoPago = itemView.findViewById(R.id.tipoPago);
-        nombreCliente = itemView.findViewById(R.id.nombreClient);
+        fecha = itemView.findViewById(R.id.fechaGasto);
+        comprobante = itemView.findViewById(R.id.tipoPagoGasto);
+        usuario = itemView.findViewById(R.id.usuarioGasto);
+        ver = itemView.findViewById(R.id.verGasto);
+        anular = itemView.findViewById(R.id.anularGasto);
 
         }
     }
-
 }

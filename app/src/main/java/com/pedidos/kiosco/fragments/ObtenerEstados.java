@@ -1,10 +1,10 @@
 package com.pedidos.kiosco.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +18,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
@@ -44,7 +43,13 @@ public class ObtenerEstados extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_obtener_estados, container, false);
 
         regresar = vista.findViewById(R.id.regresara);
-        regresar.setOnClickListener(view -> startActivity(new Intent(getContext(), Principal.class)));
+        regresar.setOnClickListener(view -> {
+
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new Home());
+            fr.commit();
+
+        });
 
         rvLista = vista.findViewById(R.id.listaEstados);
         rvLista.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -68,7 +73,7 @@ public class ObtenerEstados extends Fragment {
 
         String URL_ESTADOS = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/llenarEstados.php" + "?base=" + VariablesGlobales.dataBase;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ESTADOS,
 

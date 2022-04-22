@@ -23,9 +23,10 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,7 @@ public class Administrador extends DialogFragment {
                             + "?base=" + VariablesGlobales.dataBase
                             + "&id_usuario=" + Login.gIdUsuario);
                     ejecutarServicio("http://"+ VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/actualizarDisponibilidad.php" + "?base=" + VariablesGlobales.dataBase);
-                    startActivity(new Intent(getContext(), Login.class));
+                    startActivity(new Intent(getContext(), Principal.class));
                 } else {
                     Toast.makeText(getContext(), "Contraseña incorrecta, por favor intentelo nuevamente.", Toast.LENGTH_SHORT).show();
                 }

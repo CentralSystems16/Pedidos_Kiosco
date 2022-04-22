@@ -26,7 +26,7 @@ import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.desing.Administrador;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

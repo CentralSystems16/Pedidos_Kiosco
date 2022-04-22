@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,18 +32,16 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.categorias.CatFragment;
 import com.pedidos.kiosco.model.Caja;
 import com.pedidos.kiosco.model.Comprobantes;
 import com.pedidos.kiosco.model.Sucursales;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
 import cz.msebera.android.httpclient.Header;
 
 public class AutFiscal extends Fragment {

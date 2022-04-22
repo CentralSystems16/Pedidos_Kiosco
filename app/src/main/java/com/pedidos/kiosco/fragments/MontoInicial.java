@@ -19,7 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

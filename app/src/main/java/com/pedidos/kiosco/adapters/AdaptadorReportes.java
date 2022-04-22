@@ -24,10 +24,11 @@ import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
+import com.pedidos.kiosco.fragments.ObtenerEstados;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.main.ObtenerReportes;
 import com.pedidos.kiosco.model.Reportes;
-import com.pedidos.kiosco.z.Login;
+import com.pedidos.kiosco.Login;
 
 import java.util.List;
 
@@ -71,30 +72,9 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
         });
 
         if (Principal.gIdEstadoCliente == 2){
-            reportesViewHolder.anular.setVisibility(View.VISIBLE);
             reportesViewHolder.reeImprimir.setVisibility(View.VISIBLE);
         }
 
-        reportesViewHolder.anular.setOnClickListener(view -> new AlertDialog.Builder(cContext)
-                .setTitle("Confirmación")
-                .setMessage("¿Esta seguro que desea anular el pedido?, ¡Esta acción ya no se puede revertir!")
-
-                .setPositiveButton("CONFIRMAR", (dialog, which) -> {
-
-                    Login.gIdPedidoReporte = listaReportes.get(posicion).getPedido();
-                    ejecutarServicio("http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarEstado.php"
-                            + "?base=" + VariablesGlobales.dataBase
-                            + "&id_estado_prefactura=3"
-                            + "&id_prefactura=" + Login.gIdPedidoReporte);
-                    Toast.makeText(cContext, "El pedido se ha anulado", Toast.LENGTH_SHORT).show();
-                    cContext.startActivity(new Intent(cContext, ObtenerReportes.class));
-
-                })
-                .setNegativeButton("CANCELAR",
-                        (dialog, which) -> dialog.dismiss()
-                )
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .show());
 
     }
 
@@ -115,7 +95,7 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
    TextView tvNombre, tvFecha, tvPedido;
-   Button reeImprimir, ver, anular;
+   Button reeImprimir, ver;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,7 +105,6 @@ public class AdaptadorReportes extends RecyclerView.Adapter<AdaptadorReportes.Re
         tvPedido = itemView.findViewById(R.id.numeroPedido);
         reeImprimir = itemView.findViewById(R.id.reimprimir);
         ver = itemView.findViewById(R.id.verReporte);
-        anular = itemView.findViewById(R.id.anular);
 
         }
     }
