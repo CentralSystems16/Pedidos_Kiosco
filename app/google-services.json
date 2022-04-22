@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "550013157393",
+    "project_id": "pedidoskiosco-7fbf6",
+    "storage_bucket": "pedidoskiosco-7fbf6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550013157393:android:2e60a783060ab6a430b1b0",
+        "android_client_info": {
+          "package_name": "com.pedidos.kiosco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550013157393-anj77f21culqkltrult1miqan7qv0i4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pedidos.kiosco",
+            "certificate_hash": "9668d712796621f3f684214fd5e03b1d656bf889"
+          }
+        },
+        {
+          "client_id": "550013157393-05sr4vr21ilbdtjq522f1iq8vociosrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuGJlzZuNC9y4NovUYJ7o__o7_4bwklGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550013157393-05sr4vr21ilbdtjq522f1iq8vociosrh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
