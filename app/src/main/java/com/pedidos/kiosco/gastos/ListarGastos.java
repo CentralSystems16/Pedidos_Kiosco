@@ -3,12 +3,14 @@ package com.pedidos.kiosco.gastos;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +23,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorGastos;
 import com.pedidos.kiosco.adapters.AdaptadorReportesMov;
+import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Gastos;
 import com.pedidos.kiosco.model.Movimientos;
 
@@ -36,6 +39,10 @@ public class ListarGastos extends Fragment {
     ArrayList<Gastos> reportes;
     AdaptadorGastos adaptador;
 
+    public static double monto;
+    public static String fecha, descripcion;
+    public static int gIdGastos, idFacMovimientos;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +55,13 @@ public class ListarGastos extends Fragment {
         reportes = new ArrayList<>();
 
         obtenerGastos();
+
+        Button crearGastos = vista.findViewById(R.id.crearGasto);
+        crearGastos.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new CrearGastos());
+            fr.commit();
+        });
 
         return vista;
     }
@@ -76,7 +90,10 @@ public class ListarGastos extends Fragment {
                                     new Gastos(
 
                                             jsonObject1.getString("fecha_creo"),
-                                            jsonObject1.getDouble("monto")
+                                            jsonObject1.getDouble("monto"),
+                                            jsonObject1.getInt("id_tipo_comprobante"),
+                                            jsonObject1.getString("descripcion"),
+                                            jsonObject1.getInt("id_fac_movimiento")
 
                                     ));
                         }

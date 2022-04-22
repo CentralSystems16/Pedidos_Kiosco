@@ -72,8 +72,6 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
                 +"&id_cierre_caja=0"
                 +"&descripcion=" + CrearGastos.Sdescripcion;
 
-        System.out.println(registrar_url);
-
         String resultado = null;
 
         try {
@@ -94,7 +92,7 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
             String idAutFiscal = "1";
             String idPrefactura = String.valueOf(Login.gIdPedido);
             String idTipoPago = "1";
-            String fecha = CrearGastos.Sfecha;
+            String fecha = "1/1/1";
             String fechaCreo = fechacComplString + " a las " + horaString;
             String fechaMod = "1/1/1";
             String monto = CrearGastos.Smonto;
@@ -103,6 +101,7 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
             String montoDesc = "0.00";
             String montoPago = "0.00";
             String montoCambio = "0.00";
+            String descripcion = CrearGastos.Sdescripcion;
 
             String data = URLEncoder.encode("id_cliente", "UTF-8") + "=" + URLEncoder.encode(idCliente, "UTF-8")
                     + "&" + URLEncoder.encode("id_tipo_comprobante", "UTF-8") + "=" + URLEncoder.encode(tipoComprobante, "UTF-8")
@@ -121,7 +120,8 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
                     + "&" + URLEncoder.encode("fac_tipo_movimiento", "UTF-8") + "=" + URLEncoder.encode(facTipoMov, "UTF-8")
                     + "&" + URLEncoder.encode("monto_desc", "UTF-8") + "=" + URLEncoder.encode(montoDesc, "UTF-8")
                     + "&" + URLEncoder.encode("monto_pago", "UTF-8") + "=" + URLEncoder.encode(montoPago, "UTF-8")
-                    + "&" + URLEncoder.encode("monto_cambio", "UTF-8") + "=" + URLEncoder.encode(montoCambio, "UTF-8");
+                    + "&" + URLEncoder.encode("monto_cambio", "UTF-8") + "=" + URLEncoder.encode(montoCambio, "UTF-8")
+                    + "&" + URLEncoder.encode("descripcion", "UTF-8") + "=" + URLEncoder.encode(descripcion, "UTF-8");
 
             bufferedWriter.write(data);
             bufferedWriter.flush();

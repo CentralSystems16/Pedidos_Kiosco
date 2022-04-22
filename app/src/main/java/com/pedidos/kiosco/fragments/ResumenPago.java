@@ -111,7 +111,7 @@ public class ResumenPago extends Fragment {
         ImageButton back = vista.findViewById(R.id.backArrow);
         back.setOnClickListener(view -> {
 
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new TicketDatos());
             fr.commit();
 

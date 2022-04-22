@@ -25,16 +25,15 @@
 
     </LinearLayout>
 
-    <!--- <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextFieldNombre7"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="Fecha"
+            android:hint="Fecha creo"
             android:textColorHint="#9F807E7E"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
@@ -46,35 +45,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fechaGastos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:layout_marginStart="30dp"
-                android:focusable="false"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="Fecha sistema"
-            android:textColorHint="#9F807E7E"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            android:layout_marginTop="30dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fechasistema"
+                android:id="@+id/fechaCreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -86,7 +57,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout> -->
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -106,7 +77,7 @@
             android:textSize="15sp" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewGastos"
+            android:id="@+id/cardViewGastosEdit"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -117,7 +88,7 @@
             app:strokeWidth="1dp">
 
             <Spinner
-                android:id="@+id/spGastos"
+                android:id="@+id/spGastosEdit"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/black"
@@ -145,7 +116,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/montoGastos"
+            android:id="@+id/montoGastosEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -172,11 +143,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/descripcionGastos"
+            android:id="@+id/descripcionGastosEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:gravity="center"
+            android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
@@ -228,7 +199,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/guardarGastos"
+        android:id="@+id/guardarGastosEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GUARDAR"

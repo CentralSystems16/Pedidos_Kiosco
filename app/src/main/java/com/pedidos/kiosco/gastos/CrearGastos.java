@@ -7,6 +7,8 @@ import static com.pedidos.kiosco.Splash.gRed;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class CrearGastos extends Fragment {
 
-    EditText fecha, monto, descripcion;
+    EditText monto, descripcion;
     RadioGroup activo;
     Button continuar, cancelar;
 
@@ -69,9 +71,12 @@ public class CrearGastos extends Fragment {
         continuar.setOnClickListener(view -> {
             obtenerIdComprobante();
             obtenerAutFiscal();
-            Sfecha = fecha.getText().toString();
             Smonto = monto.getText().toString();
             Sdescripcion = descripcion.getText().toString();
+
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ListarGastos());
+            fr.commit();
 
         });
 

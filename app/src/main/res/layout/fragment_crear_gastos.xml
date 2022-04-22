@@ -178,6 +178,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
+            android:inputType="textMultiLine"
             android:textColor="@color/black"
             android:textSize="12sp" />
 

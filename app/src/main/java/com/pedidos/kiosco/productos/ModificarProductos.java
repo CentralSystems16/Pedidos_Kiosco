@@ -64,13 +64,10 @@ public class ModificarProductos extends Fragment {
         modifPrec.setText(String.valueOf(ProdFragment.gPrecio));
 
         cancelar = vista.findViewById(R.id.btnCancelarGuard);
-        cancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new ProdFragment());
-                fr.commit();
-            }
+        cancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ProdFragment());
+            fr.commit();
         });
 
         btnActivo = vista.findViewById(R.id.btnActivoProducto);

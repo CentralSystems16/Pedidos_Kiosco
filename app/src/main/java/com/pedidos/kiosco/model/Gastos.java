@@ -2,12 +2,16 @@ package com.pedidos.kiosco.model;
 
 public class Gastos {
 
-    String fechaCreo;
+    String fechaCreo, descripcion;
     Double monto;
+    int tipoComprobante, idFacMovimiento;
 
-    public Gastos(String fechaCreo, Double monto) {
+    public Gastos(String fechaCreo, Double monto, int tipoComprobante, String descripcion, int idFacMovimiento) {
         this.fechaCreo = fechaCreo;
         this.monto = monto;
+        this.tipoComprobante = tipoComprobante;
+        this.descripcion = descripcion;
+        this.idFacMovimiento = idFacMovimiento;
     }
 
     public String getFechaCreo() {
@@ -16,5 +20,17 @@ public class Gastos {
 
     public Double getMonto() {
         return monto;
+    }
+
+    public int getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public int getIdFacMovimiento() {
+        return idFacMovimiento;
     }
 }
