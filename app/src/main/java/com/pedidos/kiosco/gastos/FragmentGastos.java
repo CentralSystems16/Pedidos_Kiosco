@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,8 @@ import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.Comprobantes;
+import com.pedidos.kiosco.usuarios.UsuarioFragment;
+
 import org.json.JSONArray;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
@@ -38,7 +41,9 @@ public class FragmentGastos extends Fragment {
     Spinner spGastos;
     private AsyncHttpClient cliente;
     ArrayList<Comprobantes> comprobantes;
-    int gIdComprobanteGastos;
+    int gIdComprobanteGastos, gEstadoUs;
+
+    Button btnActivoUser, btnInactivoUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +53,35 @@ public class FragmentGastos extends Fragment {
 
         EditText montoGastos = vista.findViewById(R.id.montoGastosEdit);
         montoGastos.setText(String.valueOf(ListarGastos.monto));
+
+        btnActivoUser = vista.findViewById(R.id.btnActivoGastos);
+        btnActivoUser.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
+        btnActivoUser.setOnClickListener(v -> {
+
+            gEstadoUs = 1;
+            btnActivoUser.setVisibility(View.INVISIBLE);
+            btnInactivoUser.setVisibility(View.VISIBLE);
+            Toast.makeText(getContext(), "Gasto activado nuevamente", Toast.LENGTH_SHORT).show();
+
+        });
+
+        btnInactivoUser = vista.findViewById(R.id.btnInactivoGastos);
+        btnInactivoUser.setOnClickListener(v -> {
+
+            gEstadoUs = 0;
+            btnActivoUser.setVisibility(View.VISIBLE);
+            btnInactivoUser.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "Gasto desactivado", Toast.LENGTH_SHORT).show();
+
+        });
+
+        if (UsuarioFragment.gEstadoUsuario == 0) {
+            btnInactivoUser.setVisibility(View.INVISIBLE);
+        }
+
+        else {
+            btnActivoUser.setVisibility(View.INVISIBLE);
+        }
 
         EditText descripcion = vista.findViewById(R.id.descripcionGastosEdit);
         descripcion.setText(String.valueOf(ListarGastos.descripcion));
@@ -71,7 +105,7 @@ public class FragmentGastos extends Fragment {
                     + "&monto=" + montoGastos.getText().toString()
                     + "&descripcion=" + descripcion.getText().toString()
                     + "&id_tipo_comprobante=" + gIdComprobanteGastos
-                    + "&id_estado_comprobante=" + "1"
+                    + "&id_estado_comprobante=" + gEstadoUs
                     + "&id_fac_movimiento=" + ListarGastos.idFacMovimientos;
             System.out.println(url);
             ejecutarServicio(url);

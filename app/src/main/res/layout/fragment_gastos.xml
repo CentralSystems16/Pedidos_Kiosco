@@ -153,50 +153,38 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInactivoGastos"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Activo:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:text="INACTIVAR"
+            style="?attr/materialButtonOutlinedStyle"
+            android:textSize="11sp"
+            android:textColor="#FF1A73E8"
+            app:strokeColor="#FF1A73E8"
+            app:cornerRadius="15dp" />
 
-        <RadioGroup
-            android:id="@+id/activoGastos"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnActivoGastos"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:text="ACTIVAR"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:cornerRadius="15dp" />
 
-            <RadioButton
-                android:id="@+id/si"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SI"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-            <RadioButton
-                android:id="@+id/no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NO"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-        </RadioGroup>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/guardarGastosEdit"

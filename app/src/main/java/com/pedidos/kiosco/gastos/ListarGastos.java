@@ -1,6 +1,11 @@
 package com.pedidos.kiosco.gastos;
 
+import static com.pedidos.kiosco.Splash.gBlue;
+import static com.pedidos.kiosco.Splash.gGreen;
+import static com.pedidos.kiosco.Splash.gRed;
+
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,7 +46,7 @@ public class ListarGastos extends Fragment {
 
     public static double monto;
     public static String fecha, descripcion;
-    public static int gIdGastos, idFacMovimientos;
+    public static int gIdGastos, idFacMovimientos, estado;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +62,16 @@ public class ListarGastos extends Fragment {
         obtenerGastos();
 
         Button crearGastos = vista.findViewById(R.id.crearGasto);
+        crearGastos.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         crearGastos.setOnClickListener(view -> {
             FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new CrearGastos());
             fr.commit();
+        });
+
+        Button inactivos = vista.findViewById(R.id.gastoInactivos);
+        inactivos.setOnClickListener(view -> {
+
         });
 
         return vista;
@@ -93,7 +104,8 @@ public class ListarGastos extends Fragment {
                                             jsonObject1.getDouble("monto"),
                                             jsonObject1.getInt("id_tipo_comprobante"),
                                             jsonObject1.getString("descripcion"),
-                                            jsonObject1.getInt("id_fac_movimiento")
+                                            jsonObject1.getInt("id_fac_movimiento"),
+                                            jsonObject1.getInt("id_estado_comprobante")
 
                                     ));
                         }

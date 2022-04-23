@@ -54,8 +54,8 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
                 +"&id_estado_comprobante=1"
                 +"&id_sucursal=" + Login.gIdSucursal
                 +"&id_aut_fiscal=" + Login.gIdAutFiscal
-                +"&id_prefactura=" + Login.gIdPedido
-                +"&id_tipo_pago=" + TipoPago.idTipoPago
+                +"&id_prefactura=0"
+                +"&id_tipo_pago=1"
                 +"&fecha=" + CrearGastos.Sfecha
                 +"&fecha_creo=" + fechacComplString + " " + horaString
                 +"&fecha_mod=" + "1/1/1"
@@ -68,8 +68,8 @@ public class InsertarGastos extends AsyncTask<String, Void, String> {
                 +"&monto_exento=" + "0.00"
                 +"&monto_gravado=" + "0.00"
                 +"&monto_no_sujeto=" + "0.00"
-                +"&numero_comprobante=0"
-                +"&id_cierre_caja=0"
+                +"&numero_comprobante=" + CrearGastos.numeroComprobante
+                +"&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja
                 +"&descripcion=" + CrearGastos.Sdescripcion;
 
         String resultado = null;

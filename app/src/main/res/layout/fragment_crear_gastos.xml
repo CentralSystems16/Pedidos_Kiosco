@@ -26,14 +26,9 @@
 
     </LinearLayout>
 
-    <!--- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextFieldNombre7"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Fecha"
             android:textColorHint="#9F807E7E"
@@ -52,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:layout_marginStart="30dp"
+                android:layout_marginEnd="40dp"
                 android:focusable="false"
                 android:gravity="center"
                 android:padding="10dp"
@@ -60,40 +56,10 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="Fecha sistema"
-            android:textColorHint="#9F807E7E"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            android:layout_marginTop="30dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeColor="#000000"
-            app:hintTextColor="#000000"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fechasistema"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:layout_marginStart="30dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout> -->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -127,8 +93,34 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
     </RelativeLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Numero comprobante"
+        android:layout_marginEnd="30dp"
+        android:textColorHint="#9F807E7E"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        android:layout_marginStart="30dp"
+        app:boxStrokeColor="#000000"
+        app:hintTextColor="#000000"
+        app:boxCornerRadiusTopStart="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/numeroComprobante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -183,51 +175,6 @@
             android:textSize="12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activo:"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <RadioGroup
-            android:id="@+id/activoGastos"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/si"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SI"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-            <RadioButton
-                android:id="@+id/no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NO"
-                android:textColor="@color/black"
-                android:buttonTint="#c6391e"
-                app:buttonTint="@color/black" />
-
-        </RadioGroup>
-
-
-    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/guardarGastos"

@@ -191,7 +191,9 @@ public class ResumenPago extends Fragment {
                 response -> {
                     gCount = 0.00;
                     progressDialog.dismiss();
-                    startActivity(new Intent(getActivity(), VistaFinal.class));
+                    FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new VistaFinal());
+                    fr.commit();
 
                 },
                 volleyError -> progressDialog.dismiss()

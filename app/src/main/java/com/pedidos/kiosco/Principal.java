@@ -190,6 +190,26 @@ public class Principal extends AppCompatActivity {
             FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_layout, new ObtenerEstadoFiscal());
             fr.commit();
+
+            list.startAnimation(toBottom);
+            product.startAnimation(toBottom);
+            user.startAnimation(toBottom);
+            fiscal.startAnimation(toBottom);
+            comprobante.startAnimation(toBottom);
+            reportes.startAnimation(toBottom);
+            gastos.startAnimation(toBottom);
+            addButton.startAnimation(rotateClose);
+
+            list.setVisibility(View.GONE);
+            product.setVisibility(View.GONE);
+            user.setVisibility(View.GONE);
+            fiscal.setVisibility(View.GONE);
+            comprobante.setVisibility(View.GONE);
+            reportes.setVisibility(View.GONE);
+            gastos.setVisibility(View.GONE);
+
+            setClicleable(clicked);
+
         });
 
         comprobante = findViewById(R.id.floatingActionButton6);

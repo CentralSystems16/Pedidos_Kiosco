@@ -44,6 +44,23 @@ public class AdaptadorGastos extends RecyclerView.Adapter<AdaptadorGastos.Report
     @Override
     public void onBindViewHolder(@NonNull ReportesViewHolder reportesViewHolder, @SuppressLint("RecyclerView") int posicion) {
 
+        ListarGastos.monto = listaReportes.get(posicion).getMonto();
+        ListarGastos.fecha = listaReportes.get(posicion).getFechaCreo();
+        ListarGastos.gIdGastos = listaReportes.get(posicion).getTipoComprobante();
+        ListarGastos.descripcion = listaReportes.get(posicion).getDescripcion();
+        ListarGastos.idFacMovimientos = listaReportes.get(posicion).getIdFacMovimiento();
+        ListarGastos.estado = listaReportes.get(posicion).getIdEstado();
+
+        reportesViewHolder.fecha.setText(listaReportes.get(posicion).getFechaCreo());
+        reportesViewHolder.comprobante.setText(String.valueOf(listaReportes.get(posicion).getMonto()));
+
+        if (ListarGastos.estado == 1) {
+            reportesViewHolder.usuario.setText("Activo");
+        }
+        else {
+            reportesViewHolder.usuario.setText("Inactivo");
+        }
+
         reportesViewHolder.ver.setOnClickListener(view -> {
 
             ListarGastos.monto = listaReportes.get(posicion).getMonto();
@@ -51,6 +68,7 @@ public class AdaptadorGastos extends RecyclerView.Adapter<AdaptadorGastos.Report
             ListarGastos.gIdGastos = listaReportes.get(posicion).getTipoComprobante();
             ListarGastos.descripcion = listaReportes.get(posicion).getDescripcion();
             ListarGastos.idFacMovimientos = listaReportes.get(posicion).getIdFacMovimiento();
+            ListarGastos.estado = listaReportes.get(posicion).getIdEstado();
 
             FragmentManager fragmentManager = ((FragmentActivity) cContext).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -69,7 +87,7 @@ public class AdaptadorGastos extends RecyclerView.Adapter<AdaptadorGastos.Report
     public static class ReportesViewHolder extends RecyclerView.ViewHolder {
 
    TextView fecha, comprobante, usuario;
-   Button ver, anular;
+   Button ver;
 
         public ReportesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,7 +96,6 @@ public class AdaptadorGastos extends RecyclerView.Adapter<AdaptadorGastos.Report
         comprobante = itemView.findViewById(R.id.tipoPagoGasto);
         usuario = itemView.findViewById(R.id.usuarioGasto);
         ver = itemView.findViewById(R.id.verGasto);
-        anular = itemView.findViewById(R.id.anularGasto);
 
         }
     }

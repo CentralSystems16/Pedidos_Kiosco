@@ -4,14 +4,15 @@ public class Gastos {
 
     String fechaCreo, descripcion;
     Double monto;
-    int tipoComprobante, idFacMovimiento;
+    int tipoComprobante, idFacMovimiento, idEstado;
 
-    public Gastos(String fechaCreo, Double monto, int tipoComprobante, String descripcion, int idFacMovimiento) {
+    public Gastos(String fechaCreo, Double monto, int tipoComprobante, String descripcion, int idFacMovimiento, int idEstado) {
         this.fechaCreo = fechaCreo;
         this.monto = monto;
         this.tipoComprobante = tipoComprobante;
         this.descripcion = descripcion;
         this.idFacMovimiento = idFacMovimiento;
+        this.idEstado = idEstado;
     }
 
     public String getFechaCreo() {
@@ -32,5 +33,9 @@ public class Gastos {
 
     public int getIdFacMovimiento() {
         return idFacMovimiento;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
     }
 }

@@ -52,7 +52,7 @@
             android:id="@+id/gastoInactivos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="INCACTIVOS"
+            android:text="INACTIVOS"
             android:textSize="12sp"
             android:textColor="@color/white"
             android:layout_marginEnd="50dp"

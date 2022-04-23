@@ -202,7 +202,7 @@ public class Home extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos.php" + "?base=" + VariablesGlobales.dataBase + "&id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario + "&id_cliente=" + Login.gIdCliente;
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerPedidosActivos.php" + "?base=" + VariablesGlobales.dataBase + "&id_estado_prefactura=1" + "&id_usuario=" + Login.gIdUsuario;
         System.out.println(url);
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

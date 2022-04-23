@@ -4,16 +4,18 @@ import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -34,11 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import cz.msebera.android.httpclient.Header;
 
 public class CrearGastos extends Fragment {
 
-    EditText monto, descripcion;
+    EditText monto, descripcion, Afecha, noComprobante;
     RadioGroup activo;
     Button continuar, cancelar;
 
@@ -50,7 +54,29 @@ public class CrearGastos extends Fragment {
 
     public static String Sfecha, Smonto, Sdescripcion;
 
-    public static int gIdComprobanteGastos;
+    public static int gIdComprobanteGastos, numeroComprobante;
+
+    private int ultimoAnio, ultimoMes, ultimoDiaDelMes;
+
+    private DatePickerDialog.OnDateSetListener listenerDeDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int anio, int mes, int diaDelMes) {
+
+            ultimoAnio = anio;
+            ultimoMes = mes;
+            ultimoDiaDelMes = diaDelMes;
+
+            refrescarFechaEnEditText();
+
+        }
+    };
+
+    public void refrescarFechaEnEditText() {
+
+        String fecha = String.format(Locale.getDefault(), "%02d-%02d-%02d", ultimoAnio, ultimoMes+1, ultimoDiaDelMes);
+        Afecha.setText(fecha);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +86,15 @@ public class CrearGastos extends Fragment {
 
         monto = vista.findViewById(R.id.montoGastos);
         descripcion = vista.findViewById(R.id.descripcionGastos);
+        Afecha = vista.findViewById(R.id.fechaGastos);
+        noComprobante = vista.findViewById(R.id.numeroComprobante);
+
+        Afecha.setOnClickListener(v -> {
+
+            DatePickerDialog dialogoFecha = new DatePickerDialog(getContext(), listenerDeDatePicker, ultimoAnio, ultimoMes, ultimoDiaDelMes);
+
+            dialogoFecha.show();
+        });
 
         activo = vista.findViewById(R.id.activoGastos);
 
@@ -69,14 +104,28 @@ public class CrearGastos extends Fragment {
         continuar = vista.findViewById(R.id.guardarGastos);
         continuar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
         continuar.setOnClickListener(view -> {
-            obtenerIdComprobante();
-            obtenerAutFiscal();
-            Smonto = monto.getText().toString();
-            Sdescripcion = descripcion.getText().toString();
 
-            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_layout, new ListarGastos());
-            fr.commit();
+            if (VariablesGlobales.gIdCierreCaja == 0) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Caja cerrada")
+                        .setMessage("Para continuar debe abrir caja")
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+            }
+            else {
+                obtenerIdComprobante();
+                obtenerAutFiscal();
+                Smonto = monto.getText().toString();
+                Sdescripcion = descripcion.getText().toString();
+                Sfecha = Afecha.getText().toString();
+                numeroComprobante = Integer.parseInt(noComprobante.getText().toString());
+
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new ListarGastos());
+                fr.commit();
+            }
 
         });
 

@@ -9,6 +9,7 @@
     app:cardElevation="10dp"
     android:backgroundTint="@color/white"
     app:cardCornerRadius="10dp"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
     android:layout_margin="10dp">
 
  <LinearLayout
@@ -35,15 +36,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
             tools:ignore="UselessParent">
-
-            <ImageView
-                android:id="@+id/imgCompletado"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="left"
-                android:src="@drawable/ic_baseline_check_circle_outline_24"
-                android:scaleType="centerCrop"
-                tools:ignore="ContentDescription,RtlHardcoded" />
 
             <TextView
                 android:text="Fecha "
@@ -76,7 +68,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Tipo de pago:"
+                    android:text="Monto:"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
@@ -99,7 +91,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:text="Usuario: "
+                android:text="Estado: "
                 android:textColor="@color/black"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
@@ -126,17 +118,16 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/verGasto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VER"/>
-
-            <Button
-                android:id="@+id/anularGasto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ANULAR"/>
+                android:text="VER"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                app:cornerRadius="15dp"/>
 
         </LinearLayout>
         </LinearLayout>
