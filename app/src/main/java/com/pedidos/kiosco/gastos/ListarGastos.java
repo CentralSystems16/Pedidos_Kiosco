@@ -3,7 +3,6 @@ package com.pedidos.kiosco.gastos;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,31 +10,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pedidos.kiosco.Login;
-import com.pedidos.kiosco.Principal;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorGastos;
-import com.pedidos.kiosco.adapters.AdaptadorReportesMov;
-import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.model.Gastos;
-import com.pedidos.kiosco.model.Movimientos;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class ListarGastos extends Fragment {
@@ -46,7 +37,7 @@ public class ListarGastos extends Fragment {
 
     public static double monto;
     public static String fecha, descripcion;
-    public static int gIdGastos, idFacMovimientos, estado;
+    public static int gIdGastos, idFacMovimientos, estado = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,9 +59,27 @@ public class ListarGastos extends Fragment {
             fr.replace(R.id.fragment_layout, new CrearGastos());
             fr.commit();
         });
-
         Button inactivos = vista.findViewById(R.id.gastoInactivos);
+        if (estado == 1){
+            inactivos.setText("Activos");
+        }
+        else {
+            inactivos.setText("Inactivos");
+        }
+
         inactivos.setOnClickListener(view -> {
+            if (estado == 1) {
+                estado = 0;
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new ListarGastos());
+                fr.commit();
+            }
+            else {
+                estado = 1;
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_layout, new ListarGastos());
+                fr.commit();
+            }
 
         });
 
@@ -84,9 +93,10 @@ public class ListarGastos extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2";
+        new ArrayList<>();
+
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=" + estado;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
-        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {

@@ -43,7 +43,6 @@ import cz.msebera.android.httpclient.Header;
 public class CrearGastos extends Fragment {
 
     EditText monto, descripcion, Afecha, noComprobante;
-    RadioGroup activo;
     Button continuar, cancelar;
 
     Spinner spGastos;
@@ -95,8 +94,6 @@ public class CrearGastos extends Fragment {
 
             dialogoFecha.show();
         });
-
-        activo = vista.findViewById(R.id.activoGastos);
 
         MaterialCardView gastos = vista.findViewById(R.id.cardViewGastos);
         gastos.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
