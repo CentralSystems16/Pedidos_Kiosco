@@ -23,7 +23,9 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCierreCaja;
 import com.pedidos.kiosco.model.Pago;
 import com.pedidos.kiosco.Login;
-
+import com.pedidos.kiosco.other.ContadorCantidad;
+import com.pedidos.kiosco.other.ContadorGastos;
+import com.pedidos.kiosco.other.InsertarCierreMovCaja;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,11 +69,15 @@ public class CierreCaja extends Fragment {
         aceptar.setOnClickListener(view -> new AlertDialog.Builder(getContext())
                 .setTitle("Confirmación de cierre")
                 .setMessage("¿Esta seguro de cerrar la caja?")
-                .setPositiveButton(android.R.string.yes, (dialog, which) -> ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
-                        + "?base=" + VariablesGlobales.dataBase
-                        + "&fecha_fin=" + fechacComplString + " " + horaString
-                        + "&state=2"
-                        + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja)).setNegativeButton(android.R.string.no, (dialog, which) ->{})
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    new ContadorGastos.GetDataFromServerIntoTextView(getContext()).execute();
+                    new InsertarCierreMovCaja(getContext()).execute();
+                    ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarCierreCaja.php"
+                            + "?base=" + VariablesGlobales.dataBase
+                            + "&fecha_fin=" + fechacComplString + " " + horaString
+                            + "&state=2"
+                            + "&id_cierre_caja=" + VariablesGlobales.gIdCierreCaja);
+                }).setNegativeButton(android.R.string.no, (dialog, which) ->{})
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show());
 
@@ -183,11 +189,7 @@ public class CierreCaja extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
 
-                    //Bundle datosAEnviar = new Bundle();
-                    //datosAEnviar.putInt("cierre", VariablesGlobales.gIdCierreCaja);
-
                     Fragment fragmento = new Home();
-                    //fragmento.setArguments(datosAEnviar);
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_layout, fragmento);

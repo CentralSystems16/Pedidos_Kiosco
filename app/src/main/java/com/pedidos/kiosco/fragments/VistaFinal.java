@@ -7,13 +7,15 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toolbar;
+
 import com.google.android.material.button.MaterialButton;
 import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.Principal;
@@ -27,20 +29,14 @@ public class VistaFinal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View vista = inflater.inflate(R.layout.fragment_vista_final, container, false);
+        View vista = inflater.inflate(R.layout.vista_final, container, false);
 
 
         new SumaMonto().execute();
         new SumaMontoDevolucion().execute();
 
-        Toolbar toolbar = vista.findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
-
         MaterialButton nuevo = vista.findViewById(R.id.btnRepetirPedido);
-        nuevo.setStrokeColor(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
-
         MaterialButton ver = vista.findViewById(R.id.btnVerOrdenes);
-        ver.setStrokeColor(ColorStateList.valueOf(Color.rgb(gRed, gGreen, gBlue)));
 
         ImageButton homeEnd = vista.findViewById(R.id.homeEnd);
         homeEnd.setOnClickListener(v -> {

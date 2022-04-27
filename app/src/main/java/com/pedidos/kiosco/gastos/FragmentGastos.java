@@ -3,13 +3,11 @@ package com.pedidos.kiosco.gastos;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -26,12 +23,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.model.Comprobantes;
-import com.pedidos.kiosco.usuarios.UsuarioFragment;
-
 import org.json.JSONArray;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
@@ -42,7 +36,6 @@ public class FragmentGastos extends Fragment {
     private AsyncHttpClient cliente;
     ArrayList<Comprobantes> comprobantes;
     int gIdComprobanteGastos, gEstadoUs;
-
     Button btnActivoUser, btnInactivoUser;
 
     @Override
@@ -75,7 +68,7 @@ public class FragmentGastos extends Fragment {
 
         });
 
-        if (UsuarioFragment.gEstadoUsuario == 0) {
+        if (ListarGastos.estado == 0) {
             btnInactivoUser.setVisibility(View.INVISIBLE);
         }
 
@@ -88,6 +81,7 @@ public class FragmentGastos extends Fragment {
 
         MaterialCardView gastos = vista.findViewById(R.id.cardViewGastosEdit);
         gastos.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
 
         EditText fechaCreo = vista.findViewById(R.id.fechaCreo);
         fechaCreo.setText(ListarGastos.fecha);

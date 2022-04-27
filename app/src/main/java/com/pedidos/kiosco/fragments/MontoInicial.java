@@ -43,6 +43,7 @@ public class MontoInicial extends Fragment {
         View vista = inflater.inflate(R.layout.monto_inicial, container, false);
 
         montoInicial = vista.findViewById(R.id.montoInicial);
+        montoInit = Double.valueOf(montoInicial.getText().toString());
 
         Button aceptar = vista.findViewById(R.id.btnAceptar);
         cant1 = vista.findViewById(R.id.btnCant1);

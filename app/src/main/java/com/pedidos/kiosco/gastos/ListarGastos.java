@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -61,10 +63,10 @@ public class ListarGastos extends Fragment {
         });
         Button inactivos = vista.findViewById(R.id.gastoInactivos);
         if (estado == 1){
-            inactivos.setText("Activos");
+            inactivos.setText("Inactivos");
         }
         else {
-            inactivos.setText("Inactivos");
+            inactivos.setText("Activos");
         }
 
         inactivos.setOnClickListener(view -> {
@@ -97,6 +99,7 @@ public class ListarGastos extends Fragment {
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=" + estado;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {
@@ -128,7 +131,11 @@ public class ListarGastos extends Fragment {
                         e.printStackTrace();
                         progressDialog.dismiss();
                     }
-                }, Throwable::printStackTrace
+                }, volleyError -> {
+            Toast.makeText(getContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        }
         );
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
