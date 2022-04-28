@@ -40,10 +40,13 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
+import com.pedidos.kiosco.Login;
 import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
+import com.pedidos.kiosco.adapters.AdaptadorGastos;
+import com.pedidos.kiosco.model.Gastos;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.reportes.BuscarReportes;
@@ -352,6 +355,58 @@ public class CrearReporteCierreCaja extends Fragment {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void obtenerGastos(){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        new ArrayList<>();
+
+        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=1";
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Movimientos");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+
+                                            jsonObject1.getString("fecha_creo");
+                                            jsonObject1.getDouble("monto");
+                                            jsonObject1.getInt("id_tipo_comprobante");
+                                            jsonObject1.getString("descripcion");
+                                            jsonObject1.getInt("id_fac_movimiento");
+                                            jsonObject1.getInt("id_estado_comprobante");
+
+                        }
+
+                        progressDialog.dismiss();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressDialog.dismiss();
+                    }
+                }, volleyError -> {
+            Toast.makeText(getContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        }
+        );
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
 
     }

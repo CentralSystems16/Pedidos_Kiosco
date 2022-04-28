@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +22,6 @@ import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCierreCaja;
 import com.pedidos.kiosco.model.Pago;
 import com.pedidos.kiosco.Login;
-import com.pedidos.kiosco.other.ContadorCantidad;
 import com.pedidos.kiosco.other.ContadorGastos;
 import com.pedidos.kiosco.other.InsertarCierreMovCaja;
 import org.json.JSONArray;
@@ -189,12 +187,9 @@ public class CierreCaja extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 response -> {
 
-                    Fragment fragmento = new Home();
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_layout, fragmento);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_layout, new Home());
+                    fr.commit();
 
                     progressDialog.dismiss();
                 },

@@ -99,7 +99,6 @@ public class ListarGastos extends Fragment {
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=" + estado;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
-        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
 
                 response -> {

@@ -3,7 +3,6 @@ package com.pedidos.kiosco.gastos;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -97,6 +95,13 @@ public class CrearGastos extends Fragment {
 
         MaterialCardView gastos = vista.findViewById(R.id.cardViewGastos);
         gastos.setStrokeColor(Color.rgb(gRed, gGreen, gBlue));
+
+        cancelar = vista.findViewById(R.id.cancelarGastos);
+        cancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ListarGastos());
+            fr.commit();
+        });
 
         continuar = vista.findViewById(R.id.guardarGastos);
         continuar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
