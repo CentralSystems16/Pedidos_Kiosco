@@ -10,35 +10,31 @@
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
     tools:context=".gastos.FragmentGastos">
 
-    <LinearLayout
+    <Toolbar
+        android:id="@+id/toolbarPago1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
+        android:layout_alignParentTop="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CREAR GASTOS"
-            android:textColor="@color/black"
+            android:layout_marginStart="100dp"
+            android:textColor="@color/white"
             />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    </Toolbar>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Fecha creo"
             android:textColorHint="#9F807E7E"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopEnd="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             app:boxCornerRadiusTopStart="20dp"
             app:boxStrokeColor="#000000"
             app:hintTextColor="#000000"
@@ -46,7 +42,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fechaCreo"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:layout_marginStart="30dp"
@@ -57,13 +53,11 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -111,6 +105,7 @@
         app:boxCornerRadiusTopEnd="20dp"
         android:layout_marginStart="30dp"
         app:boxStrokeColor="#000000"
+        android:layout_marginTop="20dp"
         app:hintTextColor="#000000"
         app:boxCornerRadiusTopStart="20dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">

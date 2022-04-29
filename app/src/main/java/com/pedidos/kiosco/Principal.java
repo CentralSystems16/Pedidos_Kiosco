@@ -3,26 +3,19 @@ package com.pedidos.kiosco;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
-import static com.pedidos.kiosco.categorias.CatFragment.MY_DEFAULT_TIMEOUT;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
-
-import com.android.volley.DefaultRetryPolicy;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -30,23 +23,18 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.pedidos.kiosco.desing.Clientes;
-import com.pedidos.kiosco.fragments.ObtenerEstadoFiscal;
-import com.pedidos.kiosco.gastos.CrearGastos;
-import com.pedidos.kiosco.gastos.ListarGastos;
-import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.categorias.CatFragment;
+import com.pedidos.kiosco.desing.Clientes;
 import com.pedidos.kiosco.fragments.Categorias;
 import com.pedidos.kiosco.fragments.Home;
+import com.pedidos.kiosco.fragments.ObtenerEstadoFiscal;
 import com.pedidos.kiosco.fragments.TicketDatos;
 import com.pedidos.kiosco.fragments.Usuario;
+import com.pedidos.kiosco.gastos.ListarGastos;
 import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.productos.ProdFragment;
+import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Principal extends AppCompatActivity {
 
@@ -61,9 +49,9 @@ public class Principal extends AppCompatActivity {
     public static BottomNavigationView bottomNavigationView;
     public static int gIdEstadoCliente, gIdEstado, maximo, actual;
 
-    private long startTime=10*60*1000; // 15 MINS IDLE TIME
+    /*private long startTime=10*60*1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
-    CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer;*/
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -72,9 +60,9 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.principal);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        countDownTimer = new MyCountDownTimer(startTime, interval);
+        //countDownTimer = new MyCountDownTimer(startTime, interval);
 
-        DatosEmpresa();
+        //DatosEmpresa();
 
         rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
         rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
@@ -393,16 +381,54 @@ public class Principal extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(getApplicationContext(), "onRestar", Toast.LENGTH_SHORT).show();
-        DatosEmpresa();
+    public void ejecutarServicio (String URL){
+        ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> {
+
+                    progressDialog.dismiss();
+                },
+                volleyError -> progressDialog.dismiss()
+        );
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
+        Fragment selectedFragment = null;
 
+        if (item.getItemId() == R.id.nav_home) {
+            selectedFragment = new Home();
+        }
 
-    public void DatosEmpresa(){
+        if (item.getItemId() == R.id.nav_cat) {
+            selectedFragment = new Categorias();
+        }
+
+        if (item.getItemId() == R.id.nav_user) {
+            selectedFragment = new Usuario();
+        }
+
+        if (item.getItemId() == R.id.nav_shop) {
+            selectedFragment = new TicketDatos();
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, selectedFragment).commit();
+
+        return  true;
+    };
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    /*public void DatosEmpresa(){
 
         String URL = "http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerEmpresa.php" + "?base=" + VariablesGlobales.dataBase;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -453,9 +479,9 @@ public class Principal extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(request);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onUserInteraction(){
 
         super.onUserInteraction();
@@ -463,9 +489,9 @@ public class Principal extends AppCompatActivity {
         //Reset the timer on user interaction...
         countDownTimer.cancel();
         countDownTimer.start();
-    }
+    }*/
 
-    public class MyCountDownTimer extends CountDownTimer {
+    /*public class MyCountDownTimer extends CountDownTimer {
         public MyCountDownTimer(long startTime, long interval) {
             super(startTime, interval);
         }
@@ -481,27 +507,9 @@ public class Principal extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
         }
-    }
+    }*/
 
-    public void ejecutarServicio (String URL){
-        ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-            progressDialog.dismiss();
-                },
-                volleyError -> progressDialog.dismiss()
-        );
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(stringRequest);
-    }
-
-    public void ejecutarServicio2 (String URL){
+    /*public void ejecutarServicio2 (String URL){
         Toast.makeText(getApplicationContext(), "Entro al metodo", Toast.LENGTH_SHORT).show();
         ProgressDialog progressDialog = new ProgressDialog(Principal.this, R.style.Custom);
         progressDialog.setMessage("Por favor, espera...");
@@ -518,39 +526,9 @@ public class Principal extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-    }
+    }*/
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
-        Fragment selectedFragment = null;
-
-        if (item.getItemId() == R.id.nav_home) {
-            selectedFragment = new Home();
-        }
-
-        if (item.getItemId() == R.id.nav_cat) {
-            selectedFragment = new Categorias();
-        }
-
-        if (item.getItemId() == R.id.nav_user) {
-            selectedFragment = new Usuario();
-        }
-
-        if (item.getItemId() == R.id.nav_shop) {
-            selectedFragment = new TicketDatos();
-        }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, selectedFragment).commit();
-
-    return  true;
-    };
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
-
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
         if (isFinishing()) {
@@ -560,12 +538,11 @@ public class Principal extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (isFinishing()) {
-            Toast.makeText(getApplicationContext(), "Finalizo", Toast.LENGTH_SHORT).show();
-        }
+    protected void onRestart() {
+        super.onRestart();
+        DatosEmpresa();
     }
+
 
     @Override
     protected void onStop() {
@@ -573,5 +550,5 @@ public class Principal extends AppCompatActivity {
         if (isFinishing()) {
             Toast.makeText(getApplicationContext(), "Finalizo", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }

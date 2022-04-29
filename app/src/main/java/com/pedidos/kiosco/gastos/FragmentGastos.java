@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -46,6 +48,9 @@ public class FragmentGastos extends Fragment {
 
         EditText montoGastos = vista.findViewById(R.id.montoGastosEdit);
         montoGastos.setText(String.valueOf(ListarGastos.monto));
+
+        Toolbar toolbar = vista.findViewById(R.id.toolbarPago1);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         btnActivoUser = vista.findViewById(R.id.btnActivoGastos);
         btnActivoUser.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));

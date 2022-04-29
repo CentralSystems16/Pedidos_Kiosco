@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -51,6 +52,9 @@ public class ListarGastos extends Fragment {
         rvLista.setLayoutManager(new LinearLayoutManager(getContext()));
 
         reportes = new ArrayList<>();
+
+        Toolbar toolbar = vista.findViewById(R.id.toolbarPago1);
+        toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         obtenerGastos();
 
@@ -99,8 +103,8 @@ public class ListarGastos extends Fragment {
 
         String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/obtenerGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=" + estado;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        System.out.println(url_pedido);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
-
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
