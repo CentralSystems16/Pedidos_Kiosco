@@ -194,7 +194,7 @@
         app:cornerRadius="15dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelarGastos"
+        android:id="@+id/cancelarEditarGastos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CANCELAR"

@@ -123,10 +123,6 @@ public class CrearGastos extends Fragment {
                 Sdescripcion = descripcion.getText().toString();
                 Sfecha = Afecha.getText().toString();
                 numeroComprobante = Integer.parseInt(noComprobante.getText().toString());
-
-                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_layout, new ListarGastos());
-                fr.commit();
             }
 
         });
@@ -178,6 +174,9 @@ public class CrearGastos extends Fragment {
                         }
 
                         new InsertarGastos(getContext()).execute();
+                        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                        fr.replace(R.id.fragment_layout, new ListarGastos());
+                        fr.commit();
 
 
                     } catch (JSONException e) {

@@ -25,22 +25,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.pedidos.kiosco.LoginRequest;
-import com.pedidos.kiosco.Principal;
-import com.pedidos.kiosco.R;
-import com.pedidos.kiosco.Registro;
-import com.pedidos.kiosco.UpdateApp;
 import com.pedidos.kiosco.desing.acercaDe;
 import com.pedidos.kiosco.fragments.Home;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Login extends Fragment {
 
@@ -53,6 +54,10 @@ public class Login extends Fragment {
     EditText user, password;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
+    Date d = new Date();
+    SimpleDateFormat fecc = new SimpleDateFormat("yyyy'-'mm'-'dd", Locale.getDefault());
+    String fechacComplString = fecc.format(d);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +104,7 @@ public class Login extends Fragment {
         ImageView logoLogin = vista.findViewById(R.id.imageViewLogin);
         TextView txtBinevenido = vista.findViewById(R.id.tctBienvenido);
 
-        Glide.with(getContext()).load(gImagenSplah).into(logoLogin);
+        Glide.with(requireContext()).load(gImagenSplah).into(logoLogin);
         txtBinevenido.setTextColor(Color.rgb(gRed, gGreen, gBlue));
 
         user = vista.findViewById(R.id.user);
@@ -147,9 +152,17 @@ public class Login extends Fragment {
                             gVerificacion = jsonResponse.getInt("verificacion_usuario");
                             gIdSucursal = jsonResponse.getInt("id_sucursal");
 
+                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/registroSesion.php"
+                                    + "?base=" + VariablesGlobales.dataBase
+                                    + "&ingreso=" + fechacComplString
+                                    + "&egreso=" + "null"
+                                    + "&id_usuario=" + gIdUsuario);
+
                             FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                             fr.replace(R.id.fragment_layout, new Home());
                             fr.commit();
+
+
 
                             progressDialog.dismiss();
 
@@ -171,6 +184,21 @@ public class Login extends Fragment {
         });
 
         return vista;
+    }
+
+    public void ejecutarServicio (String URL){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
+        progressDialog.setMessage("Por favor, espera...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> progressDialog.dismiss(),
+                volleyError -> progressDialog.dismiss()
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        requestQueue.add(stringRequest);
     }
 
     private void mostrarDialogo() {

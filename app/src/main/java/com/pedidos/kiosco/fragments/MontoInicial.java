@@ -142,9 +142,7 @@ public class MontoInicial extends Fragment {
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> {
-
-                },
+                response -> progressDialog.dismiss(),
                 volleyError -> progressDialog.dismiss()
         );
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());

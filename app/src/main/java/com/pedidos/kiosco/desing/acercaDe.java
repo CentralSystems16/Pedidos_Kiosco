@@ -1,10 +1,13 @@
 package com.pedidos.kiosco.desing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.pedidos.kiosco.R;
@@ -12,11 +15,16 @@ import com.pedidos.kiosco.main.ObtenerManual;
 
 public class acercaDe extends AppCompatActivity {
 
+    TextView versionCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acerca_de);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        versionCode = findViewById(R.id.versionCode);
+        versionCode.setText(String.valueOf(getVersionName(getApplicationContext())));
 
         ImageView politica = findViewById(R.id.politica);
         politica.setOnClickListener(v -> {
@@ -41,7 +49,8 @@ public class acercaDe extends AppCompatActivity {
         ImageView facebook = findViewById(R.id.facebook);
         facebook.setOnClickListener(v -> {
 
-            Toast.makeText(getApplicationContext(), "No se puede mostrar!", Toast.LENGTH_SHORT).show();
+            Uri uri = Uri.parse("https://www.facebook.com/");
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
         });
 
@@ -64,6 +73,15 @@ public class acercaDe extends AppCompatActivity {
                     startActivity(emailIntent);
 
         });
+    }
+
+    public String getVersionName(Context ctx){
+        try {
+            return ctx.getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     private void goToPolitica() {

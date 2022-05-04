@@ -45,6 +45,7 @@ import com.pedidos.kiosco.R;
 import com.pedidos.kiosco.Splash;
 import com.pedidos.kiosco.VariablesGlobales;
 import com.pedidos.kiosco.adapters.AdaptadorCorteCaja;
+import com.pedidos.kiosco.other.ContadorGastosCaja;
 import com.pedidos.kiosco.pdf.ResponsePOJO;
 import com.pedidos.kiosco.pdf.RetrofitClient;
 import com.pedidos.kiosco.reportes.BuscarReportes;
@@ -67,7 +68,7 @@ public class CrearReporteCierreCaja extends Fragment {
     private String nombreCajero, fechaInicio, fechaFin, gTipoPago, descripcion, detalle2;
     private double ventaTotal = 0.00, montoDevolucionTotal = 0.00, gastos = 0.00, gastosTotal = 0.00,
             entregarTotal = 0.00, montoFisicoTotal = 0.00 , montoDiferenciaTotal = 0.00, montoInicialTotal = 0.00;
-    private int cierre;
+    public static int cierre;
     ArrayList arrayList = new ArrayList();
     ArrayList arrayList2 = new ArrayList();
     String detalle = "", resultado = "";
@@ -97,12 +98,14 @@ public class CrearReporteCierreCaja extends Fragment {
                              Bundle savedInstanceState) {
 
          View vista =  inflater.inflate(R.layout.crear_reporte_cierre_caja, container, false);
+        obtenerGastos();
          obtenerTipoPagoFacTipoPagoCaja(cierre);
          imprimiendo = vista.findViewById(R.id.imprimiendo);
          progressDialog = new ProgressDialog(getContext(), R.style.Custom);
          progressDialog.setMessage("Por favor, espera...");
          progressDialog.setCancelable(false);
          progressDialog.show();
+
          return vista;
 
     }
@@ -206,8 +209,6 @@ public class CrearReporteCierreCaja extends Fragment {
                             }
 
                         }
-
-                        obtenerGastos();
 
                         ventaTotal = ventaTotal + monto;
 
@@ -360,10 +361,10 @@ public class CrearReporteCierreCaja extends Fragment {
 
     public void obtenerGastos(){
 
-        String url_pedido = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/mostrarGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=1" + "&id_cierre_caja=" + cierre;
+        String url_gastos = "http://"+ VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/mostrarGastos.php" + "?base=" + VariablesGlobales.dataBase + "&id_usuario=" + Login.gIdUsuario + "&fac_tipo_movimiento=2" + "&id_estado_comprobante=1" + "&id_cierre_caja=" + cierre;
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_pedido,
+        System.out.println(url_gastos);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url_gastos,
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -379,14 +380,13 @@ public class CrearReporteCierreCaja extends Fragment {
                                             jsonObject1.getInt("id_fac_movimiento");
                                             jsonObject1.getInt("id_estado_comprobante");
 
-                                            detalle2 = gastos + "Descripcion" + descripcion;
+                                            detalle2 = "$ " + gastos + " Descripcion: " + descripcion + "\n";
                                             arrayList2.add(detalle2);
 
                         }
 
-                        System.out.println("Gastos:" + arrayList2);
-
                         progressDialog.dismiss();
+                        new ContadorGastosCaja.GetDataFromServerIntoTextView(getContext()).execute();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -422,7 +422,7 @@ public class CrearReporteCierreCaja extends Fragment {
             pdfDocument.setDefaultPageSize(pageSize);
 
         Paragraph fecha = new Paragraph("Desde: " + BuscarReportes.sFecInicial + BuscarReportes.sHoraInicial + " Hasta: " + BuscarReportes.sFecFinal + BuscarReportes.sHoraFinal).setTextAlignment(TextAlignment.CENTER);
-
+        System.out.println("Total Gastos en PDF:" + ContadorGastosCaja.GetDataFromServerIntoTextView.totalCierreCaja);
         Paragraph nombre = new Paragraph(Splash.gNombre + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph direccion = new Paragraph(Splash.gDireccion + "\n").setTextAlignment(TextAlignment.CENTER);
         Paragraph departamento = new Paragraph("Departamento" + "\n").setTextAlignment(TextAlignment.CENTER);
@@ -441,8 +441,8 @@ public class CrearReporteCierreCaja extends Fragment {
         Paragraph linea5 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph vTotal = new Paragraph("Venta Total " + "$" + String.format("%.2f", ventaTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph devTotal = new Paragraph("Devolución total $" + String.format("%.2f", montoDevolucionTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph gastos1 = new Paragraph("Gastos $" + gastos + "\n").setTextAlignment(TextAlignment.RIGHT);
-        Paragraph tGastos = new Paragraph("Total gastos $" + String.format("%.2f", gastosTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph gastos1 = new Paragraph("Gastos: " + arrayList2.toString().replace("[", "").replace("]", "").replace(",", "") + "\n").setTextAlignment(TextAlignment.RIGHT);
+        Paragraph tGastos = new Paragraph("Total gastos $" + ContadorGastosCaja.GetDataFromServerIntoTextView.totalCierreCaja + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph tEntregar = new Paragraph("Total a Entregar $" + String.format("%.2f", entregarTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph mDeclarado = new Paragraph("Monto Declarado $" + String.format("%.2f", montoFisicoTotal) + "\n").setTextAlignment(TextAlignment.RIGHT);
         Paragraph linea6 = new Paragraph("================================" + "\n").setTextAlignment(TextAlignment.RIGHT);

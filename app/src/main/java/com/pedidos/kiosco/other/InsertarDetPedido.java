@@ -48,8 +48,6 @@ public class InsertarDetPedido extends AsyncTask<String, Void, String> {
             +"&monto=" + ObtenerProductos.gDetMonto
             +"&monto_iva=" + ObtenerProductos.gDetMontoIva;
 
-        System.out.println(registrar_url);
-
     String resultado = null;
 
     try {

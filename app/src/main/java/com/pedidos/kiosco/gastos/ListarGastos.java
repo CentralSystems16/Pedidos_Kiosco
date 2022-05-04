@@ -53,7 +53,7 @@ public class ListarGastos extends Fragment {
 
         reportes = new ArrayList<>();
 
-        Toolbar toolbar = vista.findViewById(R.id.toolbarPago1);
+        Toolbar toolbar = vista.findViewById(R.id.toolbarGastos);
         toolbar.setBackgroundColor(Color.rgb(gRed, gGreen, gBlue));
 
         obtenerGastos();

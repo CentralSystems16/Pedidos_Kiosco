@@ -38,7 +38,7 @@ public class FragmentGastos extends Fragment {
     private AsyncHttpClient cliente;
     ArrayList<Comprobantes> comprobantes;
     int gIdComprobanteGastos, gEstadoUs;
-    Button btnActivoUser, btnInactivoUser;
+    Button btnActivoUser, btnInactivoUser, cancelar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +61,13 @@ public class FragmentGastos extends Fragment {
             btnInactivoUser.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), "Gasto activado nuevamente", Toast.LENGTH_SHORT).show();
 
+        });
+
+        cancelar = vista.findViewById(R.id.cancelarEditarGastos);
+        cancelar.setOnClickListener(view -> {
+            FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_layout, new ListarGastos());
+            fr.commit();
         });
 
         btnInactivoUser = vista.findViewById(R.id.btnInactivoGastos);
@@ -171,6 +178,7 @@ public class FragmentGastos extends Fragment {
                     FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_layout, new ListarGastos());
                     fr.commit();
+                    progressDialog.dismiss();
                 },
                 volleyError -> progressDialog.dismiss()
         );

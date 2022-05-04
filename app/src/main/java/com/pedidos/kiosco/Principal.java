@@ -3,8 +3,11 @@ package com.pedidos.kiosco;
 import static com.pedidos.kiosco.Splash.gBlue;
 import static com.pedidos.kiosco.Splash.gGreen;
 import static com.pedidos.kiosco.Splash.gRed;
+
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.Request;
@@ -35,6 +39,7 @@ import com.pedidos.kiosco.main.CorteCaja;
 import com.pedidos.kiosco.productos.ProdFragment;
 import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
+import com.pedidos.kiosco.utils.RecibirPDFReportes;
 
 public class Principal extends AppCompatActivity {
 
@@ -48,6 +53,7 @@ public class Principal extends AppCompatActivity {
     public static ExtendedFloatingActionButton nombreConsumidor;
     public static BottomNavigationView bottomNavigationView;
     public static int gIdEstadoCliente, gIdEstado, maximo, actual;
+    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1000;
 
     /*private long startTime=10*60*1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
@@ -63,6 +69,11 @@ public class Principal extends AppCompatActivity {
         //countDownTimer = new MyCountDownTimer(startTime, interval);
 
         //DatosEmpresa();
+
+        boolean granded = checkPermissionForReadExtertalStorage();
+        if (!granded) {
+            requestPermissionForReadExtertalStorage();
+        }
 
         rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
         rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
@@ -301,6 +312,22 @@ public class Principal extends AppCompatActivity {
         setAnimation(clicked);
         setClicleable(clicked);
         clicked = !clicked;
+    }
+
+    public boolean checkPermissionForReadExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadExtertalStorage() {
+        try {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setAnimation(Boolean clicked) {
