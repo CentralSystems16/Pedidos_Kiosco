@@ -25,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,28 +37,34 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.pedidos.kiosco.desing.acercaDe;
 import com.pedidos.kiosco.fragments.Home;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Login extends Fragment {
 
     public static int gIdCliente = 1, cargo, gIdUsuario, gVerificacion, gIdCategoria,
             gIdPedido, gIdFacDetPedido, gIdSucursal, gIdMovimiento, gIdDetMovimiento,
-            gIdPedidoReporte, gIdAutFiscal;
+            gIdPedidoReporte, gIdAutFiscal, idUser;
 
     public static String nombre, email, repeatContra, usuario, contra;
+
+    ArrayList arrayList = new ArrayList();
 
     EditText user, password;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     Date d = new Date();
-    SimpleDateFormat fecc = new SimpleDateFormat("yyyy'-'mm'-'dd", Locale.getDefault());
+    SimpleDateFormat fecc = new SimpleDateFormat("yyyy'-'MM'-'dd", Locale.getDefault());
     String fechacComplString = fecc.format(d);
 
     @Override
@@ -95,6 +103,8 @@ public class Login extends Fragment {
 
         });
 
+        obtenerSesiones();
+
         LinearLayout linearLayout = vista.findViewById(R.id.linearLogin);
         linearLayout.setBackgroundColor(Color.rgb(244, 57, 44));
 
@@ -122,17 +132,12 @@ public class Login extends Fragment {
 
         btnEntrar.setOnClickListener(v -> {
 
-            ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
-            progressDialog.setMessage("Por favor, espera...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-
             usuario = user.getText().toString();
             contra = password.getText().toString();
 
             if (usuario.isEmpty() || contra.isEmpty()) {
                 user.setError("Campos vacíos");
-                progressDialog.dismiss();
+
             } else {
 
                 Response.Listener<String> responseListener = response -> {
@@ -152,33 +157,36 @@ public class Login extends Fragment {
                             gVerificacion = jsonResponse.getInt("verificacion_usuario");
                             gIdSucursal = jsonResponse.getInt("id_sucursal");
 
-                            ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/registroSesion.php"
-                                    + "?base=" + VariablesGlobales.dataBase
-                                    + "&ingreso=" + fechacComplString
-                                    + "&egreso=" + "null"
-                                    + "&id_usuario=" + gIdUsuario);
+                            if (idUser != gIdUsuario){
+                                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/registroSesion.php"
+                                        + "?base=" + VariablesGlobales.dataBase
+                                        + "&ingreso=" + fechacComplString
+                                        + "&egreso=" + "null"
+                                        + "&id_usuario=" + gIdUsuario);
+                            }
+                            else {
+                                ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarIngreso.php"
+                                        + "?base=" + VariablesGlobales.dataBase
+                                        + "&ingreso=" + fechacComplString
+                                        + "&id_usuario=" + gIdUsuario);
+                            }
 
                             FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                             fr.replace(R.id.fragment_layout, new Home());
                             fr.commit();
 
-
-
-                            progressDialog.dismiss();
-
                         } else {
                             Toast.makeText(getContext(), "Usuario y/o contraseña incorrectos o usuario inactivo y/o sin permisos, por favor intentalo nuevamente.", Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
-                        }
+                             }
 
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), "Ocurrió un error inesperado, intentalo de nuevo más tarde, Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
+
                     }
                 };
 
                 LoginRequest loginRequest = new LoginRequest(usuario, contra, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(getContext());
+                RequestQueue queue = Volley.newRequestQueue(requireActivity());
                 queue.add(loginRequest);
             }
         });
@@ -188,14 +196,11 @@ public class Login extends Fragment {
 
     public void ejecutarServicio (String URL){
 
-        ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.Custom);
-        progressDialog.setMessage("Por favor, espera...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                response -> progressDialog.dismiss(),
-                volleyError -> progressDialog.dismiss()
+                response -> {
+                },
+                volleyError -> {
+                }
         );
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
@@ -231,6 +236,43 @@ public class Login extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
         user.setText(preferences.getString("login_usuario", ""));
         password.setText(preferences.getString("password_usuarios", ""));
+    }
+
+    public void obtenerSesiones() {
+
+        String url = "http://" + VariablesGlobales.host +"/android/kiosco/cliente/scripts/scripts_php/obtenerSesiones.php" + "?base=" + VariablesGlobales.dataBase;
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("Sesiones");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            idUser = jsonObject1.getInt("id_usuario");
+
+                        }
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
+                    }
+                }, volleyError -> {
+            Toast.makeText(getContext(), "Ocurrio un error inesperado, Error: " + volleyError, Toast.LENGTH_SHORT).show();
+
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
+
     }
 
 }

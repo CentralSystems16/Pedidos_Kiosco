@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -41,6 +43,10 @@ import com.pedidos.kiosco.reportes.BuscarReportes;
 import com.pedidos.kiosco.usuarios.UsuarioFragment;
 import com.pedidos.kiosco.utils.RecibirPDFReportes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Principal extends AppCompatActivity {
 
     Animation rotateOpen;
@@ -58,6 +64,10 @@ public class Principal extends AppCompatActivity {
     /*private long startTime=10*60*1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
     CountDownTimer countDownTimer;*/
+
+    Date d = new Date();
+    SimpleDateFormat fecc = new SimpleDateFormat("yyyy'-'MM'-'dd", Locale.getDefault());
+    String fechacComplString = fecc.format(d);
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -578,4 +588,12 @@ public class Principal extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Finalizo", Toast.LENGTH_SHORT).show();
         }
     }*/
+
+    protected void onPause() {
+        super.onPause();
+        ejecutarServicio("http://" + VariablesGlobales.host + "/android/kiosco/cliente/scripts/scripts_php/actualizarSesiones.php"
+                + "?base=" + VariablesGlobales.dataBase
+                + "&egreso=" + fechacComplString
+                + "&id_usuario=" + Login.gIdUsuario);
+    }
 }
